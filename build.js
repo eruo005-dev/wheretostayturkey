@@ -908,7 +908,7 @@ ${disclosureBanner()}
     <p class="hero-sub">${esc(c.tagline)}</p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-lg" href="#neighborhoods">See neighborhoods</a>
-      <a class="btn btn-ghost btn-lg" rel="sponsored nofollow" target="_blank" href="${esc(bookingLink(c.heroSearch))}" style="background:rgba(255,255,255,0.95);color:var(--c-ink)">Check hotel prices</a>
+      <a class="btn btn-ghost btn-lg" rel="sponsored nofollow" target="_blank" href="${esc(bookingLink(c.heroSearch))}" >Check hotel prices</a>
     </div>
     <div class="hero-meta">
       <div class="meta-item"><strong>${esc(c.idealNights)}</strong><span>Ideal stay</span></div>
