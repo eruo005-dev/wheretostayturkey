@@ -405,7 +405,7 @@ function footer() {
     </div>
     <div class="footer-bottom">
       <span>© ${new Date().getFullYear()} ${esc(config.business ? config.business.legalName : config.siteName)}. An independent editorial site. <a href="/about/#affiliate" style="color:inherit">We earn a commission on qualifying bookings</a>.</span>
-      <span><a href="/partnerships/" style="color:inherit">For hoteliers</a></span>
+      <span><a href="/partnerships/" style="color:inherit">For hoteliers</a> · Last updated ${esc(config.business.lastUpdated)}</span>
     </div>
   </div>
 </footer>`;
@@ -839,6 +839,8 @@ ${disclosureBanner()}
     </div>
   </div>
 </section>
+
+${editorsPicksStrip()}
 
 ${leadMagnet()}
 
@@ -3122,6 +3124,32 @@ ${tail()}`;
   ])];
   const html = head({ title, description, canonical, jsonld }) + body;
   writeFile("partnerships/index.html", html);
+}
+
+
+// Editor's Picks — collect flagged hotels for homepage featured strip
+function getEditorsPicks() {
+  const picks = [];
+  for (const c of cities) {
+    for (const h of c.hotels) {
+      if (h.editorsPick) picks.push({ hotel: h, city: c });
+    }
+  }
+  return picks;
+}
+
+function editorsPicksStrip() {
+  const picks = getEditorsPicks();
+  if (!picks.length) return "";
+  return `
+<section class="container section-sm" id="editors-picks">
+  <div class="section-label">Editor's Picks</div>
+  <h2 style="font-weight:300;letter-spacing:-0.025em;margin-bottom:8px">The hotels we'd book ourselves</h2>
+  <p class="text-muted" style="max-width:560px;margin-bottom:32px">${picks.length} flagship properties across Turkey, hand-selected by our editorial team. The bar is high — most cities don't have one.</p>
+  <div class="grid grid-2 grid-3">
+    ${picks.map(({ hotel, city }) => hotelCard(hotel, city)).join("")}
+  </div>
+</section>`;
 }
 
 function run() {
