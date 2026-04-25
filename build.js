@@ -1708,26 +1708,26 @@ ${tail()}
 const CITIES = ${JSON.stringify(cityPicks)};
 const QUESTIONS = [
   { key: "vibe", q: "What's the vibe you want?", options: [
-    { label: "Big city, culture, food",      picks: { istanbul: 4, izmir: 2, gaziantep: 2, ankara: 1, bursa: 1 } },
+    { label: "Big city, culture, food",      picks: { istanbul: 4, izmir: 2, gaziantep: 2, ankara: 1, bursa: 1, konya: 1 } },
     { label: "Beach holiday",                picks: { antalya: 3, bodrum: 3, fethiye: 3, side: 2, alanya: 2, marmaris: 2, kusadasi: 2, mersin: 1 } },
-    { label: "Scenery and unique landscapes",picks: { cappadocia: 4, pamukkale: 3, rize: 3, trabzon: 2, kas: 1 } },
-    { label: "Off the beaten path",          picks: { gaziantep: 3, mersin: 3, rize: 2, trabzon: 2, kas: 2, bursa: 1 } },
+    { label: "Scenery and unique landscapes",picks: { cappadocia: 4, pamukkale: 3, rize: 3, trabzon: 2, kas: 1, mardin: 3, safranbolu: 2 } },
+    { label: "Off the beaten path",          picks: { gaziantep: 3, mersin: 3, rize: 2, trabzon: 2, kas: 2, bursa: 1, mardin: 3, sanliurfa: 3, konya: 2, safranbolu: 2 } },
   ]},
   { key: "travelers", q: "Who's traveling?", options: [
-    { label: "Couple",                   picks: { istanbul: 2, cappadocia: 3, kas: 2, bodrum: 1, fethiye: 1, antalya: 1 } },
+    { label: "Couple",                   picks: { istanbul: 2, cappadocia: 3, kas: 2, bodrum: 1, fethiye: 1, antalya: 1, mardin: 2, safranbolu: 2 } },
     { label: "Family with kids",         picks: { antalya: 3, side: 3, bodrum: 2, alanya: 2, kusadasi: 2, marmaris: 1, istanbul: 1 } },
-    { label: "Solo / with friends",      picks: { istanbul: 3, izmir: 2, kas: 2, alanya: 1, cappadocia: 1, bursa: 1 } },
+    { label: "Solo / with friends",      picks: { istanbul: 3, izmir: 2, kas: 2, alanya: 1, cappadocia: 1, bursa: 1, konya: 1, mardin: 1 } },
     { label: "Multi-gen / special trip", picks: { bodrum: 3, antalya: 3, istanbul: 2, side: 2, cappadocia: 1 } },
   ]},
   { key: "nights", q: "How many nights total in Turkey?", options: [
-    { label: "3–4 nights (weekend)",       picks: { istanbul: 3, cappadocia: 2, gaziantep: 2, bursa: 1 } },
-    { label: "5–7 nights (standard trip)", picks: { istanbul: 2, cappadocia: 2, antalya: 2, bodrum: 2, fethiye: 1, izmir: 1 } },
-    { label: "8–14 nights (multi-city)",   picks: { istanbul: 1, cappadocia: 1, antalya: 1, bodrum: 1, fethiye: 1, pamukkale: 1, izmir: 1, kas: 1 } },
+    { label: "3–4 nights (weekend)",       picks: { istanbul: 3, cappadocia: 2, gaziantep: 2, bursa: 1, safranbolu: 2, konya: 1 } },
+    { label: "5–7 nights (standard trip)", picks: { istanbul: 2, cappadocia: 2, antalya: 2, bodrum: 2, fethiye: 1, izmir: 1, mardin: 1, sanliurfa: 1 } },
+    { label: "8–14 nights (multi-city)",   picks: { istanbul: 1, cappadocia: 1, antalya: 1, bodrum: 1, fethiye: 1, pamukkale: 1, izmir: 1, kas: 1, mardin: 1, safranbolu: 1, sanliurfa: 1 } },
     { label: "15+ nights (long stay)",     picks: { alanya: 3, izmir: 2, kas: 2, mersin: 2, fethiye: 1, bodrum: 1 } },
   ]},
   { key: "budget", q: "Budget per night on hotels?", options: [
-    { label: "Under $80",       picks: { mahmutlar: 0, alanya: 3, mersin: 3, rize: 2, gaziantep: 2, kas: 1, pamukkale: 2, trabzon: 2 } },
-    { label: "$80–$200",        picks: { istanbul: 2, cappadocia: 2, antalya: 2, fethiye: 2, kusadasi: 2, bursa: 2, izmir: 2, side: 1 } },
+    { label: "Under $80",       picks: { mahmutlar: 0, alanya: 3, mersin: 3, rize: 2, gaziantep: 2, kas: 1, pamukkale: 2, trabzon: 2, konya: 2, sanliurfa: 1, safranbolu: 1 } },
+    { label: "$80–$200",        picks: { istanbul: 2, cappadocia: 2, antalya: 2, fethiye: 2, kusadasi: 2, bursa: 2, izmir: 2, side: 1, mardin: 2, safranbolu: 2 } },
     { label: "$200–$500",       picks: { istanbul: 3, cappadocia: 3, bodrum: 2, antalya: 2, side: 2, fethiye: 1 } },
     { label: "$500+ (splurge)", picks: { bodrum: 3, cappadocia: 3, istanbul: 3, antalya: 2, side: 1 } },
   ]},
@@ -1811,6 +1811,7 @@ ${disclosureBanner()}
   <div class="page-head">
     <div class="breadcrumb"><a href="/">Home</a> / Visa</div>
     <h1>Do you need a visa for Turkey?</h1>
+    <div class="meta-tags">${readingPill("e-visa eligibility cost process verify before booking")}</div>
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">Most travelers need an e-Visa. It takes 10 minutes online, costs $35-50 depending on passport, and lasts 180 days. Here's the short version.</p>
   </div>
 </div>
@@ -1871,6 +1872,7 @@ ${disclosureBanner()}
   <div class="page-head">
     <div class="breadcrumb"><a href="/">Home</a> / Istanbul → Cappadocia</div>
     <h1>Istanbul to Cappadocia: the honest guide</h1>
+    <div class="meta-tags">${readingPill("flight bus drive options cost time")}</div>
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">There's no train. There are three ways: fly (80 min, recommended), overnight bus (11 hrs, cheap), or drive (7 hrs, only if you love road trips).</p>
   </div>
 </div>
@@ -1918,6 +1920,7 @@ ${disclosureBanner()}
   <div class="page-head">
     <div class="breadcrumb"><a href="/">Home</a> / Is Turkey safe</div>
     <h1>Is Turkey safe? The honest answer.</h1>
+    <div class="meta-tags">${readingPill("safety practical precautions earthquake regions")}</div>
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">Yes, for the destinations most travelers actually visit. Turkey gets 50+ million foreign tourists a year. The media coverage is louder than the reality.</p>
   </div>
 </div>
@@ -1976,6 +1979,7 @@ ${disclosureBanner()}
   <div class="page-head">
     <div class="breadcrumb"><a href="/">Home</a> / Best time to visit</div>
     <h1>The best time to visit Turkey</h1>
+    <div class="meta-tags">${readingPill("month by month region weather seasonal")}</div>
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">Spoiler: April–May or September–October. Beyond that, it depends heavily on which part of Turkey you're visiting.</p>
   </div>
 </div>
@@ -2036,6 +2040,7 @@ ${disclosureBanner()}
   <div class="page-head">
     <div class="breadcrumb"><a href="/">Home</a> / How many nights</div>
     <h1>How many nights do you need in Turkey?</h1>
+    <div class="meta-tags">${readingPill("nights itinerary length combos cities")}</div>
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">Short answer: 7 nights is the sweet spot for first-time visitors. Here's what fits into every length.</p>
   </div>
 </div>
@@ -2346,6 +2351,12 @@ function readingTime(htmlOrText) {
   const words = text.split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 230));
 }
+function readingPill(html) {
+  const m = readingTime(html);
+  return `<span class="reading-time">${m} min read</span>`;
+}
+
+
 
 // --- Author byline block (to inject under hero on city + guide pages) ---
 function bylineBlock(cityOrNull) {

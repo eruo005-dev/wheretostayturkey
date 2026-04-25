@@ -1313,3 +1313,18 @@ body.has-sticky .cookie-banner { bottom: 86px; }
   .scene-layer { transition: none; transform: translate3d(0, 0, var(--z, 0)); }
   .balloon-1, .balloon-2, .balloon-3 { animation: none; }
 }
+
+/* ---- Reading time pill (used on guide pages) ---- */
+.reading-time {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  font-weight: 500;
+  padding: 4px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+}
+.meta-tags { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
