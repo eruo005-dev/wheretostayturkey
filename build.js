@@ -396,7 +396,6 @@ function footer() {
           <li><a href="/quiz/">Take the quiz</a></li>
           <li><a href="/planner/">Trip cost calculator</a></li>
           <li><a href="/about/">About us</a></li>
-          <li><a href="/about/' + 'eruo/">About ${esc(AUTHOR.name.split(" — ")[0])}</a></li>
           <li><a href="/about/#affiliate">Affiliate disclosure</a></li>
           <li><a href="/contact/">Contact</a></li>
           <li><a href="/privacy/">Privacy</a></li>
@@ -927,7 +926,6 @@ ${disclosureBanner()}
 
 <div class="container">
   <div class="breadcrumb small text-soft" style="padding:18px 0;border-bottom:1px solid var(--c-hairline);margin-bottom:28px"><a href="/" style="color:inherit">Turkey</a> <span style="margin:0 8px">/</span> ${esc(c.name)}</div>
-  ${bylineBlock(c)}
   <div class="prose mb-4" style="max-width:720px">
     <p style="font-size:1.05rem">${esc(c.summary)}</p>
   </div>
@@ -1281,6 +1279,8 @@ ${disclosureBanner()}
     <li>Consistency across 200+ reviews</li>
     <li>Clear best-for fit</li>
   </ul>
+  <h2>How we research</h2>
+  <p>Every city is visited at least annually. Different neighborhoods on different trips. Restaurants we recommend, we eat at. Public ferries, not chartered ones. We pay for our own bookings. No PR-funded trips. No paid placements.</p>
   <h2 id="affiliate">Affiliate disclosure</h2>
   <p>We partner with Booking.com, Hotels.com, Agoda, Trip.com, Hostelworld, Vrbo, GetYourGuide, Viator, Klook, Tiqets, Welcome Pickups, Kiwitaxi, Discover Cars, Airalo, SafetyWing, World Nomads, Wise, Kiwi.com, and WayAway. Booking through our links earns us a commission at no cost to you.</p>
   <h2 id="contact">Contact</h2>
@@ -1307,7 +1307,6 @@ function renderSitemap() {
     `${config.siteUrl}/terms/`,
     `${config.siteUrl}/contact/`,
     `${config.siteUrl}/planner/`,
-    `${config.siteUrl}/about/${AUTHOR.slug}/`,
     `${config.siteUrl}/journal/`,
     `${config.siteUrl}/compare/`,
   ];
@@ -2330,10 +2329,10 @@ ${tail()}`;
 
 // --- Author / byline config ---
 const AUTHOR = {
-  name: "ERUO FREDOLİNE — founder, wheretostayturkey.com",
-  credentials: "Travel writer covering Turkey. Visits every city we cover at least annually. Independent editorial — no PR trips, no paid placements.",
-  avatarInitials: "EF",
-  slug: "eruo",
+  name: "Fredoline",
+  credentials: "Independent editorial — no PR trips, no paid placements.",
+  avatarInitials: "F",
+  slug: "fredoline",
 };
 
 // Editorial "verified" date per city — user updates when re-checking the page.
@@ -2767,36 +2766,28 @@ function photoGalleryBlock(c) {
 // ---- Author page (/about/eruo/) ----
 function renderAuthorPage() {
   const canonical = `${config.siteUrl}/about/${AUTHOR.slug}/`;
-  const title = `About ${AUTHOR.name.split(" — ")[0]} — ${config.siteName}`;
+  const title = `About ${AUTHOR.name} — ${config.siteName}`;
   const description = `The founder and editor of ${config.siteName}. Travel writer covering Turkey since 2023.`;
   const body = `
 ${nav()}
 ${disclosureBanner()}
 <div class="container">
-  <div class="breadcrumb"><a href="/">Home</a> / <a href="/about/">About</a> / ${esc(AUTHOR.name.split(" — ")[0])}</div>
+  <div class="breadcrumb"><a href="/">Home</a> / <a href="/about/">About</a> / ${esc(AUTHOR.name)}</div>
 </div>
 <section class="container container-narrow">
-  <div class="author-page">
-    <div class="author-avatar-large">${esc(AUTHOR.avatarInitials)}</div>
-    <div class="eyebrow" style="margin-top:24px">Editor &amp; founder</div>
-    <h1>${esc(AUTHOR.name.split(" — ")[0])}</h1>
-    <p class="author-tagline">${esc(AUTHOR.credentials)}</p>
+  <div class="page-head">
+    <div class="eyebrow">Editorial</div>
+    <h1>${esc(AUTHOR.name)}</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:540px">${esc(AUTHOR.credentials)}</p>
   </div>
 
-  <div class="prose mt-4">
-    <h2>Why this site exists</h2>
-    <p>I started ${esc(config.siteName)} after watching too many friends arrive in Turkey having booked the wrong neighborhood. Sultanahmet for someone who wanted nightlife. Beyoğlu for a couple who wanted to be steps from Hagia Sophia. Lara when they wanted Kaleiçi.</p>
-    <p>The internet has 10,000 articles titled "where to stay in Istanbul." Almost none answer the actual question. This site is the answer my friends keep asking me for.</p>
-
-    <h2>How I research</h2>
-    <p>I visit every city we cover at least annually. I stay in different neighborhoods on different trips. I eat at the restaurants we recommend. I take the public ferries, not the chartered ones. I pay for my own bookings.</p>
-    <p>We do not accept PR-funded trips. We do not accept paid placements. The hotels listed earned their spots by meeting the criteria on our <a href="/about/">how-we-pick-hotels</a> page — long-running review averages, location accuracy, consistency.</p>
-
-    <h2>Who I write for</h2>
-    <p>The reader I write for is decisive but time-poor. Someone who wants the best answer, not every option. Who's already convinced they want to visit Turkey and now needs to make the next decision: which city, which neighborhood, which hotel, which restaurant tonight.</p>
+  <div class="prose">
+    <h2>How we research</h2>
+    <p>Every city covered on this site is visited at least annually. Different neighborhoods, different trips. Restaurants we recommend, we eat at. Public ferries, not chartered ones. We pay for our own bookings.</p>
+    <p>We do not accept PR-funded trips. We do not accept paid placements. Hotels earn their spots by meeting the criteria on the <a href="/about/">about page</a> — long-running review averages, location accuracy, consistency.</p>
 
     <h2>Get in touch</h2>
-    <p>Spotted a mistake, want to suggest a hotel, or planning a complex multi-city trip and want a second opinion? <a href="mailto:${esc(config.business.contactEmail)}">${esc(config.business.contactEmail)}</a>. I read every email.</p>
+    <p><a href="mailto:${esc(config.business.contactEmail)}">${esc(config.business.contactEmail)}</a> for corrections, suggestions, or trip-planning questions.</p>
   </div>
 </section>
 ${essentialsBlock()}
@@ -2806,13 +2797,12 @@ ${tail()}`;
     breadcrumbLd([
       { name: "Home", url: `${config.siteUrl}/` },
       { name: "About", url: `${config.siteUrl}/about/` },
-      { name: AUTHOR.name.split(" — ")[0], url: canonical },
+      { name: AUTHOR.name, url: canonical },
     ]),
     {
       "@context": "https://schema.org",
       "@type": "Person",
-      name: AUTHOR.name.split(" — ")[0],
-      jobTitle: "Travel writer and editor",
+      name: AUTHOR.name,
       worksFor: { "@type": "Organization", name: config.siteName, url: config.siteUrl },
       url: canonical,
     },
@@ -2872,7 +2862,7 @@ ${tail()}`;
         headline: p.title,
         url: `${config.siteUrl}/journal/${p.slug}/`,
         datePublished: p.publishedAt,
-        author: { "@type": "Person", name: AUTHOR.name.split(" — ")[0] },
+        author: { "@type": "Person", name: AUTHOR.name },
       })),
     },
   ];
@@ -2901,7 +2891,7 @@ ${disclosureBanner()}
       <span>·</span>
       <span>${p.readMinutes} min read</span>
       <span>·</span>
-      <a href="/about/${AUTHOR.slug}/">${esc(AUTHOR.name.split(" — ")[0])}</a>
+      <span>${esc(AUTHOR.name)}</span>
     </div>
   </div>
 
@@ -2942,7 +2932,7 @@ ${tail()}`;
       description: p.subtitle,
       url: canonical,
       datePublished: p.publishedAt,
-      author: { "@type": "Person", name: AUTHOR.name.split(" — ")[0], url: `${config.siteUrl}/about/${AUTHOR.slug}/` },
+      author: { "@type": "Person", name: AUTHOR.name },
       publisher: { "@type": "Organization", name: config.siteName, url: config.siteUrl },
     },
   ];
@@ -3069,7 +3059,6 @@ function run() {
   renderTerms();
   renderContact();
   renderPlanner();
-  renderAuthorPage();
   renderJournalHub();
   for (const p of JOURNAL) renderJournalPost(p);
   renderComparePage();
