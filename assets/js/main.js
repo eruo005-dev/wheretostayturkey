@@ -122,3 +122,40 @@
     b.addEventListener("click", function () { apply(b.dataset.cookie); });
   });
 })();
+
+// ---- Mouse-driven 3D scene parallax on homepage hero ----
+(function () {
+  const scene = document.getElementById("scene-3d");
+  if (!scene) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  let raf = 0;
+  let targetX = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
+  const hero = scene.parentElement;
+
+  function onMove(e) {
+    const r = hero.getBoundingClientRect();
+    // -1 to 1 range, centered on hero
+    targetX = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    targetY = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+  function tick() {
+    // smooth interpolation toward target (lerp)
+    currentX += (targetX - currentX) * 0.08;
+    currentY += (targetY - currentY) * 0.08;
+    scene.style.setProperty("--mx", currentX.toFixed(3));
+    scene.style.setProperty("--my", currentY.toFixed(3));
+    if (Math.abs(targetX - currentX) > 0.001 || Math.abs(targetY - currentY) > 0.001) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      raf = 0;
+    }
+  }
+  hero.addEventListener("mousemove", onMove, { passive: true });
+  hero.addEventListener("mouseleave", function () {
+    targetX = 0; targetY = 0;
+    if (!raf) raf = requestAnimationFrame(tick);
+  }, { passive: true });
+})();

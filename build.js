@@ -770,6 +770,73 @@ ${disclosureBanner()}
 <section class="hero-home">
   <div class="blob" style="background:#ffe4e6;top:-150px;right:-80px;width:480px;height:480px"></div>
   <div class="blob" style="background:#fef3c7;bottom:-120px;left:-60px;width:420px;height:420px"></div>
+
+  <!-- Layered 3D parallax scene — pure SVG/CSS, no external assets -->
+  <div class="scene-3d" id="scene-3d" aria-hidden="true">
+    <!-- Layer 1: faint sky band (slowest depth) -->
+    <div class="scene-layer" data-depth="2" style="--z: -120px">
+      <svg viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <circle cx="450" cy="120" r="48" fill="#fde6c8"/>
+        <circle cx="450" cy="120" r="80" fill="#fde6c8" fill-opacity="0.35"/>
+      </svg>
+    </div>
+    <!-- Layer 2: distant mountains -->
+    <div class="scene-layer" data-depth="6" style="--z: -80px">
+      <svg viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <path d="M0 360 L80 280 L160 320 L240 240 L320 290 L400 220 L480 260 L560 200 L600 240 L600 480 L0 480 Z" fill="#d8b88a" fill-opacity="0.5"/>
+      </svg>
+    </div>
+    <!-- Layer 3: mid-distance domes & minarets (mosque silhouette) -->
+    <div class="scene-layer" data-depth="14" style="--z: -30px">
+      <svg viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <g fill="#0b0f19" fill-opacity="0.78">
+          <!-- main dome + stem -->
+          <ellipse cx="300" cy="370" rx="55" ry="38"/>
+          <rect x="245" y="370" width="110" height="90"/>
+          <rect x="296" y="320" width="8" height="55"/>
+          <circle cx="300" cy="318" r="5"/>
+          <!-- secondary domes -->
+          <ellipse cx="220" cy="395" rx="32" ry="22"/>
+          <rect x="188" y="395" width="64" height="65"/>
+          <ellipse cx="380" cy="395" rx="32" ry="22"/>
+          <rect x="348" y="395" width="64" height="65"/>
+          <!-- left minaret -->
+          <rect x="155" y="320" width="9" height="140"/>
+          <rect x="151" y="305" width="17" height="20" rx="6"/>
+          <rect x="156" y="290" width="7" height="18"/>
+          <!-- right minaret -->
+          <rect x="436" y="320" width="9" height="140"/>
+          <rect x="432" y="305" width="17" height="20" rx="6"/>
+          <rect x="437" y="290" width="7" height="18"/>
+          <!-- outer minarets -->
+          <rect x="100" y="360" width="7" height="100"/>
+          <rect x="97" y="350" width="13" height="15" rx="5"/>
+          <rect x="493" y="360" width="7" height="100"/>
+          <rect x="490" y="350" width="13" height="15" rx="5"/>
+        </g>
+      </svg>
+    </div>
+    <!-- Layer 4: floating hot air balloons (closest, most movement) -->
+    <div class="scene-layer scene-balloons" data-depth="28" style="--z: 30px">
+      <svg viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <g class="balloon balloon-1">
+          <ellipse cx="120" cy="140" rx="28" ry="34" fill="#b45309"/>
+          <rect x="113" y="178" width="14" height="12" fill="#0b0f19"/>
+          <line x1="115" y1="174" x2="113" y2="190" stroke="#0b0f19" stroke-width="1"/>
+          <line x1="125" y1="174" x2="127" y2="190" stroke="#0b0f19" stroke-width="1"/>
+        </g>
+        <g class="balloon balloon-2">
+          <ellipse cx="490" cy="80" rx="32" ry="38" fill="#0b0f19"/>
+          <rect x="482" y="123" width="16" height="13" fill="#b45309"/>
+        </g>
+        <g class="balloon balloon-3">
+          <ellipse cx="260" cy="60" rx="22" ry="27" fill="#fde6c8"/>
+          <rect x="254" y="92" width="12" height="10" fill="#0b0f19"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
   <div class="container" style="position:relative">
     <div class="eyebrow">Turkey trip planning, simplified</div>
     <h1>Where should you <em>actually</em> stay in Turkey?</h1>
