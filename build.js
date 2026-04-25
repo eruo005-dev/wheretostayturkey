@@ -768,8 +768,6 @@ function renderHome() {
 ${nav()}
 ${disclosureBanner()}
 <section class="hero-home">
-  <div class="blob" style="background:#ffe4e6;top:-150px;right:-80px;width:480px;height:480px"></div>
-  <div class="blob" style="background:#fef3c7;bottom:-120px;left:-60px;width:420px;height:420px"></div>
 
   <div class="container" style="position:relative">
     <div class="eyebrow">Turkey trip planning, simplified</div>
