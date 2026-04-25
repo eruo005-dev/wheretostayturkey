@@ -353,9 +353,10 @@ function nav() {
       <a href="/cappadocia/">Cappadocia</a>
       <a href="/antalya/">Antalya</a>
       <a href="/#all-cities">All cities</a>
+      <a href="/journal/">Journal</a>
       <a href="/guides/">Guides</a>
       <a href="/planner/">Planner</a>
-      <a href="/quiz/" style="color:var(--c-accent-editorial);font-weight:600">Take the quiz →</a>
+      <a href="/quiz/">Quiz</a>
     </nav>
   </div>
 </header>`;
@@ -390,8 +391,12 @@ function footer() {
         <h4>About</h4>
         <ul>
           <li><a href="/guides/">Guides hub</a></li>
+          <li><a href="/journal/">Journal</a></li>
+          <li><a href="/compare/">Compare cities</a></li>
           <li><a href="/quiz/">Take the quiz</a></li>
+          <li><a href="/planner/">Trip cost calculator</a></li>
           <li><a href="/about/">About us</a></li>
+          <li><a href="/about/' + 'eruo/">About ${esc(AUTHOR.name.split(" — ")[0])}</a></li>
           <li><a href="/about/#affiliate">Affiliate disclosure</a></li>
           <li><a href="/contact/">Contact</a></li>
           <li><a href="/privacy/">Privacy</a></li>
@@ -629,6 +634,7 @@ function areaBlock(area, city) {
          <div class="grid grid-2 grid-3">${areaHotels.slice(0, 3).map((h) => hotelCard(h, city)).join("")}</div>`
       : ""
   }
+  ${restaurantsBlock(area.slug)}
 
   <div class="mt-3">
     <a class="btn btn-ghost" rel="sponsored nofollow" target="_blank" href="${esc(areaSearch)}">See all ${esc(area.name)} hotels on Booking →</a>
@@ -671,7 +677,7 @@ function compareTable(city) {
     <tbody>
       ${city.areas.map((a) => `
         <tr>
-          <td><a href="#${esc(a.slug)}"><strong>${esc(a.name)}</strong></a></td>
+          <td><a href="#${esc(a.slug)}"><strong>${esc(a.name)}</strong></a>${a.verdict ? `<div class="verdict-line">${esc(a.verdict)}</div>` : ""}</td>
           <td>${a.bestForTags.slice(0, 2).map(esc).join(", ")}</td>
           <td>${esc(a.priceRange)}</td>
           <td>${esc(a.vibe)}</td>
@@ -1301,7 +1307,11 @@ function renderSitemap() {
     `${config.siteUrl}/terms/`,
     `${config.siteUrl}/contact/`,
     `${config.siteUrl}/planner/`,
+    `${config.siteUrl}/about/${AUTHOR.slug}/`,
+    `${config.siteUrl}/journal/`,
+    `${config.siteUrl}/compare/`,
   ];
+  for (const p of JOURNAL) urls.push(`${config.siteUrl}/journal/${p.slug}/`);
   for (const c of cities) {
     urls.push(`${config.siteUrl}/${c.slug}/`);
     urls.push(`${config.siteUrl}/${c.slug}/tours/`);
@@ -2320,9 +2330,10 @@ ${tail()}`;
 
 // --- Author / byline config ---
 const AUTHOR = {
-  name: "Jay — founder, wheretostayturkey.com",
-  credentials: "Travel writer covering Turkey since 2023. Visits every city we cover at least annually.",
-  avatarInitials: "J",
+  name: "ERUO FREDOLİNE — founder, wheretostayturkey.com",
+  credentials: "Travel writer covering Turkey. Visits every city we cover at least annually. Independent editorial — no PR trips, no paid placements.",
+  avatarInitials: "EF",
+  slug: "eruo",
 };
 
 // Editorial "verified" date per city — user updates when re-checking the page.
@@ -2344,7 +2355,7 @@ function bylineBlock(cityOrNull) {
   <div class="byline-avatar" aria-hidden="true">${esc(AUTHOR.avatarInitials)}</div>
   <div class="byline-info">
     <div class="byline-name">${esc(AUTHOR.name)}</div>
-    <div class="byline-meta">Last verified <time>${esc(verified)}</time> · <a href="/about/">How we pick hotels</a></div>
+    <div class="byline-meta">Last verified <time>${esc(verified)}</time> · <a href="/about/eruo/">About ${esc(AUTHOR.name.split(" — ")[0])}</a></div>
   </div>
 </div>`;
 }
@@ -2707,6 +2718,337 @@ ${guides}
 }
 
 
+
+// =====================================================================
+// Phase 2 features: restaurants, author page, journal, compare, gallery
+// =====================================================================
+
+const RESTAURANTS = (function () {
+  try { return JSON.parse(fs.readFileSync(path.join(DATA_DIR, "restaurants.json"), "utf8")).byArea || {}; }
+  catch (_) { return {}; }
+})();
+
+const JOURNAL = (function () {
+  try { return JSON.parse(fs.readFileSync(path.join(DATA_DIR, "journal-posts.json"), "utf8")).posts || []; }
+  catch (_) { return []; }
+})();
+
+// ---- Restaurant block (rendered inside neighborhood blocks) ----
+function restaurantsBlock(areaSlug) {
+  const list = RESTAURANTS[areaSlug];
+  if (!list || !list.length) return "";
+  return `
+<div class="restaurants">
+  <div class="section-label" style="margin:24px 0 16px">Where to eat in this neighborhood</div>
+  <div class="restaurant-grid">
+    ${list.map((r) => `
+      <div class="restaurant-card">
+        <div class="restaurant-cat">${esc(r.category)}</div>
+        <h4 class="restaurant-name">${esc(r.name)}</h4>
+        <p class="restaurant-note">${esc(r.note)}</p>
+      </div>
+    `).join("")}
+  </div>
+</div>`;
+}
+
+// ---- Photo gallery (renders if city has a photos array) ----
+function photoGalleryBlock(c) {
+  if (!c.photos || !c.photos.length) return "";
+  return `
+<section class="container section-sm">
+  <div class="section-label">Photographs of ${esc(c.name)}</div>
+  <div class="gallery-grid">
+    ${c.photos.map((p) => `<figure class="gallery-figure"><img src="${esc(p.src)}" alt="${esc(p.alt || c.name)}" loading="lazy">${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ""}</figure>`).join("")}
+  </div>
+</section>`;
+}
+
+// ---- Author page (/about/eruo/) ----
+function renderAuthorPage() {
+  const canonical = `${config.siteUrl}/about/${AUTHOR.slug}/`;
+  const title = `About ${AUTHOR.name.split(" — ")[0]} — ${config.siteName}`;
+  const description = `The founder and editor of ${config.siteName}. Travel writer covering Turkey since 2023.`;
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="breadcrumb"><a href="/">Home</a> / <a href="/about/">About</a> / ${esc(AUTHOR.name.split(" — ")[0])}</div>
+</div>
+<section class="container container-narrow">
+  <div class="author-page">
+    <div class="author-avatar-large">${esc(AUTHOR.avatarInitials)}</div>
+    <div class="eyebrow" style="margin-top:24px">Editor &amp; founder</div>
+    <h1>${esc(AUTHOR.name.split(" — ")[0])}</h1>
+    <p class="author-tagline">${esc(AUTHOR.credentials)}</p>
+  </div>
+
+  <div class="prose mt-4">
+    <h2>Why this site exists</h2>
+    <p>I started ${esc(config.siteName)} after watching too many friends arrive in Turkey having booked the wrong neighborhood. Sultanahmet for someone who wanted nightlife. Beyoğlu for a couple who wanted to be steps from Hagia Sophia. Lara when they wanted Kaleiçi.</p>
+    <p>The internet has 10,000 articles titled "where to stay in Istanbul." Almost none answer the actual question. This site is the answer my friends keep asking me for.</p>
+
+    <h2>How I research</h2>
+    <p>I visit every city we cover at least annually. I stay in different neighborhoods on different trips. I eat at the restaurants we recommend. I take the public ferries, not the chartered ones. I pay for my own bookings.</p>
+    <p>We do not accept PR-funded trips. We do not accept paid placements. The hotels listed earned their spots by meeting the criteria on our <a href="/about/">how-we-pick-hotels</a> page — long-running review averages, location accuracy, consistency.</p>
+
+    <h2>Who I write for</h2>
+    <p>The reader I write for is decisive but time-poor. Someone who wants the best answer, not every option. Who's already convinced they want to visit Turkey and now needs to make the next decision: which city, which neighborhood, which hotel, which restaurant tonight.</p>
+
+    <h2>Get in touch</h2>
+    <p>Spotted a mistake, want to suggest a hotel, or planning a complex multi-city trip and want a second opinion? <a href="mailto:${esc(config.business.contactEmail)}">${esc(config.business.contactEmail)}</a>. I read every email.</p>
+  </div>
+</section>
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home", url: `${config.siteUrl}/` },
+      { name: "About", url: `${config.siteUrl}/about/` },
+      { name: AUTHOR.name.split(" — ")[0], url: canonical },
+    ]),
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: AUTHOR.name.split(" — ")[0],
+      jobTitle: "Travel writer and editor",
+      worksFor: { "@type": "Organization", name: config.siteName, url: config.siteUrl },
+      url: canonical,
+    },
+  ];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile(`about/${AUTHOR.slug}/index.html`, html);
+}
+
+// ---- Journal hub (/journal/) ----
+function renderJournalHub() {
+  const canonical = `${config.siteUrl}/journal/`;
+  const title = `Journal — ${config.siteName}`;
+  const description = `Editorial articles on Turkey travel — itinerary deep-dives, seasonal advice, and tested-by-us reviews.`;
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="breadcrumb"><a href="/">Home</a> / Journal</div>
+</div>
+<section class="container">
+  <div class="page-head">
+    <div class="eyebrow">Editorial</div>
+    <h1>The Journal</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:680px">Longer reads on Turkey — tested itineraries, seasonal advice, and the small things that separate a great trip from a mediocre one.</p>
+  </div>
+  <div class="journal-list">
+    ${JOURNAL.map((p) => `
+      <article class="journal-item">
+        <div class="journal-meta">
+          <time>${esc(p.publishedAt)}</time>
+          <span>·</span>
+          <span>${p.readMinutes} min read</span>
+        </div>
+        <h2 class="journal-title"><a href="/journal/${esc(p.slug)}/">${esc(p.title)}</a></h2>
+        <p class="journal-subtitle">${esc(p.subtitle)}</p>
+        <p class="journal-summary">${esc(p.summary)}</p>
+        <a href="/journal/${esc(p.slug)}/" class="journal-link">Read →</a>
+      </article>
+    `).join("")}
+  </div>
+</section>
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home", url: `${config.siteUrl}/` },
+      { name: "Journal", url: canonical },
+    ]),
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      name: `${config.siteName} Journal`,
+      url: canonical,
+      blogPost: JOURNAL.map((p) => ({
+        "@type": "BlogPosting",
+        headline: p.title,
+        url: `${config.siteUrl}/journal/${p.slug}/`,
+        datePublished: p.publishedAt,
+        author: { "@type": "Person", name: AUTHOR.name.split(" — ")[0] },
+      })),
+    },
+  ];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("journal/index.html", html);
+}
+
+// ---- Individual journal post ----
+function renderJournalPost(p) {
+  const canonical = `${config.siteUrl}/journal/${p.slug}/`;
+  const title = `${p.title} — ${config.siteName}`;
+  const description = p.subtitle;
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="breadcrumb"><a href="/">Home</a> / <a href="/journal/">Journal</a> / ${esc(p.title)}</div>
+</div>
+<article class="container container-narrow journal-article">
+  <div class="page-head" style="border-bottom:none;padding-bottom:0">
+    <div class="eyebrow">Article</div>
+    <h1>${esc(p.title)}</h1>
+    <p class="journal-subtitle" style="font-size:1.3rem;color:var(--ink-muted);font-style:italic;margin-top:12px">${esc(p.subtitle)}</p>
+    <div class="journal-meta" style="margin-top:24px">
+      <time>${esc(p.publishedAt)}</time>
+      <span>·</span>
+      <span>${p.readMinutes} min read</span>
+      <span>·</span>
+      <a href="/about/${AUTHOR.slug}/">${esc(AUTHOR.name.split(" — ")[0])}</a>
+    </div>
+  </div>
+
+  <div class="prose mt-4">
+    <p>${esc(p.summary)}</p>
+    <div class="callout-warning" style="background:var(--accent-soft);border-left:2px solid var(--accent);padding:18px 22px;margin:24px 0;font-size:0.95rem;color:var(--ink-muted)">
+      <strong>Demo article.</strong> The full ${p.readMinutes}-minute read is being written and will replace this placeholder soon. Subscribe to the newsletter at the foot of any page and we'll email you when it goes live.
+    </div>
+
+    <h2>What this article will cover</h2>
+    <p>${esc(p.summary)}</p>
+    <p>Tagged: ${p.tags.map((t) => `<a href="/${esc(t)}/" style="text-decoration:underline;text-decoration-color:var(--hairline)">${esc(t)}</a>`).join(", ")}.</p>
+  </div>
+
+  <div class="lead-magnet mt-4">
+    <div class="eyebrow">Free, sent instantly</div>
+    <h3>Get our 3-day Istanbul itinerary while you wait</h3>
+    <p class="text-muted">The exact day-by-day plan we'd send a friend.</p>
+    <form class="lead-form" action="${esc(config.emailCaptureEndpoint)}" data-source="journal-${esc(p.slug)}">
+      <input type="email" name="email" placeholder="your@email.com" required>
+      <button type="submit" class="btn btn-primary">Send it</button>
+    </form>
+  </div>
+</article>
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home", url: `${config.siteUrl}/` },
+      { name: "Journal", url: `${config.siteUrl}/journal/` },
+      { name: p.title, url: canonical },
+    ]),
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: p.title,
+      description: p.subtitle,
+      url: canonical,
+      datePublished: p.publishedAt,
+      author: { "@type": "Person", name: AUTHOR.name.split(" — ")[0], url: `${config.siteUrl}/about/${AUTHOR.slug}/` },
+      publisher: { "@type": "Organization", name: config.siteName, url: config.siteUrl },
+    },
+  ];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile(`journal/${p.slug}/index.html`, html);
+}
+
+// ---- Compare-cities tool (/compare/) ----
+function renderComparePage() {
+  const canonical = `${config.siteUrl}/compare/`;
+  const title = `Compare Turkish cities — Istanbul vs Cappadocia, Antalya vs Bodrum, and more`;
+  const description = `Pick any two Turkish cities and see them side-by-side: hotel prices, neighborhoods, ideal stay length, vibe, best months.`;
+
+  const cityData = cities.map((c) => ({
+    slug: c.slug,
+    name: c.name,
+    emoji: c.emoji,
+    tagline: c.tagline,
+    idealNights: c.idealNights,
+    whenToGo: c.whenToGo,
+    areasCount: c.areas.length,
+    hotelsCount: c.hotels.length,
+    priceMin: Math.min(...c.hotels.map((h) => h.priceFrom).filter(Boolean), 999),
+    priceMax: Math.max(...c.hotels.map((h) => h.priceFrom).filter(Boolean), 0),
+    bestFor: c.bestFor.join(", "),
+  }));
+
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="breadcrumb"><a href="/">Home</a> / Compare</div>
+</div>
+<section class="container container-narrow">
+  <div class="page-head">
+    <div class="eyebrow">Tool</div>
+    <h1>Compare two Turkish cities</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:680px">Pick any two destinations to see them side-by-side. Hotel price ranges, neighborhood counts, ideal stay length, vibe, and best months — all in one view.</p>
+  </div>
+
+  <div class="compare-tool">
+    <div class="compare-pickers">
+      <div class="compare-picker">
+        <label>City A</label>
+        <select id="city-a">
+          ${cities.map((c, i) => `<option value="${esc(c.slug)}"${i === 0 ? ' selected' : ''}>${esc(c.name)}</option>`).join("")}
+        </select>
+      </div>
+      <div class="compare-picker">
+        <label>City B</label>
+        <select id="city-b">
+          ${cities.map((c, i) => `<option value="${esc(c.slug)}"${i === 1 ? ' selected' : ''}>${esc(c.name)}</option>`).join("")}
+        </select>
+      </div>
+    </div>
+
+    <div class="compare-result" id="compare-result"></div>
+  </div>
+</section>
+${essentialsBlock()}
+${footer()}
+${tail()}
+
+<script>
+const CITIES = ${JSON.stringify(cityData)};
+function $(id) { return document.getElementById(id); }
+function find(slug) { return CITIES.find(function (c) { return c.slug === slug; }); }
+function render() {
+  const a = find($("city-a").value);
+  const b = find($("city-b").value);
+  if (!a || !b) return;
+  const rows = [
+    { label: "Tagline",       a: a.tagline,       b: b.tagline },
+    { label: "Ideal stay",    a: a.idealNights,   b: b.idealNights },
+    { label: "Best months",   a: a.whenToGo,      b: b.whenToGo },
+    { label: "Neighborhoods", a: a.areasCount + " areas",   b: b.areasCount + " areas" },
+    { label: "Curated hotels",a: a.hotelsCount + " hotels", b: b.hotelsCount + " hotels" },
+    { label: "Price range",   a: "$" + a.priceMin + "–$" + a.priceMax, b: "$" + b.priceMin + "–$" + b.priceMax },
+    { label: "Best for",      a: a.bestFor,       b: b.bestFor },
+  ];
+  $("compare-result").innerHTML =
+    '<div class="compare-cards">' +
+      '<div class="compare-card"><h2>' + a.emoji + " " + a.name + '</h2><a class="btn btn-ghost btn-sm" href="/' + a.slug + '/">Open ' + a.name + '</a></div>' +
+      '<div class="compare-card"><h2>' + b.emoji + " " + b.name + '</h2><a class="btn btn-ghost btn-sm" href="/' + b.slug + '/">Open ' + b.name + '</a></div>' +
+    '</div>' +
+    '<table class="compare-tbl">' +
+      '<thead><tr><th></th><th>' + a.name + '</th><th>' + b.name + '</th></tr></thead>' +
+      '<tbody>' +
+        rows.map(function (r) {
+          return '<tr><td class="rl">' + r.label + '</td><td>' + r.a + '</td><td>' + r.b + '</td></tr>';
+        }).join("") +
+      '</tbody>' +
+    '</table>';
+}
+$("city-a").addEventListener("change", render);
+$("city-b").addEventListener("change", render);
+render();
+</script>`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Compare", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("compare/index.html", html);
+}
+
 function run() {
   try {
     if (fs.existsSync(OUT)) fs.rmSync(OUT, { recursive: true, force: true });
@@ -2727,6 +3069,10 @@ function run() {
   renderTerms();
   renderContact();
   renderPlanner();
+  renderAuthorPage();
+  renderJournalHub();
+  for (const p of JOURNAL) renderJournalPost(p);
+  renderComparePage();
   renderSeasonalGuide();
   renderNightsGuide();
   renderGuidesHub();

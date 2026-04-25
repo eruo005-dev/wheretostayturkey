@@ -1,0 +1,49 @@
+{
+  "posts": [
+    {
+      "slug": "12-hours-in-istanbul",
+      "title": "12 hours in Istanbul",
+      "subtitle": "The layover playbook — exactly what to do if your flight gives you half a day.",
+      "publishedAt": "2026-04-22",
+      "readMinutes": 6,
+      "tags": ["istanbul", "layover", "first-timers"],
+      "summary": "If you have a 12-hour Istanbul layover, you have time for one neighborhood done properly — not three done badly. Here's the route that lets you see Hagia Sophia, eat a real Turkish breakfast, ride a Bosphorus ferry, and still make your onward flight."
+    },
+    {
+      "slug": "cappadocia-in-winter",
+      "title": "Cappadocia in winter — why it's actually better",
+      "subtitle": "Snow on the fairy chimneys, half the crowds, balloons that fly more reliably than you'd think.",
+      "publishedAt": "2026-04-15",
+      "readMinutes": 8,
+      "tags": ["cappadocia", "seasonal", "off-season"],
+      "summary": "Everyone goes to Cappadocia in May or October. The locals know the secret: late November through February has snow on the rock formations, lower hotel prices, and balloon flight days that miss the spring wind cancellations. Here's the case for going when no one else does."
+    },
+    {
+      "slug": "best-bosphorus-cruise",
+      "title": "I tested every Bosphorus cruise so you don't have to",
+      "subtitle": "From the $5 public ferry to the $200 private yacht — which one is actually worth your evening.",
+      "publishedAt": "2026-04-08",
+      "readMinutes": 10,
+      "tags": ["istanbul", "bosphorus", "tested"],
+      "summary": "Six different Bosphorus cruise options compared head-to-head: the public IDO ferry, GetYourGuide group sunset cruise, dinner cruise, private yacht charter, Turkish Night dinner shows, and the long Anadolu Kavağı route. Here's exactly what each costs, what you actually get, and which to pick."
+    },
+    {
+      "slug": "turkish-rug-scams",
+      "title": "How to spot a Turkish rug scam",
+      "subtitle": "If a stranger 'helpfully' walks you to a 'family' shop, you're already inside a scam.",
+      "publishedAt": "2026-04-01",
+      "readMinutes": 7,
+      "tags": ["istanbul", "safety", "shopping"],
+      "summary": "The Turkish rug industry is mostly legitimate craftsmanship — and the scam version is some of the most polished tourist exploitation in Europe. Here's how the script runs, the precise sentences that should make you walk out, and where to actually buy a rug if you want one."
+    },
+    {
+      "slug": "best-sunset-each-city",
+      "title": "The single best sunset in each Turkish city",
+      "subtitle": "One spot per destination. No 'top 10 lists' — the actual answer.",
+      "publishedAt": "2026-03-25",
+      "readMinutes": 12,
+      "tags": ["photography", "all-cities"],
+      "summary": "Pick one sunset spot per Turkish city you're visiting and you've already done the hardest curation work. Here's mine, after standing in too many of them: Galata Bridge for Istanbul, Lovers Hill for Cappadocia, Mermerli for Antalya, Yalıkavak windmills for Bodrum — and 14 more."
+    }
+  ]
+}

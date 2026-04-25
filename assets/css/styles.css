@@ -991,3 +991,254 @@ body.has-sticky .cookie-banner { bottom: 86px; }
   z-index: 0;
 }
 .hero-home > .container { position: relative; z-index: 2; }
+
+/* ========================================================
+   Phase 2 components — restaurants, journal, compare, gallery, author
+   ======================================================== */
+
+/* ---- Restaurants block (inside neighborhood) ---- */
+.restaurants { margin-top: var(--s-5); }
+.restaurant-grid {
+  display: grid; gap: var(--s-3);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .restaurant-grid { grid-template-columns: repeat(3, 1fr); } }
+.restaurant-card {
+  background: var(--paper);
+  border: 1px solid var(--hairline-soft);
+  padding: var(--s-4) var(--s-5);
+  border-radius: var(--radius);
+}
+.restaurant-cat {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.65rem;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.restaurant-name {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.restaurant-note {
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--ink-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ---- Verdict line under area name in compare table ---- */
+.verdict-line {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* ---- Photo gallery ---- */
+.gallery-grid {
+  display: grid; gap: var(--s-3);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+.gallery-figure { margin: 0; position: relative; }
+.gallery-figure img {
+  width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover;
+  border-radius: var(--radius);
+}
+.gallery-figure figcaption {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+
+/* ---- Author page (/about/eruo/) ---- */
+.author-page { text-align: center; padding-top: var(--s-7); }
+.author-avatar-large {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  font-weight: 400;
+  margin: 0 auto;
+  letter-spacing: -0.01em;
+}
+.author-page h1 {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  margin: var(--s-3) 0;
+}
+.author-tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--ink-muted);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* ---- Journal hub ---- */
+.journal-list {
+  display: grid; gap: var(--s-7);
+  margin-top: var(--s-6);
+}
+.journal-item {
+  padding-bottom: var(--s-7);
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.journal-item:last-child { border-bottom: none; }
+.journal-meta {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  display: flex; gap: 8px; align-items: center;
+  margin-bottom: var(--s-3);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.journal-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--s-2);
+  line-height: 1.15;
+}
+.journal-title a {
+  color: var(--ink); text-decoration: none;
+  background-image: linear-gradient(var(--ink), var(--ink));
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left 100%;
+  transition: background-size .4s ease;
+}
+.journal-title a:hover { background-size: 100% 1px; text-decoration: none; }
+.journal-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--ink-muted);
+  font-size: 1.1rem;
+  margin: 0 0 var(--s-3);
+}
+.journal-summary {
+  color: var(--ink-muted);
+  margin: 0 0 var(--s-3);
+  max-width: 640px;
+}
+.journal-link {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+}
+.journal-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ---- Journal article body ---- */
+.journal-article .prose {
+  margin-top: var(--s-6);
+  max-width: 680px;
+}
+.journal-article .prose p:first-of-type {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+/* ---- Compare-cities tool ---- */
+.compare-tool {
+  border: 1px solid var(--hairline);
+  padding: var(--s-7);
+  margin-top: var(--s-5);
+  background: var(--surface);
+}
+.compare-pickers {
+  display: grid; gap: var(--s-4);
+  grid-template-columns: 1fr;
+  margin-bottom: var(--s-6);
+}
+@media (min-width: 640px) { .compare-pickers { grid-template-columns: 1fr 1fr; } }
+.compare-picker label {
+  display: block;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  margin-bottom: var(--s-2);
+  font-weight: 500;
+}
+.compare-picker select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: var(--radius);
+}
+.compare-cards {
+  display: grid; gap: var(--s-4);
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: var(--s-5);
+}
+.compare-card {
+  text-align: center;
+  padding: var(--s-5);
+  background: var(--paper);
+  border: 1px solid var(--hairline-soft);
+}
+.compare-card h2 {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 400;
+  margin: 0 0 var(--s-3);
+}
+.compare-tbl { width: 100%; border-collapse: collapse; }
+.compare-tbl th {
+  text-align: left;
+  padding: var(--s-3) var(--s-4);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  font-weight: 500;
+  border-bottom: 1px solid var(--ink);
+  background: transparent;
+}
+.compare-tbl td {
+  padding: var(--s-3) var(--s-4);
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  border-bottom: 1px solid var(--hairline-soft);
+  vertical-align: top;
+}
+.compare-tbl td.rl {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  width: 30%;
+  font-weight: 500;
+}
+.compare-tbl tr:last-child td { border-bottom: none; }

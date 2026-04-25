@@ -1,0 +1,57 @@
+{
+  "byArea": {
+    "sultanahmet": [
+      { "name": "Matbah", "category": "classic", "note": "Ottoman palace cuisine in a cellar dining room — order the lamb saray." },
+      { "name": "Seven Hills Restaurant", "category": "view", "note": "Rooftop with the Blue Mosque lit up in front of you. Reserve at sunset." },
+      { "name": "Tarihi Sultanahmet Köftecisi", "category": "local", "note": "Köfte on a marble counter since 1920. Two skewers, salad, pickle, ayran. Done." }
+    ],
+    "beyoglu": [
+      { "name": "Mikla", "category": "view", "note": "Marmara Pera rooftop. The fine-dining tasting menu is worth the price; the bar is worth the photo." },
+      { "name": "Karaköy Lokantası", "category": "classic", "note": "The meyhane that defined modern Istanbul. Order meze, raki, fresh fish — let it run long." },
+      { "name": "Çiçek Pasajı", "category": "local", "note": "Old-school flower passage. Pick any meyhane along the lane; they're all priced the same." }
+    ],
+    "besiktas-ortakoy": [
+      { "name": "Tugra at Çırağan Palace", "category": "view", "note": "Bosphorus-front Ottoman fine dining. Special-occasion only." },
+      { "name": "Eleos Çengelköy", "category": "classic", "note": "Greek-style mezze on the Asian side; ferry over for sunset." },
+      { "name": "Kebapçı İskender Beşiktaş", "category": "local", "note": "Solid kebab spot near the ferry terminal." }
+    ],
+    "kadikoy": [
+      { "name": "Çiya Sofrası", "category": "classic", "note": "Musa Dağdeviren's regional Anatolian cuisine. Walk the buffet, point at what looks new." },
+      { "name": "Kanaat Lokantası", "category": "local", "note": "Üsküdar institution since 1933. The lokanta classics done at their reference point." },
+      { "name": "Karabatak", "category": "view", "note": "Third-wave coffee + brunch in a courtyard. The Karaköy original spawned the chain." }
+    ],
+    "sisli-nisantasi": [
+      { "name": "Hünkar", "category": "classic", "note": "Refined Turkish home cooking, Nişantaşı address, lunch crowd of business families." },
+      { "name": "Lacivert Restaurant", "category": "view", "note": "Bosphorus shore at Çubuklu — accessed by hotel boat; full evening commitment." },
+      { "name": "Sade Kahve", "category": "local", "note": "Perfect Turkish coffee + börek breakfast. Sit, watch the neighborhood." }
+    ],
+    "goreme": [
+      { "name": "Topdeck Cave Restaurant", "category": "classic", "note": "Reservation-only in a real cave. Chef Mustafa cooks one sitting per night." },
+      { "name": "Dibek", "category": "local", "note": "Testi kebab (sealed clay pot, broken at the table). Order it 4 hours ahead." },
+      { "name": "Seten Restaurant", "category": "view", "note": "Best fine dining in the region — terraces over Göreme, modern Cappadocian." }
+    ],
+    "uchisar": [
+      { "name": "Lil'a at Museum Hotel", "category": "view", "note": "Michelin-Key hotel's restaurant. Cliffside terrace; book early." },
+      { "name": "Seki Restaurant at Argos", "category": "view", "note": "Argos cellars 'kitchen of the priest' — atmospheric, slow, romantic." },
+      { "name": "Center Café", "category": "local", "note": "Lokanta in central Uçhisar. Solid, cheap, what the locals actually eat." }
+    ],
+    "urgup": [
+      { "name": "Ziggy's Cafe", "category": "classic", "note": "Long-running expat-favorite courtyard restaurant; fixed-price chef's menu works." },
+      { "name": "Old Greek House", "category": "view", "note": "1860s mansion with a courtyard. The full Cappadocian wine pairing is excellent." },
+      { "name": "Han Çırağan", "category": "local", "note": "Ürgüp meatball-and-soup spot, no English menu, perfect lunch." }
+    ],
+    "kaleici": [
+      { "name": "Seraser Fine Dining", "category": "view", "note": "Ottoman mansion in Kaleiçi; tasting menu pairs with Anatolian wines." },
+      { "name": "7 Mehmet", "category": "classic", "note": "Antalya institution since 1962. Seafood with a sea view; do the meze run." },
+      { "name": "Vanilla Lounge", "category": "local", "note": "Casual courtyard near the harbor. Light Mediterranean lunch + wine." }
+    ],
+    "lara": [
+      { "name": "Big Chef's Lara", "category": "classic", "note": "The dependable steakhouse for resort guests escaping all-inclusive food fatigue." },
+      { "name": "Falez Restaurant", "category": "view", "note": "Cliffside seafood with Mediterranean panoramas; good for special evenings." }
+    ],
+    "konyaalti": [
+      { "name": "Club Arma", "category": "view", "note": "Yacht-club restaurant near the harbor, fish-of-the-day plates." },
+      { "name": "Lara Sini Et Mangal", "category": "local", "note": "Family kebab house away from the resort strip; what locals book." }
+    ]
+  }
+}

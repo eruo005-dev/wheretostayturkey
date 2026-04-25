@@ -1,0 +1,162 @@
+{
+  "cities": [
+    {
+      "slug": "mardin",
+      "name": "Mardin",
+      "emoji": "🏛️",
+      "tagline": "The honey-stone city above the Mesopotamian plain — UNESCO architecture, Syriac Christianity, and the most underrated old town in Turkey.",
+      "summary": "Mardin's old town is a single sloping street of golden limestone mansions, monasteries, and minarets, all looking south across the plain into Syria. Stay in the Old City — the new town has nothing for you. Most boutique hotels are restored 200-year-old mansions with rooftop terraces.",
+      "bestFor": ["History travelers", "Photographers", "Off-the-beaten-path"],
+      "idealNights": "2–3 nights",
+      "whenToGo": "March–May and September–November",
+      "mapQuery": "Mardin, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Mardin,Turkey&z=14&output=embed",
+      "heroSearch": "Mardin",
+      "lastVerified": "April 2026",
+      "areas": [
+        {
+          "slug": "mardin-old-town",
+          "name": "Mardin Old Town",
+          "oneLiner": "The honey-stone single-street town with the famous panoramic view.",
+          "vibe": "Historic, atmospheric, photogenic",
+          "walkability": "Excellent — very steep stairs",
+          "bestForTags": ["history", "couples", "photography"],
+          "priceRange": "$70–$300 / night",
+          "pros": ["Walk to every sight", "Restored Ottoman mansion hotels", "Sunset terraces over the plain", "Few western tourists"],
+          "cons": ["Stairs everywhere — not luggage-friendly", "Limited fine dining", "Hot in midsummer"]
+        },
+        {
+          "slug": "midyat",
+          "name": "Midyat",
+          "oneLiner": "Smaller stone town 1 hour east — silversmith bazaar and the Mor Gabriel monastery nearby.",
+          "vibe": "Quiet, traditional",
+          "walkability": "Good",
+          "bestForTags": ["off-the-beaten-path", "photography"],
+          "priceRange": "$50–$180 / night",
+          "pros": ["Authentic, almost no tourists", "Beautiful stonework"],
+          "cons": ["Need a car", "Limited dining"]
+        }
+      ],
+      "hotels": [
+        { "name": "Zinciriye Hotel", "area": "mardin-old-town", "tier": "mid", "priceFrom": 110, "bestFor": ["couples", "history"], "whyStay": "Historic Mardin mansion with terrace overlooking the plain." },
+        { "name": "Maridin Hotel", "area": "mardin-old-town", "tier": "mid", "priceFrom": 130, "bestFor": ["couples", "design"], "whyStay": "Boutique-feeling Mardin stay with traditional stonework and rooftop dinners." },
+        { "name": "Reyhani Kasri Hotel", "area": "mardin-old-town", "tier": "mid", "priceFrom": 95, "bestFor": ["couples", "value"], "whyStay": "Restored 19th-century mansion in the historic core, friendly family-run service." }
+      ],
+      "faqs": [
+        { "q": "Is Mardin safe?", "a": "Mardin Old Town is well-touristed by domestic travelers and broadly safe. Foreign-office guidance has eased substantially since 2018, but always check your government's current advisory before booking the southeast." },
+        { "q": "How long do I need?", "a": "Two nights minimum: arrive afternoon, sunset terrace, full day for the old town + Deyrulzafaran monastery, leave morning of day three. Add a third night to add Midyat." }
+      ]
+    },
+
+    {
+      "slug": "konya",
+      "name": "Konya",
+      "emoji": "🌀",
+      "tagline": "Home of Rumi and the whirling dervishes — Turkey's spiritual capital and most conservative big city.",
+      "summary": "Konya is a one-night pilgrimage stop for most travelers — the Mevlana Museum (Rumi's tomb) and an authentic Sema (whirling dervish) ceremony are the reasons to come. The city is more conservative than Istanbul/Cappadocia; dress modestly. Most international travelers stay near the museum or in the small modern hotel district.",
+      "bestFor": ["Spiritual travel", "Cultural enrichment", "One-night stop on a longer Anatolia trip"],
+      "idealNights": "1–2 nights",
+      "whenToGo": "April–June and September–October",
+      "mapQuery": "Konya, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Konya,Turkey&z=12&output=embed",
+      "heroSearch": "Konya",
+      "lastVerified": "April 2026",
+      "areas": [
+        {
+          "slug": "konya-center",
+          "name": "Konya Center (Mevlana District)",
+          "oneLiner": "Walking distance to Rumi's tomb, the central park, and the indoor sema venue.",
+          "vibe": "Pilgrimage center, historic, conservative",
+          "walkability": "Excellent",
+          "bestForTags": ["one-night stop", "history", "spiritual"],
+          "priceRange": "$50–$200 / night",
+          "pros": ["Walk to the Mevlana Museum", "Sema ceremony venue 5 min away", "Easy train station access"],
+          "cons": ["Not a 'leisure' destination", "Limited nightlife by Turkish big-city standards", "Dress conservatively"]
+        }
+      ],
+      "hotels": [
+        { "name": "Hilton Garden Inn Konya", "area": "konya-center", "tier": "mid", "priceFrom": 110, "bestFor": ["business", "first-timers"], "whyStay": "Reliable brand 10-min walk from the Mevlana Museum, modern rooms, breakfast included." },
+        { "name": "Bayır Diamond Hotel", "area": "konya-center", "tier": "mid", "priceFrom": 100, "bestFor": ["business", "couples"], "whyStay": "Central Konya 5-star with pool and rooftop, well-reviewed for the price." },
+        { "name": "Dedeman Konya", "area": "konya-center", "tier": "mid", "priceFrom": 90, "bestFor": ["families", "value"], "whyStay": "Long-running reliable Dedeman with good breakfast and conference-friendly rooms." }
+      ],
+      "faqs": [
+        { "q": "When are the dervish ceremonies?", "a": "Public sema ceremonies happen every Saturday evening at the Mevlana Cultural Center (free), with a major festival in early December (Şeb-i Arus, the 'wedding night' marking Rumi's death anniversary). Book hotels well ahead for December." },
+        { "q": "Worth combining with Cappadocia?", "a": "Yes — Konya is 3 hours by car from Cappadocia, and the route passes Sultanhanı caravanserai. Easy 1-night addition to a Cappadocia trip." }
+      ]
+    },
+
+    {
+      "slug": "sanliurfa",
+      "name": "Şanlıurfa",
+      "emoji": "🦌",
+      "tagline": "The city next to Göbekli Tepe — humanity's oldest known temple, plus the legendary Pool of Sacred Fish.",
+      "summary": "Şanlıurfa (often just Urfa) is the gateway to Göbekli Tepe, the 11,000-year-old archaeological site that's rewriting human history. Stay in the old city near Balıklıgöl (Pool of Sacred Fish) for atmospheric mansion hotels. The new city has standard mid-range chains.",
+      "bestFor": ["Göbekli Tepe visits", "Archaeology travelers", "Off-the-beaten-path"],
+      "idealNights": "2 nights",
+      "whenToGo": "March–May and October–November",
+      "mapQuery": "Sanliurfa, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Sanliurfa,Turkey&z=12&output=embed",
+      "heroSearch": "Sanliurfa",
+      "lastVerified": "April 2026",
+      "areas": [
+        {
+          "slug": "urfa-old-city",
+          "name": "Urfa Old City",
+          "oneLiner": "Historic core around Balıklıgöl — restored Ottoman houses, atmospheric old bazaars.",
+          "vibe": "Historic, traditional, conservative",
+          "walkability": "Excellent",
+          "bestForTags": ["history", "couples", "archaeology"],
+          "priceRange": "$60–$220 / night",
+          "pros": ["Walk to Balıklıgöl + bazaars", "Restored mansion hotels with courtyards", "Authentic Urfa cuisine at the door"],
+          "cons": ["Hot in summer", "Conservative dress expected", "Limited international dining"]
+        }
+      ],
+      "hotels": [
+        { "name": "El Ruha Hotel", "area": "urfa-old-city", "tier": "mid", "priceFrom": 130, "bestFor": ["couples", "history"], "whyStay": "Restored Ottoman mansion with courtyard pool, walking distance to everything." },
+        { "name": "Manici Kasrı", "area": "urfa-old-city", "tier": "mid", "priceFrom": 100, "bestFor": ["couples", "design"], "whyStay": "Boutique 19th-century mansion turned hotel; intimate, atmospheric." },
+        { "name": "Hilton Garden Inn Şanlıurfa", "area": "urfa-old-city", "tier": "mid", "priceFrom": 90, "bestFor": ["business", "first-timers"], "whyStay": "Reliable modern brand for travelers who want consistency over atmosphere." }
+      ],
+      "faqs": [
+        { "q": "How do I get to Göbekli Tepe?", "a": "20-minute drive from central Urfa. Most hotels arrange a half-day driver for ~$30. The site visit takes 90 minutes; pair with the Şanlıurfa Archaeology Museum (the original carved stones live there)." },
+        { "q": "Is it safe?", "a": "Şanlıurfa is significantly inland from any current security concerns and well-touristed by archaeology travelers. Standard southeastern-Turkey caution applies; check your foreign-office advisory." }
+      ]
+    },
+
+    {
+      "slug": "safranbolu",
+      "name": "Safranbolu",
+      "emoji": "🍯",
+      "tagline": "UNESCO Ottoman town — half-timbered mansions, cobbled lanes, and the saffron the place is named after.",
+      "summary": "Safranbolu is the best-preserved Ottoman town in Turkey and a 3-hour drive from Ankara (or a long day-trip from Istanbul, but better as an overnight). The Old Town (Çarşı) is fully restored 19th-century mansions, most of which now operate as boutique hotels. Spend a night in one.",
+      "bestFor": ["Architecture lovers", "Day trip from Istanbul or Ankara", "Couples", "Photography"],
+      "idealNights": "1–2 nights",
+      "whenToGo": "April–June and September–October",
+      "mapQuery": "Safranbolu, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Safranbolu,Turkey&z=14&output=embed",
+      "heroSearch": "Safranbolu",
+      "lastVerified": "April 2026",
+      "areas": [
+        {
+          "slug": "carsi",
+          "name": "Çarşı (Old Town)",
+          "oneLiner": "The UNESCO core — every street is preserved Ottoman architecture.",
+          "vibe": "Historic, peaceful, picture-perfect",
+          "walkability": "Excellent",
+          "bestForTags": ["couples", "history", "photography"],
+          "priceRange": "$70–$280 / night",
+          "pros": ["Sleep inside a UNESCO site", "Restored 19th-century konak hotels", "Walk to every sight"],
+          "cons": ["Cobblestone streets — wheeled luggage struggles", "Rooms can be small (historic constraints)"]
+        }
+      ],
+      "hotels": [
+        { "name": "Cinci Han Hotel", "area": "carsi", "tier": "mid", "priceFrom": 130, "bestFor": ["couples", "history"], "whyStay": "Restored 17th-century caravanserai. Sleeping inside an original Han is the experience." },
+        { "name": "Gül Evi Otel", "area": "carsi", "tier": "mid", "priceFrom": 110, "bestFor": ["couples", "design"], "whyStay": "Beautiful Ottoman house turned boutique hotel — intimate, romantic, garden courtyard." },
+        { "name": "Bastoncu Pansiyon", "area": "carsi", "tier": "budget", "priceFrom": 60, "bestFor": ["budget", "couples"], "whyStay": "Family-run pension in a historic mansion at the heart of Çarşı; simple but charming." }
+      ],
+      "faqs": [
+        { "q": "Day trip from Istanbul or overnight?", "a": "Overnight. Day-tripping is technically possible (5+ hours each way) but you miss the magic — it's quietest before 9am and after 5pm when the day-trippers leave." },
+        { "q": "How do I get there?", "a": "From Ankara: 3 hours by car or bus. From Istanbul: 5 hours by car, 6+ by bus. There's no airport; the closest is Ankara." }
+      ]
+    }
+  ]
+}
