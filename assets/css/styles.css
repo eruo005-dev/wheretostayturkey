@@ -980,3 +980,14 @@ body.has-sticky .cookie-banner { bottom: 86px; }
 .city-card-rich.has-photo .city-card-body {
   background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.65) 100%);
 }
+
+/* ---------- 33. Hero blobs (homepage gradient atmosphere) ---------- */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-home > .container { position: relative; z-index: 2; }
