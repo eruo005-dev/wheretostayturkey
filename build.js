@@ -405,7 +405,7 @@ function footer() {
     </div>
     <div class="footer-bottom">
       <span>© ${new Date().getFullYear()} ${esc(config.business ? config.business.legalName : config.siteName)}. An independent editorial site. <a href="/about/#affiliate" style="color:inherit">We earn a commission on qualifying bookings</a>.</span>
-      <span>Made for travelers.</span>
+      <span><a href="/partnerships/" style="color:inherit">For hoteliers</a></span>
     </div>
   </div>
 </footer>`;
@@ -481,6 +481,7 @@ function hotelCard(hotel, city) {
   return `
 <article class="card hotel-card">
   <div class="tag-row">
+    ${editorsPickBadge(hotel)}
     ${tierTag(hotel.tier)}
     ${hotel.bestFor.slice(0, 2).map(bestForTag).join("")}
   </div>
@@ -1309,6 +1310,7 @@ function renderSitemap() {
     `${config.siteUrl}/planner/`,
     `${config.siteUrl}/journal/`,
     `${config.siteUrl}/compare/`,
+    `${config.siteUrl}/partnerships/`,
   ];
   for (const p of JOURNAL) urls.push(`${config.siteUrl}/journal/${p.slug}/`);
   for (const c of cities) {
@@ -3039,6 +3041,79 @@ render();
   writeFile("compare/index.html", html);
 }
 
+
+// =====================================================================
+// Long-game inbound: /partnerships/ + Editor's Pick badge
+// =====================================================================
+// Editorial framing — never reads as pay-to-play. Hotels reach out wanting to
+// be considered; the published criteria stay editorial; any commercial
+// arrangements are negotiated privately and disclosed in copy where required.
+
+// Editor's Pick badge — rendered on hotel cards if hotel.editorsPick === true.
+// Add this manually in cities*.json to flag your top picks.
+function editorsPickBadge(hotel) {
+  if (!hotel.editorsPick) return "";
+  return `<span class="ep-badge" title="Editor's Pick — selected by our editorial team">Editor's Pick</span>`;
+}
+
+// ---- /partnerships/ page (for hoteliers, restaurants, tour operators) ----
+function renderPartnerships() {
+  const canonical = `${config.siteUrl}/partnerships/`;
+  const title = `Partnerships — ${config.siteName}`;
+  const description = `For hoteliers, restaurants, and tour operators in Turkey. How to be considered for editorial coverage.`;
+  const b = config.business;
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="breadcrumb"><a href="/">Home</a> / Partnerships</div>
+</div>
+<section class="container container-narrow">
+  <div class="page-head">
+    <div class="eyebrow">For the industry</div>
+    <h1>Partnerships</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:580px">If you run a hotel, restaurant, or tour operation in Turkey and you want to be considered for our editorial coverage, this is the right page.</p>
+  </div>
+
+  <div class="prose">
+    <h2>What we cover</h2>
+    <p>${esc(config.siteName)} reviews accommodations, restaurants, and experiences in Turkey for an English-speaking, decision-focused traveler. We publish neighborhood guides for ${esc(String(cities.length))} cities, plus tested itineraries and editorial features in our journal.</p>
+
+    <h2>How we select properties</h2>
+    <p>We do not accept payment for inclusion in editorial guides. Hotels and restaurants earn coverage by meeting our published criteria — long-running review averages, neighborhood location accuracy, consistent service quality, and clear best-for fit. Our <a href="/about/">about page</a> explains the methodology in detail.</p>
+    <p>That said, we read every introduction. If you'd like us to consider your property, the form below is the right way in.</p>
+
+    <h2>Submit your property for consideration</h2>
+    <p>Send us a one-paragraph note — what your property is, where it is, what makes it specific. Photos and Booking.com / Tripadvisor links help. Address it to:</p>
+    <p><a href="mailto:${esc(b.editorialEmail)}?subject=Submission%20-%20[Your%20property%20name]">${esc(b.editorialEmail)}</a></p>
+    <p>We don't respond to every submission, but every one is read. Properties we add typically appear in a guide within 30 days of acceptance, and we visit every newly added property within 12 months.</p>
+
+    <h2>Commercial partnerships</h2>
+    <p>For commercial inquiries that go beyond editorial coverage — sponsored journal features, off-site campaigns, or dedicated content collaborations — write to <a href="mailto:${esc(b.partnershipsEmail)}">${esc(b.partnershipsEmail)}</a>. We handle these carefully, with clear disclosure to readers as required by FTC guidance and our own editorial standards.</p>
+    <p>We are selective. The reader's trust is the only asset we have, and any partnership that would compromise it is one we decline.</p>
+
+    <h2>Press &amp; media</h2>
+    <p>Journalists and media partners requesting quotes, statistics, or syndication: <a href="mailto:${esc(b.editorialEmail)}">${esc(b.editorialEmail)}</a>. Response within 48 hours.</p>
+
+    <h2>What we don't do</h2>
+    <ul>
+      <li>Sell guaranteed inclusion in any editorial guide</li>
+      <li>Accept manuscripts or copy provided by properties as our own editorial</li>
+      <li>Publish reviews based solely on press materials — every property in our guides is independently assessed</li>
+      <li>Run unmarked sponsored content (all paid placements are clearly disclosed)</li>
+    </ul>
+  </div>
+</section>
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Partnerships", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("partnerships/index.html", html);
+}
+
 function run() {
   try {
     if (fs.existsSync(OUT)) fs.rmSync(OUT, { recursive: true, force: true });
@@ -3059,6 +3134,7 @@ function run() {
   renderTerms();
   renderContact();
   renderPlanner();
+  renderPartnerships();
   renderJournalHub();
   for (const p of JOURNAL) renderJournalPost(p);
   renderComparePage();

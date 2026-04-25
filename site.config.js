@@ -31,6 +31,8 @@ const business = {
   contactEmail: "hello@wheretostayturkey.com",
   supportEmail: "support@wheretostayturkey.com",
   privacyEmail: "privacy@wheretostayturkey.com",
+  editorialEmail: "editorial@wheretostayturkey.com",
+  partnershipsEmail: "partnerships@wheretostayturkey.com",
   postalAddress: "[Street address, City, Postal Code, Country]",
   lastUpdated: "2026-04-24",
 };
