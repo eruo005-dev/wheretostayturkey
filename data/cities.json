@@ -1,0 +1,766 @@
+{
+  "cities": [
+    {
+      "slug": "istanbul",
+      "name": "Istanbul",
+      "emoji": "🕌",
+      "tagline": "Where East meets West — and every neighborhood feels like a different city.",
+      "summary": "Istanbul is enormous. Picking the wrong neighborhood can mean a 45-minute commute to everything you came to see. Stay in Sultanahmet if it's your first visit. Stay in Beyoğlu if you want nightlife and rooftops. Cross to Kadıköy if you want to eat like a local.",
+      "bestFor": ["First-time visitors", "History & architecture", "Food lovers", "Long weekends"],
+      "idealNights": "4–6 nights",
+      "whenToGo": "April–June and September–October",
+      "mapQuery": "Istanbul, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Istanbul,Turkey&z=11&output=embed",
+      "heroSearch": "Istanbul",
+      "areas": [
+        {
+          "slug": "sultanahmet",
+          "name": "Sultanahmet",
+          "oneLiner": "The historic peninsula. Walk to Hagia Sophia, the Blue Mosque, and Topkapı in minutes.",
+          "vibe": "Historic, touristy, walkable",
+          "walkability": "Excellent",
+          "bestForTags": ["first-timers", "couples", "history"],
+          "priceRange": "$70–$450 / night",
+          "pros": [
+            "Walking distance to every major Old City sight",
+            "Quiet streets after 8pm",
+            "Tram connects you to the rest of the city",
+            "Plenty of boutique hotels in Ottoman mansions"
+          ],
+          "cons": [
+            "Evenings feel dead — nightlife is across the bridge",
+            "Many restaurants are tourist traps",
+            "Limited local feel"
+          ]
+        },
+        {
+          "slug": "beyoglu",
+          "name": "Beyoğlu (Galata / Karaköy / Cihangir)",
+          "oneLiner": "The creative heart of Istanbul — rooftop bars, design hotels, street food, Galata Tower views.",
+          "vibe": "Trendy, energetic, cosmopolitan",
+          "walkability": "Very good — steep in places",
+          "bestForTags": ["second visit", "nightlife", "design hotels", "couples"],
+          "priceRange": "$90–$600 / night",
+          "pros": [
+            "Best restaurant and bar scene in the city",
+            "Galata Bridge walk to Old Town in 20 minutes",
+            "Rooftop views across the Bosphorus",
+            "Full of boutique and design hotels"
+          ],
+          "cons": [
+            "Noisy on weekend nights",
+            "Hilly streets can be tiring",
+            "Further from Hagia Sophia (15–20 min tram/walk)"
+          ]
+        },
+        {
+          "slug": "besiktas-ortakoy",
+          "name": "Beşiktaş & Ortaköy",
+          "oneLiner": "Bosphorus-front living — Dolmabahçe Palace, ferries to Asia, waterside cafés under the bridge.",
+          "vibe": "Residential, upscale, waterfront",
+          "walkability": "Good near the water",
+          "bestForTags": ["repeat visitors", "waterfront stays", "luxury"],
+          "priceRange": "$120–$900 / night",
+          "pros": [
+            "Bosphorus views from many hotels",
+            "Home to the 5-star palace hotels",
+            "Quick ferry to Kadıköy for dinner",
+            "Walking path along the water"
+          ],
+          "cons": [
+            "Needs tram/taxi to Old Town (~20 min)",
+            "Restaurants near the water are pricier",
+            "Can feel spread out"
+          ]
+        },
+        {
+          "slug": "kadikoy",
+          "name": "Kadıköy (Asian side)",
+          "oneLiner": "The local side — food halls, indie bars, no tour buses. Best for travelers who've been before.",
+          "vibe": "Local, foodie, relaxed",
+          "walkability": "Excellent in Moda",
+          "bestForTags": ["food lovers", "budget", "digital nomads", "repeat visitors"],
+          "priceRange": "$50–$250 / night",
+          "pros": [
+            "Cheaper hotels and restaurants",
+            "Real neighborhood feel",
+            "Moda seaside walk is one of Istanbul's best",
+            "15-minute ferry to the European side"
+          ],
+          "cons": [
+            "Ferry required to reach the Old City",
+            "Fewer luxury options",
+            "Further from iconic sights"
+          ]
+        },
+        {
+          "slug": "sisli-nisantasi",
+          "name": "Şişli / Nişantaşı",
+          "oneLiner": "Istanbul's shopping district — designer boutiques, international chains, business hotels.",
+          "vibe": "Polished, commercial, uptown",
+          "walkability": "Good",
+          "bestForTags": ["business travelers", "shopping", "families"],
+          "priceRange": "$100–$500 / night",
+          "pros": [
+            "Great for shopping and fine dining",
+            "Well-connected by metro",
+            "Many modern family-friendly hotels",
+            "Feels safe and upscale"
+          ],
+          "cons": [
+            "Limited historic atmosphere",
+            "20–30 min to major sights",
+            "Can feel like any global capital"
+          ]
+        }
+      ],
+      "hotels": [
+        { "name": "Four Seasons Hotel Istanbul at Sultanahmet", "area": "sultanahmet", "tier": "luxury", "priceFrom": 620, "bestFor": ["couples", "first-timers"], "whyStay": "Former Ottoman prison turned luxury icon, steps from Hagia Sophia. Central courtyard, legendary service." },
+        { "name": "Sirkeci Mansion", "area": "sultanahmet", "tier": "mid", "priceFrom": 140, "bestFor": ["couples", "history"], "whyStay": "Boutique Ottoman-style hotel 5 min from the Blue Mosque. Rooftop breakfast with Topkapı views." },
+        { "name": "Cheers Hostel", "area": "sultanahmet", "tier": "budget", "priceFrom": 35, "bestFor": ["budget", "solo"], "whyStay": "Clean, social hostel with one of the best hostel rooftop bars in the city, right by Hagia Sophia." },
+        { "name": "Hotel Amira Istanbul", "area": "sultanahmet", "tier": "mid", "priceFrom": 120, "bestFor": ["couples", "families"], "whyStay": "Consistently top-rated mid-range. Warm staff, rooftop terrace, 3 min walk to the Blue Mosque." },
+
+        { "name": "Soho House Istanbul", "area": "beyoglu", "tier": "luxury", "priceFrom": 380, "bestFor": ["design", "couples"], "whyStay": "Restored 19th-century palazzo with rooftop pool, members' club atmosphere, best rooftop in the city." },
+        { "name": "Georges Hotel Galata", "area": "beyoglu", "tier": "luxury", "priceFrom": 280, "bestFor": ["couples", "design"], "whyStay": "Intimate boutique hotel with Galata Tower views, elegant rooms, rooftop restaurant." },
+        { "name": "Vault Karakoy, The House Hotel", "area": "beyoglu", "tier": "mid", "priceFrom": 180, "bestFor": ["design", "couples"], "whyStay": "Early-1900s bank building turned design hotel. Soaring lobby, walking distance to Galata Bridge." },
+        { "name": "10 Karakoy Istanbul", "area": "beyoglu", "tier": "mid", "priceFrom": 160, "bestFor": ["design", "business"], "whyStay": "Modern art-filled hotel in the gallery district, top-floor restaurant overlooking the Bosphorus." },
+        { "name": "Marmara Pera", "area": "beyoglu", "tier": "mid", "priceFrom": 110, "bestFor": ["couples", "first-timers"], "whyStay": "Rooftop infinity pool with panoramic Old Town view. Classic Beyoğlu address on Istiklal." },
+
+        { "name": "Çırağan Palace Kempinski", "area": "besiktas-ortakoy", "tier": "luxury", "priceFrom": 780, "bestFor": ["luxury", "honeymoon"], "whyStay": "The only true palace hotel on the Bosphorus. Waterfront infinity pool, Ottoman suites, showstopper property." },
+        { "name": "Shangri-La Bosphorus", "area": "besiktas-ortakoy", "tier": "luxury", "priceFrom": 520, "bestFor": ["luxury", "couples"], "whyStay": "Large Bosphorus-view rooms, superb service, excellent Asian restaurants. Near Dolmabahçe Palace." },
+        { "name": "The Stay Bosphorus", "area": "besiktas-ortakoy", "tier": "mid", "priceFrom": 190, "bestFor": ["design", "couples"], "whyStay": "Sleek design hotel right on the water in Ortaköy, under the bridge, with a rooftop restaurant." },
+
+        { "name": "Hush Moda Hotel", "area": "kadikoy", "tier": "mid", "priceFrom": 90, "bestFor": ["local feel", "couples"], "whyStay": "Boutique property in Istanbul's coolest non-tourist district. Walking distance to seafood restaurants and the Moda seaside." },
+        { "name": "DoubleTree by Hilton Moda", "area": "kadikoy", "tier": "mid", "priceFrom": 130, "bestFor": ["families", "business"], "whyStay": "Reliable brand with views of the Marmara. Ferries to the European side 10 min away." },
+        { "name": "Wyndham Grand Kalamış Marina", "area": "kadikoy", "tier": "mid", "priceFrom": 140, "bestFor": ["families", "waterfront"], "whyStay": "Marina setting, larger rooms, pool — good value for families on the Asian side." },
+
+        { "name": "The St. Regis Istanbul", "area": "sisli-nisantasi", "tier": "luxury", "priceFrom": 540, "bestFor": ["luxury", "shopping"], "whyStay": "In the heart of Nişantaşı designer district. Impeccable service, great spa, excellent butler service." },
+        { "name": "Raffles Istanbul", "area": "sisli-nisantasi", "tier": "luxury", "priceFrom": 460, "bestFor": ["luxury", "families"], "whyStay": "Connected to Zorlu Center mall, with one of the best hotel pools in Istanbul. Family suites available." },
+        { "name": "Hilton Istanbul Bomonti", "area": "sisli-nisantasi", "tier": "mid", "priceFrom": 180, "bestFor": ["business", "families"], "whyStay": "Tall tower with panoramic views, big pool, conference-friendly, near the metro." }
+      ],
+      "faqs": [
+        { "q": "What's the safest area to stay in Istanbul?", "a": "Sultanahmet, Beyoğlu (Galata/Cihangir), Beşiktaş, and Kadıköy are all safe and well-touristed. Istanbul is generally safe; just watch for pickpockets near major sights and avoid poorly lit side streets at night." },
+        { "q": "How many nights do I need in Istanbul?", "a": "Four nights is the sweet spot for first-timers. Three is rushed. Five to six nights let you do the European side properly and still cross to Kadıköy for a day." },
+        { "q": "Is Sultanahmet or Beyoğlu better?", "a": "Sultanahmet for first-timers who want to walk everywhere historic. Beyoğlu for repeat visitors, food/nightlife lovers, and anyone who wants the 'real Istanbul' energy. Many travelers split: two nights each." }
+      ]
+    },
+
+    {
+      "slug": "cappadocia",
+      "name": "Cappadocia",
+      "emoji": "🎈",
+      "tagline": "Cave hotels, fairy chimneys, and the best sunrise balloon ride on Earth.",
+      "summary": "Cappadocia isn't a city — it's a region of small towns. Göreme is the tourist center and best for first-timers. Uçhisar is quieter and more upscale. Ürgüp is a proper town with more dining. Avanos is for travelers who want to feel removed.",
+      "bestFor": ["Balloon photography", "Couples", "Honeymoons", "Unique stays"],
+      "idealNights": "2–3 nights",
+      "whenToGo": "April–May and September–October",
+      "mapQuery": "Cappadocia, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Cappadocia,Turkey&z=11&output=embed",
+      "heroSearch": "Cappadocia",
+      "areas": [
+        {
+          "slug": "goreme",
+          "name": "Göreme",
+          "oneLiner": "Ground zero for Cappadocia tourism. Best views of the balloons and easiest access to everything.",
+          "vibe": "Touristy but charming, walkable",
+          "walkability": "Excellent",
+          "bestForTags": ["first-timers", "couples", "balloon views"],
+          "priceRange": "$80–$600 / night",
+          "pros": [
+            "Highest density of cave hotels",
+            "Best rooftop positions for balloon sunrise",
+            "Walking distance to Open Air Museum",
+            "Plenty of restaurants, bars, and tour operators"
+          ],
+          "cons": [
+            "Very touristy",
+            "Can be noisy in peak season",
+            "Prices have climbed"
+          ]
+        },
+        {
+          "slug": "uchisar",
+          "name": "Uçhisar",
+          "oneLiner": "Quieter, more upscale, and perched high — the best panoramic terraces in Cappadocia.",
+          "vibe": "Refined, quiet, romantic",
+          "walkability": "Good, hilly",
+          "bestForTags": ["couples", "honeymoon", "luxury"],
+          "priceRange": "$150–$900 / night",
+          "pros": [
+            "Highest point — unbeatable balloon views",
+            "Home to Cappadocia's most famous luxury cave hotels",
+            "Less crowded",
+            "Beautiful sunsets from the castle"
+          ],
+          "cons": [
+            "Need taxi to reach Göreme restaurants",
+            "Fewer dining options",
+            "More expensive overall"
+          ]
+        },
+        {
+          "slug": "urgup",
+          "name": "Ürgüp",
+          "oneLiner": "A proper Turkish town — wineries, restaurants, and upscale cave hotels without the tourist-trap feel.",
+          "vibe": "Authentic town, good food",
+          "walkability": "Good",
+          "bestForTags": ["foodies", "couples", "wine"],
+          "priceRange": "$120–$700 / night",
+          "pros": [
+            "Best restaurant scene in Cappadocia",
+            "Local wineries within walking distance",
+            "Great cave hotels with a more local feel",
+            "Less touristy than Göreme"
+          ],
+          "cons": [
+            "Balloons are visible but not directly overhead",
+            "15-minute drive to Göreme center",
+            "Less nightlife than Göreme"
+          ]
+        },
+        {
+          "slug": "avanos",
+          "name": "Avanos",
+          "oneLiner": "Pottery town on the Red River — for travelers who want to feel completely away from the crowds.",
+          "vibe": "Rural, artisan, quiet",
+          "walkability": "Moderate",
+          "bestForTags": ["off the beaten path", "pottery", "budget"],
+          "priceRange": "$60–$300 / night",
+          "pros": [
+            "Truly escapes the tour-bus crowds",
+            "Riverside setting is unique",
+            "Famous pottery workshops",
+            "Cheaper than Göreme or Uçhisar"
+          ],
+          "cons": [
+            "Balloons don't usually fly directly here",
+            "Taxi required to reach Göreme sights",
+            "Few luxury options"
+          ]
+        }
+      ],
+      "hotels": [
+        { "name": "Museum Hotel", "area": "uchisar", "tier": "luxury", "priceFrom": 720, "bestFor": ["honeymoon", "luxury"], "whyStay": "The original luxury cave hotel — Relais & Châteaux. Antique-filled suites, heated outdoor pool, jaw-dropping views. Reserve 3+ months ahead." },
+        { "name": "Argos in Cappadocia", "area": "uchisar", "tier": "luxury", "priceFrom": 540, "bestFor": ["honeymoon", "luxury"], "whyStay": "Restored village on the hillside. Underground wine cellar, terrace dinners, exceptional design. Perfect for couples." },
+        { "name": "Sacred House", "area": "urgup", "tier": "luxury", "priceFrom": 480, "bestFor": ["couples", "design"], "whyStay": "Wildly designed cave suites with copper tubs and eclectic art. Unlike any hotel you've stayed in." },
+        { "name": "Kayakapi Premium Caves", "area": "urgup", "tier": "luxury", "priceFrom": 420, "bestFor": ["couples", "families"], "whyStay": "Restored 300-year-old cave dwellings, each suite unique. Jacuzzis, fireplaces, excellent restaurant." },
+        { "name": "Sultan Cave Suites", "area": "goreme", "tier": "mid", "priceFrom": 220, "bestFor": ["couples", "instagram"], "whyStay": "The famous carpet-and-balloon-filled terrace you've seen on Instagram. Exceptional balloon-sunrise photos." },
+        { "name": "Mithra Cave Hotel", "area": "goreme", "tier": "mid", "priceFrom": 170, "bestFor": ["couples", "first-timers"], "whyStay": "Consistently top-rated mid-range cave hotel. Great terrace, friendly staff, strong breakfast." },
+        { "name": "Taskonaklar", "area": "uchisar", "tier": "mid", "priceFrom": 200, "bestFor": ["couples", "quiet"], "whyStay": "Historic Uçhisar cave residence with huge outdoor terraces overlooking Pigeon Valley." },
+        { "name": "Koza Cave Hotel", "area": "goreme", "tier": "mid", "priceFrom": 160, "bestFor": ["couples", "eco"], "whyStay": "Family-run eco-conscious cave hotel in Göreme with excellent breakfast and strong views." },
+        { "name": "Artemis Cave Suites", "area": "goreme", "tier": "budget", "priceFrom": 95, "bestFor": ["budget", "couples"], "whyStay": "Affordable cave rooms in the heart of Göreme with a terrace good for balloon watching." },
+        { "name": "Sos Cave Hotel", "area": "avanos", "tier": "budget", "priceFrom": 70, "bestFor": ["budget", "quiet"], "whyStay": "Simple, clean cave hotel in quieter Avanos, family-run, great value." }
+      ],
+      "faqs": [
+        { "q": "How many nights do I need in Cappadocia?", "a": "Two full nights minimum — you need two shots at the balloon ride because weather cancels flights often. Three nights lets you also do an ATV sunset tour, the Open Air Museum, and the underground cities without rushing." },
+        { "q": "Which town is best for the balloon sunrise view?", "a": "Uçhisar has the highest terraces. Göreme has the most rooftops directly under where balloons fly. Both are excellent — Uçhisar for panoramic shots, Göreme for up-close photos." },
+        { "q": "Is a cave hotel worth it?", "a": "Yes — it's the whole point of coming. Rooms stay cool in summer, warm in winter, and waking up inside rock is memorable. Pick one with a good terrace." }
+      ]
+    },
+
+    {
+      "slug": "antalya",
+      "name": "Antalya",
+      "emoji": "🏖️",
+      "tagline": "Turkey's Mediterranean capital — beaches, Roman ruins, and resort comfort.",
+      "summary": "Antalya province is huge. Kaleiçi (the old town) is the charming base for culture travelers. Lara has the mega all-inclusive resorts and the sandy beach. Konyaaltı has a long pebble beach closer to the old town. Choose based on whether you want a beach vacation or a walkable historic base.",
+      "bestFor": ["Beach holidays", "Families", "All-inclusive resorts", "Roman history"],
+      "idealNights": "4–7 nights",
+      "whenToGo": "May–June and September–October",
+      "mapQuery": "Antalya, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Antalya,Turkey&z=11&output=embed",
+      "heroSearch": "Antalya",
+      "areas": [
+        {
+          "slug": "kaleici",
+          "name": "Kaleiçi (Old Town)",
+          "oneLiner": "Marina, Ottoman houses, Roman walls — the most atmospheric base for non-beach-only travelers.",
+          "vibe": "Historic, charming, walkable",
+          "walkability": "Excellent",
+          "bestForTags": ["couples", "history", "first-timers"],
+          "priceRange": "$80–$450 / night",
+          "pros": [
+            "Walkable historic streets",
+            "Picturesque Roman harbor",
+            "Best restaurants and bars in central Antalya",
+            "Lots of boutique Ottoman mansion hotels"
+          ],
+          "cons": [
+            "Not right on the main beach",
+            "Cobblestone streets with luggage",
+            "Touristy restaurants can be pricey"
+          ]
+        },
+        {
+          "slug": "lara",
+          "name": "Lara",
+          "oneLiner": "The big sandy beach strip — home of Turkey's famous themed mega-resorts.",
+          "vibe": "Resort, family, all-inclusive",
+          "walkability": "Limited — resorts are self-contained",
+          "bestForTags": ["families", "all-inclusive", "beach"],
+          "priceRange": "$150–$1200 / night",
+          "pros": [
+            "Long sandy beach — rare in Turkey",
+            "Massive all-inclusive options with waterparks",
+            "Great for families with kids",
+            "Near the airport"
+          ],
+          "cons": [
+            "Far from old town sights",
+            "Mostly inside the resort — limited local flavor",
+            "Crowded in July–August"
+          ]
+        },
+        {
+          "slug": "konyaalti",
+          "name": "Konyaaltı",
+          "oneLiner": "The long pebble beach on the west side — easier walk/tram to the old town.",
+          "vibe": "Urban beach, active, mixed",
+          "walkability": "Good",
+          "bestForTags": ["beach + culture combo", "couples", "city base"],
+          "priceRange": "$100–$700 / night",
+          "pros": [
+            "10-minute tram to Kaleiçi",
+            "Long beach promenade for running/walking",
+            "Mix of resort and city hotels",
+            "Views of the Taurus Mountains"
+          ],
+          "cons": [
+            "Pebble beach, not sand",
+            "Less pure 'resort' feel than Lara",
+            "Can get windy"
+          ]
+        },
+        {
+          "slug": "belek",
+          "name": "Belek",
+          "oneLiner": "Turkey's golf capital and home to its most lavish 5-star all-inclusives.",
+          "vibe": "Luxury resort, golf, family",
+          "walkability": "Inside resorts only",
+          "bestForTags": ["luxury", "golf", "families"],
+          "priceRange": "$250–$2000 / night",
+          "pros": [
+            "Best all-inclusives in Turkey",
+            "Excellent golf courses",
+            "Long sandy beaches",
+            "Great for multi-gen family trips"
+          ],
+          "cons": [
+            "40-minute drive from Antalya old town",
+            "Entire experience is inside the resort",
+            "Not a local travel experience"
+          ]
+        }
+      ],
+      "hotels": [
+        { "name": "Tuvana Hotel", "area": "kaleici", "tier": "mid", "priceFrom": 160, "bestFor": ["couples", "history"], "whyStay": "Restored Ottoman mansions with a courtyard pool in the heart of Kaleiçi. Consistently the top-rated old-town hotel." },
+        { "name": "Mediterra Art Hotel", "area": "kaleici", "tier": "mid", "priceFrom": 130, "bestFor": ["couples", "design"], "whyStay": "Beautifully restored 200-year-old mansion turned boutique, in a quiet Kaleiçi lane." },
+        { "name": "Hotel Alp Paşa", "area": "kaleici", "tier": "mid", "priceFrom": 140, "bestFor": ["couples", "first-timers"], "whyStay": "Ottoman-style boutique with a pool, romantic setting, walk to the harbor." },
+        { "name": "White Garden Pansiyon", "area": "kaleici", "tier": "budget", "priceFrom": 55, "bestFor": ["budget", "couples"], "whyStay": "Charming, affordable guesthouse in a historic building with a pretty garden courtyard." },
+        { "name": "Titanic Mardan Palace", "area": "lara", "tier": "luxury", "priceFrom": 420, "bestFor": ["families", "all-inclusive"], "whyStay": "Famous themed mega-resort with gondola canals and a huge waterpark. Unreal for kids." },
+        { "name": "Delphin Imperial", "area": "lara", "tier": "luxury", "priceFrom": 380, "bestFor": ["families", "all-inclusive"], "whyStay": "Top-tier Lara all-inclusive with excellent food, great pools, and direct beach access." },
+        { "name": "Akra Hotel", "area": "konyaalti", "tier": "luxury", "priceFrom": 260, "bestFor": ["couples", "beach"], "whyStay": "Modern 5-star with panoramic Mediterranean views, infinity pool, and a short tram ride to Kaleiçi." },
+        { "name": "Barut Akra Park", "area": "konyaalti", "tier": "mid", "priceFrom": 200, "bestFor": ["families", "beach"], "whyStay": "Family-friendly all-inclusive on Konyaaltı with kids' programs and close access to town." },
+        { "name": "Regnum Carya", "area": "belek", "tier": "luxury", "priceFrom": 680, "bestFor": ["luxury", "golf"], "whyStay": "One of Turkey's most acclaimed all-inclusive resorts — golf course, 12 restaurants, beach club. Multi-generational favorite." },
+        { "name": "Maxx Royal Belek", "area": "belek", "tier": "luxury", "priceFrom": 720, "bestFor": ["luxury", "families"], "whyStay": "Ultra-luxury all-inclusive with a huge private beach, multiple pools, and standout kids' club." },
+        { "name": "Rixos Premium Belek", "area": "belek", "tier": "luxury", "priceFrom": 540, "bestFor": ["families", "all-inclusive"], "whyStay": "Large resort with waterpark and multiple à la carte restaurants — classic Belek experience." }
+      ],
+      "faqs": [
+        { "q": "Kaleiçi or the beach resorts — which is better?", "a": "Kaleiçi if you want to explore and walk. Lara or Belek if you want to never leave the pool. Many travelers split: 2 nights Kaleiçi, 3 nights at a resort." },
+        { "q": "What's the best beach in Antalya?", "a": "Lara for soft sand and resort vibes. Konyaaltı for the longer promenade and easier tram access to the old town. Both are excellent — pick by beach type." },
+        { "q": "Is Antalya safe for families?", "a": "Yes — it's one of Turkey's most family-friendly destinations. Resorts in Belek and Lara are purpose-built for families with kids." }
+      ]
+    },
+
+    {
+      "slug": "bodrum",
+      "name": "Bodrum",
+      "emoji": "⛵",
+      "tagline": "The Turkish Riviera — chic beach clubs, whitewashed villas, yacht-filled bays.",
+      "summary": "Bodrum is a peninsula, not just a town. Bodrum Town itself is the nightlife hub. Bitez is family-friendly. Yalıkavak has the luxury marina. Türkbükü is the 'St. Tropez of Turkey' for the quiet-money crowd.",
+      "bestFor": ["Beach clubs", "Yachting", "Summer parties", "Design hotels"],
+      "idealNights": "4–7 nights",
+      "whenToGo": "May–June and September",
+      "mapQuery": "Bodrum, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Bodrum,Turkey&z=10&output=embed",
+      "heroSearch": "Bodrum",
+      "areas": [
+        {
+          "slug": "bodrum-town",
+          "name": "Bodrum Town",
+          "oneLiner": "The lively center with the castle, the marina, and most of the nightlife.",
+          "vibe": "Busy, social, touristy",
+          "walkability": "Good",
+          "bestForTags": ["nightlife", "first-timers", "young couples"],
+          "priceRange": "$80–$400 / night",
+          "pros": ["Easy walking to restaurants/bars", "Most transport options", "Best sunset spots"],
+          "cons": ["Noisy in peak season", "No great beach in town itself", "Overrun in August"]
+        },
+        {
+          "slug": "yalikavak",
+          "name": "Yalıkavak",
+          "oneLiner": "Home of the superyacht marina and Bodrum's most stylish boutiques.",
+          "vibe": "Luxury, chic, yacht-crowd",
+          "walkability": "Marina is walkable",
+          "bestForTags": ["luxury", "couples", "dining"],
+          "priceRange": "$200–$1500 / night",
+          "pros": ["Excellent dining scene", "Glamorous marina atmosphere", "Nearby pristine bays"],
+          "cons": ["Expensive", "30 min to Bodrum town", "Can feel exclusive"]
+        },
+        {
+          "slug": "bitez",
+          "name": "Bitez",
+          "oneLiner": "The family-friendly bay — shallow water, calmer atmosphere, good value.",
+          "vibe": "Relaxed, family, mid-range",
+          "walkability": "Good along the promenade",
+          "bestForTags": ["families", "budget-to-mid", "beach"],
+          "priceRange": "$100–$400 / night",
+          "pros": ["Shallow sea good for kids", "Walking promenade", "Short dolmuş ride to Bodrum"],
+          "cons": ["Less nightlife", "Small beach", "Not the most scenic bay"]
+        },
+        {
+          "slug": "turkbuku",
+          "name": "Türkbükü & Göltürkbükü",
+          "oneLiner": "The discreet 'St. Tropez' — wooden piers, beach clubs, quiet luxury.",
+          "vibe": "Upscale, low-key, exclusive",
+          "walkability": "Limited",
+          "bestForTags": ["luxury", "couples", "beach clubs"],
+          "priceRange": "$250–$2000 / night",
+          "pros": ["Beautiful wooden pier beach clubs", "Top-tier design hotels", "Quieter than the peninsula's party zones"],
+          "cons": ["Requires a car", "Very expensive", "No sandy beach — platforms on the sea"]
+        }
+      ],
+      "hotels": [
+        { "name": "Mandarin Oriental Bodrum", "area": "turkbuku", "tier": "luxury", "priceFrom": 950, "bestFor": ["luxury", "honeymoon"], "whyStay": "Sprawling cliffside resort with multiple private beaches, world-class spa, Nobu restaurant." },
+        { "name": "Maça Kızı", "area": "turkbuku", "tier": "luxury", "priceFrom": 680, "bestFor": ["couples", "design"], "whyStay": "Iconic Bodrum boutique — whitewashed walls, famous beach club, the in-crowd hotel." },
+        { "name": "LUX* Bodrum", "area": "yalikavak", "tier": "luxury", "priceFrom": 450, "bestFor": ["families", "luxury"], "whyStay": "Large design-forward resort with excellent kids' club, two private beaches, great all-inclusive option." },
+        { "name": "Caresse, a Luxury Collection Resort", "area": "yalikavak", "tier": "luxury", "priceFrom": 520, "bestFor": ["luxury", "couples"], "whyStay": "Elegant cliffside 5-star with private beach and infinity pools near Yalıkavak marina." },
+        { "name": "Kaya Palazzo Resort", "area": "yalikavak", "tier": "luxury", "priceFrom": 340, "bestFor": ["families", "all-inclusive"], "whyStay": "All-inclusive resort with excellent food and kids' programs on a private beach." },
+        { "name": "Su Hotel", "area": "bodrum-town", "tier": "mid", "priceFrom": 120, "bestFor": ["couples", "boutique"], "whyStay": "Charming adults-only boutique in the heart of Bodrum Town with a courtyard pool." },
+        { "name": "Marina Vista Bodrum", "area": "bodrum-town", "tier": "mid", "priceFrom": 140, "bestFor": ["first-timers", "couples"], "whyStay": "Great central location right by the marina with a rooftop pool overlooking the castle." },
+        { "name": "Bitez Garden Life Hotel", "area": "bitez", "tier": "mid", "priceFrom": 130, "bestFor": ["families", "value"], "whyStay": "Relaxed garden hotel with a pool, 5-min walk to Bitez beach, consistently great reviews." },
+        { "name": "Jasmin Beach Hotel", "area": "bitez", "tier": "budget", "priceFrom": 80, "bestFor": ["budget", "families"], "whyStay": "Simple beachfront hotel in Bitez with good value and direct bay access." }
+      ],
+      "faqs": [
+        { "q": "Which side of Bodrum is best?", "a": "North side (Yalıkavak, Türkbükü, Gündoğan) for luxury and views. South side (Bodrum town, Bitez, Gümbet) for nightlife and budget. Cross-peninsula drives are 20–40 minutes." },
+        { "q": "Is Bodrum expensive?", "a": "Parts of it are now among the priciest destinations in the Mediterranean. Bitez and Gümüşlük are still reasonable. Yalıkavak and Türkbükü are genuinely expensive in summer." }
+      ]
+    },
+
+    {
+      "slug": "fethiye",
+      "name": "Fethiye",
+      "emoji": "🪂",
+      "tagline": "Turquoise lagoons, paraglider sunsets, Blue Voyage gulets.",
+      "summary": "Fethiye itself is a working town; most travelers stay nearby. Ölüdeniz has the famous Blue Lagoon and paragliding. Çalış has a long beach and good value. Kayaköy is the ghost village escape. Hisarönü is the nightlife strip.",
+      "bestFor": ["Beach + adventure combo", "Paragliding", "Boat trips", "Backpackers"],
+      "idealNights": "3–5 nights",
+      "whenToGo": "May–June and September",
+      "mapQuery": "Fethiye, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Fethiye,Turkey&z=11&output=embed",
+      "heroSearch": "Fethiye Ölüdeniz",
+      "areas": [
+        {
+          "slug": "oludeniz",
+          "name": "Ölüdeniz",
+          "oneLiner": "The famous Blue Lagoon — calm turquoise water and paragliders descending from Babadağ mountain.",
+          "vibe": "Touristy, scenic, active",
+          "walkability": "Good",
+          "bestForTags": ["couples", "first-timers", "adventure"],
+          "priceRange": "$90–$500 / night",
+          "pros": ["Iconic lagoon view", "Walking distance to Blue Lagoon beach", "Paragliding landing zone"],
+          "cons": ["Busy in peak summer", "Mostly package-holiday crowd", "Few 'local' restaurants"]
+        },
+        {
+          "slug": "calis",
+          "name": "Çalış Beach",
+          "oneLiner": "Long pebble beach with a sunset promenade — better value than Ölüdeniz.",
+          "vibe": "Relaxed, family, mid-range",
+          "walkability": "Very good along the promenade",
+          "bestForTags": ["families", "budget", "sunset"],
+          "priceRange": "$60–$250 / night",
+          "pros": ["Famous sunsets over the islands", "Good value hotels", "Water taxi to Fethiye town"],
+          "cons": ["Not the turquoise lagoon vibe", "Can be windy", "Further from Ölüdeniz"]
+        },
+        {
+          "slug": "kayakoy-hisaronu",
+          "name": "Kayaköy & Hisarönü",
+          "oneLiner": "Hisarönü is party central. Kayaköy next door is the peaceful ghost village with design stays.",
+          "vibe": "Kayaköy quiet, Hisarönü loud",
+          "walkability": "Moderate",
+          "bestForTags": ["design hotels", "nightlife", "hikers"],
+          "priceRange": "$70–$600 / night",
+          "pros": ["Kayaköy is beautifully atmospheric", "Hisarönü has the bars", "Gateway to the Lycian Way trail"],
+          "cons": ["Hisarönü attracts a rowdy crowd", "Need transport to the beach", "Mixed vibes between towns"]
+        }
+      ],
+      "hotels": [
+        { "name": "Hillside Beach Club", "area": "oludeniz", "tier": "luxury", "priceFrom": 420, "bestFor": ["families", "all-inclusive"], "whyStay": "Consistently ranked one of Turkey's best all-inclusive resorts. Private cove, excellent food, adults-only and family pools." },
+        { "name": "Liberty Hotels Lykia", "area": "oludeniz", "tier": "luxury", "priceFrom": 340, "bestFor": ["families", "all-inclusive"], "whyStay": "Large resort in Ölüdeniz with adults-only zone, great kids' club, and direct beach access." },
+        { "name": "Oyster Residences", "area": "oludeniz", "tier": "mid", "priceFrom": 170, "bestFor": ["adults-only", "couples"], "whyStay": "Adults-only boutique steps from the Blue Lagoon beach. Romantic and intimate." },
+        { "name": "Montana Pine Resort", "area": "kayakoy-hisaronu", "tier": "mid", "priceFrom": 140, "bestFor": ["families", "value"], "whyStay": "Pine forest resort with multiple pools, kids' programs, dolmuş to Ölüdeniz." },
+        { "name": "Villa Rhapsody", "area": "kayakoy-hisaronu", "tier": "budget", "priceFrom": 70, "bestFor": ["budget", "couples"], "whyStay": "Peaceful family-run pension in Kayaköy with a pool and the best views of the ghost village." },
+        { "name": "Yacht Classic Hotel", "area": "calis", "tier": "mid", "priceFrom": 130, "bestFor": ["couples", "quiet"], "whyStay": "Design-led hotel on the Fethiye harbor, adults-only, walking distance to the old town." },
+        { "name": "Jiva Beach Resort", "area": "calis", "tier": "mid", "priceFrom": 110, "bestFor": ["families", "beach"], "whyStay": "Affordable all-inclusive on Çalış Beach with big pools and family rooms." }
+      ],
+      "faqs": [
+        { "q": "Ölüdeniz or Çalış?", "a": "Ölüdeniz for the iconic lagoon photo and paragliding. Çalış for better value, quieter vibe, and sunsets. A combined trip (2+2) works well." },
+        { "q": "Is Fethiye good for families?", "a": "Yes — Hillside Beach Club and Liberty Lykia are some of the best family resorts in Turkey. The area is very safe and oriented around beach activities." }
+      ]
+    },
+
+    {
+      "slug": "izmir",
+      "name": "Izmir",
+      "emoji": "🍊",
+      "tagline": "Turkey's most modern, secular big city — and the gateway to Ephesus.",
+      "summary": "Izmir is a big urban city that most travelers use as a base to visit Ephesus (Selçuk) or the coast (Çeşme). Alsancak is the walkable foodie center. Konak has the waterfront and Kemeraltı bazaar. For beach and day trips, Çeşme is 1 hour away.",
+      "bestFor": ["City breaks", "Ephesus day trip", "Foodies", "Digital nomads"],
+      "idealNights": "2–4 nights",
+      "whenToGo": "April–June and September–October",
+      "mapQuery": "Izmir, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Izmir,Turkey&z=11&output=embed",
+      "heroSearch": "Izmir",
+      "areas": [
+        {
+          "slug": "alsancak",
+          "name": "Alsancak",
+          "oneLiner": "The heart of Izmir's restaurant, bar, and boutique scene — walkable and lively.",
+          "vibe": "Trendy, walkable, urban",
+          "walkability": "Excellent",
+          "bestForTags": ["first-timers", "couples", "nightlife"],
+          "priceRange": "$60–$300 / night",
+          "pros": ["Best food scene in Izmir", "Walk to Kordon promenade", "Easy metro/tram access"],
+          "cons": ["Weekend nights are loud", "Few hotel pools", "Parking is tough"]
+        },
+        {
+          "slug": "konak",
+          "name": "Konak",
+          "oneLiner": "Waterfront Izmir — clock tower, ferry terminal, and the historic Kemeraltı bazaar.",
+          "vibe": "Historic, commercial, busy",
+          "walkability": "Good",
+          "bestForTags": ["shopping", "history", "business"],
+          "priceRange": "$70–$350 / night",
+          "pros": ["Direct waterfront views", "Kemeraltı bazaar at the door", "Easy ferry and metro access"],
+          "cons": ["Less nightlife than Alsancak", "Parts feel transactional", "Traffic heavy during the day"]
+        },
+        {
+          "slug": "cesme",
+          "name": "Çeşme",
+          "oneLiner": "Coastal resort town 1 hour from Izmir — windsurfing, thermal springs, long beaches.",
+          "vibe": "Beach, resort, chic",
+          "walkability": "Town is walkable",
+          "bestForTags": ["beach", "day-tripping from Izmir", "couples"],
+          "priceRange": "$120–$800 / night",
+          "pros": ["Great beaches (Ilıca, Altınkum)", "Stylish beach clubs", "Windsurfing capital of Turkey"],
+          "cons": ["Requires a car", "Packed in August", "Beach clubs are pricey"]
+        }
+      ],
+      "hotels": [
+        { "name": "Swissôtel Büyük Efes Izmir", "area": "alsancak", "tier": "luxury", "priceFrom": 220, "bestFor": ["business", "first-timers"], "whyStay": "Classic Izmir 5-star with landscaped gardens, big pool, and a central Kordon-adjacent location." },
+        { "name": "Mövenpick Hotel Izmir", "area": "alsancak", "tier": "mid", "priceFrom": 150, "bestFor": ["business", "couples"], "whyStay": "Modern tower hotel with sea views and a rooftop pool, walk to Alsancak restaurants." },
+        { "name": "Key Hotel", "area": "konak", "tier": "mid", "priceFrom": 120, "bestFor": ["couples", "design"], "whyStay": "Design hotel in a converted 1950s bank building with rooftop restaurant and waterfront views." },
+        { "name": "Wyndham Grand Izmir Özdilek", "area": "konak", "tier": "mid", "priceFrom": 130, "bestFor": ["families", "shopping"], "whyStay": "Connected to a mall with pool and family rooms — reliable option for families." },
+        { "name": "Nomads Hotel Izmir", "area": "alsancak", "tier": "budget", "priceFrom": 50, "bestFor": ["budget", "digital nomads"], "whyStay": "Affordable central hotel with clean rooms and strong Wi-Fi, steps from Alsancak cafes." },
+        { "name": "Alavya Hotel", "area": "cesme", "tier": "luxury", "priceFrom": 320, "bestFor": ["couples", "design"], "whyStay": "Whitewashed design boutique in Alaçatı village with courtyard pool and top restaurant." },
+        { "name": "Sheraton Çeşme", "area": "cesme", "tier": "luxury", "priceFrom": 380, "bestFor": ["families", "beach"], "whyStay": "Large beach resort with thermal spa and excellent family facilities on the Çeşme coast." }
+      ],
+      "faqs": [
+        { "q": "Is Izmir worth visiting?", "a": "Yes — it's Turkey's most liberal, Aegean, and food-forward big city. Most travelers pair it with Ephesus (1 hour south) or Çeşme (1 hour west)." },
+        { "q": "Where to stay for Ephesus?", "a": "Selçuk is the small town 5 min from the ruins — best for a quick overnight. Izmir Alsancak is better if you want city amenities and just day-trip to Ephesus." }
+      ]
+    },
+
+    {
+      "slug": "pamukkale",
+      "name": "Pamukkale",
+      "emoji": "🤍",
+      "tagline": "The white travertine terraces and the ancient ruins of Hierapolis above them.",
+      "summary": "Pamukkale is a 1-night stop for most travelers. The village at the base has simple pensions. Karahayıt, 5 km away, has slightly larger thermal-spa hotels. Denizli city is 20 km away if you want a proper city base.",
+      "bestFor": ["One-night stopover", "Thermal pools", "Photography"],
+      "idealNights": "1–2 nights",
+      "whenToGo": "March–May and October",
+      "mapQuery": "Pamukkale, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Pamukkale,Turkey&z=13&output=embed",
+      "heroSearch": "Pamukkale",
+      "areas": [
+        {
+          "slug": "pamukkale-village",
+          "name": "Pamukkale Village",
+          "oneLiner": "Walk right up to the travertines from your hotel — the most convenient base.",
+          "vibe": "Small village, simple, functional",
+          "walkability": "Excellent",
+          "bestForTags": ["one-night stop", "photo trip", "budget"],
+          "priceRange": "$40–$150 / night",
+          "pros": ["Walk to the entrance", "Cheap pensions with pools", "Quiet evenings"],
+          "cons": ["Limited restaurants", "No real nightlife", "Most hotels are simple"]
+        },
+        {
+          "slug": "karahayit",
+          "name": "Karahayıt",
+          "oneLiner": "Red-water thermal spring village 5 km away, with bigger thermal-spa hotels.",
+          "vibe": "Spa, quiet, bus-tour hub",
+          "walkability": "Moderate",
+          "bestForTags": ["spa", "families", "couples"],
+          "priceRange": "$80–$300 / night",
+          "pros": ["Large spa resorts", "Thermal pools at the hotel", "More amenities than the village"],
+          "cons": ["Shuttle needed to walk travertines", "Draws bus-tour groups", "Less scenic base"]
+        }
+      ],
+      "hotels": [
+        { "name": "Doga Thermal Health & Spa", "area": "karahayit", "tier": "mid", "priceFrom": 130, "bestFor": ["spa", "families"], "whyStay": "Large thermal spa hotel with multiple hot pools, near Pamukkale travertines." },
+        { "name": "Hierapark Thermal & Spa Hotel", "area": "karahayit", "tier": "mid", "priceFrom": 110, "bestFor": ["families", "spa"], "whyStay": "Thermal pools, all-inclusive meal plan, reliable for a spa night." },
+        { "name": "Hotel Hal-Tur", "area": "pamukkale-village", "tier": "mid", "priceFrom": 90, "bestFor": ["couples", "value"], "whyStay": "Well-reviewed mid-range right in Pamukkale village with a pool and easy walk to the travertines." },
+        { "name": "Venus Suite Hotel", "area": "pamukkale-village", "tier": "budget", "priceFrom": 55, "bestFor": ["budget", "couples"], "whyStay": "Clean, well-run guesthouse with a pool — excellent value for the area." },
+        { "name": "Melrose House Hotel", "area": "pamukkale-village", "tier": "budget", "priceFrom": 65, "bestFor": ["couples", "quiet"], "whyStay": "Charming small hotel with a garden pool, consistently top-rated for hospitality." }
+      ],
+      "faqs": [
+        { "q": "Do I need to stay overnight in Pamukkale?", "a": "Yes if you want a quiet morning or sunset at the travertines. Day-trippers arrive at peak hours and it gets crowded. A cheap village hotel lets you walk over at dawn." }
+      ]
+    },
+
+    {
+      "slug": "marmaris",
+      "name": "Marmaris",
+      "emoji": "⛱️",
+      "tagline": "Pine-covered bays, water sports, and Turkey's busiest gulet marina.",
+      "summary": "Marmaris is a holiday town built for beach-and-boat travelers. The town marina is the nightlife hub. Içmeler is the quieter family-friendly bay. Turunç is the secluded cove 40 minutes away.",
+      "bestFor": ["Budget beach holidays", "Gulet trips", "Nightlife"],
+      "idealNights": "3–5 nights",
+      "whenToGo": "May–June and September",
+      "mapQuery": "Marmaris, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Marmaris,Turkey&z=12&output=embed",
+      "heroSearch": "Marmaris",
+      "areas": [
+        {
+          "slug": "marmaris-center",
+          "name": "Marmaris Center",
+          "oneLiner": "The marina, the bar street, the long town beach — busy and budget-friendly.",
+          "vibe": "Party, tourist, lively",
+          "walkability": "Good",
+          "bestForTags": ["nightlife", "young travelers", "budget"],
+          "priceRange": "$50–$250 / night",
+          "pros": ["Lots of bars and clubs", "Cheap all-inclusive options", "Easy boat trips"],
+          "cons": ["Very touristy", "Bar Street is loud into the night", "Not scenic"]
+        },
+        {
+          "slug": "icmeler",
+          "name": "İçmeler",
+          "oneLiner": "The calmer bay next door — cleaner water, family-oriented, nicer beach.",
+          "vibe": "Family, quiet, beach",
+          "walkability": "Good",
+          "bestForTags": ["families", "couples", "beach"],
+          "priceRange": "$70–$300 / night",
+          "pros": ["Nicer beach than central Marmaris", "Quieter evenings", "Dolmuş to town in 15 min"],
+          "cons": ["Less dining variety", "Fewer adult-only resorts", "Small town feel"]
+        }
+      ],
+      "hotels": [
+        { "name": "Grand Yazıcı Marmaris Palace", "area": "marmaris-center", "tier": "mid", "priceFrom": 180, "bestFor": ["families", "all-inclusive"], "whyStay": "Large all-inclusive with kids' club and private beach on Pasha Bay." },
+        { "name": "D-Resort Grand Azur", "area": "marmaris-center", "tier": "mid", "priceFrom": 200, "bestFor": ["couples", "design"], "whyStay": "Beachfront resort with multiple pools, spa, and adults-only areas." },
+        { "name": "Casa De Maris Spa & Resort Hotel", "area": "icmeler", "tier": "mid", "priceFrom": 160, "bestFor": ["adults-only", "couples"], "whyStay": "Adults-only all-inclusive in İçmeler with good food and a quiet bay." },
+        { "name": "Marti Resort de Luxe", "area": "icmeler", "tier": "mid", "priceFrom": 170, "bestFor": ["families", "beach"], "whyStay": "Established İçmeler family resort with beach, water sports, and kids' programs." },
+        { "name": "Sonnen Hotel", "area": "marmaris-center", "tier": "budget", "priceFrom": 55, "bestFor": ["budget", "couples"], "whyStay": "Well-run mid-range near Icmeler Beach with a pool, solid value." }
+      ],
+      "faqs": [
+        { "q": "Marmaris or İçmeler?", "a": "Marmaris if you want nightlife and a buzzing town. İçmeler for families and couples who want a calmer beach." }
+      ]
+    },
+
+    {
+      "slug": "kas",
+      "name": "Kaş",
+      "emoji": "🐙",
+      "tagline": "The bohemian Lycian coast town — diving, paragliding, and cobblestone streets.",
+      "summary": "Kaş is small and charming — a former Greek village on the Mediterranean with no package resorts. Stay in Kaş Center to walk everywhere. Çukurbağ Peninsula (just west) has the boutique sea-view hotels.",
+      "bestFor": ["Adults only", "Diving", "Quiet beach towns", "Slow travel"],
+      "idealNights": "3–5 nights",
+      "whenToGo": "May–June and September",
+      "mapQuery": "Kas, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Kas,Turkey&z=13&output=embed",
+      "heroSearch": "Kas",
+      "areas": [
+        {
+          "slug": "kas-center",
+          "name": "Kaş Center",
+          "oneLiner": "Cobblestone old town with cafés, boutique shops, and the harbor — walk everywhere.",
+          "vibe": "Bohemian, charming, relaxed",
+          "walkability": "Excellent",
+          "bestForTags": ["couples", "solo", "walkable"],
+          "priceRange": "$80–$350 / night",
+          "pros": ["Incredibly walkable", "Excellent dining for a town this size", "Easy boat and diving access"],
+          "cons": ["No real sand beach", "Pricey in peak season", "Cobblestones — not wheeled-luggage-friendly"]
+        },
+        {
+          "slug": "cukurbag",
+          "name": "Çukurbağ Peninsula",
+          "oneLiner": "The sea-view peninsula with boutique design hotels and private swimming platforms.",
+          "vibe": "Quiet, scenic, upscale",
+          "walkability": "Limited — hilly",
+          "bestForTags": ["couples", "luxury", "design"],
+          "priceRange": "$150–$600 / night",
+          "pros": ["Best sea views in the area", "Boutique design hotels", "Private swim platforms"],
+          "cons": ["Need transport to town", "Hilly walks", "More expensive"]
+        }
+      ],
+      "hotels": [
+        { "name": "Hotel Villa Hera", "area": "cukurbag", "tier": "luxury", "priceFrom": 240, "bestFor": ["couples", "design"], "whyStay": "Adults-only cliffside hotel with panoramic sea views and infinity pool." },
+        { "name": "Peninsula Gardens", "area": "cukurbag", "tier": "mid", "priceFrom": 160, "bestFor": ["couples", "quiet"], "whyStay": "Adults-only sea-view hotel with swimming platforms on the Çukurbağ peninsula." },
+        { "name": "Gardenia Hotel", "area": "kas-center", "tier": "mid", "priceFrom": 140, "bestFor": ["couples", "walkable"], "whyStay": "Beautifully located adults-only boutique in Kaş old town with a rooftop terrace." },
+        { "name": "Hideaway Hotel", "area": "kas-center", "tier": "mid", "priceFrom": 110, "bestFor": ["couples", "value"], "whyStay": "Consistently top-rated friendly small hotel a short walk from the harbor." },
+        { "name": "Ani Pension", "area": "kas-center", "tier": "budget", "priceFrom": 55, "bestFor": ["budget", "solo"], "whyStay": "Popular backpacker-friendly pension with a rooftop and central location." }
+      ],
+      "faqs": [
+        { "q": "Is Kaş good for families?", "a": "Kaş is quieter and more adults-oriented than Antalya's resort areas. Many hotels are adults-only. Families usually prefer Antalya or Fethiye instead." }
+      ]
+    },
+
+    {
+      "slug": "trabzon",
+      "name": "Trabzon",
+      "emoji": "🌲",
+      "tagline": "The Black Sea gateway — Sumela Monastery, highland plateaus, rainforest green.",
+      "summary": "Trabzon is the entry point for Turkey's rainy green Black Sea region. Stay in Trabzon Center for the city and Sumela. For the famous Uzungöl lake, base there directly — it's 1.5 hours from the city.",
+      "bestFor": ["Off-the-beaten-path", "Nature lovers", "Gulf visitors"],
+      "idealNights": "2–4 nights",
+      "whenToGo": "June–September",
+      "mapQuery": "Trabzon, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Trabzon,Turkey&z=10&output=embed",
+      "heroSearch": "Trabzon",
+      "areas": [
+        {
+          "slug": "trabzon-center",
+          "name": "Trabzon City Center",
+          "oneLiner": "The urban base for visiting Sumela Monastery and exploring the Black Sea coast.",
+          "vibe": "Urban, bustling, authentic",
+          "walkability": "Good around Meydan",
+          "bestForTags": ["first-timers", "city base", "Sumela trips"],
+          "priceRange": "$60–$250 / night",
+          "pros": ["Base for Sumela day trips", "Plenty of restaurants", "Easy airport access"],
+          "cons": ["Not especially scenic", "Rainy most of the year", "Limited English in smaller hotels"]
+        },
+        {
+          "slug": "uzungol",
+          "name": "Uzungöl",
+          "oneLiner": "The famous mountain lake village — cloud-covered mosques, trout, green everywhere.",
+          "vibe": "Alpine village, scenic, touristy",
+          "walkability": "Good around the lake",
+          "bestForTags": ["scenery", "Gulf travelers", "photography"],
+          "priceRange": "$70–$300 / night",
+          "pros": ["Iconic postcard scenery", "Fresh mountain air", "Many hotels right on the lake"],
+          "cons": ["1.5 hours from Trabzon", "Can feel crowded in summer", "Basic dining options"]
+        }
+      ],
+      "hotels": [
+        { "name": "Radisson Blu Hotel Trabzon", "area": "trabzon-center", "tier": "luxury", "priceFrom": 180, "bestFor": ["business", "first-timers"], "whyStay": "Modern harbor-view hotel with pool and spa, walk to Meydan square." },
+        { "name": "Novotel Trabzon", "area": "trabzon-center", "tier": "mid", "priceFrom": 130, "bestFor": ["business", "couples"], "whyStay": "Reliable brand with good breakfast, sea views, and central location." },
+        { "name": "Ramada Hotel Trabzon", "area": "trabzon-center", "tier": "mid", "priceFrom": 110, "bestFor": ["families", "value"], "whyStay": "Central city hotel with pool and family rooms." },
+        { "name": "İnan Kardeşler Bungalow", "area": "uzungol", "tier": "mid", "priceFrom": 140, "bestFor": ["couples", "nature"], "whyStay": "Wood-clad bungalows with balconies over the lake — the classic Uzungöl stay." },
+        { "name": "Uzungöl Suites Hotel", "area": "uzungol", "tier": "mid", "priceFrom": 110, "bestFor": ["couples", "families"], "whyStay": "Central lakeside hotel in Uzungöl village with traditional Black Sea architecture." }
+      ],
+      "faqs": [
+        { "q": "When is Trabzon best to visit?", "a": "June to September. The Black Sea region is very rainy — pack layers and waterproofs even in summer." }
+      ]
+    }
+  ]
+}

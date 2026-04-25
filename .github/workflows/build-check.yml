@@ -1,0 +1,49 @@
+name: Build check
+
+# Validates that the site builds cleanly on every push and pull request.
+# Vercel handles actual deployment via its native Git integration.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate config
+        run: node -e "const c = require('./site.config'); if (!c.business || !c.affiliates) throw new Error('config malformed');"
+
+      - name: Validate JSON data files
+        run: |
+          for f in data/cities*.json data/lead-magnet-*.json; do
+            node -e "JSON.parse(require('fs').readFileSync('$f', 'utf8'))" || exit 1
+            echo "  OK: $f"
+          done
+
+      - name: Build site
+        run: node build.js
+
+      - name: Verify expected pages exist
+        run: |
+          test -f site/index.html
+          test -f site/sitemap.xml
+          test -f site/robots.txt
+          test -f site/feed.xml
+          test -f site/404.html
+          test -f site/privacy/index.html
+          test -f site/terms/index.html
+          test -f site/planner/index.html
+          test -f site/quiz/index.html
+          test $(find site -name '*.html' | wc -l) -gt 100
+          echo "✓ Build verified"

@@ -1,0 +1,38 @@
+name: Manual Vercel deploy (optional)
+
+# OPTIONAL workflow. Vercel's native Git integration handles auto-deploy on every
+# push, so this is only needed if you want a manual trigger or want to fall back
+# from Vercel native to Actions-driven deploys.
+#
+# To use: in GitHub repo Settings → Secrets, add:
+#   VERCEL_TOKEN       (vercel.com/account/tokens — create one with full scope)
+#   VERCEL_ORG_ID      (run `vercel link` locally, copy from .vercel/project.json)
+#   VERCEL_PROJECT_ID  (same source)
+#
+# Then trigger manually from the Actions tab → "Run workflow".
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Pull Vercel env
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build
+        run: node build.js
+
+      - name: Deploy to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

@@ -1,0 +1,223 @@
+{
+  "cities": [
+    {
+      "slug": "rize",
+      "name": "Rize",
+      "emoji": "🍵",
+      "tagline": "Turkey's tea country — misty highlands, green valleys, and the famous Ayder plateau.",
+      "summary": "Rize is the Black Sea's green heart. Don't base in the city itself — head to the highlands. Ayder Yaylası is the famous highland village for scenery. Çamlıhemşin is the traditional riverside gateway. Fırtına Valley is for serious nature travelers.",
+      "bestFor": ["Nature and hiking", "Tea plantations", "Summer escape from the heat"],
+      "idealNights": "2–4 nights",
+      "whenToGo": "June–September",
+      "mapQuery": "Rize, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Rize,Turkey&z=10&output=embed",
+      "heroSearch": "Rize Ayder",
+      "areas": [
+        {
+          "slug": "ayder",
+          "name": "Ayder Yaylası (Plateau)",
+          "oneLiner": "The famous misty highland village at 1350m — wooden chalets, thermal baths, waterfalls.",
+          "vibe": "Highland village, scenic, cool",
+          "walkability": "Good in the village",
+          "bestForTags": ["nature", "couples", "summer cool"],
+          "priceRange": "$80–$300 / night",
+          "pros": ["One of the most photogenic villages in Turkey", "Cool air in summer (15–25°C)", "Traditional wooden lodge hotels", "Thermal spa option"],
+          "cons": ["Very rainy — pack waterproofs", "2 hours from Trabzon airport", "Can be crowded with domestic tourists in August"]
+        },
+        {
+          "slug": "camlihemsin",
+          "name": "Çamlıhemşin & Fırtına Valley",
+          "oneLiner": "The river-valley approach to Ayder — old stone bridges, Zilkale castle, raftable rivers.",
+          "vibe": "Rural, outdoorsy, quiet",
+          "walkability": "Limited",
+          "bestForTags": ["nature", "adventure", "off-the-beaten-path"],
+          "priceRange": "$60–$200 / night",
+          "pros": ["Zilkale Castle perched on the cliff", "Rafting and canyoning base", "Quieter than Ayder itself"],
+          "cons": ["Few restaurants", "Requires a car", "Very basic wifi in lodges"]
+        },
+        {
+          "slug": "rize-center",
+          "name": "Rize City Center",
+          "oneLiner": "Urban base for tea-garden visits — simple hotels, seafront, and the famous tea factory tours.",
+          "vibe": "Small city, local, functional",
+          "walkability": "Good",
+          "bestForTags": ["one-night stop", "tea tourism"],
+          "priceRange": "$50–$150 / night",
+          "pros": ["Tea garden day tours start here", "Waterfront walk", "Easy airport transfer"],
+          "cons": ["Not scenic like the highlands", "Limited dining variety", "Better as a 1-night transit stop"]
+        }
+      ],
+      "hotels": [
+        { "name": "Ayder Doga Hotel", "area": "ayder", "tier": "mid", "priceFrom": 140, "bestFor": ["couples", "nature"], "whyStay": "Wooden-lodge hotel on the Ayder plateau with valley views and a highland spa — the atmospheric choice." },
+        { "name": "Ayder Avusor Butik Hotel", "area": "ayder", "tier": "mid", "priceFrom": 120, "bestFor": ["couples", "boutique"], "whyStay": "Beautifully restored mountain lodge, excellent local breakfast, consistently top-rated in the plateau." },
+        { "name": "Ayder Hasimoglu Hotel", "area": "ayder", "tier": "mid", "priceFrom": 110, "bestFor": ["families", "value"], "whyStay": "Long-running plateau hotel with larger rooms — good for families exploring the highlands." },
+        { "name": "Firtina Pansiyon", "area": "camlihemsin", "tier": "budget", "priceFrom": 55, "bestFor": ["budget", "nature"], "whyStay": "Simple family-run pension on the Fırtına river — eat fresh trout on the terrace, sleep to the river's sound." },
+        { "name": "Dedeman Rize", "area": "rize-center", "tier": "mid", "priceFrom": 130, "bestFor": ["business", "first-timers"], "whyStay": "Reliable branded 5-star in central Rize with sea views — easiest airport base." },
+        { "name": "Rize Park Hotel", "area": "rize-center", "tier": "mid", "priceFrom": 90, "bestFor": ["business", "value"], "whyStay": "Good-value central hotel near the seafront and main square, modern rooms." }
+      ],
+      "faqs": [
+        { "q": "Should I stay in Rize city or the plateau?", "a": "The plateau (Ayder) — that's why you come. Use Rize city only as a 1-night arrival/departure stop if needed." },
+        { "q": "When does it rain in Rize?", "a": "All year, honestly — the Black Sea coast is Turkey's rainiest region. Expect some rain even in August. Pack waterproof shoes and a light rain jacket." }
+      ]
+    },
+
+    {
+      "slug": "ankara",
+      "name": "Ankara",
+      "emoji": "🏛️",
+      "tagline": "Turkey's capital — business travel, Anıtkabir, and a growing food scene.",
+      "summary": "Ankara is Turkey's political and administrative capital. It's not a leisure destination most foreigners target — but it's essential for business travel and for visitors to Anıtkabir (Atatürk's mausoleum). Stay in Çankaya for the embassy/upscale district, or Kızılay for young/affordable/walkable.",
+      "bestFor": ["Business trips", "Anıtkabir pilgrimage", "Transit stops"],
+      "idealNights": "1–2 nights",
+      "whenToGo": "April–June and September–October",
+      "mapQuery": "Ankara, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Ankara,Turkey&z=11&output=embed",
+      "heroSearch": "Ankara",
+      "areas": [
+        {
+          "slug": "cankaya",
+          "name": "Çankaya (Kavaklıdere / Gaziosmanpaşa)",
+          "oneLiner": "The diplomatic district — embassies, designer boutiques, and the best international hotels.",
+          "vibe": "Upscale, quiet, leafy",
+          "walkability": "Good",
+          "bestForTags": ["business", "first-timers", "luxury"],
+          "priceRange": "$100–$450 / night",
+          "pros": ["Most international 5-star hotels are here", "Safe, quiet, tree-lined", "Close to Tunalı Hilmi restaurant street"],
+          "cons": ["Less nightlife than Kızılay", "Feels corporate", "15-min drive to Anıtkabir"]
+        },
+        {
+          "slug": "kizilay",
+          "name": "Kızılay",
+          "oneLiner": "Central Ankara — student cafés, government buildings, the metro hub.",
+          "vibe": "Busy, young, local",
+          "walkability": "Excellent",
+          "bestForTags": ["budget", "walkable", "solo"],
+          "priceRange": "$60–$200 / night",
+          "pros": ["Central metro access", "Cheapest eating", "Walk to most sights"],
+          "cons": ["Can feel chaotic", "Not scenic", "Weekend nights can get rowdy"]
+        }
+      ],
+      "hotels": [
+        { "name": "JW Marriott Hotel Ankara", "area": "cankaya", "tier": "luxury", "priceFrom": 280, "bestFor": ["business", "luxury"], "whyStay": "One of Ankara's flagship 5-stars — excellent service, great breakfast, connected to a mall." },
+        { "name": "Swissôtel Ankara", "area": "cankaya", "tier": "luxury", "priceFrom": 250, "bestFor": ["business", "first-timers"], "whyStay": "Large conference-friendly 5-star with panoramic views, pool, and spa." },
+        { "name": "Divan Çankaya", "area": "cankaya", "tier": "mid", "priceFrom": 140, "bestFor": ["business", "couples"], "whyStay": "Mid-sized 4-star in a quiet Çankaya lane — consistently good reviews from business travelers." },
+        { "name": "Radisson Blu Hotel Ankara", "area": "kizilay", "tier": "mid", "priceFrom": 130, "bestFor": ["first-timers", "business"], "whyStay": "Central Kızılay location near the metro — reliable brand, modern rooms." },
+        { "name": "Hotel Ickale", "area": "kizilay", "tier": "budget", "priceFrom": 55, "bestFor": ["budget", "solo"], "whyStay": "Well-reviewed budget hotel in central Kızılay — basic but clean with strong wifi." }
+      ],
+      "faqs": [
+        { "q": "Is Ankara worth visiting?", "a": "For leisure travelers: one night is enough, focused on Anıtkabir, the Anatolian Civilisations Museum, and Haci Bayram. Most foreign tourists skip it unless they're doing business." }
+      ]
+    },
+
+    {
+      "slug": "gaziantep",
+      "name": "Gaziantep",
+      "emoji": "🥮",
+      "tagline": "Turkey's food capital — UNESCO gastronomy city and home of real baklava.",
+      "summary": "Gaziantep (locally Antep) is where serious Turkish food tourism happens. It's not beach, not cave hotels — it's eating your way through one of the world's great food cities. Stay in the center to walk to the bazaars, baklava houses, and the extraordinary Zeugma Mosaic Museum.",
+      "bestFor": ["Food travel", "Weekend breaks from Istanbul", "Cultural depth"],
+      "idealNights": "2–3 nights",
+      "whenToGo": "March–May and September–November",
+      "mapQuery": "Gaziantep, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Gaziantep,Turkey&z=12&output=embed",
+      "heroSearch": "Gaziantep",
+      "areas": [
+        {
+          "slug": "gaziantep-old-city",
+          "name": "Gaziantep Old City",
+          "oneLiner": "The historic hammam, copper market, and castle district — where the food tours start.",
+          "vibe": "Historic, busy, authentic",
+          "walkability": "Excellent",
+          "bestForTags": ["food", "first-timers", "couples"],
+          "priceRange": "$70–$260 / night",
+          "pros": ["Walking distance to the bazaars", "Best baklava houses at your door", "Historic stone architecture", "Zeugma Museum is 15 min away"],
+          "cons": ["Gets hot in summer", "Parts are run-down", "Less English than tourist cities"]
+        },
+        {
+          "slug": "sahinbey",
+          "name": "Şahinbey & Modern Center",
+          "oneLiner": "The modern commercial side — malls, office hotels, easier for business travel.",
+          "vibe": "Modern, commercial, functional",
+          "walkability": "Good",
+          "bestForTags": ["business", "families", "modern hotels"],
+          "priceRange": "$80–$250 / night",
+          "pros": ["Modern hotel chains", "Malls and modern dining", "Easy airport access"],
+          "cons": ["Generic feel", "10–15 min drive to the old city and food scene"]
+        }
+      ],
+      "hotels": [
+        { "name": "The Anatolian Hotel", "area": "gaziantep-old-city", "tier": "mid", "priceFrom": 180, "bestFor": ["couples", "history"], "whyStay": "Restored old-city mansion with a courtyard — walk to baklava and the covered bazaar." },
+        { "name": "Tugcan Hotel", "area": "sahinbey", "tier": "mid", "priceFrom": 130, "bestFor": ["business", "first-timers"], "whyStay": "Modern 5-star near the commercial district with an indoor pool and reliable breakfast." },
+        { "name": "Divan Gaziantep", "area": "sahinbey", "tier": "mid", "priceFrom": 150, "bestFor": ["business", "couples"], "whyStay": "Dependable Divan-brand 5-star with rooftop restaurant and city views." },
+        { "name": "Grand Hotel Gaziantep", "area": "sahinbey", "tier": "budget", "priceFrom": 70, "bestFor": ["budget", "business"], "whyStay": "Reliable mid-range near the center — good value in a city that's mostly about the food, not the hotel." },
+        { "name": "Hampton by Hilton Gaziantep", "area": "sahinbey", "tier": "budget", "priceFrom": 75, "bestFor": ["budget", "families"], "whyStay": "Modern budget brand — consistent standards for a food-focused trip where the hotel is just a base." }
+      ],
+      "faqs": [
+        { "q": "Is Gaziantep worth flying to just for food?", "a": "Yes, genuinely. A weekend here (with a Zeugma Museum visit) is one of Turkey's best short trips. Do a food tour on day one." },
+        { "q": "Is Gaziantep safe?", "a": "Yes. It's a large, established Turkish city. The southeastern location means you should pay routine attention but it's not a destination with notable safety concerns." }
+      ]
+    },
+
+    {
+      "slug": "bursa",
+      "name": "Bursa",
+      "emoji": "⛷️",
+      "tagline": "The first Ottoman capital — thermal baths, ski slopes, and İskender kebab at its source.",
+      "summary": "Bursa is easy to reach from Istanbul (2 hours by ferry + road) and gives you three experiences: Ottoman heritage in the old city, thermal spa hotels in Çekirge, and Turkey's best ski resort on Uludağ mountain.",
+      "bestFor": ["Weekend breaks from Istanbul", "Thermal spa trips", "Winter ski trips"],
+      "idealNights": "2–3 nights",
+      "whenToGo": "Year-round (ski Dec–March)",
+      "mapQuery": "Bursa, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Bursa,Turkey&z=11&output=embed",
+      "heroSearch": "Bursa",
+      "areas": [
+        {
+          "slug": "cekirge",
+          "name": "Çekirge",
+          "oneLiner": "The thermal spa district — every hotel has its own hot spring, old Ottoman baths nearby.",
+          "vibe": "Spa, quiet, upscale",
+          "walkability": "Good",
+          "bestForTags": ["spa", "couples", "families"],
+          "priceRange": "$90–$400 / night",
+          "pros": ["In-hotel thermal pools", "Historic baths within walking distance", "Quieter than the center"],
+          "cons": ["Restaurants mostly inside hotels", "15-min drive to the old city"]
+        },
+        {
+          "slug": "bursa-center",
+          "name": "Bursa City Center (Osmangazi)",
+          "oneLiner": "The old Ottoman heart — Ulu Mosque, Green Mosque, covered bazaar, İskender kebab houses.",
+          "vibe": "Historic, busy, authentic",
+          "walkability": "Excellent",
+          "bestForTags": ["first-timers", "history", "food"],
+          "priceRange": "$70–$250 / night",
+          "pros": ["Walk to Ottoman sights", "Best İskender kebab on earth", "Covered bazaar shopping"],
+          "cons": ["No spa focus", "Central traffic is rough", "Fewer large hotels"]
+        },
+        {
+          "slug": "uludag",
+          "name": "Uludağ (Ski Zone)",
+          "oneLiner": "Turkey's most accessible ski resort — chair lifts, slopes, and mountain-chalet hotels at 2000m.",
+          "vibe": "Ski, seasonal, alpine",
+          "walkability": "Inside the resort zone",
+          "bestForTags": ["ski", "families", "winter"],
+          "priceRange": "$150–$700 / night (peak)",
+          "pros": ["Ski-in/ski-out hotels", "1.5 hour from Istanbul", "Family-friendly ski school"],
+          "cons": ["Only worthwhile in winter", "Limited off-season", "Basic non-ski activities"]
+        }
+      ],
+      "hotels": [
+        { "name": "Kervansaray Termal Hotel", "area": "cekirge", "tier": "luxury", "priceFrom": 220, "bestFor": ["spa", "couples"], "whyStay": "Historic thermal hotel built over original Ottoman hot springs — authentic experience." },
+        { "name": "Grand Thermal Hotel", "area": "cekirge", "tier": "mid", "priceFrom": 160, "bestFor": ["spa", "families"], "whyStay": "Large thermal resort with multiple indoor pools, family-friendly, good value." },
+        { "name": "Çelik Palas Hotel", "area": "cekirge", "tier": "luxury", "priceFrom": 240, "bestFor": ["spa", "business"], "whyStay": "Historic landmark hotel (Atatürk slept here) with a stunning domed thermal hall and excellent spa." },
+        { "name": "Crowne Plaza Bursa Convention Center & Thermal Spa", "area": "cekirge", "tier": "luxury", "priceFrom": 200, "bestFor": ["business", "families"], "whyStay": "Modern 5-star with thermal pools and central Bursa access — reliable choice." },
+        { "name": "Almira Hotel", "area": "bursa-center", "tier": "mid", "priceFrom": 120, "bestFor": ["business", "first-timers"], "whyStay": "Central 4-star in downtown Bursa — walk to Ulu Mosque and the covered bazaar." },
+        { "name": "Monte Baia Uludağ", "area": "uludag", "tier": "luxury", "priceFrom": 360, "bestFor": ["ski", "families"], "whyStay": "Ski-in hotel at 2000m with a huge indoor pool, kids' ski school, good breakfast." },
+        { "name": "Grand Yazıcı Hotel & Ski Center", "area": "uludag", "tier": "luxury", "priceFrom": 320, "bestFor": ["ski", "families"], "whyStay": "One of Uludağ's biggest ski resort hotels with half-board packages." }
+      ],
+      "faqs": [
+        { "q": "Is Bursa a good day trip from Istanbul?", "a": "Long day. Fast ferry + 1-hour bus gets you there in ~3 hours each way. Better as a 1-2 night break. In winter, pair with Uludağ skiing for a proper weekend." },
+        { "q": "Which hammam should I try in Bursa?", "a": "Çekirge's Eski Kaplıca (15th century) for history, or your hotel's private thermal pool for comfort. Both tap the same natural hot springs." }
+      ]
+    }
+  ]
+}

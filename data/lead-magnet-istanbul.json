@@ -1,0 +1,89 @@
+{
+  "slug": "istanbul-3-days",
+  "title": "Your 3-Day Istanbul Itinerary",
+  "subtitle": "The exact plan we'd send a friend. Opinionated. No tourist traps.",
+  "intro": "This is a 3-day plan that assumes you want to see the big sights without feeling like a tour group. Day 1 is the Old City on foot. Day 2 is the creative side of the Golden Horn. Day 3 crosses to the Asian side because that's where Istanbul stops being a museum and becomes a city. If you only have 2 days, skip Day 3.",
+  "preTrip": [
+    "Get an eSIM before you fly (saves ~$40 vs. airport SIM). Airalo's Turkey plan activates mid-flight.",
+    "Pre-book the airport transfer. Istanbul Airport (IST) to Sultanahmet is a 50-min fixed-fare ride via Welcome Pickups; avoid unmarked taxis.",
+    "Book the Hagia Sophia combined ticket online. The queue at the door is now brutal.",
+    "Download the IETT or Citymapper app. Public transport uses the Istanbulkart — buy and top up on arrival.",
+    "Bring US dollars in small bills for one scenario only: the visa-on-arrival kiosk if your passport requires it. Otherwise use card everywhere."
+  ],
+  "days": [
+    {
+      "title": "Day 1 — Sultanahmet (Old City)",
+      "staybase": "Sultanahmet",
+      "flow": [
+        { "time": "08:00", "what": "Breakfast at your hotel. Sultanahmet hotels do the best Turkish breakfast in the city — don't skip it." },
+        { "time": "09:00", "what": "Blue Mosque (Sultan Ahmet Camii). Free entry; wear long sleeves. Go first, while it's quiet." },
+        { "time": "10:00", "what": "Hagia Sophia. Use your pre-booked ticket. Non-Muslims now enter via the upper gallery." },
+        { "time": "12:00", "what": "Lunch at Matbah (Ottoman palace cuisine) or Balıkçı Sabahattin (classic seafood near Cankurtaran)." },
+        { "time": "13:30", "what": "Basilica Cistern. 20-min visit. Book a time slot — walk-ups wait 45+ min." },
+        { "time": "14:30", "what": "Topkapı Palace. 2–3 hours. Pay extra for the Harem — it's the best part." },
+        { "time": "17:30", "what": "Walk down to Gülhane Park, loop back via the Arasta Bazaar for rugs and ceramics (cheaper than the Grand Bazaar, same quality)." },
+        { "time": "19:30", "what": "Sunset drinks at Seven Hills Restaurant rooftop — the Blue Mosque lights up right in front of you. Book a table." },
+        { "time": "21:00", "what": "Dinner at Balıkçı Sabahattin or Deraliye Ottoman Cuisine. Walk back to the hotel." }
+      ],
+      "tips": [
+        "Skip: the Grand Bazaar if you're short on time. It's atmospheric but the sellers are exhausting. The Arasta Bazaar by the Blue Mosque is smaller and friendlier.",
+        "Skip: the lira-priced tram stations near the big sights — touts try to sell 'Istanbulkart' for triple price.",
+        "If it rains, reverse the day: cistern in the morning, mosques in the afternoon."
+      ]
+    },
+    {
+      "title": "Day 2 — Karaköy, Galata, Beyoğlu",
+      "staybase": "Sultanahmet (morning walk to the tram) or move to a Galata boutique hotel tonight",
+      "flow": [
+        { "time": "09:00", "what": "Walk over the Galata Bridge. Fishermen, simit vendors, ferries underneath — the classic Istanbul photo." },
+        { "time": "09:30", "what": "Breakfast at Karabatak or Unter in Karaköy. Third-wave coffee scene; this is where Istanbul's creative class starts the day." },
+        { "time": "11:00", "what": "Istanbul Modern (now in its new Renzo Piano building) — excellent modern Turkish art, waterfront setting." },
+        { "time": "13:00", "what": "Lunch at Çiçek Pasajı (Flower Passage) off Istiklal — old-school meyhane, order meze + raki." },
+        { "time": "14:30", "what": "Walk Istiklal Caddesi to Taksim. Stop at Saint Antoine de Padoue (cathedral, free) and the historic tram." },
+        { "time": "16:00", "what": "Galata Tower. Skip if the queue is long; the view from the Mikla rooftop bar (see evening) is better." },
+        { "time": "17:00", "what": "Coffee and people-watching in Cihangir — the writer/designer neighborhood. Try Kronotrop or Van Kahvaltı Evi." },
+        { "time": "19:00", "what": "Cocktails at Mikla (Marmara Pera rooftop) — spectacular panorama. Arrive before sunset." },
+        { "time": "21:00", "what": "Dinner. Splurge: Neolokal or Mikla itself. Mid-range: Lokanta Kantin. Casual: Meze by Lemon Tree." }
+      ],
+      "tips": [
+        "Skip: the people trying to shine your shoes or 'find' a dropped brush on Istiklal. Old scam.",
+        "If you're a coffee person: detour to Yeni Lokanta or Mandabatmaz for Turkish coffee done right.",
+        "Getting around: T1 tram + F2 funicular + walking handles almost everything."
+      ]
+    },
+    {
+      "title": "Day 3 — Asian side + Bosphorus",
+      "staybase": "Sultanahmet or Beyoğlu — this is a day trip, no move needed",
+      "flow": [
+        { "time": "09:30", "what": "Ferry from Eminönü or Karaköy to Kadıköy (20 min, pay with Istanbulkart). Sit on the side facing the Old City for the photo." },
+        { "time": "10:00", "what": "Breakfast at Tarihi Moda Börekçisi — legendary börek." },
+        { "time": "11:00", "what": "Kadıköy food market (Fish Market area). Try pickles at Sakızcı Hacı Bekir, lokum at Cafer Erol." },
+        { "time": "13:00", "what": "Lunch at Çiya Sofrası — chef Musa Dağdeviren's regional Anatolian food. Bucket list stuff." },
+        { "time": "14:30", "what": "Walk the Moda seaside promenade. 45-min stroll with tea gardens and the best sunset spot on the Asian side." },
+        { "time": "16:30", "what": "Ferry back. For max scenery, take a longer Bosphorus tour ferry: Eminönü → Anadolu Kavağı return (1.5 hrs each way) — way cheaper than private tour boats." },
+        { "time": "19:30", "what": "Back to the European side for dinner. Final meal pick: Karaköy Lokantası (classic meyhane) or Mikla for a view." }
+      ],
+      "tips": [
+        "Kadıköy is where you buy souvenirs that don't feel like souvenirs. Spice mixes, Turkish tea, pottery — all cheaper than Sultanahmet.",
+        "The Bosphorus ferry is the single best-value thing you can do in Istanbul. Skip the overpriced private 'dinner cruises'.",
+        "Back to the airport: pre-book a return transfer or Havaist bus (90 min, <$5)."
+      ]
+    }
+  ],
+  "scams": [
+    "The shoeshiner drops his brush, you pick it up, he insists on shining your shoes 'as thanks' then charges €50. Ignore the whole interaction.",
+    "Friendly local approaches you, invites you to a 'bar'. You're charged hundreds of euros for a small drink. Never follow a stranger into a bar.",
+    "The Grand Bazaar rug 'auction' or 'from my village' pitches — assume 40% of the asked price is the real number.",
+    "Taxis taking long routes from the airport. Only use Welcome Pickups, Uber, or BiTaksi (the local app).",
+    "Unofficial 'guides' at Hagia Sophia entrance. Real guides have licenses — ask to see."
+  ],
+  "checklist": [
+    "Airport transfer pre-booked",
+    "eSIM installed",
+    "Hagia Sophia ticket pre-purchased",
+    "Basilica Cistern time slot booked",
+    "One rooftop restaurant reservation (Seven Hills or Mikla)",
+    "Istanbulkart app downloaded",
+    "Travel insurance active"
+  ]
+}

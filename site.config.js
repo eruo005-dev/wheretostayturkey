@@ -1,0 +1,55 @@
+// wheretostayturkey.com - central config
+
+const affiliates = {
+  booking:        { aid: "BOOKING_AID" },
+  hotelsCom:      { camref: "" },
+  agoda:          { cid: "" },
+  tripcom:        { allianceid: "", sid: "" },
+  hostelworld:    { urlPrefix: "" },
+  vrbo:           { camref: "" },
+  getYourGuide:   { partnerId: "" },
+  viator:         { pid: "" },
+  klook:          { aid: "" },
+  tiqets:         { partner: "" },
+  civitatis:      { partner: "" },
+  welcomePickups: { ref: "" },
+  kiwitaxi:       { marker: "" },
+  discoverCars:   { aAid: "" },
+  rentalcars:     { aid: "" },
+  airalo:         { ref: "" },
+  holafly:        { ref: "" },
+  safetywing:     { ref: "" },
+  worldNomads:    { ref: "" },
+  wise:           { invite: "" },
+  kiwiCom:        { marker: "" },
+  wayaway:        { marker: "" },
+};
+
+const business = {
+  legalName: "Where to Stay Turkey",
+  jurisdiction: "Turkey",
+  contactEmail: "hello@wheretostayturkey.com",
+  supportEmail: "support@wheretostayturkey.com",
+  privacyEmail: "privacy@wheretostayturkey.com",
+  postalAddress: "[Street address, City, Postal Code, Country]",
+  lastUpdated: "2026-04-24",
+};
+
+module.exports = {
+  siteName: "Where to Stay in Turkey",
+  siteTagline: "The fastest way to decide where to stay in Turkey.",
+  siteUrl: "https://wheretostayturkey.com",
+  siteDescription: "A decision engine for the best neighborhoods and hotels in Turkey.",
+  business,
+  affiliates,
+  bookingAid: affiliates.booking.aid,
+  getYourGuidePartnerId: affiliates.getYourGuide.partnerId,
+  adsense: { clientId: "", slotCity: "" },
+  plausibleDomain: "",
+  gaMeasurementId: "",
+  emailCaptureEndpoint: "https://formspree.io/f/YOUR_FORM_ID",
+  defaultOgImage: "/assets/img/og-default.svg",
+  twitterHandle: "@wheretostayturkey",
+  currency: "USD",
+  locale: "en-US",
+};

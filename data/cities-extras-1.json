@@ -1,0 +1,734 @@
+{
+  "cities": [
+    {
+      "slug": "alanya",
+      "name": "Alanya",
+      "emoji": "🏰",
+      "tagline": "Antalya's bigger, cheaper, beach-first coastal cousin — and home to Cleopatra Beach.",
+      "summary": "Alanya stretches 25 km along the Mediterranean east of Antalya. Cleopatra Beach / Center has the castle views and the most walkable base. Oba and Tosmur are mid-range residential. Mahmutlar is the expat-heavy value zone. Pick based on how much resort vs. local-life you want.",
+      "bestFor": [
+        "Budget beach weeks",
+        "All-inclusive families",
+        "Long-stay digital nomads"
+      ],
+      "idealNights": "4–7 nights",
+      "whenToGo": "May–June and September–October",
+      "mapQuery": "Alanya, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Alanya,Turkey&z=12&output=embed",
+      "heroSearch": "Alanya",
+      "areas": [
+        {
+          "slug": "alanya-center",
+          "name": "Alanya Center & Cleopatra Beach",
+          "oneLiner": "The postcard side — castle on the cliff, sandy Cleopatra Beach, busy promenade.",
+          "vibe": "Touristy, lively, scenic",
+          "walkability": "Excellent",
+          "bestForTags": [
+            "first-timers",
+            "couples",
+            "beach"
+          ],
+          "priceRange": "$60–$300 / night",
+          "pros": [
+            "Best sandy beach in the region",
+            "Walk to restaurants and bars",
+            "Iconic castle views",
+            "Water sports on the beach"
+          ],
+          "cons": [
+            "Very busy in summer",
+            "Some streets feel like Vegas",
+            "Pricier than Mahmutlar"
+          ]
+        },
+        {
+          "slug": "oba-tosmur",
+          "name": "Oba & Tosmur",
+          "oneLiner": "The quieter residential strip just east of the center — mid-range resorts, less chaos.",
+          "vibe": "Family, residential, calmer",
+          "walkability": "Good",
+          "bestForTags": [
+            "families",
+            "couples",
+            "mid-range"
+          ],
+          "priceRange": "$70–$250 / night",
+          "pros": [
+            "Calmer than the center",
+            "Big family hotels with pools",
+            "Dolmuş to the center in 10 min"
+          ],
+          "cons": [
+            "Beach is rockier than Cleopatra",
+            "Less to walk to",
+            "Feels residential"
+          ]
+        },
+        {
+          "slug": "mahmutlar",
+          "name": "Mahmutlar",
+          "oneLiner": "The expat value zone — long pebble beach, Russian/German shopfronts, cheap long-term stays.",
+          "vibe": "Expat, budget, residential",
+          "walkability": "Good",
+          "bestForTags": [
+            "budget",
+            "long-stay",
+            "digital nomads"
+          ],
+          "priceRange": "$40–$180 / night",
+          "pros": [
+            "Cheapest hotels and rentals in the region",
+            "Nice long beach",
+            "Good grocery stores and gyms",
+            "Friendly for long-stays"
+          ],
+          "cons": [
+            "Very few Turkish locals",
+            "Feels quite Eastern European in summer",
+            "15-min dolmuş to Cleopatra"
+          ]
+        },
+        {
+          "slug": "avsallar-okurcalar",
+          "name": "Avsallar & Okurcalar",
+          "oneLiner": "30 min west of Alanya — all-inclusive resort strip with long sandy beaches.",
+          "vibe": "Package holiday, family, all-inclusive",
+          "walkability": "Inside resorts",
+          "bestForTags": [
+            "families",
+            "all-inclusive",
+            "beach"
+          ],
+          "priceRange": "$100–$500 / night",
+          "pros": [
+            "Purpose-built all-inclusive resorts",
+            "Long sandy beaches",
+            "Good for kids",
+            "Frequent airport transfers"
+          ],
+          "cons": [
+            "Very little non-resort life",
+            "30–45 min from Alanya old town",
+            "Summer peak crowds"
+          ]
+        }
+      ],
+      "hotels": [
+        {
+          "name": "Delphin Be Grand Resort",
+          "area": "avsallar-okurcalar",
+          "tier": "luxury",
+          "priceFrom": 320,
+          "bestFor": [
+            "families",
+            "all-inclusive"
+          ],
+          "whyStay": "One of the best all-inclusives on the strip — excellent food, large pool complex, private beach."
+        },
+        {
+          "name": "Granada Luxury Beach",
+          "area": "avsallar-okurcalar",
+          "tier": "luxury",
+          "priceFrom": 260,
+          "bestFor": [
+            "families",
+            "all-inclusive"
+          ],
+          "whyStay": "Large family-friendly 5-star with waterpark, kids' programs, beachfront setting."
+        },
+        {
+          "name": "Hedef Resort & Spa",
+          "area": "alanya-center",
+          "tier": "mid",
+          "priceFrom": 180,
+          "bestFor": [
+            "families",
+            "beach"
+          ],
+          "whyStay": "Cliffside hotel with elevator down to a private beach — great value 5-star near the center."
+        },
+        {
+          "name": "Club Hotel Sera",
+          "area": "alanya-center",
+          "tier": "mid",
+          "priceFrom": 130,
+          "bestFor": [
+            "families",
+            "value"
+          ],
+          "whyStay": "Large resort near Cleopatra Beach with good all-inclusive food and multiple pools."
+        },
+        {
+          "name": "Grand Kaptan Hotel",
+          "area": "oba-tosmur",
+          "tier": "mid",
+          "priceFrom": 110,
+          "bestFor": [
+            "families",
+            "all-inclusive"
+          ],
+          "whyStay": "Beachfront family resort with waterslides, kids' club, and reasonable all-inclusive pricing."
+        },
+        {
+          "name": "Xperia Saray Beach",
+          "area": "oba-tosmur",
+          "tier": "mid",
+          "priceFrom": 90,
+          "bestFor": [
+            "families",
+            "budget"
+          ],
+          "whyStay": "Reliable mid-range family hotel with a pool, 5 min from the beach."
+        },
+        {
+          "name": "White City Hotel",
+          "area": "mahmutlar",
+          "tier": "budget",
+          "priceFrom": 50,
+          "bestFor": [
+            "budget",
+            "long-stay"
+          ],
+          "whyStay": "Modern apart-hotel with kitchenettes near Mahmutlar beach — popular with digital nomads."
+        },
+        {
+          "name": "Orion Hotel",
+          "area": "mahmutlar",
+          "tier": "budget",
+          "priceFrom": 60,
+          "bestFor": [
+            "budget",
+            "couples"
+          ],
+          "whyStay": "Good-value central Mahmutlar hotel with a rooftop pool and short walk to the beach."
+        }
+      ],
+      "faqs": [
+        {
+          "q": "Alanya or Antalya?",
+          "a": "Alanya is cheaper, beachier, less cultural. Antalya has more history (Kaleiçi), better old town, and easier international flights. Many travelers do 2 nights Antalya + 5 nights Alanya."
+        },
+        {
+          "q": "Is Cleopatra Beach worth it?",
+          "a": "Yes — it's the only long sandy beach in the area and has water the Roman queen supposedly bathed in. Get there before 10am for a good spot in summer."
+        }
+      ]
+    },
+    {
+      "slug": "side",
+      "name": "Side",
+      "emoji": "🏛️",
+      "tagline": "Roman ruins on the beach — a resort town built inside a 2,000-year-old city.",
+      "summary": "Side is small and unusual — a former Greek-Roman port where you walk past ancient temples on the way to dinner. The Old Town peninsula is pedestrianized and romantic. West Side and East Side have the large all-inclusive resorts.",
+      "bestFor": [
+        "Beach + ruins combo",
+        "Couples",
+        "Families in all-inclusives"
+      ],
+      "idealNights": "4–6 nights",
+      "whenToGo": "May–June and September",
+      "mapQuery": "Side, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Side,Turkey&z=13&output=embed",
+      "heroSearch": "Side Turkey",
+      "areas": [
+        {
+          "slug": "side-old-town",
+          "name": "Side Old Town",
+          "oneLiner": "The pedestrianized Roman peninsula — temple columns at sunset, restaurants everywhere, harbor walks.",
+          "vibe": "Historic, romantic, walkable",
+          "walkability": "Excellent",
+          "bestForTags": [
+            "couples",
+            "first-timers",
+            "history"
+          ],
+          "priceRange": "$80–$450 / night",
+          "pros": [
+            "Walk to Roman ruins",
+            "Picturesque harbor",
+            "Best restaurants in the area",
+            "Small, charming boutique hotels"
+          ],
+          "cons": [
+            "No real resort pool scene",
+            "Crowded with day-trippers",
+            "Limited large-family hotels"
+          ]
+        },
+        {
+          "slug": "side-west",
+          "name": "West Side (Kumköy)",
+          "oneLiner": "The long sandy beach strip west of Old Town — large 5-star all-inclusives.",
+          "vibe": "Resort, family, all-inclusive",
+          "walkability": "Inside resorts",
+          "bestForTags": [
+            "families",
+            "all-inclusive",
+            "beach"
+          ],
+          "priceRange": "$180–$800 / night",
+          "pros": [
+            "Great beach",
+            "Walkable to Old Town in ~25 min or free shuttle",
+            "Big family resorts"
+          ],
+          "cons": [
+            "Less local feel",
+            "Crowded in July–August"
+          ]
+        },
+        {
+          "slug": "side-east",
+          "name": "East Side (Sorgun)",
+          "oneLiner": "Forested beach area east of the peninsula — quieter, upscale resorts.",
+          "vibe": "Upscale resort, peaceful",
+          "walkability": "Inside resorts",
+          "bestForTags": [
+            "luxury",
+            "families",
+            "all-inclusive"
+          ],
+          "priceRange": "$200–$1200 / night",
+          "pros": [
+            "Some of Turkey's best all-inclusives",
+            "Pine-backed beaches",
+            "Quieter and more green"
+          ],
+          "cons": [
+            "Further from the Old Town walk",
+            "Almost entirely resort-based"
+          ]
+        }
+      ],
+      "hotels": [
+        {
+          "name": "Barut Hemera",
+          "area": "side-west",
+          "tier": "luxury",
+          "priceFrom": 380,
+          "bestFor": [
+            "couples",
+            "all-inclusive"
+          ],
+          "whyStay": "Adults-only Barut resort with excellent food, big pools, direct beach access — top-tier Turkish all-inclusive."
+        },
+        {
+          "name": "Sueno Hotels Beach Side",
+          "area": "side-west",
+          "tier": "luxury",
+          "priceFrom": 340,
+          "bestFor": [
+            "families",
+            "all-inclusive"
+          ],
+          "whyStay": "Huge family-friendly resort with waterpark, multiple restaurants, and long beach."
+        },
+        {
+          "name": "Ali Bey Resort",
+          "area": "side-east",
+          "tier": "luxury",
+          "priceFrom": 360,
+          "bestFor": [
+            "families",
+            "all-inclusive"
+          ],
+          "whyStay": "Legendary family all-inclusive with tennis academy and vast kids' programs."
+        },
+        {
+          "name": "Crystal Sunset Luxury Resort",
+          "area": "side-east",
+          "tier": "luxury",
+          "priceFrom": 310,
+          "bestFor": [
+            "families",
+            "all-inclusive"
+          ],
+          "whyStay": "Well-reviewed family resort with a long private beach and excellent buffet."
+        },
+        {
+          "name": "Side Crown Charm Hotel",
+          "area": "side-old-town",
+          "tier": "mid",
+          "priceFrom": 130,
+          "bestFor": [
+            "couples",
+            "history"
+          ],
+          "whyStay": "Boutique hotel steps from the temple of Apollo in Old Town — great for a cultural base."
+        },
+        {
+          "name": "Beach House Hotel",
+          "area": "side-old-town",
+          "tier": "mid",
+          "priceFrom": 110,
+          "bestFor": [
+            "couples",
+            "walkable"
+          ],
+          "whyStay": "Long-running adults-only hotel in the heart of Old Town with a seafront terrace."
+        }
+      ],
+      "faqs": [
+        {
+          "q": "Should I stay in Side Old Town or a resort?",
+          "a": "Old Town if you want to walk to dinner among Roman ruins. A resort if you want all-inclusive convenience. A smart combo: 2 nights boutique in Old Town, 4 nights in an East Side resort."
+        }
+      ]
+    },
+    {
+      "slug": "kusadasi",
+      "name": "Kuşadası",
+      "emoji": "⚓",
+      "tagline": "Cruise-ship gateway to Ephesus — and Turkey's most walkable Aegean resort town.",
+      "summary": "Kuşadası is the main port of call for Aegean cruises and the base most travelers pick for visiting Ephesus. Stay in Kuşadası Center for walking access to restaurants and the marina. Ladies Beach is the classic beach base. Selçuk is the tiny town right next to Ephesus itself.",
+      "bestFor": [
+        "Ephesus visits",
+        "Cruise extensions",
+        "Families",
+        "Weekend breakers"
+      ],
+      "idealNights": "3–5 nights",
+      "whenToGo": "May–June and September–October",
+      "mapQuery": "Kusadasi, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Kusadasi,Turkey&z=12&output=embed",
+      "heroSearch": "Kusadasi",
+      "areas": [
+        {
+          "slug": "kusadasi-center",
+          "name": "Kuşadası Center",
+          "oneLiner": "Walking distance to the port, the grand bazaar, and a strip of harbor-view restaurants.",
+          "vibe": "Busy port town, lively",
+          "walkability": "Excellent",
+          "bestForTags": [
+            "first-timers",
+            "cruise",
+            "couples"
+          ],
+          "priceRange": "$70–$350 / night",
+          "pros": [
+            "Walk everywhere",
+            "Best dining variety in the area",
+            "Easy pickup for Ephesus tours"
+          ],
+          "cons": [
+            "Cruise-day chaos",
+            "Nightlife streets can be loud",
+            "Beach isn't at your door"
+          ]
+        },
+        {
+          "slug": "ladies-beach",
+          "name": "Ladies Beach (Kadınlar Denizi)",
+          "oneLiner": "The main Kuşadası beach — hotel row along the bay, family-friendly, with dolmuş to the center.",
+          "vibe": "Beach resort, family",
+          "walkability": "Very good",
+          "bestForTags": [
+            "families",
+            "beach",
+            "all-inclusive"
+          ],
+          "priceRange": "$90–$400 / night",
+          "pros": [
+            "Direct beach access",
+            "Mix of mid-range and 5-star all-inclusives",
+            "Dolmuş to town every 5 min"
+          ],
+          "cons": [
+            "Crowded beach in summer",
+            "Less walkable to restaurants than the center"
+          ]
+        },
+        {
+          "slug": "selcuk",
+          "name": "Selçuk (for Ephesus)",
+          "oneLiner": "Tiny town 5 min from the Ephesus ruins — the best base for dawn visits before the buses arrive.",
+          "vibe": "Village, local, historic",
+          "walkability": "Excellent",
+          "bestForTags": [
+            "history",
+            "couples",
+            "one-night stop"
+          ],
+          "priceRange": "$50–$250 / night",
+          "pros": [
+            "5 min from Ephesus gate",
+            "Real small-town Turkish feel",
+            "Great for early or sunset visits"
+          ],
+          "cons": [
+            "Not on the sea — no beach",
+            "Very small, limited dining",
+            "Can feel too quiet"
+          ]
+        }
+      ],
+      "hotels": [
+        {
+          "name": "Korumar Ephesus Beach & Spa",
+          "area": "ladies-beach",
+          "tier": "luxury",
+          "priceFrom": 320,
+          "bestFor": [
+            "couples",
+            "all-inclusive"
+          ],
+          "whyStay": "Top-rated 5-star on the coast with adults-only areas, excellent spa, and panoramic sea views."
+        },
+        {
+          "name": "Charisma De Luxe Hotel",
+          "area": "ladies-beach",
+          "tier": "luxury",
+          "priceFrom": 260,
+          "bestFor": [
+            "couples",
+            "adults-only"
+          ],
+          "whyStay": "Adults-only cliffside 5-star with private beach platforms and great dining."
+        },
+        {
+          "name": "Sealight Resort Hotel",
+          "area": "ladies-beach",
+          "tier": "mid",
+          "priceFrom": 180,
+          "bestFor": [
+            "families",
+            "all-inclusive"
+          ],
+          "whyStay": "Large family resort with multiple pools and good all-inclusive value."
+        },
+        {
+          "name": "Richmond Ephesus Resort",
+          "area": "kusadasi-center",
+          "tier": "mid",
+          "priceFrom": 160,
+          "bestFor": [
+            "families",
+            "beach"
+          ],
+          "whyStay": "Beachside 5-star with a big pool and very strong family reputation."
+        },
+        {
+          "name": "Grand Efe Hotel",
+          "area": "selcuk",
+          "tier": "mid",
+          "priceFrom": 90,
+          "bestFor": [
+            "couples",
+            "history"
+          ],
+          "whyStay": "Nicest mid-range in Selçuk, 5-min drive to Ephesus, pool and garden."
+        },
+        {
+          "name": "Nilya Hotel",
+          "area": "selcuk",
+          "tier": "mid",
+          "priceFrom": 80,
+          "bestFor": [
+            "couples",
+            "boutique"
+          ],
+          "whyStay": "Restored Ottoman house in central Selçuk with garden courtyard, family-run, excellent reviews."
+        },
+        {
+          "name": "Villa Konak",
+          "area": "selcuk",
+          "tier": "budget",
+          "priceFrom": 55,
+          "bestFor": [
+            "budget",
+            "couples"
+          ],
+          "whyStay": "Charming stone guesthouse in Selçuk old quarter, peaceful courtyard, great value."
+        }
+      ],
+      "faqs": [
+        {
+          "q": "Should I stay in Kuşadası or Selçuk for Ephesus?",
+          "a": "Selçuk if Ephesus is your only goal — you can be inside the ruins at dawn before the crowds. Kuşadası if you want a broader vacation with beach, dining, and a cruise option."
+        },
+        {
+          "q": "How far is Ephesus from Kuşadası?",
+          "a": "Around 20 minutes by car. Day tours pick up at Kuşadası hotels every morning."
+        }
+      ]
+    },
+    {
+      "slug": "mersin",
+      "name": "Mersin",
+      "emoji": "🌴",
+      "tagline": "The eastern Mediterranean city — cleaner beaches, lower prices, no tour buses.",
+      "summary": "Mersin is a modern Turkish port city few foreign tourists reach — which is exactly the point. Stay in Yenişehir for the walkable seafront and restaurants. Mezitli has the beach hotels. Erdemli & Kızkalesi (60 min east) have the famous sea castles and quieter coves.",
+      "bestFor": [
+        "Off-the-beaten-path",
+        "Domestic travelers",
+        "Value beach weeks"
+      ],
+      "idealNights": "3–5 nights",
+      "whenToGo": "May–June and September–October",
+      "mapQuery": "Mersin, Turkey",
+      "mapEmbed": "https://www.google.com/maps?q=Mersin,Turkey&z=11&output=embed",
+      "heroSearch": "Mersin",
+      "areas": [
+        {
+          "slug": "yenisehir",
+          "name": "Yenişehir",
+          "oneLiner": "Mersin's modern heart — long seafront promenade, shopping, and the best restaurants.",
+          "vibe": "Urban, modern, local",
+          "walkability": "Excellent",
+          "bestForTags": [
+            "first-timers",
+            "couples",
+            "business"
+          ],
+          "priceRange": "$60–$220 / night",
+          "pros": [
+            "Long seaside walk (Forum to Marina)",
+            "Best restaurant scene in the city",
+            "Well-connected public transport",
+            "Feels safe and local"
+          ],
+          "cons": [
+            "Not on a swimmable beach",
+            "Few international-style hotels",
+            "Limited English at budget places"
+          ]
+        },
+        {
+          "slug": "mezitli",
+          "name": "Mezitli & Tece",
+          "oneLiner": "Mersin's beach suburb — row of beach hotels, open-air cafés, local Sunday market.",
+          "vibe": "Beach, family, residential",
+          "walkability": "Good near the sea",
+          "bestForTags": [
+            "families",
+            "budget",
+            "beach"
+          ],
+          "priceRange": "$50–$180 / night",
+          "pros": [
+            "Direct beach access",
+            "Long pebble beaches",
+            "Cheap and local feel"
+          ],
+          "cons": [
+            "15-min drive to the center",
+            "No major hotel brands",
+            "Beach isn't soft sand"
+          ]
+        },
+        {
+          "slug": "kizkalesi",
+          "name": "Kızkalesi (Erdemli)",
+          "oneLiner": "An hour east of Mersin — the famous Maiden's Castle sits in the sea just off a sandy beach.",
+          "vibe": "Small beach village, quiet, historic",
+          "walkability": "Excellent",
+          "bestForTags": [
+            "couples",
+            "history",
+            "off-the-beaten-path"
+          ],
+          "priceRange": "$60–$200 / night",
+          "pros": [
+            "One of Turkey's most photogenic castles",
+            "Good sandy beach",
+            "Cheaper than the Aegean coast"
+          ],
+          "cons": [
+            "1 hour from the Mersin city",
+            "Limited dining options",
+            "Mostly Turkish-language service"
+          ]
+        }
+      ],
+      "hotels": [
+        {
+          "name": "Mersin HiltonSA",
+          "area": "yenisehir",
+          "tier": "luxury",
+          "priceFrom": 150,
+          "bestFor": [
+            "business",
+            "first-timers"
+          ],
+          "whyStay": "The landmark 5-star on Mersin's seafront promenade — big pool, sea views, central Yenişehir location."
+        },
+        {
+          "name": "Divan Mersin",
+          "area": "yenisehir",
+          "tier": "mid",
+          "priceFrom": 120,
+          "bestFor": [
+            "business",
+            "couples"
+          ],
+          "whyStay": "Modern 5-star with rooftop restaurant (Roof 14), walkable to the marina, 9.3 location rating."
+        },
+        {
+          "name": "The Qua Hotel",
+          "area": "yenisehir",
+          "tier": "mid",
+          "priceFrom": 90,
+          "bestFor": [
+            "business",
+            "value"
+          ],
+          "whyStay": "Well-reviewed modern hotel near the Yenişehir Forum mall. Good value for a city stay."
+        },
+        {
+          "name": "Vista Boutique Hotel",
+          "area": "mezitli",
+          "tier": "mid",
+          "priceFrom": 80,
+          "bestFor": [
+            "families",
+            "beach"
+          ],
+          "whyStay": "Relaxed beach-adjacent hotel in Mezitli with private balconies — great value near Viransehir Beach."
+        },
+        {
+          "name": "Merada Suit Otel and Spa",
+          "area": "mezitli",
+          "tier": "mid",
+          "priceFrom": 75,
+          "bestFor": [
+            "long-stay",
+            "families"
+          ],
+          "whyStay": "Suite-style rooms with kitchenettes in central Mezitli, garden terrace — good for longer stays."
+        },
+        {
+          "name": "Kilikya Hotel",
+          "area": "kizkalesi",
+          "tier": "mid",
+          "priceFrom": 100,
+          "bestFor": [
+            "families",
+            "history"
+          ],
+          "whyStay": "Beachfront 4-star directly opposite the Maiden's Castle — private beach, pool, kids' water park."
+        },
+        {
+          "name": "Yaka Hotel Kizkalesi",
+          "area": "kizkalesi",
+          "tier": "budget",
+          "priceFrom": 55,
+          "bestFor": [
+            "budget",
+            "couples"
+          ],
+          "whyStay": "Simple sea-view hotel in Kızkalesi with direct castle views — incredible value for the area."
+        }
+      ],
+      "faqs": [
+        {
+          "q": "Is Mersin worth visiting as a tourist?",
+          "a": "Yes — if you want a Turkey that isn't on every Instagram feed. Mersin is modern, safe, and priced for locals. Pair it with Kızkalesi or the ruins at Kanlıdivane for a different side of the country."
+        },
+        {
+          "q": "Is Mersin safe for tourists?",
+          "a": "Very safe in the city itself — it's a major Turkish port with a large middle class. Standard urban caution applies; avoid the port industrial areas after dark."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "slug": "istanbul-cappadocia-5-days",
+  "title": "Istanbul + Cappadocia in 5 Days",
+  "subtitle": "The combo most first-time Turkey travelers actually want. Book the balloon flight before anything else — it sells out.",
+  "intro": "Five days is the sweet spot: 2 nights Istanbul for the icons, 2 nights Cappadocia for the balloon and cave hotels, 1 flex night that you use in whichever side hooks you. Flights between are 80 min and $60–120. Do it in this order — Cappadocia first if the balloon is non-negotiable (gives you a second shot if weather cancels).",
+  "preTrip": [
+    "Book the hot air balloon NOW. 3-month lead time in peak season. Royal Balloon, Butterfly Balloons, and Voyager are the three operators with the best safety records.",
+    "Pre-book the internal flight Istanbul → Kayseri (closer to Cappadocia than Nevşehir airport). Turkish Airlines and Pegasus fly 4–6x daily. ~$60–120 one-way.",
+    "Activate an Airalo Turkey eSIM before you fly — saves airport-SIM hassle.",
+    "Pre-book both airport transfers (IST → Istanbul city, Kayseri/Nevşehir → your Cappadocia cave hotel). Cave hotels are remote; a taxi meter can run $40+.",
+    "Reserve your cave hotel 2+ months ahead if you want Museum Hotel, Argos in Cappadocia, Sultan Cave Suites, or Kayakapi. These sell out consistently."
+  ],
+  "days": [
+    {
+      "title": "Day 1 — Arrive Istanbul (Sultanahmet)",
+      "staybase": "Sultanahmet — you want to wake up next to Hagia Sophia tomorrow",
+      "flow": [
+        { "time": "Arrive", "what": "Pre-booked transfer from IST to Sultanahmet (50 min)." },
+        { "time": "14:00", "what": "Check in + rest. Don't try to do sights on arrival day — jet lag costs more than you think." },
+        { "time": "17:00", "what": "Sunset walk: Sultanahmet Square → Hippodrome → Cistern plaza. Orientation only, no tickets yet." },
+        { "time": "19:30", "what": "Dinner at Matbah (Ottoman cuisine inside Ottoman Imperial Hotel) or Deraliye. Early night." }
+      ],
+      "tips": [
+        "Jet lag tip: don't sleep before 22:00 local. Light 45-min nap max.",
+        "If you arrive before noon: swap this with Day 2 morning."
+      ]
+    },
+    {
+      "title": "Day 2 — Istanbul icons",
+      "staybase": "Sultanahmet (same hotel)",
+      "flow": [
+        { "time": "08:00", "what": "Hotel breakfast, then Blue Mosque (free entry, open 08:30)." },
+        { "time": "09:30", "what": "Hagia Sophia with pre-booked ticket. Allow 90 min." },
+        { "time": "11:30", "what": "Basilica Cistern (pre-booked slot). 30 min." },
+        { "time": "12:30", "what": "Lunch at Balıkçı Sabahattin (seafood, classic meyhane)." },
+        { "time": "14:00", "what": "Topkapı Palace + Harem. 3 hours. Don't rush it." },
+        { "time": "17:30", "what": "Ferry across Bosphorus — Eminönü → Kadıköy → back. Cheapest spectacular experience in Turkey." },
+        { "time": "20:00", "what": "Dinner in Beyoğlu — Mikla (view splurge), Karaköy Lokantası (meyhane), or Meze by Lemon Tree." }
+      ],
+      "tips": [
+        "Pack light for tomorrow — small bag only. Luggage stays at Istanbul hotel if doing a round-trip, or ships with you.",
+        "Tomorrow is an early flight. Set alarms."
+      ]
+    },
+    {
+      "title": "Day 3 — Fly to Cappadocia + first afternoon",
+      "staybase": "Göreme (balloon central) or Uçhisar (quieter, higher)",
+      "flow": [
+        { "time": "06:00", "what": "Early transfer to IST airport. Fly to Kayseri (80 min)." },
+        { "time": "10:30", "what": "Land + transfer to your cave hotel (~60 min). Check in." },
+        { "time": "13:00", "what": "Lunch at Topdeck Cave Restaurant (Göreme) or Seki Restaurant (Uçhisar)." },
+        { "time": "14:30", "what": "Göreme Open Air Museum — the painted rock churches. 2 hours." },
+        { "time": "16:30", "what": "Sunset at Red Valley viewpoint. 15-min walk from parking. Bring a jacket." },
+        { "time": "19:30", "what": "Dinner at Seten Restaurant (Göreme) — best fine dining in the region." },
+        { "time": "21:30", "what": "EARLY night — tomorrow is a 04:30 wake-up for the balloon." }
+      ],
+      "tips": [
+        "Confirm balloon pickup with the operator after check-in.",
+        "Weather can cancel balloons. If it does, Day 4 becomes backup — that's why we gave it flex."
+      ]
+    },
+    {
+      "title": "Day 4 — Balloon sunrise + Cappadocia deep dive",
+      "staybase": "Göreme / Uçhisar (same cave hotel)",
+      "flow": [
+        { "time": "04:30", "what": "Balloon pickup. Takeoff ~05:45. 60-min flight. Traditional champagne toast on landing." },
+        { "time": "08:00", "what": "Back to hotel. Full Turkish breakfast on the terrace — this is a life moment." },
+        { "time": "10:00", "what": "Rest / pool hour at your cave hotel." },
+        { "time": "12:00", "what": "Lunch at Dibek (Göreme) — cooked-in-clay-pot testi kebab." },
+        { "time": "14:00", "what": "Kaymaklı or Derinkuyu underground city. Pick one — they're similar, don't do both." },
+        { "time": "16:30", "what": "Pigeon Valley + Uçhisar Castle climb." },
+        { "time": "18:30", "what": "Sunset at Lovers Hill or Rose Valley." },
+        { "time": "20:30", "what": "Dinner at Ziggy's Cafe (Ürgüp) or Old Greek House for the atmosphere." }
+      ],
+      "tips": [
+        "If balloon cancelled: operator auto-rebooks you for Day 5 morning. Use Day 4 afternoon normally.",
+        "Skip the 'whirling dervish' tourist show in Cappadocia — it's for buses. See the real thing in Konya or Galata."
+      ]
+    },
+    {
+      "title": "Day 5 — Flex + fly home",
+      "staybase": "Back to Istanbul or direct home",
+      "flow": [
+        { "time": "Morning", "what": "ATV tour through Love Valley (best morning activity) OR horseback ride OR a pottery class in Avanos." },
+        { "time": "12:30", "what": "Lunch somewhere with a terrace view — Seten for refined, Ziggy's for casual." },
+        { "time": "14:30", "what": "Transfer to Kayseri/Nevşehir airport. Fly to Istanbul or your next stop." },
+        { "time": "Evening", "what": "If back in Istanbul: final dinner in Karaköy. If going home: Istanbul layover means airport hotel for an early flight." }
+      ],
+      "tips": [
+        "Book a hamam in Cappadocia morning if you want real relaxation — 60-min scrub at Museum Hotel or Kelebek hammam.",
+        "If you have an extra day: take the overnight bus to Pamukkale instead of flying home. Turkey's other iconic photo spot, 90% less touristy."
+      ]
+    }
+  ],
+  "scams": [
+    "Balloon operator undercutting the known brands. Safety record matters. Stick to Royal Balloon, Butterfly, Voyager, Kapadokya Balloons.",
+    "Kayseri airport taxi drivers quoting $100+ for the 60-minute ride. Pre-book transfer: $35–50 fixed.",
+    "'Special rug village' tour stops that materialize mid-day trip. Politely refuse.",
+    "Fake 'Turkish night' shows advertised in hotel lobbies — 80% are mediocre; if you want the performance, pick a real Sema ceremony in a museum setting."
+  ],
+  "checklist": [
+    "Balloon flight pre-booked + confirmed",
+    "Istanbul → Kayseri flight pre-booked",
+    "Both airport transfers pre-booked",
+    "Cave hotel reserved 2+ months out",
+    "eSIM activated",
+    "Travel insurance active (balloon flying is covered by SafetyWing nomad plan)"
+  ]
+}

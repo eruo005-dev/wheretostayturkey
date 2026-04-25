@@ -1,0 +1,23 @@
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+
+# Local env / secrets
+.env
+.env.local
+.env.*.local
+
+# Build output - Vercel rebuilds it on every deploy
+site/
+
+# Editor cruft
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Scratch
+/tmp/
+data/_staging/

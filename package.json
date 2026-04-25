@@ -1,0 +1,11 @@
+{
+  "name": "wheretostayturkey",
+  "version": "1.0.0",
+  "description": "Where to Stay in Turkey — affiliate-driven decision engine for Turkey hotel bookings.",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js && npx --yes serve site -p 4000"
+  },
+  "private": true,
+  "license": "UNLICENSED"
+}
