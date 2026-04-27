@@ -13,11 +13,26 @@
       btn.disabled = true;
       try {
         if (endpoint && !endpoint.includes("YOUR_FORM_ID")) {
-          await fetch(endpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
-            body: JSON.stringify({ email, source: form.dataset.source || "inline", page: location.pathname }),
-          });
+          if (endpoint.includes("mailerlite.com")) {
+            // MailerLite expects form-encoded data with fields[email].
+            // Cross-origin POST returns opaque (no-cors); fire-and-forget.
+            const body = new URLSearchParams();
+            body.append("fields[email]", email);
+            body.append("ml-submit", "1");
+            body.append("anticsrf", "true");
+            await fetch(endpoint, {
+              method: "POST",
+              mode: "no-cors",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: body.toString(),
+            });
+          } else {
+            await fetch(endpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Accept: "application/json" },
+              body: JSON.stringify({ email, source: form.dataset.source || "inline", page: location.pathname }),
+            });
+          }
         }
         // Send users straight to the thank-you page where the itinerary lives
         // plus the highest-converting affiliate upsells on the site.

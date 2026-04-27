@@ -49,7 +49,7 @@ module.exports = {
   adsense: { clientId: "", slotCity: "" },
   plausibleDomain: "",
   gaMeasurementId: "",
-  emailCaptureEndpoint: "https://formspree.io/f/YOUR_FORM_ID",
+  emailCaptureEndpoint: "https://assets.mailerlite.com/jsonp/2296486/forms/185895210894493012/subscribe",
   defaultOgImage: "/assets/img/og-default.svg",
   twitterHandle: "@wheretostayturkey",
   currency: "USD",
