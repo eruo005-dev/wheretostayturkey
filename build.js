@@ -1398,8 +1398,12 @@ function renderSitemap() {
     `${config.siteUrl}/packing/`,
     `${config.siteUrl}/arrival-istanbul/`,
     `${config.siteUrl}/experiences/`,
+    `${config.siteUrl}/regions/`,
+    `${config.siteUrl}/turkey-guide/`,
   ];
   for (const _e of EXPERIENCES) urls.push(`${config.siteUrl}/experiences/${_e.slug}/`);
+  for (const _r of REGIONS) urls.push(`${config.siteUrl}/regions/${_r.slug}/`);
+  for (const _slug of Object.keys(DAY_TRIPS)) urls.push(`${config.siteUrl}/${_slug}/day-trips/`);
   for (const p of JOURNAL) urls.push(`${config.siteUrl}/journal/${p.slug}/`);
   for (const c of cities) {
     urls.push(`${config.siteUrl}/${c.slug}/`);
@@ -2616,6 +2620,254 @@ ${tail()}`;
   ];
   const html = head({ title, description, canonical, jsonld }) + body;
   writeFile(`experiences/${p.slug}/index.html`, html);
+}
+
+// ---- Regional hubs + Day Trips clusters + Ultimate Guide ----
+const REGIONS = (() => {
+  try { return require("./data/regions.json").regions || []; }
+  catch (e) { return []; }
+})();
+const DAY_TRIPS = (() => {
+  try { return require("./data/day-trips.json").byCity || {}; }
+  catch (e) { return {}; }
+})();
+
+function renderRegionsHub() {
+  const canonical = `${config.siteUrl}/regions/`;
+  const title = "The 5 regions of Turkey — pick which one fits your trip";
+  const description = "Aegean Coast, Mediterranean Riviera, Cappadocia, Black Sea, Eastern Anatolia. Each region has a completely different Turkey trip. Compare them and pick yours.";
+  const cards = REGIONS.map((r) => `
+    <a class="card" href="/regions/${esc(r.slug)}/" style="text-decoration:none;color:inherit;padding:24px">
+      <div class="eyebrow">Region</div>
+      <h3 style="margin:6px 0 8px">${esc(r.name)}</h3>
+      <p style="color:var(--c-text-soft);font-size:.95rem;margin:0 0 8px">${esc(r.tagline)}</p>
+      <p style="font-size:.85rem;color:var(--ink-muted);margin:0">${(r.cities || []).slice(0, 4).map((c) => esc(c)).join(" · ")}</p>
+      <div style="color:var(--c-accent);font-weight:600;font-size:.95rem;margin-top:14px">Explore →</div>
+    </a>
+  `).join("");
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Regions</div>
+    <h1>The 5 regions of Turkey</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">Turkey is geographically as varied as Italy + Greece combined. Pick the region that fits your trip style — coast, mountains, ruins, or the cradle of civilization.</p>
+  </div>
+</div>
+<section class="container">
+  <div class="grid grid-1 grid-2 grid-3 mt-3">${cards}</div>
+</section>
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Regions", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("regions/index.html", html);
+}
+
+function renderRegionPage(r) {
+  const canonical = `${config.siteUrl}/regions/${r.slug}/`;
+  const title = `${r.name} — where to go and where to stay`;
+  const description = r.summary.slice(0, 160);
+  const citiesInRegion = (r.cities || []).map((slug) => cities.find((c) => c.slug === slug)).filter(Boolean);
+
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/regions/">Regions</a> / ${esc(r.name)}</div>
+    <h1>${esc(r.name)}</h1>
+    <p class="text-muted" style="font-size:1.2rem;font-style:italic;max-width:720px">${esc(r.tagline)}</p>
+    <p style="max-width:720px;margin-top:18px">${esc(r.summary)}</p>
+  </div>
+</div>
+
+<section class="container section-sm">
+  <h2>Cities in ${esc(r.name)}</h2>
+  <div class="grid grid-1 grid-2 grid-3 mt-3">
+    ${citiesInRegion.map((c) => `
+      <a class="card" href="/${esc(c.slug)}/" style="text-decoration:none;color:inherit;padding:22px">
+        <div class="eyebrow">${esc(c.tagline || "")}</div>
+        <h3 style="margin:6px 0">${esc(c.name)}</h3>
+        <p style="color:var(--c-text-soft);font-size:.92rem;margin:0">${esc((c.intro || "").slice(0, 140))}…</p>
+        <div style="color:var(--c-accent);font-weight:600;margin-top:12px">Where to stay in ${esc(c.name)} →</div>
+      </a>
+    `).join("")}
+  </div>
+</section>
+
+<section class="container section-sm">
+  <h2>When to go</h2>
+  <p style="max-width:720px">${esc(r.whenToGo)}</p>
+</section>
+
+<section class="container section-sm">
+  <h2>Highlights</h2>
+  <ul style="max-width:720px;line-height:1.8">
+    ${(r.highlights || []).map((h) => `<li>${esc(h)}</li>`).join("")}
+  </ul>
+</section>
+
+<section class="container section-sm">
+  <h2>Suggested ${(r.itinerary || []).length}-stop itinerary</h2>
+  <ol style="max-width:720px;line-height:1.8">
+    ${(r.itinerary || []).map((step) => `<li>${esc(step)}</li>`).join("")}
+  </ol>
+</section>
+
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Regions", url: `${config.siteUrl}/regions/` },
+    { name: r.name, url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile(`regions/${r.slug}/index.html`, html);
+}
+
+function renderDayTrips(citySlug, trips) {
+  const c = cities.find((x) => x.slug === citySlug);
+  if (!c) return;
+  const canonical = `${config.siteUrl}/${c.slug}/day-trips/`;
+  const title = `Day trips from ${c.name} — ${trips.length} options ranked`;
+  const description = `Best day trips from ${c.name}: how far, how long, what to see, and which tour operator to book through. Real distances, honest verdicts.`;
+
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/${c.slug}/">${esc(c.name)}</a> / Day trips</div>
+    <h1>Day trips from ${esc(c.name)}</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">${trips.length} day-trip options from ${esc(c.name)}, with real distances, time required, and the best tour operator for each. Pick one for a half-day reset, two for a packed week.</p>
+  </div>
+</div>
+
+<section class="container">
+  ${trips.map((t, i) => `
+    <div class="card mt-3" style="padding:28px">
+      <div class="eyebrow">${esc(t.distance)} · ${esc(t.time)}</div>
+      <h3 style="margin:6px 0 12px">${i + 1}. ${esc(t.name)}</h3>
+      <p style="margin:0 0 16px;color:var(--c-text-soft)">${t.summary}</p>
+      <a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(getYourGuideLink(t.tourQuery))}">Book a ${esc(t.name)} tour →</a>
+    </div>
+  `).join("")}
+</section>
+
+<section class="container section-sm">
+  <h2>Where to stay in ${esc(c.name)}</h2>
+  <p class="text-muted" style="max-width:720px">If you're doing 2+ day trips, base yourself centrally. <a href="/${c.slug}/">See our full ${esc(c.name)} neighborhood guide</a> for which area suits which tour pickup.</p>
+</section>
+
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: c.name, url: `${config.siteUrl}/${c.slug}/` },
+    { name: "Day trips", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile(`${c.slug}/day-trips/index.html`, html);
+}
+
+function renderUltimateGuide() {
+  const canonical = `${config.siteUrl}/turkey-guide/`;
+  const title = "The ultimate Turkey travel guide — where to stay, when to go, what to do";
+  const description = "Complete Turkey travel guide: 5 regions, 22 cities, day-by-day itineraries, flight + visa + insurance + packing essentials, and 19 in-depth journal articles. Everything in one place.";
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Ultimate Turkey guide</div>
+    <h1>The ultimate Turkey travel guide</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:760px">A single page that links every resource we have for planning a Turkey trip — from "should I go to Turkey or Greece" all the way to "which kebab to order in Gaziantep". Bookmark this and come back.</p>
+  </div>
+</div>
+
+<section class="container container-narrow prose">
+  <h2>1. Decide if Turkey is right for your trip</h2>
+  <p>Start with the macro question. <a href="/journal/turkey-vs-greece/">Turkey vs Greece</a> compares the two coastlines for first-time visitors. <a href="/best-time-to-visit-turkey/">When to visit Turkey</a> picks your month. <a href="/how-many-nights-turkey/">How many nights</a> sets your budget envelope. <a href="/journal/turkey-cost-week/">How much does a week in Turkey cost</a> answers the big-number question.</p>
+  <h2>2. Pick your region</h2>
+  <p>Turkey has 5 wildly different regions. Pick one (or two) per trip:</p>
+  <ul>
+    ${REGIONS.map((r) => `<li><strong><a href="/regions/${esc(r.slug)}/">${esc(r.name)}</a></strong> — ${esc(r.tagline)}</li>`).join("")}
+  </ul>
+  <h2>3. Pick your city</h2>
+  <p>Browse the 22 cities we cover, ranked by travel style:</p>
+  <ul>
+    <li><strong>For first-timers:</strong> <a href="/istanbul/">Istanbul</a> + <a href="/cappadocia/">Cappadocia</a></li>
+    <li><strong>For beach trips:</strong> <a href="/antalya/">Antalya</a>, <a href="/bodrum/">Bodrum</a>, <a href="/fethiye/">Fethiye</a>, <a href="/kas/">Kaş</a></li>
+    <li><strong>For culture-deep trips:</strong> <a href="/mardin/">Mardin</a>, <a href="/sanliurfa/">Şanlıurfa</a>, <a href="/gaziantep/">Gaziantep</a>, <a href="/konya/">Konya</a></li>
+    <li><strong>For nature:</strong> <a href="/trabzon/">Trabzon</a>, <a href="/rize/">Rize</a>, <a href="/pamukkale/">Pamukkale</a></li>
+    <li><strong>For nearly-anyone:</strong> Use our <a href="/quiz/">interactive quiz</a> to match your travel style to a city</li>
+  </ul>
+  <h2>4. Pick your neighborhood and hotel</h2>
+  <p>Each city page breaks down 3–5 neighborhoods with the right hotel for your style. Open the city page and use the <em>"Best for"</em> tags to filter (couples, families, first-timers, luxury, budget). All hotel CTAs route through Travelpayouts.</p>
+  <h2>5. Book the practical stack</h2>
+  <ul>
+    <li><a href="/flights/">Flights to Turkey</a> — 16 popular routes via Trip.com</li>
+    <li><a href="/visa/">Visa requirements by country</a> — most travelers get an e-visa in 3 minutes online</li>
+    <li><a href="/esim/">eSIM &amp; data</a> — Airalo from $4.50 / 7 days</li>
+    <li><a href="/insurance/">Travel insurance</a> — SafetyWing is the default pick</li>
+    <li><a href="/money/">Money &amp; tipping</a> — lira basics, ATM tips, what to actually tip</li>
+    <li><a href="/packing/">What to pack</a> — season-by-season checklist</li>
+    <li><a href="/arrival-istanbul/">Your first 4 hours at IST</a> — the airport-to-hotel playbook</li>
+  </ul>
+  <h2>6. Plan day-by-day</h2>
+  <p>Free itineraries:</p>
+  <ul>
+    <li><a href="/thank-you/">3-day Istanbul itinerary</a> — emailed lead magnet</li>
+    <li><a href="/thank-you-combo/">5-day Istanbul + Cappadocia combo</a></li>
+    <li>Day trips per city: <a href="/istanbul/day-trips/">Istanbul</a>, <a href="/cappadocia/day-trips/">Cappadocia</a>, <a href="/antalya/day-trips/">Antalya</a>, <a href="/izmir/day-trips/">Izmir</a>, <a href="/bodrum/day-trips/">Bodrum</a>, <a href="/fethiye/day-trips/">Fethiye</a></li>
+  </ul>
+  <h2>7. Have the real Turkish experience</h2>
+  <p>The 6-experience cultural deep-dive that separates a tourist from a traveler:</p>
+  <ul>
+    <li><a href="/experiences/cay-culture/">Çay culture</a></li>
+    <li><a href="/experiences/turkish-coffee/">Turkish coffee</a></li>
+    <li><a href="/experiences/whirling-dervishes/">Whirling dervishes</a> in Konya</li>
+    <li><a href="/experiences/turkish-bazaars/">How to actually use a bazaar</a></li>
+    <li><a href="/experiences/hammam-ritual-deep-dive/">Inside an Ottoman hammam</a></li>
+    <li><a href="/experiences/anatolian-breakfast-culture/">Anatolian breakfast culture</a></li>
+  </ul>
+  <h2>8. Read deeper on the topics that matter</h2>
+  <p>19 long-form articles. Some highlights:</p>
+  <ul>
+    <li><a href="/journal/cappadocia-balloon-guide/">Cappadocia balloon ride — complete guide</a></li>
+    <li><a href="/journal/turkey-solo-female-travel/">Is Turkey safe for solo female travelers?</a></li>
+    <li><a href="/journal/turkish-rug-scams/">How to spot a Turkish rug scam</a></li>
+    <li><a href="/journal/turkish-food-20-dishes/">20 Turkish dishes worth eating</a></li>
+    <li><a href="/journal/best-bosphorus-cruise/">Every Bosphorus cruise option, tested</a></li>
+    <li><a href="/journal/best-sunset-each-city/">The best sunset in each Turkish city</a></li>
+    <li><a href="/journal/">All 19 articles →</a></li>
+  </ul>
+  <h2>9. Tools we built to help you decide</h2>
+  <ul>
+    <li><a href="/quiz/">Trip-style quiz</a> — answer 6 questions, get a city + neighborhood + hotel pick</li>
+    <li><a href="/planner/">Trip cost calculator</a> — set your tier and length, get a real budget</li>
+    <li><a href="/compare/">Compare cities</a> — side-by-side any two cities</li>
+  </ul>
+  <h2>10. The newsletter</h2>
+  <p>One email a week, only when something's worth saying — new article, season change, balloon-flight calendar update. Subscribe via the popup or the foot of any page. We'll send you the 3-day Istanbul itinerary the moment you sign up.</p>
+</section>
+
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Ultimate Turkey guide", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("turkey-guide/index.html", html);
 }
 
 // ---- Per-city OG image (SVG) ----
@@ -3845,6 +4097,10 @@ function run() {
   renderArrivalIstanbul();
   renderExperiencesHub();
   for (const _exp of EXPERIENCES) renderExperiencePost(_exp);
+  renderRegionsHub();
+  for (const _r of REGIONS) renderRegionPage(_r);
+  for (const [_slug, _trips] of Object.entries(DAY_TRIPS)) renderDayTrips(_slug, _trips);
+  renderUltimateGuide();
 
   for (const c of cities) {
     renderCity(c);

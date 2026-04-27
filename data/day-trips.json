@@ -1,0 +1,219 @@
+{
+  "byCity": {
+    "istanbul": [
+      {
+        "name": "Princes' Islands",
+        "distance": "20 km / ferry",
+        "time": "Half-day or full day",
+        "summary": "Car-free islands in the Sea of Marmara — Büyükada is the largest. Bicycle the perimeter, eat lunch at a fish restaurant, ferry back at sunset.",
+        "tourQuery": "Istanbul Princes Islands ferry tour"
+      },
+      {
+        "name": "Bosphorus full cruise (Anadolu Kavağı)",
+        "distance": "Full Bosphorus length",
+        "time": "5–6 hours",
+        "summary": "Public IDO ferry from Eminönü all the way to Anadolu Kavağı near the Black Sea mouth. Hike to Yoros Castle, eat fish at the dock, return ferry.",
+        "tourQuery": "Istanbul Bosphorus full cruise"
+      },
+      {
+        "name": "Bursa",
+        "distance": "100 km via Yalova ferry + bus",
+        "time": "Full day",
+        "summary": "First Ottoman capital. Mosque complexes, original silk-trade caravanserais, the green-tiled Yeşil Türbe. Best İskender kebab in the country.",
+        "tourQuery": "Bursa day trip from Istanbul"
+      },
+      {
+        "name": "Şile + Ağva (Black Sea villages)",
+        "distance": "75 km east",
+        "time": "Full day",
+        "summary": "Black Sea fishing villages weekenders go to escape Istanbul. Beaches, river-mouth restaurants, lighthouse hikes.",
+        "tourQuery": "Şile Ağva private tour"
+      },
+      {
+        "name": "Polonezköy",
+        "distance": "30 km north",
+        "time": "Half day",
+        "summary": "Polish-founded village from 1842, now a forest brunch destination on the Asian side. Hiking trails, traditional Polish-Turkish food at Adampol.",
+        "tourQuery": "Polonezköy nature tour"
+      },
+      {
+        "name": "Gallipoli battlefield (Çanakkale)",
+        "distance": "330 km",
+        "time": "Long full day or overnight",
+        "summary": "WWI Anzac/Turkish memorial sites, museum, the Trojan Horse at Çanakkale. Heavy historical day, especially around April 25 (Anzac Day).",
+        "tourQuery": "Gallipoli day trip from Istanbul"
+      }
+    ],
+    "cappadocia": [
+      {
+        "name": "Ihlara Valley + Selime Monastery",
+        "distance": "85 km southwest",
+        "time": "Full day",
+        "summary": "The Green Tour route. 14 km canyon hike past Byzantine cave churches, then the Star Wars-filming-location Selime Monastery cut into a cliff.",
+        "tourQuery": "Cappadocia Green Tour Ihlara Valley"
+      },
+      {
+        "name": "Soğanlı Valley",
+        "distance": "55 km south",
+        "time": "Half day",
+        "summary": "Less-visited valley with painted Byzantine churches, dovecote-pocked tuff cliffs, and a dwindling village famous for cloth dolls.",
+        "tourQuery": "Soğanlı Valley private tour"
+      },
+      {
+        "name": "Derinkuyu + Kaymaklı underground cities",
+        "distance": "30 km south",
+        "time": "Half day",
+        "summary": "Two of the largest underground cities, 8 levels deep at Derinkuyu. Sheltered 20,000+ people in the Christian-Roman era. Claustrophobics, prepare.",
+        "tourQuery": "Derinkuyu Kaymaklı tour"
+      },
+      {
+        "name": "Mount Hasan + Aksaray",
+        "distance": "120 km west",
+        "time": "Full day",
+        "summary": "The 3,253m volcano whose ash sculpted Cappadocia. Seljuk-era caravanserais along the silk road, Sultanhanı caravanserai is the photo.",
+        "tourQuery": "Aksaray Sultanhanı caravanserai"
+      },
+      {
+        "name": "Hot-air balloon flight",
+        "distance": "Local",
+        "time": "Pre-dawn 4 hours total",
+        "summary": "Not technically a day trip but the main reason people come. Pickup 4:30am, 60–90 minutes flight, back by 8am for breakfast. See <a href=\"/journal/cappadocia-balloon-guide/\">our complete balloon guide</a>.",
+        "tourQuery": "Cappadocia hot air balloon flight"
+      }
+    ],
+    "antalya": [
+      {
+        "name": "Aspendos + Side ruins",
+        "distance": "60 km east",
+        "time": "Full day",
+        "summary": "Aspendos is the best-preserved Roman amphitheater in the Mediterranean and still hosts opera in summer. Side adds beach + Apollo Temple ruins by sunset.",
+        "tourQuery": "Aspendos Side day tour"
+      },
+      {
+        "name": "Termessos",
+        "distance": "35 km northwest",
+        "time": "Half day",
+        "summary": "Roman-Pisidian mountain ruins Alexander couldn't conquer, now overgrown with pine forest. Steep hike to the necropolis. Bring water and good shoes.",
+        "tourQuery": "Termessos hiking tour"
+      },
+      {
+        "name": "Köprülü Canyon + rafting",
+        "distance": "100 km northeast",
+        "time": "Full day",
+        "summary": "Canyon rafting + Selge Roman ruins. Pick rafting if you have kids; pick hiking + lunch by the river if you don't. Operator pickups daily.",
+        "tourQuery": "Köprülü Canyon rafting"
+      },
+      {
+        "name": "Pamukkale + Hierapolis",
+        "distance": "240 km north",
+        "time": "Long full day",
+        "summary": "The white travertine pools and the Roman city above. Best as overnight to catch sunrise on the terraces, but workable as day trip if you start at 6am.",
+        "tourQuery": "Pamukkale Hierapolis day tour"
+      },
+      {
+        "name": "Phaselis ruins + beach",
+        "distance": "55 km west",
+        "time": "Half day",
+        "summary": "Roman ruins on a triple-cove beach — the only place in Turkey you can swim while looking at a Roman aqueduct. Family-friendly.",
+        "tourQuery": "Phaselis ruins"
+      }
+    ],
+    "izmir": [
+      {
+        "name": "Ephesus + Selçuk + Şirince",
+        "distance": "80 km south",
+        "time": "Full day",
+        "summary": "The Mediterranean's most complete Roman city, the basilica of St. John, and a wine-producing hilltop village for lunch. The classic combo.",
+        "tourQuery": "Ephesus Şirince private tour"
+      },
+      {
+        "name": "Pergamon (Bergama)",
+        "distance": "100 km north",
+        "time": "Full day",
+        "summary": "Greek-Roman acropolis on a 300m hill, the Asclepion healing center, the world's steepest theater. Quieter than Ephesus.",
+        "tourQuery": "Pergamon ruins day tour"
+      },
+      {
+        "name": "Çeşme + Alaçatı",
+        "distance": "85 km west",
+        "time": "Full or half day",
+        "summary": "Hipster wind-surfer's coast. Çeşme for thermal pools and seafood, Alaçatı for cobbled streets and stone-house boutique cafes.",
+        "tourQuery": "Çeşme Alaçatı tour"
+      },
+      {
+        "name": "Sardis + Mount Tmolus",
+        "distance": "100 km east",
+        "time": "Full day",
+        "summary": "Lydian-era ruins (the kingdom that invented coins) plus Bin Tepe burial mounds. Less touristy than Ephesus, more interesting if you've seen Ephesus.",
+        "tourQuery": "Sardis Manisa day trip"
+      }
+    ],
+    "bodrum": [
+      {
+        "name": "Pamukkale + Hierapolis",
+        "distance": "260 km northeast",
+        "time": "Long full day",
+        "summary": "Possible from Bodrum but you spend more time in the bus than on the terraces. Better as overnight; if doing as day trip, leave 5am.",
+        "tourQuery": "Pamukkale day trip from Bodrum"
+      },
+      {
+        "name": "Ephesus from Bodrum",
+        "distance": "200 km north",
+        "time": "Long full day",
+        "summary": "Yes you can. But you'll be in transit 6+ hours. Worth it once if you don't get to Izmir/Kuşadası on the same trip.",
+        "tourQuery": "Ephesus from Bodrum"
+      },
+      {
+        "name": "Datça peninsula",
+        "distance": "75 km southwest",
+        "time": "Full day",
+        "summary": "Quieter, narrower peninsula west of Marmaris. Knidos ancient ruins at the very tip, where Aegean meets Mediterranean. Lots of swimming.",
+        "tourQuery": "Datça peninsula tour"
+      },
+      {
+        "name": "Greek island day trip (Kos)",
+        "distance": "20 min ferry",
+        "time": "Full day",
+        "summary": "Daily ferries Bodrum → Kos. Schengen visa NOT required for day trips with passport. Bring it. Asklepion ruins, sandy beaches, lunch in Kos town.",
+        "tourQuery": "Bodrum Kos ferry day"
+      }
+    ],
+    "fethiye": [
+      {
+        "name": "Saklıkent Gorge",
+        "distance": "50 km southeast",
+        "time": "Half or full day",
+        "summary": "Wade through ice-cold canyon water deep into a slot. Full day adds Tlos ruins and a trout lunch on platforms over the river.",
+        "tourQuery": "Saklıkent Tlos tour"
+      },
+      {
+        "name": "Kayaköy ghost village",
+        "distance": "10 km south",
+        "time": "Half day",
+        "summary": "Greek village abandoned 1923 in the population exchange. Eerie at sunset. Walk back to Ölüdeniz over the hill.",
+        "tourQuery": "Kayaköy ghost village tour"
+      },
+      {
+        "name": "Butterfly Valley",
+        "distance": "Boat from Ölüdeniz",
+        "time": "Half or full day",
+        "summary": "Cliff-protected cove only reachable by boat (or a vertical hike with ropes). Tiger butterflies, swim, picnic. Day-boat trips run from Ölüdeniz.",
+        "tourQuery": "Butterfly Valley boat trip"
+      },
+      {
+        "name": "12 Islands boat tour",
+        "distance": "Local Aegean",
+        "time": "Full day",
+        "summary": "Daily boats from Fethiye Marina circle the surrounding islands. Multiple swim stops, lunch on board. Touristy but good.",
+        "tourQuery": "Fethiye 12 islands boat"
+      },
+      {
+        "name": "Tlos + Yakaköy",
+        "distance": "35 km east",
+        "time": "Half day",
+        "summary": "Lycian rock tombs cut into a cliff face above an old Ottoman village now full of small wineries. The under-the-radar Lycian site.",
+        "tourQuery": "Tlos ruins tour"
+      }
+    ]
+  }
+}

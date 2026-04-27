@@ -1,0 +1,134 @@
+{
+  "regions": [
+    {
+      "slug": "aegean-coast",
+      "name": "Aegean Coast",
+      "tagline": "Olive groves, Greek islands, the most relaxed corner of Turkey.",
+      "cities": [
+        "izmir",
+        "kusadasi",
+        "bodrum",
+        "marmaris"
+      ],
+      "summary": "The west-coast strip from Izmir down past Kuşadası to the Bodrum peninsula and Marmaris. Whitewashed villages, swimmable bays you can reach without a tour boat, fresh fish lunches, and the ruins of Ephesus a short drive from any of it. Think 'Greek islands but better food'.",
+      "whenToGo": "May–June and September–October (perfect weather, manageable crowds). July–August is hot and packed but the sea is at peak temperature.",
+      "highlights": [
+        "Ephesus — the most complete Roman city in the Mediterranean, 30 minutes from Kuşadası",
+        "Yalıkavak's marina + windmill ridge — Bodrum peninsula's quietest evening",
+        "Şirince village — wine, pottery, and the slow Aegean afternoon",
+        "Çeşme + Alaçatı — wind-surfer's coast, hipster cafés, the Aegean's gentrified corner"
+      ],
+      "itinerary": [
+        "Day 1–3: Izmir (gateway), day-trip to Ephesus + Şirince",
+        "Day 4–5: Kuşadası or Selçuk base, deeper Ephesus + Pamukkale day trip",
+        "Day 6–8: Bodrum peninsula (Yalıkavak / Bitez), beach + boat days",
+        "Day 9–10: Marmaris if continuing south, or fly out from Bodrum"
+      ]
+    },
+    {
+      "slug": "mediterranean-riviera",
+      "name": "Mediterranean Riviera (Turquoise Coast)",
+      "tagline": "Beaches with Roman ruins on top of them, the Lycian Way, the bluest water in Turkey.",
+      "cities": [
+        "antalya",
+        "alanya",
+        "side",
+        "kas",
+        "fethiye",
+        "oludeniz",
+        "kayakoy-hisaronu",
+        "calis"
+      ],
+      "summary": "From Antalya east to Alanya and west to Fethiye, the Turquoise Coast is the Mediterranean at its most photogenic. Lycian-era ruins built on cliffs above swimming coves, paragliding off Babadağ over Ölüdeniz, the gentle pace of Kaş.",
+      "whenToGo": "April–May or late September–October (warm enough to swim, no peak crowds). June–August for full beach season.",
+      "highlights": [
+        "Kaputaş Beach near Kaş — postcard turquoise cove",
+        "Ölüdeniz lagoon + paragliding from Babadağ",
+        "Kaleiçi old town in Antalya — Ottoman lanes, Roman walls, harbor views",
+        "Aspendos amphitheater — still hosts opera in summer",
+        "Kayaköy ghost village — abandoned 1923, eerie at sunset"
+      ],
+      "itinerary": [
+        "Day 1–3: Antalya (Kaleiçi base), day-trip to Aspendos / Termessos",
+        "Day 4–5: Drive west to Kaş (3 hrs along Lycian coast)",
+        "Day 6–8: Fethiye + Ölüdeniz, paragliding + Saklıkent canyon",
+        "Day 9–10: Bodrum or fly out from Dalaman"
+      ]
+    },
+    {
+      "slug": "cappadocia-central-anatolia",
+      "name": "Cappadocia & Central Anatolia",
+      "tagline": "Fairy chimneys, underground cities, balloon dawns, and the Sufi heart of Turkey.",
+      "cities": [
+        "goreme",
+        "uchisar",
+        "urgup",
+        "konya",
+        "ankara"
+      ],
+      "summary": "Volcanic landscape sculpted into surreal rock formations, cave hotels carved into cliffs, hot-air balloon rides at sunrise, and the deep cultural anchors of Konya (Mevlana / whirling dervishes) and Ankara (the country's modern capital).",
+      "whenToGo": "April–June and September–November (best balloon flight rates and clearest skies). Winter for snow on the fairy chimneys and 40% cheaper hotels.",
+      "highlights": [
+        "Hot-air balloon flight at sunrise — Cappadocia's signature experience",
+        "Göreme Open-Air Museum — Byzantine cave churches with original frescoes",
+        "Derinkuyu underground city — 8 levels deep, sheltered 20,000 people",
+        "Uçhisar Castle viewpoint — sunset over all three valleys",
+        "Mevlana Museum in Konya — the Rumi tomb",
+        "Anıtkabir in Ankara — Atatürk's mausoleum"
+      ],
+      "itinerary": [
+        "Day 1–4: Cappadocia (Uçhisar or Göreme base) — balloon, valleys, underground cities",
+        "Day 5–6: Konya (Mevlana, whirling dervish ceremony if timed right)",
+        "Day 7: Ankara (Anıtkabir, Anatolian Civilizations Museum)"
+      ]
+    },
+    {
+      "slug": "black-sea",
+      "name": "Black Sea Coast",
+      "tagline": "Tea plantations, alpine yaylas, the rainy green Turkey nobody photographs.",
+      "cities": [
+        "trabzon",
+        "rize"
+      ],
+      "summary": "The Pontic Mountains drop straight into the Black Sea — tea fields wrap the slopes, monasteries cling to cliffs, and the high-altitude yayla pastures (Ayder, Pokut, Sal) feel more like Switzerland than the Mediterranean. The Turkey that locals visit when they want to escape Istanbul or Antalya.",
+      "whenToGo": "June–September (dry-ish summer; Black Sea is wetter than the rest of Turkey). May for blooming tea fields. Avoid winter (snow blocks yayla roads).",
+      "highlights": [
+        "Sumela Monastery — Byzantine cliff-built monastery near Trabzon",
+        "Uzungöl — alpine lake village, Turkey's most overphotographed mountain spot for a reason",
+        "Ayder + Pokut yaylas — wooden mountain houses, mist, fresh trout",
+        "Tea plantation walks in Rize — pickers in bright orange among green hills",
+        "Hamsi (Black Sea anchovies) — fried, eaten whole, with corn bread"
+      ],
+      "itinerary": [
+        "Day 1–2: Trabzon city + Sumela Monastery",
+        "Day 3–4: Drive to Uzungöl (90 min)",
+        "Day 5–7: Rize area + Ayder + Pokut yayla",
+        "Day 8: Return via Trabzon airport"
+      ]
+    },
+    {
+      "slug": "eastern-anatolia",
+      "name": "Eastern Anatolia & Mesopotamia",
+      "tagline": "The cradle of civilizations — Mardin, Şanlıurfa, Gaziantep — where Turkey meets Mesopotamia.",
+      "cities": [
+        "mardin",
+        "sanliurfa",
+        "gaziantep"
+      ],
+      "summary": "The southeast is where Turkey gets weirder, older, and more interesting. Mardin's stone city perched over the Mesopotamian plain. Şanlıurfa's sacred fish ponds and the 12,000-year-old Göbekli Tepe. Gaziantep's UNESCO-recognized food culture. The trip Turkey enthusiasts come back for after the standard route.",
+      "whenToGo": "March–May and October–November (hot dry summers, mild winters). Avoid July–August (45°C in Şanlıurfa).",
+      "highlights": [
+        "Göbekli Tepe — the world's oldest known temple, 12,000 years old",
+        "Mardin old city — sandstone houses cascading down a hill over the plains",
+        "Balıklıgöl in Şanlıurfa — sacred carp pool, Halil-ur Rahman mosque",
+        "Gaziantep food — UNESCO Creative City of Gastronomy, real baklava + kebabs + copperware",
+        "Diyarbakır's basalt walls — the longest continuous fortifications after the Great Wall (if visiting)"
+      ],
+      "itinerary": [
+        "Day 1–2: Gaziantep — food, copper bazaar, Zeugma Mosaics museum",
+        "Day 3–4: Şanlıurfa — Göbekli Tepe, Balıklıgöl, bazaars",
+        "Day 5–7: Mardin — old city, day trips to Hasankeyf, Midyat"
+      ]
+    }
+  ]
+}
