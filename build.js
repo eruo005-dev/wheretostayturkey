@@ -1400,7 +1400,11 @@ function renderSitemap() {
     `${config.siteUrl}/experiences/`,
     `${config.siteUrl}/regions/`,
     `${config.siteUrl}/turkey-guide/`,
+    `${config.siteUrl}/turkey-by-month/`,
+    `${config.siteUrl}/best-of-turkey/`,
   ];
+  for (const _m of MONTHS) urls.push(`${config.siteUrl}/turkey-by-month/${_m.slug}/`);
+  for (const _col of COLLECTIONS) urls.push(`${config.siteUrl}/best-of-turkey/${_col.slug}/`);
   for (const _e of EXPERIENCES) urls.push(`${config.siteUrl}/experiences/${_e.slug}/`);
   for (const _r of REGIONS) urls.push(`${config.siteUrl}/regions/${_r.slug}/`);
   for (const _slug of Object.keys(DAY_TRIPS)) urls.push(`${config.siteUrl}/${_slug}/day-trips/`);
@@ -2870,6 +2874,192 @@ ${tail()}`;
   writeFile("turkey-guide/index.html", html);
 }
 
+// ---- Monthly seasonal pages + cross-city collections ----
+const MONTHS = (() => {
+  try { return require("./data/months.json").months || []; }
+  catch (e) { return []; }
+})();
+const COLLECTIONS = (() => {
+  try { return require("./data/collections.json").collections || []; }
+  catch (e) { return []; }
+})();
+
+function renderMonthsHub() {
+  const canonical = `${config.siteUrl}/turkey-by-month/`;
+  const title = "Turkey by month — pick the right time to visit";
+  const description = "Month-by-month Turkey guide. Weather by city, balloon flight rates, festivals, what's open and closed, and the verdict on whether to go.";
+  const cards = MONTHS.map((m) => `
+    <a class="card" href="/turkey-by-month/${esc(m.slug)}/" style="text-decoration:none;color:inherit;padding:22px">
+      <div class="eyebrow">Month ${m.monthNum}</div>
+      <h3 style="margin:6px 0 8px">${esc(m.monthName)}</h3>
+      <p style="color:var(--c-text-soft);font-size:.92rem;margin:0">${esc((m.subtitle || "").slice(0, 110))}</p>
+    </a>
+  `).join("");
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Turkey by month</div>
+    <h1>Turkey month-by-month</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">Each month in Turkey is a different country. We've ranked all 12 with weather, festival, balloon-flight rate and verdict — so you can pick the month that fits your trip.</p>
+  </div>
+</div>
+<section class="container">
+  <div class="grid grid-1 grid-2 grid-3 grid-4 mt-3">${cards}</div>
+</section>
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Turkey by month", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("turkey-by-month/index.html", html);
+}
+
+function renderMonthPage(m) {
+  const canonical = `${config.siteUrl}/turkey-by-month/${m.slug}/`;
+  const title = `${m.title}`;
+  const description = (m.subtitle || m.summary || "").slice(0, 160);
+  const weatherRows = Object.entries(m.weatherByCity || {}).map(([slug, w]) => {
+    const c = cities.find((x) => x.slug === slug);
+    return `<tr><td><a href="/${esc(slug)}/">${esc(c ? c.name : slug)}</a></td><td>${w.high}°C / ${w.low}°C</td><td>${w.rainDays || "—"} rain days</td></tr>`;
+  }).join("");
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="breadcrumb"><a href="/">Home</a> / <a href="/turkey-by-month/">Turkey by month</a> / ${esc(m.monthName)}</div>
+</div>
+<article class="container container-narrow">
+  <div class="page-head" style="border-bottom:none;padding-bottom:0">
+    <div class="eyebrow">Month ${m.monthNum}</div>
+    <h1>${esc(m.title)}</h1>
+    ${m.subtitle ? `<p class="journal-subtitle" style="font-size:1.3rem;color:var(--ink-muted);font-style:italic;margin-top:12px">${esc(m.subtitle)}</p>` : ""}
+  </div>
+
+  <div class="card mt-4" style="padding:24px;background:var(--c-accent-soft);border-left:3px solid var(--c-accent)">
+    <div class="eyebrow">Verdict</div>
+    <p style="margin:6px 0 0;font-size:1.05rem">${esc(m.verdict || "")}</p>
+  </div>
+
+  ${weatherRows ? `
+    <h2 style="margin-top:32px">Weather across Turkey in ${esc(m.monthName)}</h2>
+    <table>
+      <thead><tr><th>City</th><th>High / Low</th><th>Rain</th></tr></thead>
+      <tbody>${weatherRows}</tbody>
+    </table>
+  ` : ""}
+
+  <div class="prose mt-4">${m.bodyHtml || `<p>${esc(m.summary || "")}</p>`}</div>
+</article>
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Turkey by month", url: `${config.siteUrl}/turkey-by-month/` },
+    { name: m.monthName, url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile(`turkey-by-month/${m.slug}/index.html`, html);
+}
+
+function renderCollectionsHub() {
+  const canonical = `${config.siteUrl}/best-of-turkey/`;
+  const title = "Best of Turkey — curated hotel collections";
+  const description = "Themed collections of the best hotels across Turkey: honeymoons, families, history, beachfront, cave hotels, and luxury resorts. Verified picks only.";
+  const cards = COLLECTIONS.map((c) => `
+    <a class="card" href="/best-of-turkey/${esc(c.slug)}/" style="text-decoration:none;color:inherit;padding:22px">
+      <div class="eyebrow">${c.picks.length} verified picks</div>
+      <h3 style="margin:6px 0 8px">${esc(c.title)}</h3>
+      <p style="color:var(--c-text-soft);font-size:.92rem;margin:0">${esc((c.subtitle || "").slice(0, 110))}</p>
+    </a>
+  `).join("");
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Best of Turkey</div>
+    <h1>Best of Turkey — curated hotel collections</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">Six themed collections of the best hotels across Turkey, picked from our 22-city database. Every property is real and verified — no padding.</p>
+  </div>
+</div>
+<section class="container">
+  <div class="grid grid-1 grid-2 grid-3 mt-3">${cards}</div>
+</section>
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Best of Turkey", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("best-of-turkey/index.html", html);
+}
+
+function renderCollectionPage(c) {
+  const canonical = `${config.siteUrl}/best-of-turkey/${c.slug}/`;
+  const title = `${c.title}`;
+  const description = (c.summary || c.subtitle || "").slice(0, 160);
+
+  const pickCards = (c.picks || []).map((p, i) => {
+    const cityObj = cities.find((x) => x.slug === p.city);
+    const cityName = cityObj ? cityObj.name : p.city;
+    const bookingUrl = bookingLink(`${p.hotelName} ${cityName}`);
+    return `
+      <div class="card mt-3" style="padding:24px">
+        <div class="eyebrow">${i + 1}. ${esc(cityName)} · ${esc(p.area || "")}${p.tier ? ` · ${esc(p.tier)}` : ""}${p.priceFrom ? ` · from $${p.priceFrom}/night` : ""}</div>
+        <h3 style="margin:6px 0 12px">${esc(p.hotelName)}</h3>
+        <p style="margin:0 0 16px">${esc(p.whyForThisList || "")}</p>
+        <a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(bookingUrl)}">Check rates →</a>
+        <a href="/${esc(p.city)}/" style="margin-left:14px;color:var(--c-accent);font-weight:600">See ${esc(cityName)} guide →</a>
+      </div>
+    `;
+  }).join("");
+
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/best-of-turkey/">Best of Turkey</a> / ${esc(c.title)}</div>
+    <h1>${esc(c.title)}</h1>
+    ${c.subtitle ? `<p class="text-muted" style="font-size:1.15rem;font-style:italic;margin-top:10px">${esc(c.subtitle)}</p>` : ""}
+    <p style="max-width:720px;margin-top:18px">${esc(c.intro || "")}</p>
+    ${c.criteria ? `<p style="max-width:720px;margin-top:14px;color:var(--ink-muted);font-style:italic">Selection criteria: ${esc(c.criteria)}</p>` : ""}
+  </div>
+</div>
+
+<section class="container">
+  ${pickCards}
+</section>
+
+${c.verdict ? `
+  <section class="container container-narrow section-sm">
+    <div class="card" style="padding:24px;background:var(--c-accent-soft);border-left:3px solid var(--c-accent)">
+      <div class="eyebrow">Closing call</div>
+      <p style="margin:6px 0 0">${esc(c.verdict)}</p>
+    </div>
+  </section>
+` : ""}
+
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Best of Turkey", url: `${config.siteUrl}/best-of-turkey/` },
+    { name: c.title, url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile(`best-of-turkey/${c.slug}/index.html`, html);
+}
+
 // ---- Per-city OG image (SVG) ----
 function writeCityOgImages() {
   for (const c of cities) {
@@ -4101,6 +4291,10 @@ function run() {
   for (const _r of REGIONS) renderRegionPage(_r);
   for (const [_slug, _trips] of Object.entries(DAY_TRIPS)) renderDayTrips(_slug, _trips);
   renderUltimateGuide();
+  renderMonthsHub();
+  for (const _m of MONTHS) renderMonthPage(_m);
+  renderCollectionsHub();
+  for (const _c of COLLECTIONS) renderCollectionPage(_c);
 
   for (const c of cities) {
     renderCity(c);

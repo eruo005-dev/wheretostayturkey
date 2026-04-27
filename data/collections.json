@@ -1,0 +1,666 @@
+{
+  "_note": "Theme collections aggregating verified hotels across the 22 city files. All hotelName values cross-checked against cities.json, cities-extras-1/2/3.json. No invented properties. Voice: editorial, decisive, opinionated.",
+  "lastUpdated": "2026-04-27",
+  "collections": [
+    {
+      "slug": "honeymoon-hotels-turkey",
+      "title": "The 12 best honeymoon hotels in Turkey — verified",
+      "subtitle": "Cave suites, Bosphorus terraces, and adults-only coves — the rooms worth flying for.",
+      "intro": "Turkey does honeymoons better than almost anywhere in the Mediterranean — and the gap between the best room and the wrong room is enormous. A cave suite in Uçhisar, a Bosphorus-front palace in Beşiktaş, an adults-only cliff hotel in Kaş: these are the kinds of stays that make the trip. We've ignored every all-inclusive that herds families through a buffet, every 'romantic' rooftop that's actually shared with 200 strangers, and every 'private' terrace that's a balcony beside the lift shaft. What's left are 12 properties that genuinely earn the word — restored konaks, copper-tub cave rooms, and palace suites with the Marmara at the foot of the bed. Prices are 2026 rates, in USD, from real city pages on this site.",
+      "summary": "Twelve verified honeymoon hotels in Turkey — Cappadocia cave suites, Bosphorus-front Istanbul, Aegean cliff boutiques. Real names, real prices, real verdicts.",
+      "criteria": "To make this list a hotel had to: (1) be adults-friendly or have a clear adults-only zone, (2) offer private terraces, plunge pools, or genuine sea/valley views — not lightwell rooms, (3) lean to luxury or design-led mid-range, (4) sit in a celebration-worthy location — Cappadocia ridge, Bosphorus front, boutique Aegean coast. Big family resorts and party-strip hotels were excluded even when their reviews were strong.",
+      "picks": [
+        {
+          "rank": 1,
+          "hotelName": "Museum Hotel",
+          "city": "cappadocia",
+          "area": "uchisar",
+          "tier": "luxury",
+          "priceFrom": 720,
+          "whyForThisList": "The original Cappadocia luxury cave hotel — Relais & Châteaux, antique-filled suites, a heated outdoor pool that frames the balloons at sunrise. Reserve three months ahead for a honeymoon, request a suite with private terrace. The whole property is engineered for couples, not crowds."
+        },
+        {
+          "rank": 2,
+          "hotelName": "Çırağan Palace Kempinski",
+          "city": "istanbul",
+          "area": "besiktas-ortakoy",
+          "tier": "luxury",
+          "priceFrom": 780,
+          "whyForThisList": "The only true Ottoman palace hotel on the Bosphorus. The infinity pool sits at the water's edge with the Bosphorus Bridge framing the view; the palace suites have ceiling moldings older than most countries. For a once-in-a-lifetime week, this is the room."
+        },
+        {
+          "rank": 3,
+          "hotelName": "Argos in Cappadocia",
+          "city": "cappadocia",
+          "area": "uchisar",
+          "tier": "luxury",
+          "priceFrom": 540,
+          "whyForThisList": "A restored Uçhisar village built into the hillside with a private wine cellar carved underground and terrace dinners served as the balloons rise. The split-level suites feel like a home, not a hotel. Couples come back for anniversaries."
+        },
+        {
+          "rank": 4,
+          "hotelName": "Mandarin Oriental Bodrum",
+          "city": "bodrum",
+          "area": "turkbuku",
+          "tier": "luxury",
+          "priceFrom": 950,
+          "whyForThisList": "Two private beaches, a Nobu on site, and villas with plunge pools that fall straight off the cliff edge. The Türkbükü address keeps it discreet — yacht crowd quiet, not Yalıkavak loud. Book a Garden Pool Suite and you may not leave it."
+        },
+        {
+          "rank": 5,
+          "hotelName": "Sacred House",
+          "city": "cappadocia",
+          "area": "urgup",
+          "tier": "luxury",
+          "priceFrom": 480,
+          "whyForThisList": "Wildly designed cave suites with copper soaking tubs, fireplaces, and eclectic salvaged-art interiors. Not for everyone — but for the right couple it's the most memorable room they'll ever sleep in. Ürgüp's wine bars are a five-minute walk."
+        },
+        {
+          "rank": 6,
+          "hotelName": "Caresse, a Luxury Collection Resort",
+          "city": "bodrum",
+          "area": "yalikavak",
+          "tier": "luxury",
+          "priceFrom": 520,
+          "whyForThisList": "Cliffside rooms with balconies over the Aegean, two infinity pools, a private beach platform reached by a glass funicular. Closer to the Yalıkavak superyacht marina than Mandarin — better if dinners out matter as much as the room."
+        },
+        {
+          "rank": 7,
+          "hotelName": "Maça Kızı",
+          "city": "bodrum",
+          "area": "turkbuku",
+          "tier": "luxury",
+          "priceFrom": 680,
+          "whyForThisList": "The original chic Bodrum boutique. Whitewashed walls, a wooden-pier beach club where Istanbul's quiet money summers, and rooms small enough to feel like a friend's villa. Pick this for a fashion-magazine honeymoon, not a kid-sounds-from-the-pool one."
+        },
+        {
+          "rank": 8,
+          "hotelName": "Hotel Villa Hera",
+          "city": "kas",
+          "area": "cukurbag",
+          "tier": "luxury",
+          "priceFrom": 240,
+          "whyForThisList": "Adults-only cliffside boutique on the Çukurbağ peninsula with an infinity pool over the Mediterranean and rooms that open straight to swim platforms. Kaş itself is a slow, walkable Lycian town — perfect for couples who want quiet over scene."
+        },
+        {
+          "rank": 9,
+          "hotelName": "Soho House Istanbul",
+          "city": "istanbul",
+          "area": "beyoglu",
+          "tier": "luxury",
+          "priceFrom": 380,
+          "whyForThisList": "A 19th-century palazzo with the best rooftop pool in the city and rooms that feel like a private apartment in Beyoğlu. Honeymoon-grade for couples who want design over palace gilt — and want to walk to dinner instead of being driven."
+        },
+        {
+          "rank": 10,
+          "hotelName": "Mardius Tarihi Konak",
+          "city": "mardin",
+          "area": "mardin-old-town",
+          "tier": "luxury",
+          "priceFrom": 200,
+          "whyForThisList": "A 700-year-old stone konak with a private hammam and a rooftop terrace facing the Mesopotamian plain. For honeymooners who want sunset cocktails over an unfamiliar landscape — the southeast almost no one chooses, and almost everyone remembers."
+        },
+        {
+          "rank": 11,
+          "hotelName": "Tuvana Hotel",
+          "city": "antalya",
+          "area": "kaleici",
+          "tier": "mid",
+          "priceFrom": 160,
+          "whyForThisList": "A cluster of restored Ottoman mansions around a courtyard pool in Kaleiçi old town — soft, intimate, walking distance to the Roman harbor. The mid-range pick on this list, but the romance is fully there for the price."
+        },
+        {
+          "rank": 12,
+          "hotelName": "Oyster Residences",
+          "city": "fethiye",
+          "area": "oludeniz",
+          "tier": "mid",
+          "priceFrom": 170,
+          "whyForThisList": "Adults-only boutique steps from the Blue Lagoon — small, romantic, with a pool tucked between palms. Ölüdeniz is where you fly off Babadağ together; this is where you come back to. Best mid-tier honeymoon room on the Mediterranean coast."
+        }
+      ],
+      "verdict": "If the honeymoon is the trip of the decade, book Çırağan, Mandarin, or Museum Hotel and don't apologize. If the spend has to land somewhere reasonable, Tuvana in Antalya or Oyster in Ölüdeniz get you 80% of the experience for a third of the price. Either way: pick the room first, plan the rest after."
+    },
+    {
+      "slug": "family-friendly-hotels-turkey",
+      "title": "The 12 best family-friendly hotels in Turkey — verified",
+      "subtitle": "Kids' clubs, shallow pools, family suites, real beaches — sorted by what your kids will actually do.",
+      "intro": "Turkey is one of the easiest big countries in Europe to take kids to — flights are short, food is mild, the all-inclusive infrastructure is genuinely world-class along the Mediterranean and Aegean. But the gap between a hotel that says 'family-friendly' and a hotel that's actually built for kids is enormous. Some have water parks. Some have a single dusty trampoline. The list below is twelve properties from our 22 city pages where families actually book repeat trips: kid pools deep enough to swim in but shallow enough to stand, in-house kids' clubs that take supervised hours, family suites with a real second room, and beach access that doesn't involve crossing a road. Prices are 2026 from-rates per night.",
+      "summary": "Twelve verified family-friendly hotels in Turkey — Antalya, Bodrum, Side, Fethiye and Alanya picks with kid pools, kids' clubs, family suites, and direct beach access.",
+      "criteria": "To make this list a hotel had to: (1) have a dedicated kid pool or shallow swim zone, (2) offer family suites or connecting rooms for 4+, (3) run a real kids' club with supervised programs (not just a coloring corner), (4) be on or directly adjacent to a beach. We weighted heavily toward the Antalya/Bodrum/Side strip where the family-resort infrastructure is built for this and skipped cities where the inventory was thin.",
+      "picks": [
+        {
+          "rank": 1,
+          "hotelName": "Maxx Royal Belek",
+          "city": "antalya",
+          "area": "belek",
+          "tier": "luxury",
+          "priceFrom": 720,
+          "whyForThisList": "Turkey's flagship family ultra-luxury. A vast private beach with shallow swim zones, multiple kid pools, a kids' club regarded as the country's best, and family suites that fit four properly. Belek's golf is incidental for parents — the kids' offer is the actual reason to come."
+        },
+        {
+          "rank": 2,
+          "hotelName": "Hillside Beach Club",
+          "city": "fethiye",
+          "area": "oludeniz",
+          "tier": "luxury",
+          "priceFrom": 420,
+          "whyForThisList": "Consistently ranked the best family resort in Turkey. A private cove (calm, swim-protected), separate adults-only and family pools, a kids' club that British and German families plan trips around, and an evening program that actually keeps teenagers off their phones."
+        },
+        {
+          "rank": 3,
+          "hotelName": "Regnum Carya",
+          "city": "antalya",
+          "area": "belek",
+          "tier": "luxury",
+          "priceFrom": 680,
+          "whyForThisList": "A multi-generational favorite — twelve restaurants so picky kids and grandparents can both be fed, a private beach with calm water, and a kids' club programmed by age band. The family suites are villa-large; book early for the school holidays."
+        },
+        {
+          "rank": 4,
+          "hotelName": "Titanic Mardan Palace",
+          "city": "antalya",
+          "area": "lara",
+          "tier": "luxury",
+          "priceFrom": 420,
+          "whyForThisList": "Themed mega-resort with gondola canals through the property and a serious water park. Genuinely magical for kids 5–12 in a way most luxury hotels can't match — your six-year-old will not stop talking about it. Lara beach is sandy and shallow."
+        },
+        {
+          "rank": 5,
+          "hotelName": "Sueno Hotels Beach Side",
+          "city": "side",
+          "area": "side-west",
+          "tier": "luxury",
+          "priceFrom": 340,
+          "whyForThisList": "Side's biggest family all-inclusive — water park, multiple restaurants, long sandy beach, and a kids' program that runs all day. Walk or shuttle to Side Old Town's Roman ruins for the cultural day, back to slides by 4 p.m."
+        },
+        {
+          "rank": 6,
+          "hotelName": "Ali Bey Resort",
+          "city": "side",
+          "area": "side-east",
+          "tier": "luxury",
+          "priceFrom": 360,
+          "whyForThisList": "The legend of Turkish family resorts. A tennis academy that hosts ATP-level coaches, the country's deepest kids' programs, a long pine-backed private beach, and family suites that feel like apartments. Multi-generational repeats are the rule."
+        },
+        {
+          "rank": 7,
+          "hotelName": "LUX* Bodrum",
+          "city": "bodrum",
+          "area": "yalikavak",
+          "tier": "luxury",
+          "priceFrom": 450,
+          "whyForThisList": "The design-forward family pick on Bodrum's chic side. Two private beaches with calm bays, an excellent kids' club, big family rooms, and food that adults won't tolerate as 'kid food'. Fits parents who don't want the all-inclusive cookie-cutter."
+        },
+        {
+          "rank": 8,
+          "hotelName": "Liberty Hotels Lykia",
+          "city": "fethiye",
+          "area": "oludeniz",
+          "tier": "luxury",
+          "priceFrom": 340,
+          "whyForThisList": "Big Ölüdeniz resort with a separate adults-only zone (so parents get a break), a strong kids' club, direct beach access, and family rooms with bunks for the children. Easier to book than Hillside next door, similar feel."
+        },
+        {
+          "rank": 9,
+          "hotelName": "Kaya Palazzo Resort",
+          "city": "bodrum",
+          "area": "yalikavak",
+          "tier": "luxury",
+          "priceFrom": 340,
+          "whyForThisList": "All-inclusive with a private beach, kid pools, and kids' programs run every day in summer. Cheaper-tier Bodrum family stay that gets the basics right — pool to room is short, beach is calm, food is good enough."
+        },
+        {
+          "rank": 10,
+          "hotelName": "Delphin Be Grand Resort",
+          "city": "alanya",
+          "area": "avsallar-okurcalar",
+          "tier": "luxury",
+          "priceFrom": 320,
+          "whyForThisList": "One of the best all-inclusives on the Alanya strip — large pool complex including a dedicated kid section, private sandy beach, in-house kids' programs. Cheaper than Belek, almost as polished, easier flight on charter routes."
+        },
+        {
+          "rank": 11,
+          "hotelName": "Hedef Resort & Spa",
+          "city": "alanya",
+          "area": "alanya-center",
+          "tier": "mid",
+          "priceFrom": 180,
+          "whyForThisList": "Cliffside 5-star with an elevator down to its own private beach — a small detail that matters with toddlers and beach gear. Family rooms, kid pool, and a price point under €200 that beats most Belek alternatives."
+        },
+        {
+          "rank": 12,
+          "hotelName": "Bitez Garden Life Hotel",
+          "city": "bodrum",
+          "area": "bitez",
+          "tier": "mid",
+          "priceFrom": 130,
+          "whyForThisList": "The under-€150 family pick on the Bodrum peninsula. Bitez bay is the shallowest, calmest swim on the south side; the hotel is five minutes' walk from the water with a garden pool. For families who want Bodrum without paying Yalıkavak."
+        }
+      ],
+      "verdict": "Belek for the four-figure-a-night week-of-a-lifetime trips, Side for the proven mid-luxury all-inclusive sweet spot, Alanya/Bitez for the under-€200 routes that still feel like a holiday. The single biggest mistake families make is picking by 'star count' instead of 'kids' club hours' — read the small print on what's actually open in shoulder season."
+    },
+    {
+      "slug": "historic-hotels-turkey",
+      "title": "The 10 best historic hotels in Turkey — verified",
+      "subtitle": "Restored konaks, Ottoman prisons, 700-year stone mansions — sleep inside the history you came to see.",
+      "intro": "Turkey is the rare country where the historic-hotel category isn't a plaque on a 1970s building — it's an actual 17th-century caravanserai or a 700-year-old stone konak now run as a 12-room boutique. The best of these stays are concentrated in Sultanahmet, Mardin, Safranbolu, and the old quarters of Antalya and Şanlıurfa. Below are ten verified properties where the building itself is the reason to book — Ottoman prisons turned five-stars, 19th-century mansions with their original cisterns, and stone caravanserais where merchants slept five centuries ago. Some are luxury, some are mid-range, all are real.",
+      "summary": "Ten verified historic hotels in Turkey — Ottoman mansions, 17th-century caravanserais, restored konaks. Sleep inside the architecture, not next to it.",
+      "criteria": "To qualify a hotel had to occupy a genuinely historic structure (Ottoman mansion, caravanserai, restored konak from the 17th–19th century, or older). The building had to be the headline feature, not a renovation aesthetic on a modern shell. We leaned toward Sultanahmet, Mardin, Safranbolu, Şanlıurfa, Bursa, Antalya old town, and Selçuk — the cities where this category is genuinely deep.",
+      "picks": [
+        {
+          "rank": 1,
+          "hotelName": "Four Seasons Hotel Istanbul at Sultanahmet",
+          "city": "istanbul",
+          "area": "sultanahmet",
+          "tier": "luxury",
+          "priceFrom": 620,
+          "whyForThisList": "A former Ottoman prison turned luxury icon, a one-minute walk from Hagia Sophia. The yellow neoclassical exterior is one of the most photographed buildings in Sultanahmet; the central courtyard is the calm in the middle of the historic peninsula. Service is the benchmark."
+        },
+        {
+          "rank": 2,
+          "hotelName": "Mardius Tarihi Konak",
+          "city": "mardin",
+          "area": "mardin-old-town",
+          "tier": "luxury",
+          "priceFrom": 200,
+          "whyForThisList": "A 700-year-old stone konak in Mardin's UNESCO old town with its own hammam and a rooftop terrace looking south across the Mesopotamian plain. The most atmospheric splurge in the southeast — a building that predates most European cathedrals."
+        },
+        {
+          "rank": 3,
+          "hotelName": "Cinci Han Hotel",
+          "city": "safranbolu",
+          "area": "carsi",
+          "tier": "mid",
+          "priceFrom": 130,
+          "whyForThisList": "A restored 17th-century caravanserai in the heart of UNESCO Çarşı — sleeping inside an original Han where merchants once stabled animals on the ground floor. Stone arches, deep-set windows, and a courtyard kitchen still working."
+        },
+        {
+          "rank": 4,
+          "hotelName": "Çelik Palas Hotel",
+          "city": "bursa",
+          "area": "cekirge",
+          "tier": "luxury",
+          "priceFrom": 240,
+          "whyForThisList": "A historic landmark hotel in Çekirge where Atatürk himself stayed — the original domed thermal hall, fed by Ottoman hot springs, is now part of the spa. Modernized rooms, but the bones and the bathing tradition are untouched."
+        },
+        {
+          "rank": 5,
+          "hotelName": "Artuklu Kervansarayi - Special Class",
+          "city": "mardin",
+          "area": "mardin-old-town",
+          "tier": "mid",
+          "priceFrom": 120,
+          "whyForThisList": "A restored historical caravanserai with 58 rooms in central Eski Mardin — bigger than the steeper konak boutiques, easier on luggage, and still genuinely historic. The right pick if Mardin's stair-streets worry you."
+        },
+        {
+          "rank": 6,
+          "hotelName": "El Ruha Hotel",
+          "city": "sanliurfa",
+          "area": "urfa-old-city",
+          "tier": "mid",
+          "priceFrom": 130,
+          "whyForThisList": "A restored Ottoman mansion in Urfa's old city with a courtyard pool and a five-minute walk to Balıklıgöl. Şanlıurfa is the gateway to Göbekli Tepe — sleep inside Ottoman stonework before visiting an 11,000-year-old temple in the morning."
+        },
+        {
+          "rank": 7,
+          "hotelName": "Tuvana Hotel",
+          "city": "antalya",
+          "area": "kaleici",
+          "tier": "mid",
+          "priceFrom": 160,
+          "whyForThisList": "A cluster of restored Ottoman mansions around a courtyard pool in Antalya's Kaleiçi old town. Roman walls visible from the breakfast terrace; the harbor is a five-minute walk. Consistently the highest-rated old-town hotel in Antalya."
+        },
+        {
+          "rank": 8,
+          "hotelName": "Reyhani Kasri Hotel",
+          "city": "mardin",
+          "area": "mardin-old-town",
+          "tier": "mid",
+          "priceFrom": 95,
+          "whyForThisList": "A restored 19th-century stone mansion in the historic core of Mardin, family-run with a small breakfast terrace overlooking the plain. Under €100 a night for a properly historic Mardin stay — rare."
+        },
+        {
+          "rank": 9,
+          "hotelName": "Gül Evi Otel",
+          "city": "safranbolu",
+          "area": "carsi",
+          "tier": "mid",
+          "priceFrom": 110,
+          "whyForThisList": "An Ottoman timber-and-plaster house turned boutique hotel in UNESCO Çarşı — small rooms (historic constraints), original beams, a garden courtyard. Romantic by accident, not by marketing."
+        },
+        {
+          "rank": 10,
+          "hotelName": "Nilya Hotel",
+          "city": "kusadasi",
+          "area": "selcuk",
+          "tier": "mid",
+          "priceFrom": 80,
+          "whyForThisList": "A restored Ottoman house in central Selçuk with a garden courtyard and family-run service — five minutes by car from the Ephesus gate. The cheapest historic-stay option on this list and one of the loveliest."
+        }
+      ],
+      "verdict": "If the building itself matters, Four Seasons Sultanahmet and Mardius Tarihi Konak are the two splurges that won't be forgotten. For under €150 a night, Cinci Han in Safranbolu and Reyhani Kasri in Mardin let you sleep inside actual UNESCO architecture — better than most museum visits."
+    },
+    {
+      "slug": "beachfront-hotels-turkey",
+      "title": "The 12 best beachfront hotels in Turkey — verified",
+      "subtitle": "Direct sand, swim platforms, private bays — hotels where the beach starts at the lobby.",
+      "intro": "Turkey has more legitimately beachfront hotels than any country on the Mediterranean — and a frustrating number of properties marketed as 'beachfront' that are 200 metres back across a road. The list below is twelve verified hotels where the beach genuinely starts at the property: private sand on the Antalya strip, wooden swim platforms in Türkbükü and Kaş, calm-bay sand at Bitez and Bodrum, pebble-and-promenade beachfront in Konyaaltı and Kuşadası. We've split tiers from €100 mid-range to €900 splurge so families, couples, and solo travelers can each find a workable choice.",
+      "summary": "Twelve verified beachfront hotels in Turkey — direct beach access on the Antalya, Bodrum, Fethiye, Side, Kuşadası and Alanya coasts. Sand, swim platforms, or pebble — but always feet-in-the-water.",
+      "criteria": "To make this list, the hotel had to have direct sand or sea access from its property — no road crossings, no five-minute walks. We accepted private wooden swim platforms (the Aegean norm) as well as classic sandy beachfront. Resort-only properties were eligible if the beach itself was the headline. We skipped any city where the beach inventory was thin or the access was indirect.",
+      "picks": [
+        {
+          "rank": 1,
+          "hotelName": "Mandarin Oriental Bodrum",
+          "city": "bodrum",
+          "area": "turkbuku",
+          "tier": "luxury",
+          "priceFrom": 950,
+          "whyForThisList": "Two private beaches on a single property — a calm shallow swim cove and a deeper-water platform — with villas that have plunge pools cantilevered over the water. The most engineered beachfront in Turkey, and priced like it."
+        },
+        {
+          "rank": 2,
+          "hotelName": "Caresse, a Luxury Collection Resort",
+          "city": "bodrum",
+          "area": "yalikavak",
+          "tier": "luxury",
+          "priceFrom": 520,
+          "whyForThisList": "A glass funicular drops you from the cliff lobby straight onto a private swim platform with infinity pools above. Yalıkavak's marina is a ten-minute drive — beach by day, marina dinners by night."
+        },
+        {
+          "rank": 3,
+          "hotelName": "Hillside Beach Club",
+          "city": "fethiye",
+          "area": "oludeniz",
+          "tier": "luxury",
+          "priceFrom": 420,
+          "whyForThisList": "A private cove on the Fethiye coast — calm, swim-protected, with separate adult and family beach zones. The water is the same impossible blue as Ölüdeniz lagoon, but private. Walk straight from your room to the sand."
+        },
+        {
+          "rank": 4,
+          "hotelName": "Barut Hemera",
+          "city": "side",
+          "area": "side-west",
+          "tier": "luxury",
+          "priceFrom": 380,
+          "whyForThisList": "Adults-only Barut resort on West Side's long sandy beach. Direct access, premium loungers, and food that genuinely competes with Turkey's top all-inclusives. The right beachfront pick if you want sand without kids."
+        },
+        {
+          "rank": 5,
+          "hotelName": "Crystal Sunset Luxury Resort",
+          "city": "side",
+          "area": "side-east",
+          "tier": "luxury",
+          "priceFrom": 310,
+          "whyForThisList": "A long private beach on East Side's pine-backed coast. Quieter than Side West, similar quality, and the bay is calm enough for kids. One of the best beachfront values on the Mediterranean strip."
+        },
+        {
+          "rank": 6,
+          "hotelName": "Akra Hotel",
+          "city": "antalya",
+          "area": "konyaalti",
+          "tier": "luxury",
+          "priceFrom": 260,
+          "whyForThisList": "Modern Konyaaltı 5-star with a panoramic infinity pool and direct access to the long pebble beach below. Tram to Kaleiçi old town in ten minutes — best of both: beach base by day, walkable history by night."
+        },
+        {
+          "rank": 7,
+          "hotelName": "Kilikya Hotel",
+          "city": "mersin",
+          "area": "kizkalesi",
+          "tier": "mid",
+          "priceFrom": 100,
+          "whyForThisList": "A beachfront 4-star directly opposite the Maiden's Castle in the sea — private beach, pool, kids' water park. The cheapest direct-beachfront stay on this list and one of the most photogenic addresses in eastern Turkey."
+        },
+        {
+          "rank": 8,
+          "hotelName": "Richmond Ephesus Resort",
+          "city": "kusadasi",
+          "area": "kusadasi-center",
+          "tier": "mid",
+          "priceFrom": 160,
+          "whyForThisList": "Beachside 5-star on the Kuşadası coast with a big pool and direct sand access. Families come back for the consistency. Walking distance to the Kuşadası marina restaurants."
+        },
+        {
+          "rank": 9,
+          "hotelName": "Jiva Beach Resort",
+          "city": "fethiye",
+          "area": "calis",
+          "tier": "mid",
+          "priceFrom": 110,
+          "whyForThisList": "Affordable all-inclusive directly on Çalış Beach — the long pebble strip with the famous sunsets over the Aegean islands. Family rooms, big pools, and one of the best price-to-beachfront ratios in the country."
+        },
+        {
+          "rank": 10,
+          "hotelName": "Sahil Martı Hotel",
+          "city": "mersin",
+          "area": "mezitli",
+          "tier": "mid",
+          "priceFrom": 95,
+          "whyForThisList": "Beachfront 4-star in Mezitli with a private sand area and sea-view rooms — the easiest swim-out-of-bed option in Mersin. Eastern Mediterranean coast, no tour buses, half the price of the Antalya strip."
+        },
+        {
+          "rank": 11,
+          "hotelName": "Jasmin Beach Hotel",
+          "city": "bodrum",
+          "area": "bitez",
+          "tier": "budget",
+          "priceFrom": 80,
+          "whyForThisList": "Simple beachfront hotel in Bitez with direct bay access — the calm, shallow swim that the rest of the Bodrum peninsula doesn't have. Under €100 a night on a peninsula where most beachfront starts at three times that."
+        },
+        {
+          "rank": 12,
+          "hotelName": "Peninsula Gardens",
+          "city": "kas",
+          "area": "cukurbag",
+          "tier": "mid",
+          "priceFrom": 160,
+          "whyForThisList": "Adults-only sea-view hotel on the Çukurbağ peninsula with private wooden swim platforms straight off the property. Kaş has no sandy beach — but this is the better thing: deep, clear water you walk into from a sun lounger."
+        }
+      ],
+      "verdict": "If the beach is the entire trip, Mandarin or Caresse on the Bodrum peninsula and Hillside Beach Club outside Fethiye are the three rooms worth flying for. Under €200 a night, Akra Konyaaltı, Crystal Sunset Side, and Sahil Martı in Mersin all deliver real beachfront without the all-inclusive lock-in."
+    },
+    {
+      "slug": "cave-hotels-cappadocia",
+      "title": "The 10 best cave hotels in Cappadocia — verified",
+      "subtitle": "Stone-cut suites, balloon-view terraces, copper-tub splurges — sorted by where in Cappadocia you actually want to be.",
+      "intro": "There are over 200 hotels in Cappadocia advertising 'cave rooms' — and the gap between an actual carved-stone suite with a private terrace and a small underground bedroom with no window is enormous. The list below is ten verified cave hotels across Uçhisar, Göreme, Ürgüp, and Avanos: a mix of luxury (Museum, Argos, Sacred House, Kayakapi) and mid-range (Sultan, Mithra, Koza, Taskonaklar) and budget (Artemis, Sos) so that any traveler can find the right room. The single biggest decision isn't tier — it's town. Uçhisar is highest, quietest, and most upscale; Göreme has the best balloon-rooftop angles; Ürgüp has the best dining; Avanos is the quiet escape.",
+      "summary": "Ten verified cave hotels in Cappadocia — Uçhisar, Göreme, Ürgüp, Avanos. Stone-cut rooms, balloon-view terraces, sorted by town and tier.",
+      "criteria": "To make this list a hotel had to have actual carved-stone or cave-cut rooms (not just stone walls in a modern build), be in one of the four core Cappadocia towns, and have a usable terrace or vantage for the balloon sunrise. We picked the highest-rated property at each tier in each town and balanced the list so the four towns were all represented.",
+      "picks": [
+        {
+          "rank": 1,
+          "hotelName": "Museum Hotel",
+          "city": "cappadocia",
+          "area": "uchisar",
+          "tier": "luxury",
+          "priceFrom": 720,
+          "whyForThisList": "The original luxury cave hotel in Cappadocia. Relais & Châteaux, antique-filled stone suites, a heated outdoor pool overlooking Pigeon Valley. The benchmark — every other luxury cave hotel in the region is measured against this one. Reserve three months out."
+        },
+        {
+          "rank": 2,
+          "hotelName": "Argos in Cappadocia",
+          "city": "cappadocia",
+          "area": "uchisar",
+          "tier": "luxury",
+          "priceFrom": 540,
+          "whyForThisList": "A restored Uçhisar village built into the hillside, with tunnels connecting suites and an underground wine cellar carved into the rock. Terrace dinners catch the morning balloon launch. Couples and design travelers — not first-timers chasing bucket-list photos."
+        },
+        {
+          "rank": 3,
+          "hotelName": "Sacred House",
+          "city": "cappadocia",
+          "area": "urgup",
+          "tier": "luxury",
+          "priceFrom": 480,
+          "whyForThisList": "Wildly designed cave suites with copper tubs, fireplaces, and salvaged eclectic art — the most personality-loaded rooms in the region. Ürgüp's dining and wineries are a five-minute walk. Picks itself for travelers who hate generic luxury."
+        },
+        {
+          "rank": 4,
+          "hotelName": "Kayakapi Premium Caves",
+          "city": "cappadocia",
+          "area": "urgup",
+          "tier": "luxury",
+          "priceFrom": 420,
+          "whyForThisList": "300-year-old restored cave dwellings, each suite genuinely unique — some with jacuzzis, fireplaces, multiple stone-cut rooms. Excellent on-site restaurant. Quieter alternative to Sacred House for the same price tier."
+        },
+        {
+          "rank": 5,
+          "hotelName": "Sultan Cave Suites",
+          "city": "cappadocia",
+          "area": "goreme",
+          "tier": "mid",
+          "priceFrom": 220,
+          "whyForThisList": "The Instagram cave hotel — its carpet-and-balloon-filled terrace is on every Cappadocia mood board. The rooms behind the terrace are real cave suites; the photo position is the actual reason to book. Mid-tier price for the best Göreme balloon shot."
+        },
+        {
+          "rank": 6,
+          "hotelName": "Taskonaklar",
+          "city": "cappadocia",
+          "area": "uchisar",
+          "tier": "mid",
+          "priceFrom": 200,
+          "whyForThisList": "A historic Uçhisar cave residence with huge outdoor terraces over Pigeon Valley. Not flashy — atmospheric. The mid-range pick for travelers who want Uçhisar's quiet height without paying Museum or Argos rates."
+        },
+        {
+          "rank": 7,
+          "hotelName": "Mithra Cave Hotel",
+          "city": "cappadocia",
+          "area": "goreme",
+          "tier": "mid",
+          "priceFrom": 170,
+          "whyForThisList": "Consistently the top-rated mid-range cave hotel in Göreme. Strong terrace for the balloon sunrise, friendly staff, generous breakfast. The default booking when you can't get the splurges."
+        },
+        {
+          "rank": 8,
+          "hotelName": "Koza Cave Hotel",
+          "city": "cappadocia",
+          "area": "goreme",
+          "tier": "mid",
+          "priceFrom": 160,
+          "whyForThisList": "Family-run eco-conscious cave hotel in Göreme with one of the best breakfasts in the region and strong valley views. Slightly off the main tourist drag — quieter at night, same balloon access in the morning."
+        },
+        {
+          "rank": 9,
+          "hotelName": "Artemis Cave Suites",
+          "city": "cappadocia",
+          "area": "goreme",
+          "tier": "budget",
+          "priceFrom": 95,
+          "whyForThisList": "Affordable cave rooms in central Göreme with a usable terrace for balloon watching. Under €100 a night is the entry price for a real cave room in town — most cheaper options are rooms next to caves, not in them."
+        },
+        {
+          "rank": 10,
+          "hotelName": "Sos Cave Hotel",
+          "city": "cappadocia",
+          "area": "avanos",
+          "tier": "budget",
+          "priceFrom": 70,
+          "whyForThisList": "Simple, clean cave hotel in quieter Avanos by the Red River. Family-run, great value, the quietest base in the region. Balloons fly less directly here — drive 15 minutes to Göreme for the photo, sleep in the calm."
+        }
+      ],
+      "verdict": "Splurge tier: Museum, Argos, Sacred House are the three caves worth flying for. Mid-range: Sultan for the photo, Mithra for the comfort, Taskonaklar for Uçhisar's quiet. Under €100: Artemis in Göreme or Sos in Avanos. Pick the town first — Uçhisar for height, Göreme for balloons, Ürgüp for food, Avanos for quiet — then the tier."
+    },
+    {
+      "slug": "luxury-resorts-turkish-coast",
+      "title": "The 10 best luxury resorts on the Turkish coast — verified",
+      "subtitle": "€400+ per night, private beaches, real Michelin-grade kitchens — only the addresses worth the spend.",
+      "intro": "The Turkish coast does luxury better than any other corner of the Mediterranean — Mandarin Oriental in Türkbükü, Maxx Royal in Belek, Çırağan Palace on the Bosphorus, Nikki Beach quiet money on the Bodrum peninsula. The catch: the gap between the genuinely world-class properties and the very-expensive-but-not-actually-special ones is huge. Below are ten verified resorts from our city pages where the rate is €400+ per night and every euro is earned: private beaches that aren't shared with day-trippers, kitchens with named chefs, suites with real terraces, and service that competes with the best in Asia. No greenwash, no rebranded mid-rate sold as luxury.",
+      "summary": "Ten verified luxury resorts on the Turkish coast and Bosphorus — Mandarin Oriental, Maxx Royal, Çırağan, Caresse and more. €400+ per night, private beaches, real names.",
+      "criteria": "To make this list a hotel had to: (1) be priced from €400/night or higher in our verified data, (2) be on or directly adjacent to the sea (or in the Bosphorus-front Istanbul case, the water), (3) offer private beach or beach-club access not shared with the public, (4) have substantive on-site dining and spa programs. We focused on the Bodrum peninsula, Antalya/Belek, Bosphorus Istanbul, and Side — the four addresses where Turkish luxury actually concentrates.",
+      "picks": [
+        {
+          "rank": 1,
+          "hotelName": "Mandarin Oriental Bodrum",
+          "city": "bodrum",
+          "area": "turkbuku",
+          "tier": "luxury",
+          "priceFrom": 950,
+          "whyForThisList": "The benchmark luxury resort in Turkey. Two private beaches, a Nobu on site, villas with plunge pools, and service that genuinely matches Mandarin's flagships in Asia. Türkbükü address keeps it discreet — yacht-crowd quiet, not party-strip loud."
+        },
+        {
+          "rank": 2,
+          "hotelName": "Çırağan Palace Kempinski",
+          "city": "istanbul",
+          "area": "besiktas-ortakoy",
+          "tier": "luxury",
+          "priceFrom": 780,
+          "whyForThisList": "The only true Ottoman palace hotel on the Bosphorus. The infinity pool sits on the water; palace suites have ceiling moldings older than most modern countries. Tugra, the in-house Ottoman restaurant, is a destination dinner on its own."
+        },
+        {
+          "rank": 3,
+          "hotelName": "Maxx Royal Belek",
+          "city": "antalya",
+          "area": "belek",
+          "tier": "luxury",
+          "priceFrom": 720,
+          "whyForThisList": "Ultra-luxury all-inclusive on a vast private beach in Belek. Multiple pools, the country's best kids' club for multi-gen trips, and food that's genuinely up to the rate. The rare resort that justifies all-inclusive at the luxury tier."
+        },
+        {
+          "rank": 4,
+          "hotelName": "Regnum Carya",
+          "city": "antalya",
+          "area": "belek",
+          "tier": "luxury",
+          "priceFrom": 680,
+          "whyForThisList": "Belek's other top-of-the-tier resort — golf course, twelve restaurants, beach club, and a private beach big enough that even peak season feels uncrowded. Multi-generational families repeat for years."
+        },
+        {
+          "rank": 5,
+          "hotelName": "Maça Kızı",
+          "city": "bodrum",
+          "area": "turkbuku",
+          "tier": "luxury",
+          "priceFrom": 680,
+          "whyForThisList": "The original chic Bodrum boutique resort — whitewashed walls, a wooden-pier beach club where Istanbul's quiet money summers, and small enough to feel like a friend's villa. Picks itself for couples who want fashion-magazine luxury, not corporate."
+        },
+        {
+          "rank": 6,
+          "hotelName": "Four Seasons Hotel Istanbul at Sultanahmet",
+          "city": "istanbul",
+          "area": "sultanahmet",
+          "tier": "luxury",
+          "priceFrom": 620,
+          "whyForThisList": "Not on the coast — but the Sultanahmet Four Seasons earns the luxury list by virtue of being a former Ottoman prison turned five-star landmark, with service that benchmarks Istanbul. Pair it with a Bodrum or Türkbükü leg for the full Turkey-luxury trip."
+        },
+        {
+          "rank": 7,
+          "hotelName": "Rixos Premium Belek",
+          "city": "antalya",
+          "area": "belek",
+          "tier": "luxury",
+          "priceFrom": 540,
+          "whyForThisList": "Large luxury all-inclusive in Belek with a water park and multiple à la carte restaurants — the classic Belek luxury experience for travelers who want recognizability and scale. Better for families than couples."
+        },
+        {
+          "rank": 8,
+          "hotelName": "Shangri-La Bosphorus",
+          "city": "istanbul",
+          "area": "besiktas-ortakoy",
+          "tier": "luxury",
+          "priceFrom": 520,
+          "whyForThisList": "Large Bosphorus-view rooms next to Dolmabahçe Palace, superb service, and the best Asian restaurants of any Istanbul hotel. Less iconic than Çırağan, but cheaper and rooms are bigger — better value at the luxury tier for travelers prioritizing space."
+        },
+        {
+          "rank": 9,
+          "hotelName": "Caresse, a Luxury Collection Resort",
+          "city": "bodrum",
+          "area": "yalikavak",
+          "tier": "luxury",
+          "priceFrom": 520,
+          "whyForThisList": "Cliffside Yalıkavak resort with a glass funicular down to a private beach platform and infinity pools above. Closer to the superyacht marina than Türkbükü — better if dinners out matter as much as the room."
+        },
+        {
+          "rank": 10,
+          "hotelName": "Hillside Beach Club",
+          "city": "fethiye",
+          "area": "oludeniz",
+          "tier": "luxury",
+          "priceFrom": 420,
+          "whyForThisList": "Consistently ranked Turkey's best all-inclusive resort. A private cove, separate adult and family pools, and a kitchen that punches above its all-inclusive category. The lower-priced luxury pick on this list — and the one repeat guests defend most fiercely."
+        }
+      ],
+      "verdict": "Three rooms worth the spend above all others: Mandarin Oriental Bodrum for couples and pure design, Çırağan Palace Kempinski for the Bosphorus once-in-a-lifetime, Maxx Royal Belek for multi-generational family trips. Everything else on this list is excellent — these three are the answers to specific questions."
+    }
+  ]
+}
