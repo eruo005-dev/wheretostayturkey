@@ -242,9 +242,68 @@ function discoverCarsLink(city) {
   const base = `https://www.discovercars.com/turkey/${slug(city)}`;
   return A.discoverCars.aAid ? `${base}?a_aid=${A.discoverCars.aAid}` : base;
 }
+// Localrent — Turkey-strong rental aggregator via Travelpayouts redirector.
+// Cities Localrent supports in Turkey: istanbul, antalya, bodrum, dalaman, izmir,
+// kayseri (Cappadocia), trabzon, fethiye, marmaris, alanya, kemer, side, kusadasi,
+// gocek. For unsupported cities we fall back to /turkey landing.
+const LOCALRENT_TURKEY_CITIES = new Set([
+  "istanbul","antalya","bodrum","dalaman","izmir","kayseri","cappadocia","goreme",
+  "trabzon","fethiye","marmaris","alanya","kemer","side","kusadasi","gocek",
+]);
+function localrentDestUrl(cityName) {
+  const s = slug(cityName);
+  // Cappadocia / Goreme → Kayseri airport area on Localrent
+  const mapped = (s === "cappadocia" || s === "goreme") ? "kayseri" : s;
+  if (LOCALRENT_TURKEY_CITIES.has(mapped)) {
+    return `https://localrent.com/en/rent-a-car-in-${mapped}`;
+  }
+  return `https://localrent.com/en/turkey`;
+}
+function tpMediaLink(campaignId, partnerId, destUrl, sub1) {
+  // TP redirector pattern. Marker = TP account, trs = website source.
+  const params = new URLSearchParams({
+    campaign_id: campaignId,
+    marker: A.localrent.marker,  // shared TP marker for the project
+    p: partnerId,
+    trs: A.localrent.trs,
+  });
+  if (sub1) params.set("sub_id", sub1);
+  return `https://tp.media/r?${params.toString()}&u=${encodeURIComponent(destUrl)}`;
+}
+function localrentLink(cityName, sub1) {
+  return tpMediaLink(A.localrent.campaignId, A.localrent.partnerId, localrentDestUrl(cityName), sub1);
+}
 function rentalcarsLink(city) {
   const base = `https://www.rentalcars.com/SearchResults.do?location=${encodeURIComponent(city)}`;
   return A.rentalcars.aid ? `${base}&aid=${A.rentalcars.aid}` : base;
+}
+
+// ---- Trip.com flights ----
+function tripcomFlightLink(originName, destName, originIata, destIata, sub1) {
+  // Pattern from TP Trip.com partnership:
+  // /flights/{Origin}-to-{Dest}/tickets-{ORIG}-{DEST}?flighttype=S&dcity={ORIG}&acity={DEST}&Allianceid=...&SID=...
+  const slugify = (s) => String(s).trim().replace(/\s+/g, "-");
+  const path = `${slugify(originName)}-to-${slugify(destName)}`;
+  const tickets = `tickets-${originIata}-${destIata}`;
+  const params = new URLSearchParams({
+    flighttype: "S",
+    dcity: originIata,
+    acity: destIata,
+  });
+  if (A.tripcom.allianceid) params.set("Allianceid", A.tripcom.allianceid);
+  if (A.tripcom.sid)        params.set("SID", A.tripcom.sid);
+  if (sub1)                 params.set("trip_sub1", sub1);
+  if (A.tripcom.tripSub3)   params.set("trip_sub3", A.tripcom.tripSub3);
+  return `https://www.trip.com/flights/${path}/${tickets}?${params.toString()}`;
+}
+function tripcomFlightSearchLink(destIata, sub1) {
+  // Generic flight search landing page (no specific origin). Useful for "search any flight" CTAs.
+  const params = new URLSearchParams({ acity: destIata });
+  if (A.tripcom.allianceid) params.set("Allianceid", A.tripcom.allianceid);
+  if (A.tripcom.sid)        params.set("SID", A.tripcom.sid);
+  if (sub1)                 params.set("trip_sub1", sub1);
+  if (A.tripcom.tripSub3)   params.set("trip_sub3", A.tripcom.tripSub3);
+  return `https://www.trip.com/flights/?${params.toString()}`;
 }
 
 // ---- eSIM / insurance / money ----
@@ -338,6 +397,7 @@ ${config.twitterHandle ? `<meta name="twitter:site" content="${esc(config.twitte
 <link rel="dns-prefetch" href="https://www.airalo.com">
 ${ldBlocks}
 ${analytics.join("\n")}
+${(config.verificationScripts || []).join("\n")}
 </head>
 <body class="has-sticky">`;
 }
@@ -355,6 +415,7 @@ function nav() {
       <a href="/#all-cities">All cities</a>
       <a href="/journal/">Journal</a>
       <a href="/guides/">Guides</a>
+      <a href="/flights/">Flights</a>
       <a href="/planner/">Planner</a>
       <a href="/quiz/">Quiz</a>
     </nav>
@@ -395,6 +456,7 @@ function footer() {
           <li><a href="/compare/">Compare cities</a></li>
           <li><a href="/quiz/">Take the quiz</a></li>
           <li><a href="/planner/">Trip cost calculator</a></li>
+          <li><a href="/flights/">Cheap flights to Turkey</a></li>
           <li><a href="/about/">About us</a></li>
           <li><a href="/about/#affiliate">Affiliate disclosure</a></li>
           <li><a href="/contact/">Contact</a></li>
@@ -531,13 +593,15 @@ function experiencesBlock(city) {
 function transferBlock(city) {
   const wp = welcomePickupsLink(city.name);
   const kt = kiwitaxiLink(city.name);
+  const lr = localrentLink(city.name, `transfer-${slug(city.name)}`);
   const dc = discoverCarsLink(city.name);
   const rc = rentalcarsLink(city.name);
   const cards = [
     { partner: "Welcome Pickups", tag: "Fixed-price airport transfer", url: wp, active: true },
     { partner: "Kiwitaxi",        tag: "Pre-book a private car",       url: kt, active: true },
-    { partner: "Discover Cars",   tag: "Rental cars — compare 500+ providers", url: dc, active: true },
-    { partner: "Rentalcars.com",  tag: "Rental cars — Booking Group",         url: rc, active: !!A.rentalcars.aid },
+    { partner: "Localrent",       tag: "Rental cars — Turkey-focused, no deposit",       url: lr, active: true },
+    { partner: "Discover Cars",   tag: "Rental cars — compare 500+ providers",            url: dc, active: !!A.discoverCars.aAid },
+    { partner: "Rentalcars.com",  tag: "Rental cars — Booking Group",                     url: rc, active: !!A.rentalcars.aid },
   ].filter((c) => c.active);
   return `
 <section class="container section-sm">
@@ -1666,6 +1730,130 @@ ${tail()}`;
   ];
   const html = head({ title, description, canonical, jsonld }) + body;
   writeFile(`${c.slug}/tours/index.html`, html);
+}
+
+// ---- Flights to Turkey landing page ----
+function renderFlights() {
+  const canonical = `${config.siteUrl}/flights/`;
+  const title = "Cheap flights to Turkey — compare prices and book";
+  const description = "Find affordable flights to Istanbul, Antalya, and Bodrum. Popular routes from London, New York, Toronto, Dubai, and 12+ origin cities.";
+
+  // Curated list of high-traffic routes. Trip.com aggregates carriers across all major OTAs.
+  const routes = [
+    // To Istanbul (IST) — primary international hub
+    { from: "London",     fromIata: "LHR", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, BA, Pegasus" },
+    { from: "New-York",   fromIata: "JFK", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, ~10h" },
+    { from: "Toronto",    fromIata: "YYZ", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, ~10h" },
+    { from: "Los-Angeles",fromIata: "LAX", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, ~13h" },
+    { from: "Paris",      fromIata: "CDG", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, AF, Pegasus" },
+    { from: "Frankfurt",  fromIata: "FRA", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, Lufthansa" },
+    { from: "Amsterdam",  fromIata: "AMS", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, KLM, Pegasus" },
+    { from: "Dubai",      fromIata: "DXB", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, Emirates" },
+    { from: "Singapore",  fromIata: "SIN", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, ~11h" },
+    { from: "Sydney",     fromIata: "SYD", to: "Istanbul", toIata: "IST", note: "1 stop via Doha or Dubai" },
+    { from: "Mumbai",     fromIata: "BOM", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, IndiGo" },
+    { from: "Lagos",      fromIata: "LOS", to: "Istanbul", toIata: "IST", note: "Direct on Turkish, ~7h" },
+    // To Antalya (AYT) — resort hub
+    { from: "London",     fromIata: "LHR", to: "Antalya",  toIata: "AYT", note: "Seasonal direct, summer peak" },
+    { from: "Berlin",     fromIata: "BER", to: "Antalya",  toIata: "AYT", note: "Direct on SunExpress, Pegasus" },
+    { from: "Moscow",     fromIata: "DME", to: "Antalya",  toIata: "AYT", note: "Direct on Turkish, Aeroflot" },
+    // To Bodrum (BJV)
+    { from: "London",     fromIata: "LHR", to: "Bodrum",   toIata: "BJV", note: "Seasonal direct, May–Oct" },
+  ];
+
+  const featuredRoute = routes[0]; // London → Istanbul as the hero example
+
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Turkey</a> / Flights</div>
+    <h1>Cheap flights to Turkey</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">We compare every major carrier and OTA in one place. Pick your origin, see prices in seconds, book through Trip.com — no hidden markups, no upsell tricks.</p>
+  </div>
+</div>
+
+<section class="container">
+  <div class="card" style="padding:32px;background:linear-gradient(135deg,#faf8f3,#f3ede0);border:1px solid var(--c-border)">
+    <div class="eyebrow">Most-searched route</div>
+    <h2 style="margin:6px 0 12px">${esc(featuredRoute.from.replace(/-/g, " "))} → ${esc(featuredRoute.to)}</h2>
+    <p style="color:var(--c-text-soft);margin:0 0 20px">${esc(featuredRoute.note)}. Compare flight times and prices live.</p>
+    <a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(tripcomFlightLink(featuredRoute.from, featuredRoute.to, featuredRoute.fromIata, featuredRoute.toIata, "flights-hero"))}">Search ${esc(featuredRoute.from.replace(/-/g, " "))} → ${esc(featuredRoute.to)} flights →</a>
+  </div>
+</section>
+
+<section class="container section-sm">
+  <h2>Popular routes to Istanbul</h2>
+  <p class="text-muted" style="max-width:720px">Direct flights save 4–8 hours on long-haul. We list both options where the saving on a connection is significant.</p>
+  <div class="grid grid-2 grid-3 mt-3">
+    ${routes.filter(r => r.toIata === "IST").map((r) => `
+      <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(tripcomFlightLink(r.from, r.to, r.fromIata, r.toIata, "flights-list"))}" style="text-decoration:none;color:inherit;padding:20px">
+        <div class="eyebrow">${esc(r.fromIata)} → ${esc(r.toIata)}</div>
+        <h3 style="margin:6px 0 8px">${esc(r.from.replace(/-/g, " "))} → ${esc(r.to)}</h3>
+        <p style="color:var(--c-text-soft);font-size:.95rem;margin:0">${esc(r.note)}</p>
+        <div class="mt-2" style="color:var(--c-accent);font-weight:600">Compare prices →</div>
+      </a>
+    `).join("")}
+  </div>
+</section>
+
+<section class="container section-sm">
+  <h2>Resort coast: Antalya &amp; Bodrum</h2>
+  <p class="text-muted" style="max-width:720px">Skip the 12-hour bus from Istanbul if you're heading to the beach. Seasonal direct flights run May–October.</p>
+  <div class="grid grid-2 grid-3 mt-3">
+    ${routes.filter(r => r.toIata !== "IST").map((r) => `
+      <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(tripcomFlightLink(r.from, r.to, r.fromIata, r.toIata, "flights-resort"))}" style="text-decoration:none;color:inherit;padding:20px">
+        <div class="eyebrow">${esc(r.fromIata)} → ${esc(r.toIata)}</div>
+        <h3 style="margin:6px 0 8px">${esc(r.from.replace(/-/g, " "))} → ${esc(r.to)}</h3>
+        <p style="color:var(--c-text-soft);font-size:.95rem;margin:0">${esc(r.note)}</p>
+        <div class="mt-2" style="color:var(--c-accent);font-weight:600">Compare prices →</div>
+      </a>
+    `).join("")}
+  </div>
+</section>
+
+<section class="container section-sm">
+  <h2>How we pick flights</h2>
+  <div class="grid grid-2 grid-3 mt-3">
+    <div class="card" style="padding:24px">
+      <div class="eyebrow">Honest pricing</div>
+      <h4 style="margin:6px 0">Final price you'll pay</h4>
+      <p style="color:var(--c-text-soft);font-size:.95rem">Trip.com shows the all-in price including taxes and bag fees — no surprise add-ons at checkout.</p>
+    </div>
+    <div class="card" style="padding:24px">
+      <div class="eyebrow">Real options</div>
+      <h4 style="margin:6px 0">Every major carrier</h4>
+      <p style="color:var(--c-text-soft);font-size:.95rem">Turkish Airlines, Pegasus, Lufthansa, BA, Emirates, Qatar — compared side-by-side, not just the OTA's preferred airline.</p>
+    </div>
+    <div class="card" style="padding:24px">
+      <div class="eyebrow">Mistake fares</div>
+      <h4 style="margin:6px 0">Same-day price drops</h4>
+      <p style="color:var(--c-text-soft);font-size:.95rem">Search at different times — Tuesday 6am ET catches the most error fares. Trip.com surfaces them as soon as airlines publish.</p>
+    </div>
+  </div>
+</section>
+
+<section class="container section-sm">
+  <div class="card" style="padding:32px;text-align:center">
+    <h2 style="margin:0 0 12px">Search any other route</h2>
+    <p class="text-muted" style="max-width:560px;margin:0 auto 20px">Don't see your origin? Search Trip.com directly — they have every route to Turkey from every major airport.</p>
+    <a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(tripcomFlightSearchLink("IST", "flights-cta"))}">Search any flight to Turkey →</a>
+  </div>
+</section>
+
+${footer()}
+${modal()}
+${tail()}`;
+
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home",    url: `${config.siteUrl}/` },
+      { name: "Flights", url: canonical },
+    ]),
+  ];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile(`flights/index.html`, html);
 }
 
 // ---- Interactive decision quiz ----
@@ -3179,6 +3367,7 @@ function run() {
   renderSeasonalGuide();
   renderNightsGuide();
   renderGuidesHub();
+  renderFlights();
 
   for (const c of cities) {
     renderCity(c);
