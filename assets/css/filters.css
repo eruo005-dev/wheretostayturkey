@@ -1,0 +1,93 @@
+/* Persona filter chips + amenity icons — wheretostayturkey.com */
+
+.persona-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 28px;
+  padding: 0;
+  list-style: none;
+}
+
+.persona-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--c-text, #0b0f19);
+  background: transparent;
+  border: 1px solid var(--c-border, #e3dccc);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+}
+
+.persona-chip:hover {
+  border-color: var(--c-accent, #b45309);
+  color: var(--c-accent, #b45309);
+}
+
+.persona-chip[data-active="true"] {
+  background: var(--c-accent, #b45309);
+  border-color: var(--c-accent, #b45309);
+  color: #faf8f3;
+}
+
+.persona-chip[data-active="true"]:hover {
+  color: #faf8f3;
+  opacity: 0.92;
+}
+
+.persona-chip-count {
+  font-size: 0.78rem;
+  opacity: 0.7;
+  font-weight: 400;
+}
+
+.hotel-card[data-hidden="true"] {
+  display: none;
+}
+
+/* Amenity icons */
+.amenity-row {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.amenity-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: var(--c-text-soft, #5e6473);
+  letter-spacing: 0.02em;
+}
+
+.amenity-icon svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .persona-filter {
+    margin: 18px 0 20px;
+    gap: 6px;
+  }
+  .persona-chip {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}

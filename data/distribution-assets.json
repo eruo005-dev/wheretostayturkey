@@ -1,0 +1,396 @@
+{
+  "_meta": {
+    "site": "Where to Stay in Turkey",
+    "siteUrl": "https://wheretostayturkey.com",
+    "generatedFor": "2026 distribution playbook",
+    "voice": "Confident, opinionated, editorial. Real numbers, real specifics. No clickbait.",
+    "counts": {
+      "pinterest_pins": 30,
+      "reddit_post_drafts": 5,
+      "haro_response_templates": 6,
+      "guest_post_outlines": 4
+    }
+  },
+
+  "pinterest_pins": [
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/cappadocia-in-winter/",
+      "pinTitle": "Cappadocia in Winter: A Real Trip-Planning Guide",
+      "pinDescription": "Cappadocia in winter is cheaper, quieter, and the hot-air balloons still fly on most clear mornings. We break down December–February pricing, which cave hotels keep their pools heated, what to pack for sub-zero sunrises, and why January is the sweet spot for snow-on-fairy-chimneys photos. Includes a 4-night winter itinerary for Göreme and Uçhisar with hotel picks at three budgets. Cappadocia winter trip planning, snow Cappadocia, balloon ride December, cave hotel winter, Goreme off season, Turkey winter itinerary, what to pack Cappadocia winter. Save for your January or February trip.",
+      "boardSuggestion": "Cappadocia Travel | Turkey Winter Trips | Cave Hotels",
+      "imagePromptIdea": "Vertical 1000x1500 image: snow-dusted fairy chimneys at sunrise with three or four hot-air balloons rising through pink dawn light, white text overlay 'Cappadocia in Winter — what nobody tells you'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/cappadocia-balloon-guide/",
+      "pinTitle": "Cappadocia Balloon Ride: Complete 2026 Guide",
+      "pinDescription": "A real guide to the Cappadocia hot-air balloon ride: how flights are graded by basket size, what the standard vs deluxe vs comfort flights actually include, why the 4am pickup matters, and how to read the cancellation refund rules before you pay. We cover average prices in 2026, which months have the highest fly rate, and the safest operators with multi-year safety records. Cappadocia balloon ride cost, hot air balloon Turkey, Goreme balloon flight, sunrise balloon Cappadocia, balloon ride safety, best balloon company Cappadocia. Save for your sunrise.",
+      "boardSuggestion": "Cappadocia | Bucket List Travel | Hot Air Balloon",
+      "imagePromptIdea": "Vertical photo of dozens of balloons over Cappadocia valley at golden hour, single hiker silhouette on a ridge, bold serif title 'The Balloon Ride Guide'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/turkey-cost-week/",
+      "pinTitle": "How Much a Week in Turkey Costs in 2026",
+      "pinDescription": "A real 7-day Turkey budget broken into three tiers: backpacker ($55/day), midrange ($140/day), and comfort ($310/day). We price out flights inside Turkey, intercity buses, dinner for two in Istanbul vs Antalya, a Cappadocia balloon ride, hammam, ferry crossings, and tipping. Includes a printable expense table. Turkey travel budget 2026, how much to save for Turkey trip, Istanbul prices, Cappadocia cost, Turkey 7 days budget, Turkish lira exchange tips. Save before you book.",
+      "boardSuggestion": "Turkey Travel | Budget Travel Tips | Trip Planning",
+      "imagePromptIdea": "Flat-lay of Turkish lira notes, a coffee, a Moleskine, and a paper map of Turkey with the title 'A Week in Turkey: Real 2026 Costs'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/turkey-solo-female-travel/",
+      "pinTitle": "Solo Female Travel in Turkey: Honest Guide",
+      "pinDescription": "An honest guide to solo female travel in Turkey written from real trips, not a press release. Where to stay alone in Istanbul (Cihangir, not Sultanahmet at night), how dress codes actually work in Konya vs Bodrum, taxi-app hygiene, Cappadocia tour groups, and the safest overnight bus operators. Covers what to wear for mosque visits, hammam etiquette for women, and which neighborhoods we recommend skipping after dark. Solo female travel Turkey, Istanbul safety solo, women travel tips Turkey, Turkey dress code, female solo Cappadocia. Save and share.",
+      "boardSuggestion": "Solo Female Travel | Turkey Travel | Women Who Travel",
+      "imagePromptIdea": "Woman with backpack looking out at the Bosphorus from a ferry, soft afternoon light, title 'Solo in Turkey — what I'd actually tell my sister'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/turkish-food-20-dishes/",
+      "pinTitle": "20 Turkish Dishes You Have to Eat (Beyond Kebab)",
+      "pinDescription": "Turkish food is not just kebab. Twenty dishes that prove it: Antep-style lahmacun, mantı with garlic yogurt, içli köfte, kuzu tandır, Black Sea muhlama, Çiya-style stuffed vegetables, the breakfasts of Van and Hatay, real künefe, baklava with pistachio paste, and which restaurant we send people to in each region. Turkish food guide, what to eat Turkey, traditional Turkish dishes, lahmacun vs pide, Turkish breakfast regions, Antep food, mantı, baklava. Save before your trip.",
+      "boardSuggestion": "Turkish Food | Foodie Travel | Mediterranean Cuisine",
+      "imagePromptIdea": "Overhead spread of a Turkish breakfast — olives, white cheese, eggs, simit, çay glasses on a copper tray — title in lower-third 'Eat Turkey Properly: 20 Dishes'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/best-cave-hotels-cappadocia/",
+      "pinTitle": "10 Cappadocia Cave Hotels Worth the Price",
+      "pinDescription": "We toured forty Cappadocia cave hotels and only ten earned the recommendation. The list covers Göreme, Uçhisar, and Ürgüp at three price tiers: under $200, $300–$500, and $700+ per night. Each entry has the actual room types we'd book, balloon-view ratings, breakfast quality, and the catch. Cave hotel Cappadocia, best cave hotel Goreme, Uchisar cave hotel, luxury cave suite Turkey, Cappadocia honeymoon hotel, cave hotel with balloon view. Save to your hotel board.",
+      "boardSuggestion": "Cave Hotels | Cappadocia Stays | Unique Hotels",
+      "imagePromptIdea": "Stone arch of a cave-hotel terrace at sunrise framing a sky full of balloons, with a textile-laden bed inside, title 'Cave Hotels Worth Booking'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/best-honeymoon-hotels-turkey/",
+      "pinTitle": "The 8 Best Honeymoon Hotels in Turkey",
+      "pinDescription": "Honeymoon planning for Turkey is split between two trips in one: a Cappadocia cave-hotel night and a coast resort week. Our shortlist covers Bodrum's Mandarin Oriental, an over-the-Aegean villa stay in Yalıkavak, the cave-hotel kings of Uçhisar, and a quiet Kaş boutique that beats Mykonos at half the price. Honeymoon Turkey, Turkey honeymoon hotels, romantic resort Bodrum, Cappadocia honeymoon suite, luxury Turkey resort, Aegean honeymoon villa. Save before you book the flight.",
+      "boardSuggestion": "Honeymoon Destinations | Luxury Travel Turkey | Romantic Hotels",
+      "imagePromptIdea": "Couple at a cave-hotel terrace with sunrise balloons in the background, two coffees on a low table, soft pastel grading, title 'Honeymoon Turkey'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/best-bosphorus-cruise/",
+      "pinTitle": "Best Bosphorus Cruise: We Tested All of Them",
+      "pinDescription": "The Bosphorus has a dozen cruise companies and only three worth booking. We compare the public ferry route, the 90-minute private cruise, and the long full-Bosphorus ferry to Anadolu Kavağı with prices, departure points, what's actually included, and which ones serve dinner worth eating. Bosphorus cruise Istanbul, best Bosphorus tour, public ferry vs private cruise, sunset cruise Istanbul, Istanbul boat tour. Save for trip planning.",
+      "boardSuggestion": "Istanbul Things to Do | Bosphorus | Turkey Travel",
+      "imagePromptIdea": "Wide vertical of the Bosphorus Bridge at golden hour with a ferry in the foreground, mosques along the European shoreline, title 'Bosphorus Cruise — Which One'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/12-hours-in-istanbul/",
+      "pinTitle": "12 Hours in Istanbul: A Layover Itinerary",
+      "pinDescription": "A real 12-hour Istanbul itinerary for layovers, written by airport-to-airport time. Start at IST or SAW, take the M11 metro to Gayrettepe, hit Sultanahmet's three icons in two and a half hours, then escape the tourist zone for a Karaköy lunch, a Bosphorus ferry round-trip, and a quick hammam before re-clearing security. Includes timing math, taxi cost from each airport, and what to skip. Istanbul layover, 12 hours Istanbul, Istanbul one day itinerary, IST airport layover plan, half day Istanbul. Save for your stopover.",
+      "boardSuggestion": "Istanbul Travel | Layover Tips | Europe City Breaks",
+      "imagePromptIdea": "Tilted clock face overlaid on the Hagia Sophia at dusk, ferry in lower frame, title '12 Hours: A Real Layover'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/turkish-rug-scams/",
+      "pinTitle": "How to Spot a Turkish Rug Scam (Before You Pay)",
+      "pinDescription": "The classic Grand Bazaar rug script, broken down line by line: the free apple tea, the cousin in your hometown, the sudden discount when you reach the door. We cover what a real silk-on-silk Hereke costs, how to read knot count, why shipping insurance matters, and the four sentences that get you out of a hard sell without losing face. Turkish rug scam, Grand Bazaar tips, how to buy Turkish rug, kilim shopping Istanbul, carpet shop Sultanahmet. Save before you walk in.",
+      "boardSuggestion": "Istanbul Tips | Travel Scams | Turkey Travel",
+      "imagePromptIdea": "Tight overhead of a stack of patterned rugs with a tea glass on top, hand half-cropped, title 'The Rug Script — and How to Walk Away'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/off-tourist-istanbul-neighborhoods/",
+      "pinTitle": "5 Istanbul Neighborhoods Tourists Never See",
+      "pinDescription": "Past Sultanahmet there's a real Istanbul: Kuzguncuk's pastel wooden houses on the Asian shore, Balat's antique-stuffed back alleys, Yeldeğirmeni's coffee scene, Arnavutköy's Bosphorus seafood meyhanes, and Moda's seaside promenade. Each entry has a 2-hour walking loop, a coffee stop, and a lunch we'd actually go back for. Istanbul off the beaten path, Balat neighborhood, Kadikoy Moda walk, Kuzguncuk Istanbul, hidden Istanbul. Save for your second visit.",
+      "boardSuggestion": "Istanbul Neighborhoods | Off the Beaten Path | Local Travel",
+      "imagePromptIdea": "Pastel wooden houses on a sloping Bosphorus street, single cat in foreground, soft morning light, title 'The Istanbul Tourists Skip'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/anatolian-breakfast-regions/",
+      "pinTitle": "Turkish Breakfast Is 6 Different Breakfasts",
+      "pinDescription": "There is no single Turkish breakfast. The Aegean version is olive-oil and herb-heavy, Van's is a sprawling 25-dish marathon, the Black Sea adds cornbread and muhlama, Hatay leans into thyme and za'atar. Six regions, six breakfast styles, with the dish names and the cafés we'd send you to in each city. Turkish breakfast, Van kahvaltı, Aegean breakfast, Black Sea muhlama, Hatay breakfast, regional Turkish food. Save before your trip.",
+      "boardSuggestion": "Turkish Breakfast | Foodie Travel | Regional Food",
+      "imagePromptIdea": "Birds-eye of an enormous Van breakfast spread on a copper tray, dozens of small bowls, title 'Six Turkish Breakfasts You Should Know'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/cay-culture-turkey/",
+      "pinTitle": "Why Turkey Drinks 30 Cups of Tea a Day",
+      "pinDescription": "Turkish çay is not just a drink — it's the social fabric of every shop, ferry, and waiting room in the country. We unpack why tea replaced coffee in the 20th century, how Rize-region terraces produce most of it, how to order properly (açık vs demli, koyu, tavşan kanı), and the etiquette of the second glass. Turkish tea culture, cay garden Turkey, how to drink Turkish tea, Rize tea, Istanbul tea house, çay etiquette. Save before you order.",
+      "boardSuggestion": "Turkish Culture | Tea Lovers | Slow Travel",
+      "imagePromptIdea": "Tulip glass of red-amber Turkish tea on a mosaic table next to a sugar cube and a saucer, soft side light, title 'Why Turkey Lives on Tea'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/turkish-hammam-guide/",
+      "pinTitle": "Turkish Hammam Etiquette: What to Actually Expect",
+      "pinDescription": "First time at a Turkish hammam? Here's exactly what happens, in order: the peştemal, the warm marble göbektaşı, the kese exfoliation, the foam massage, and the cool-down çay. We cover what to wear (and not wear), tipping math, gender separation in historic hammams, and which Istanbul hammams are worth the splurge vs which are tourist traps. Turkish bath etiquette, hammam Istanbul, what to wear hammam, Cagaloglu hammam, kese scrub, Turkish spa. Save before you book.",
+      "boardSuggestion": "Istanbul Tips | Turkish Culture | Spa Travel",
+      "imagePromptIdea": "Steamy domed hammam interior with shafts of light through star-shaped ceiling holes, bowl on marble, title 'The Hammam, Step by Step'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/istanbul/",
+      "pinTitle": "Where to Stay in Istanbul: Neighborhood Guide",
+      "pinDescription": "Istanbul is enormous and the wrong neighborhood means a 45-minute commute to everything you came to see. Our guide breaks down five core areas: Sultanahmet for first-timers walking to Hagia Sophia, Beyoğlu/Galata for design hotels and rooftops, Beşiktaş/Ortaköy for Bosphorus-front luxury, Kadıköy for the local Asian-side food scene, and Şişli/Nişantaşı for shopping bases. Where to stay Istanbul, best Istanbul neighborhood, Sultanahmet vs Beyoglu, Galata hotels, Kadikoy stay, Istanbul accommodation guide. Save before you book.",
+      "boardSuggestion": "Istanbul Hotels | Where to Stay | Turkey Travel",
+      "imagePromptIdea": "Vertical Galata Tower with the Golden Horn behind, neighborhoods labeled with thin lines, title 'Where to Stay in Istanbul'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/cappadocia/",
+      "pinTitle": "Where to Stay in Cappadocia: Goreme vs Uchisar",
+      "pinDescription": "The big Cappadocia decision is Göreme vs Uçhisar vs Ürgüp. Göreme puts you in the balloon-launch valley with the most cave-hotel choice and the busiest streets. Uçhisar is quieter, higher, and gives you the panoramic balloon-view photos. Ürgüp is the wine-and-restaurant base. Avanos is for pottery and river views. We compare each with hotel picks under $200, $300–$500, and $700+. Where to stay Cappadocia, Goreme vs Uchisar, best Cappadocia village, cave hotel base, Cappadocia accommodation. Save before you book.",
+      "boardSuggestion": "Cappadocia Travel | Where to Stay | Cave Hotels",
+      "imagePromptIdea": "Map-style illustration of Cappadocia with three pinned villages and balloons rising from the center, title 'Goreme, Uchisar or Urgup?'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/antalya/",
+      "pinTitle": "Where to Stay in Antalya: 4 Areas Compared",
+      "pinDescription": "Antalya is bigger than people think. Kaleiçi is the walled old town with boutique stays, Konyaaltı has the long pebble beach and modern hotels, Lara is the all-inclusive resort strip with beach-club access, and Belek is golf-and-luxury. We compare each area with the kind of trip it suits, average prices, and the catch. Where to stay Antalya, Kaleici hotels, Lara beach resort, Konyaalti vs Lara, Belek golf hotel, Antalya neighborhood guide. Save for your Mediterranean trip.",
+      "boardSuggestion": "Antalya Travel | Turkish Riviera | Mediterranean Hotels",
+      "imagePromptIdea": "Aerial of Antalya's Kaleiçi marina with cliffs and the old harbor, title 'Antalya: 4 Areas, One Decision'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/bodrum/",
+      "pinTitle": "Where to Stay in Bodrum: Aegean Coast Picks",
+      "pinDescription": "Bodrum is a peninsula, not a town. Bodrum Town gives you the marina-and-castle nightlife base, Yalıkavak is where the superyachts park (and the prices match), Bitez is the family-friendly bay with shallow water, and Türkbükü is the boho boutique-hotel scene. We pick a hotel in each at three budgets and tell you which to skip in August. Where to stay Bodrum, Yalikavak vs Bitez, Bodrum peninsula, Aegean coast hotel, Turkbuku hotel, Bodrum accommodation guide. Save before booking.",
+      "boardSuggestion": "Bodrum Travel | Turkish Aegean | Beach Hotels",
+      "imagePromptIdea": "Whitewashed bougainvillea villa over a turquoise Aegean cove with a wooden gulet boat, title 'Where to Stay in Bodrum'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/fethiye/",
+      "pinTitle": "Fethiye Guide: Oludeniz, Calis or Old Town",
+      "pinDescription": "Fethiye splits into three very different bases. Ölüdeniz is the Blue Lagoon paragliding capital with cliffside resorts. Çalış is the long flat beach with budget-friendly stays and a sunset promenade. Fethiye Old Town is the marina-and-market base with the best food. Pick by what kind of holiday you want — we compare each with hotel picks and a 5-day itinerary. Where to stay Fethiye, Oludeniz vs Calis, Fethiye Old Town, Blue Lagoon hotel, paragliding Oludeniz, Lycian coast base. Save before you book.",
+      "boardSuggestion": "Fethiye Travel | Turkish Riviera | Lycian Coast",
+      "imagePromptIdea": "Aerial of the Ölüdeniz Blue Lagoon spit with a paraglider in mid-frame, title 'Fethiye: Oludeniz, Calis, or the Old Town?'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/izmir/",
+      "pinTitle": "Where to Stay in Izmir and Cesme",
+      "pinDescription": "Izmir is the underrated big city of the Aegean — Alsancak for waterfront walks and meyhanes, Konak for old-bazaar history, and Çeşme an hour west for the windsurf-and-boutique-hotel beach scene. We pick hotels in each, explain why locals call Çeşme the Hamptons of Turkey, and tell you when Alaçatı's stone-house lanes are worth the price hike. Where to stay Izmir, Cesme hotels, Alacati boutique, Alsancak Izmir, Aegean city break, Izmir accommodation. Save before you book.",
+      "boardSuggestion": "Izmir Travel | Cesme | Aegean Coast",
+      "imagePromptIdea": "Cobblestone Alaçatı lane with stone houses, blue shutters, and bougainvillea, title 'Izmir and Cesme: Where to Stay'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/regions/aegean-coast/",
+      "pinTitle": "Aegean Coast Turkey: Region Trip Planner",
+      "pinDescription": "Turkey's Aegean coast runs from Çeşme down to Bodrum and Datça — whitewashed villages, olive groves, gulet boats, and the calmest sea on the Turkish map. Our region planner covers the eight bases worth a stop, a 10-day driving itinerary, the best month for boat days (May or September), and where to skip in peak August. Aegean coast Turkey, Turkey Aegean itinerary, Cesme to Bodrum drive, gulet cruise Turkey, Aegean villages. Save for your trip.",
+      "boardSuggestion": "Turkish Aegean | Mediterranean Trips | Coastal Travel",
+      "imagePromptIdea": "Wooden gulet boat in a turquoise Aegean cove with pine-covered cliffs, title 'Aegean Coast: A 10-Day Plan'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/regions/mediterranean-riviera/",
+      "pinTitle": "Turkish Riviera: Antalya to Kas Itinerary",
+      "pinDescription": "The Turkish Riviera runs Antalya–Kemer–Kaş–Kalkan–Fethiye and packs ancient Lycian ruins, the bluest swimming coves on the Mediterranean, and a coastal road that rivals the Amalfi at half the price. Our region planner covers driving stages, the four nights worth booking, the Lycian Way day-hikes, and the best month (late May or October). Turkish Riviera, Antalya to Kas drive, Lycian Way Turkey, Kalkan Kas hotels, Mediterranean Turkey itinerary. Save before booking.",
+      "boardSuggestion": "Turkish Riviera | Mediterranean Travel | Road Trips",
+      "imagePromptIdea": "Coastal road clinging to cliffs above turquoise water, Lycian sarcophagus on a hill, title 'The Riviera, Properly Planned'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/regions/cappadocia-central-anatolia/",
+      "pinTitle": "Central Anatolia: Cappadocia, Konya, Ankara",
+      "pinDescription": "The Anatolian heartland is more than Cappadocia. A real 7-day loop pairs the cave-hotel mornings of Göreme with Konya's Sufi Mevlevi heritage, Ankara's mausoleum and museum of Anatolian Civilizations, and the salt-flat sunset at Tuz Gölü. We map the drive, pick the hotels, and tell you when winter beats summer. Central Anatolia itinerary, Cappadocia Konya Ankara, Tuz Golu salt lake, Mevlana Konya, Anatolia road trip. Save for your trip.",
+      "boardSuggestion": "Cappadocia Travel | Central Anatolia | Turkey Itineraries",
+      "imagePromptIdea": "Whirling-dervish silhouette in soft motion blur, fairy-chimney landscape composited softly behind, title 'Central Anatolia: Beyond Balloons'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/regions/black-sea/",
+      "pinTitle": "Black Sea Turkey: The Green Side Nobody Visits",
+      "pinDescription": "The Turkish Black Sea coast is a different country — emerald valleys, wooden mountain villages, tea terraces, and the cloud-wrapped highland of Ayder. Our regional planner covers Trabzon, Uzungöl, Sumela Monastery, Rize tea estates, and the best 5-day route from Trabzon airport. June and September are the sweet months. Black Sea Turkey, Trabzon Uzungol, Ayder highland, Sumela Monastery, Rize tea, green Turkey. Save for your trip.",
+      "boardSuggestion": "Black Sea Turkey | Green Travel | Mountain Escapes",
+      "imagePromptIdea": "Mist-covered green valley with a wooden mountain village and tea terraces, title 'Turkey's Green Coast'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/regions/eastern-anatolia/",
+      "pinTitle": "Eastern Anatolia: Mardin, Urfa, Van Itinerary",
+      "pinDescription": "Eastern Anatolia is the Turkey most travelers miss: Mardin's honey-stone old town on the edge of Mesopotamia, Şanlıurfa's Göbekli Tepe (older than the pyramids), Van's lake-and-castle and the legendary Van breakfast, and the Mount Nemrut sunrise heads. Our 8-day plan covers flights, drives, and the hotels worth booking. Mardin Urfa Van itinerary, Gobekli Tepe trip, Mount Nemrut sunrise, eastern Turkey itinerary, Mesopotamia tour. Save and share.",
+      "boardSuggestion": "Eastern Turkey | Off the Beaten Path | Cultural Travel",
+      "imagePromptIdea": "Mardin's honey-stone houses cascading toward the Mesopotamian plain at sunset, title 'The East: Mardin, Urfa, Van'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/collections/honeymoon-hotels-turkey/",
+      "pinTitle": "12 Best Honeymoon Hotels in Turkey",
+      "pinDescription": "A vetted shortlist of twelve hotels for a Turkey honeymoon — from Cappadocia cave suites with private balloon-view terraces to Bodrum cliff villas with infinity pools and a quiet Kalkan boutique built into the rock. Each entry has the room category we'd actually book, the splurge moment, and what's overrated. Best honeymoon hotels Turkey, Turkey honeymoon resort, Cappadocia honeymoon suite, Bodrum cliff villa, Kalkan boutique hotel. Save and share with your partner.",
+      "boardSuggestion": "Honeymoon Hotels | Luxury Travel | Romantic Stays",
+      "imagePromptIdea": "Two coffees and a rose on a stone terrace overlooking sunrise balloons, title 'Honeymoon Turkey: 12 Hotels Worth It'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/collections/family-friendly-hotels-turkey/",
+      "pinTitle": "12 Family-Friendly Hotels in Turkey: Verified",
+      "pinDescription": "We screened sixty hotels for the things parents actually need — calm shore swimming, kids' clubs that run all day, family rooms with a real second bedroom, baby gear, soft-play, and a buffet kids will eat. Twelve made the cut across Belek, Side, Bodrum, and Antalya. Family hotel Turkey, kids friendly resort Turkey, Belek family resort, Antalya family hotel, all-inclusive Turkey family. Save before you book.",
+      "boardSuggestion": "Family Travel | Turkey Resorts | Family Hotels",
+      "imagePromptIdea": "Wide shallow resort pool with kids' splash zone and a Mediterranean beach behind, title 'Turkey Hotels Built for Families'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/flights/",
+      "pinTitle": "Cheapest Months to Fly to Turkey in 2026",
+      "pinDescription": "When to book and when to fly to Turkey for the lowest fares. We track 12 months of fare data — January and February are 30–45% cheaper than peak August, the November shoulder is the secret pocket, and last-minute Cappadocia flights are usually a worse deal than booking 8 weeks out. Includes airline routing tips through IST and SAW and which budget carriers to actually trust. Cheap flights to Turkey, when to fly Turkey, Istanbul flight deals, Turkey airfare 2026. Save before you book.",
+      "boardSuggestion": "Cheap Flights | Travel Hacks | Turkey Trip Planning",
+      "imagePromptIdea": "Window seat view over the Bosphorus on approach to Istanbul, with a fare-trend line graphic in the corner, title 'Cheapest Months to Fly to Turkey'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/experiences/",
+      "pinTitle": "20 Turkey Experiences Worth Booking in Advance",
+      "pinDescription": "Some Turkey experiences sell out 6–8 weeks ahead — the Cappadocia balloon, dome-roof private hammam slots, sunrise Mount Nemrut, gulet day cruises in peak July, and the Whirling Dervish sema in Istanbul. We list twenty that are worth pre-booking, the ones to skip, and what each really costs in 2026. Turkey tours to book, Cappadocia balloon booking, Bosphorus cruise tickets, hammam booking, gulet day trip, dervish ceremony Istanbul. Save before you go.",
+      "boardSuggestion": "Turkey Tours | Experiences | Trip Planning",
+      "imagePromptIdea": "Composite of three Turkey icons in a vertical triptych — balloon basket, gulet boat, hammam dome — title '20 Experiences Worth Booking Early'."
+    },
+    {
+      "destinationUrl": "https://wheretostayturkey.com/journal/best-sunset-each-city/",
+      "pinTitle": "The Single Best Sunset in Each Turkish City",
+      "pinDescription": "We picked one sunset spot per city — and only one. In Istanbul, the Galata Bridge upper deck (not Pierre Loti). In Cappadocia, the Red Valley ridge above Çavuşin. In Bodrum, the windmills above Gümüşlük. In Kaş, the Antiphellos amphitheater above the harbor. In Mardin, the Zinciriye Madrasa terrace. Twelve cities, twelve sunset addresses, with bus and walking directions. Best sunset Turkey, sunset Istanbul, Cappadocia sunset spot, Bodrum sunset, Mardin sunset. Save before your trip.",
+      "boardSuggestion": "Sunset Spots | Turkey Photography | Travel Inspiration",
+      "imagePromptIdea": "Cappadocia Red Valley at sunset with hikers silhouetted, deep orange sky, title 'One Sunset Per City'."
+    }
+  ],
+
+  "reddit_post_drafts": [
+    {
+      "subreddit": "r/turkey",
+      "title": "Lived in Istanbul 4 years — here are the neighborhood differences I wish someone had explained to me before I moved",
+      "body": "Hi r/turkey. I moved to Istanbul in 2022 and have spent the last four years working across the city — different jobs took me to Levent, Kadıköy, and finally Cihangir. The number-one question friends ask me is the same one most travelers ask: where should I actually base myself in this city? After a lot of conversations, I want to put down what I tell them in one place, because the standard 'stay in Sultanahmet' advice is doing visitors a disservice.\n\nIstanbul isn't a city, it's about eight cities glued together by ferries. Picking the wrong base means you waste 90 minutes a day in traffic and miss the part of Istanbul you'd have liked the most.\n\n**Sultanahmet** is the historic peninsula. Hagia Sophia, Blue Mosque, Topkapı, Basilica Cistern — all walkable. Stay here if it's your first visit and you have three nights. Past 8pm the streets empty out, almost no locals live here, and most restaurants are tourist traps. Three nights is the right dose. Five is too many.\n\n**Beyoğlu (Galata, Karaköy, Cihangir)** is where the actual social life of Istanbul happens — bars, third-wave coffee, design hotels, rooftops, indie cinemas. From Galata Bridge you walk to Sultanahmet in 20 minutes. If you're a repeat visitor, this is the base. Karaköy specifically has shifted from a fish-market neighborhood to a design-hotel district in the last five years.\n\n**Kadıköy (Asian side)** is where I'd send anyone who's been to Istanbul before and wants to see the real one. The food scene — Çiya Sofrası, the Tuesday market in Salı Pazarı, the meyhanes of Kadife Sokak — is denser than anywhere else in the city. The 20-minute ferry from Eminönü or Karaköy is one of the great commutes on Earth.\n\n**Beşiktaş / Ortaköy** is for waterfront living and the palace hotels (Çırağan, Four Seasons). Ortaköy under the bridge at sunset is touristy but undeniable.\n\n**Şişli / Nişantaşı** is the upscale shopping and business district. Convenient if you have a flight from IST and want easy metro access, otherwise skip.\n\nA few practical things tourists get wrong:\n- The new airport (IST) is far. Plan 75 minutes door-to-door from Sultanahmet, or take the M11 metro to Gayrettepe and switch.\n- Istanbulkart is one card, refillable, works on metro, tram, bus, and ferries. Buy it at any kiosk.\n- The Bosphorus public ferry to Anadolu Kavağı is the cheapest cruise in the world (~30 lira) and beats every paid one.\n- Don't change money at the airport. The exchange offices in Sirkeci or Eminönü are 3–5% better.\n\nIf anyone wants the longer write-up I keep on a site I run with neighborhood breakdowns and hotel picks, it's at wheretostayturkey.com — but honestly the bullet points above cover the 80% case. Happy to answer specific 'we have 4 nights, where do we stay' questions in the comments.",
+      "ruleNotes": "r/turkey allows English-language posts but is strict about low-effort tourism questions. Frame as personal experience + helpful info. Use Markdown formatting. Do not lead with the link. Single soft mention of the site near the end is acceptable; mods will remove anything that reads as promotional. Do not crosspost the same body to r/istanbul on the same day — space them by 2+ weeks."
+    },
+    {
+      "subreddit": "r/SoloTravel",
+      "title": "Solo female traveler in Turkey for 18 days — what surprised me, what I'd skip, what I wish I'd booked earlier",
+      "body": "Just finished an 18-day solo trip through Turkey (Istanbul → Cappadocia → Antalya → Kaş → Selçuk → Istanbul). 32, female, intermediate solo traveler — Morocco, Vietnam, Mexico previously. Posting because the pre-trip research was unexpectedly hard. Half the blogs are from 2018 and prices have moved a lot, the other half are 'OMG you HAVE to' fluff with no real info. Here's what I wish I'd known.\n\n**Safety, honestly.** I never felt unsafe walking alone in central Istanbul (Beyoğlu, Kadıköy, Sultanahmet during the day), Antalya's Kaleiçi, or any of the smaller coastal towns. The catcalling baseline is lower than Italy and noticeably lower than Morocco. Cappadocia hotel staff and tour-bus operators were professional throughout. The only place I felt scrutinized was a couple of conservative neighborhoods in Konya — not unsafe, just wanting to dress more modestly.\n\n**Dress code is regional.** Istanbul, Antalya, Bodrum, Kaş — wear what you'd wear in Athens. Cappadocia tourist areas — same. Konya, Mardin, Şanlıurfa — covered shoulders and knees, scarf in your bag for mosques. For mosque visits anywhere, knees and shoulders covered, scarf for hair. Most big mosques (including Blue Mosque) hand out a scarf at the door if you forget.\n\n**Solo dining was fine.** Meyhanes (the meze-and-rakı taverns) seat solo women without comment. Kadıköy has so many young female solos it's a non-issue. The only awkward situation was a fancy hotel restaurant in Belek where I was the only solo and got a corner table — read the room before booking 5-star resort dinners alone.\n\n**Things I'd book earlier:** the Cappadocia balloon (mine got weather-canceled day 1, 2, and 3 — book the first morning of a 4-night stay so you have backups, and pre-pay only with a refund-within-24-hours operator), a Bosphorus sunset cruise that isn't the dinner-with-belly-dancer trap, and the Whirling Dervish sema in Galata.\n\n**Things I'd skip:** the touristy Grand Bazaar carpet shops (the script is real), any 'free' walking tour that ends at a leather-shop demonstration, and the dinner-cruise belly-dance combos.\n\n**Money:** card works basically everywhere except small taxis, hammams, and street food. Wise card was great. ATMs charged 5–35 lira depending on which bank — use Garanti or Yapı Kredi for lower fees. Do NOT exchange at the airport.\n\n**Transit:** intercity buses (Pamukkale, Kamil Koç, Metro Turizm) are actually nice. Domestic flights via Pegasus or Turkish Airlines are usually under $50 if booked 3+ weeks ahead.\n\n**One useful site:** I leaned on wheretostayturkey.com for the neighborhood breakdowns when I couldn't decide between Göreme and Uçhisar in Cappadocia — the verdicts there match what I saw on the ground. Happy to answer specific solo-female questions in comments.",
+      "ruleNotes": "r/SoloTravel rewards detailed trip-report posts. Lead with the trip details, not promotion. Single soft URL mention near the end is acceptable. The mods auto-remove posts under ~250 words and posts that look like blog teasers. Do not include any image with a watermark or logo."
+    },
+    {
+      "subreddit": "r/travel",
+      "title": "Honest cost breakdown of a 14-day Turkey trip in March 2026 (couple, midrange) — every line item",
+      "body": "Just back from 14 days in Turkey with my partner. We're in our late 30s, midrange travelers — we don't backpack but we're not staying at Four Seasons either. Posting the line-item breakdown because every 'cost of Turkey' post I read pre-trip was either from 2019 or used lira figures that meant nothing after the inflation of the past two years.\n\n**Route:** Istanbul (4 nights) → Cappadocia (3 nights) → Antalya (2 nights) → Kaş (3 nights) → Istanbul (1 night, flight out). Mid-March 2026. Two adults.\n\n**Flights**\n- International round-trip from JFK, booked 9 weeks out: $612 each.\n- Internal flights (IST → ASR Cappadocia, AYT Antalya → IST): $48 + $58 per person on Pegasus.\n\n**Accommodation (14 nights total, all booked on Booking.com)**\n- Istanbul, Beyoğlu boutique hotel: $148/night × 4 + 1 = 5 nights = $740.\n- Cappadocia, mid-tier cave hotel in Göreme: $190/night × 3 = $570.\n- Antalya, Kaleiçi old-town boutique: $110/night × 2 = $220.\n- Kaş, sea-view boutique: $135/night × 3 = $405.\n- Total accommodation: **$1,935**.\n\n**Food and drink (couple, all in)**\n- Average lunch (not in Sultanahmet): $14–22 for two.\n- Average dinner with a glass of wine each: $35–55 for two.\n- Coffee/çay all day: $6–10 for two.\n- 14 days × ~$70/day = **$980**.\n\n**Activities**\n- Cappadocia balloon (standard 1-hour, certified operator): $230 each = $460.\n- Bosphorus full-day public ferry to Anadolu Kavağı + lunch: $40 for two.\n- Hammam (Çemberlitaş, full kese + foam): $75 each = $150.\n- Topkapı + Hagia Sophia + Basilica Cistern entries: ~$95 for two.\n- Kaş boat day on a small group gulet: $55 each = $110.\n- Whirling Dervish sema in Galata: $35 each = $70.\n- Total: **$925**.\n\n**Transport (in-country)**\n- IST airport metro both directions: $7 total.\n- Antalya → Kaş minibus: $14 each.\n- Antalya airport transfer: $32.\n- Local taxis and trams: ~$80 across 14 days.\n- Total: **$147**.\n\n**Total trip, two people, 14 days, excluding international flights: $3,987.**\nWith international flights ($1,224): **$5,211** for two, or roughly **$186 per person per day**.\n\nWhat I'd change: book the balloon on the first available Cappadocia morning (we got cancelled twice), skip the dinner cruise on the Bosphorus and take the public ferry, and do not change money at the airport.\n\nUseful resource I leaned on for the neighborhood-by-neighborhood hotel decisions: wheretostayturkey.com had the cleanest breakdowns. Otherwise I'd say Turkey is still about 30% cheaper than equivalent Greece or Italy trips for what you get.",
+      "ruleNotes": "r/travel removes thin trip reports and marketing-style posts on sight. This works because every figure is specific. Keep the URL mention to one clearly-soft reference near the end. Do not embed images. Flair the post 'Trip Report' if available."
+    },
+    {
+      "subreddit": "r/budgettravel",
+      "title": "Turkey on $55/day in 2026 — what works, what doesn't, and where to spend the splurges",
+      "body": "Spent 21 days backpacking Turkey on a tight budget last month. I tracked every expense in a spreadsheet because I was tired of vague 'Turkey is cheap!' takes that turned out to be wrong once you factored in the 2022–2024 inflation. Here's what $55/day actually buys.\n\n**Hostels and budget hotels**\n- Istanbul: 8-bed mixed dorm in Beyoğlu, ~$15/night. Cheng Hostel and Cheers Lighthouse are reliable.\n- Cappadocia (Göreme): basic cave hostel, ~$22/night. Kelebek Cave Hotel has dorm beds in their lower section if you book direct.\n- Antalya: hostel in Kaleiçi, ~$13/night.\n- Smaller towns (Kaş, Selçuk, Eğirdir): family-run pansiyons with private rooms for $25–35.\n- Average: $18/night.\n\n**Food**\n- Pide and lahmacun: $2.50–4 each. Two = a meal.\n- Esnaf lokantası (working-person's cafeteria): full plate with rice and bread, $5–7.\n- Döner sandwich from a non-touristy place: $3–4.\n- Simit (sesame bread) and çay: $1.50.\n- Average: $14/day if you skip restaurants and one beer/day.\n\n**Transit**\n- Intercity buses: Istanbul → Cappadocia overnight is $25–32 with Metro Turizm or Kamil Koç. Comfortable, water and snack included.\n- Pegasus domestic flights if you book 3+ weeks ahead: $25–45.\n- City public transit (Istanbul, Izmir, Antalya): $0.50–0.80 per ride with the local card.\n\n**The splurges actually worth it**\n- Cappadocia balloon: $200–230. Yes, it's the budget-killer. Yes, it's still worth it. Book a standard 1-hour with a certified operator, not a 'budget' operator with a cheaper price.\n- One proper hammam: $40–75 depending on the hammam. Çemberlitaş or Kılıç Ali Paşa in Istanbul.\n- One meyhane night with rakı in Kadıköy or Beyoğlu: $25 a head with food and drink.\n\n**The traps to avoid**\n- Sultanahmet restaurants — every restaurant within 200m of Hagia Sophia is overpriced. Walk 10 minutes north into Cağaloğlu or south into Kumkapı.\n- 'Free' walking tours that end at a leather/carpet shop.\n- Airport money exchanges (5–8% worse rates than in town).\n- Currency-conversion-at-the-card-machine — always pick 'pay in lira'.\n\n**Daily totals across the trip:** $14 food + $18 sleep + ~$8 transit + ~$10 sights/coffee/extras = **$50/day**. Add the balloon and a hammam and the trip averages out at $55/day.\n\nWhere I cross-checked neighborhood and hotel info: wheretostayturkey.com — useful because they break out price ranges per neighborhood, which the big OTAs don't. Otherwise the spreadsheet is the answer to 'is Turkey still cheap'. It's still good value, but '2015 cheap' is gone — plan accurately.",
+      "ruleNotes": "r/budgettravel rewards spreadsheet-style detail. Keep the link mention casual and singular. The mods remove any post whose body reads like a blog excerpt. Daily figures must be defensible — if challenged in comments, be ready to break each line further."
+    },
+    {
+      "subreddit": "r/AskCulinary",
+      "title": "What dishes define Turkish regional cuisine? Trying to plan an eating itinerary that goes beyond Istanbul",
+      "body": "Hi r/AskCulinary. I've been to Istanbul twice and I'm planning a third trip specifically as a food-focused itinerary across Turkey. The problem: every English-language Turkish food guide collapses the country into 'kebab, baklava, mezze' which is roughly the same as describing Italy as 'pasta and pizza'. I'd love this sub's read on regional differentiation.\n\nWhat I've gathered so far from Turkish-language sources and a chef I was lucky enough to interview last year:\n\n**Aegean (Izmir, Çeşme, Bodrum)** — olive-oil-based, herb-forward, lots of wild greens (ot kavurma, deniz börülcesi/sea bean, radika), lighter mezes, white-fleshed fish, less spice than the south. Çıtır kalamar and grilled levrek are everywhere.\n\n**Southeastern (Gaziantep, Şanlıurfa, Hatay)** — this is the region UNESCO names as a Creative City of Gastronomy. Antep is where lahmacun, içli köfte (kibbeh), beyran soup, simit kebab, and the real version of pistachio baklava live. Hatay leans Levantine — za'atar, muhammara, künefe with double-cream.\n\n**Black Sea (Trabzon, Rize)** — corn (mısır ekmeği, kuymak/muhlama with cornmeal and butter and stretchy cheese), hamsi (anchovy) in 40 forms, kale (karalahana), buttery and dairy-heavy.\n\n**Eastern Anatolia (Van, Erzurum, Kars)** — the Van breakfast is its own genre, with otlu peynir (herbed cheese), kavut, murtuğa, and clotted cream from cows that graze 2,500m up. Kars has aged gruyère-style cheeses from the Caucasus tradition.\n\n**Central Anatolia (Konya, Cappadocia, Ankara)** — meatier, grain-heavy. Konya etli ekmek, fırın kebabı, bulgur dishes, testi kebabı (clay-pot stew sealed and cracked open at the table).\n\n**Thrace and the Marmara (Edirne, Tekirdağ)** — Edirne tava ciğeri (deep-fried calf's liver), köfte traditions, more Balkan influence.\n\nQuestions for the sub:\n1. Anyone with chef experience here who can speak to how Turkish regional cuisine maps onto micro-climate / migration history? My read is the southeast is Levantine/Mesopotamian, the Aegean is Greek/Cretan, the Black Sea is Caucasian-Georgian, but I'd love to hear sharper takes.\n2. Any underappreciated dishes that don't show up in the English literature? I'm specifically curious about Hatay and Mardin.\n3. Best restaurant in each region for someone who wants to taste the 'definitive' version of the local style?\n\nFor anyone planning their own version of this trip, I keep notes by region at wheretostayturkey.com under the food sections — happy to share what I've collected. Looking forward to learning from this sub.",
+      "ruleNotes": "r/AskCulinary is strict: questions only, no recipe-blog promotion, no life stories. The post must read as a real culinary question with framing. Single soft site mention at the very bottom is borderline — if mods remove it, repost without the URL. Do not crosspost to r/foodie within the same week."
+    }
+  ],
+
+  "haro_response_templates": [
+    {
+      "queryAngle": "Best month to visit Turkey for weather, crowds, and price",
+      "expertTitle": "Editor, wheretostayturkey.com",
+      "responseText": "The honest answer is that Turkey has three good seasons depending on what you want, and one to avoid. Late April through mid-June is the peak window: Mediterranean water is just warm enough for swimming by late May, Cappadocia balloons fly on roughly 24 of 30 mornings, wildflowers are out across Anatolia, and Istanbul averages 21°C with low rain. Hotel rates are 30–40% below August. The second sweet spot is mid-September through late October — water is at its warmest, the August crowds have left Bodrum and Antalya, and grape harvest season hits in Cappadocia and Şirince. The third option, which most people overlook, is January and February: Istanbul is dramatic in fog and occasional snow, the historic mosques and palaces are crowd-free, and Cappadocia under snow with balloons rising is one of the great winter scenes anywhere — flights and hotels are at their cheapest. The one window I'd push travelers away from is mid-July through late August. The Aegean and Mediterranean coasts hit 38–42°C, beach towns are at peak Russian/Turkish-domestic capacity, and Cappadocia tour buses are wall-to-wall. If August is your only option, head to the Black Sea coast (Trabzon, Ayder) or eastern highlands (Lake Van), where the climate is 10°C cooler and the crowds 90% smaller. Feel free to attribute this to wheretostayturkey.com."
+    },
+    {
+      "queryAngle": "Hot air balloon ride safety and how to choose an operator (Cappadocia)",
+      "expertTitle": "Editor, wheretostayturkey.com",
+      "responseText": "Cappadocia is one of the most regulated balloon-flying environments in the world. The Turkish Directorate General of Civil Aviation grounds all flights when surface winds exceed roughly 15 knots, when visibility falls under specific thresholds, or when there is precipitation — which is why a third of winter mornings cancel. Travelers should treat that grounding rate as a feature, not a flaw. Three concrete rules. First, only book operators licensed under the SHGM (Sivil Havacılık Genel Müdürlüğü) — Royal Balloon, Kapadokya Balloons, Voyager, Turquaz, Butterfly, and Anatolian are the long-track-record names. Second, prefer 'standard' or 'comfort' flights with 16–20 passengers in the basket over 'deluxe' 8-person flights only if budget is the constraint — the safety record is identical, the experience is shorter on the deluxe but the basket is less crowded. Third, book a flight on the first available morning of a multi-night Cappadocia stay so you have backup mornings if weather cancels. Refund policies vary; the licensed operators issue full refunds for weather cancellations, while a few unlicensed resellers do not. Average price in 2026 is $200–230 for a standard 1-hour flight including pickup, breakfast, and certificate. Avoid any operator quoting under $150 — the math doesn't work for legitimate fuel, insurance, and licensing. Feel free to attribute this to wheretostayturkey.com."
+    },
+    {
+      "queryAngle": "Solo female travel safety in Turkey",
+      "expertTitle": "Editor, wheretostayturkey.com",
+      "responseText": "Turkey is one of the more straightforward solo female destinations in the eastern Mediterranean, with caveats that are about region rather than the country as a whole. In Istanbul (Beyoğlu, Kadıköy, Sultanahmet during daylight), Antalya's Kaleiçi, Bodrum, Kaş, Selçuk, and the Aegean coastal towns, solo women report harassment levels comparable to or lower than southern Italy or Greece. Public transit, intercity buses (Kamil Koç, Pamukkale, Metro Turizm), and inter-city flights are professional and women-only seating sections are available on most overnight routes. Hammams have separate women's sections in nearly every historic facility — Çemberlitaş and Kılıç Ali Paşa in Istanbul are mixed-day-friendly. Dress code is regional: Istanbul and the coast match any cosmopolitan European city; Konya, Şanlıurfa, and Mardin call for covered shoulders and knees and a scarf in the bag for mosque visits. The Cappadocia tour-bus scene is professional and group-tour-friendly for solo women. The two practical rules I'd give a solo female traveler: use the Bitaksi or Uber app rather than hailing taxis off the street (the meter culture is improving but app receipts protect you), and base yourself in Cihangir, Galata, or Kadıköy rather than Sultanahmet for stays longer than three nights — the foot-traffic and 24-hour street life are higher. Feel free to attribute this to wheretostayturkey.com."
+    },
+    {
+      "queryAngle": "Best hotels in Turkey for honeymoons / luxury / first-time visitors",
+      "expertTitle": "Editor, wheretostayturkey.com",
+      "responseText": "The strongest honeymoon and luxury moves in Turkey play on the country's geographic variety: a cave-hotel night in Cappadocia paired with a coast resort week. In Cappadocia, Argos in Cappadocia (Uçhisar) sets the bar for luxury cave-hotel design, with the village's best balloon-view terraces and a wine cellar built into a 5th-century monastery. Museum Hotel, also in Uçhisar, is the older but still strong alternative with a heated outdoor pool. For Bodrum, the Mandarin Oriental at Paltziz Bay is the most consistent 5-star, with a 600m private beach. In Yalıkavak, the Maxx Royal and Lujo are the polished newer entries. On the Lycian coast, Mahalimi in Kalkan and Hidden Garden in Kaş punch above their star rating. For first-time Istanbul stays, Soho House Istanbul (Beyoğlu, restored Italian palazzo) and Six Senses Kocataş Mansions (Bosphorus shoreline) are the two we send people to. For something more affordable that still feels special, the Tomtom Suites in Galata and the Sumahan on the Water in Çengelköy are repeat picks. The pattern across all of these: hotels built into existing historical structures (caves, mansions, bath houses) consistently outperform new-build resorts of the same star rating in Turkey. Feel free to attribute this to wheretostayturkey.com."
+    },
+    {
+      "queryAngle": "Currency, money, and payment tips for Turkey travelers",
+      "expertTitle": "Editor, wheretostayturkey.com",
+      "responseText": "The Turkish lira has been volatile for several years, and that affects how travelers should handle money. Three rules cover the practical 95%. First, do not exchange currency at the airport — Istanbul (IST and SAW) and Antalya airport exchanges are 5–8% worse than city-center bureaus in Sirkeci, Eminönü, or central Antalya. The minute or two it saves you costs $20–40 on a typical $500 exchange. Second, prefer card payment everywhere it's accepted (which is almost everywhere except small taxis, hammams, street food, and family-run pansiyons in smaller towns). When the card terminal asks 'pay in your home currency or lira', always pick lira — the dynamic currency conversion offered at the terminal is a 4–7% markup. Third, for ATM withdrawals, use major bank ATMs (Garanti, Yapı Kredi, İş Bankası, Akbank) rather than the standalone ATMs at airports and tourist sites — fees are 15–35 lira lower. A Wise or Revolut card is the cleanest setup for travelers because of the inter-bank rate and no foreign-transaction fee. Tipping is 10% in restaurants where service isn't included, round-up for taxis and cafés, and 50–100 lira per service in hammams. Carry a small lira reserve (200–300) for the cash-only edge cases, but don't over-stock — the lira loses value if you sit on it. Feel free to attribute this to wheretostayturkey.com."
+    },
+    {
+      "queryAngle": "Must-eat Turkish foods / regional culinary highlights",
+      "expertTitle": "Editor, wheretostayturkey.com",
+      "responseText": "Turkish food is at least six distinct cuisines pretending to be one, and the trick is to eat each region's specialty in its region rather than chasing all of it from Istanbul. The southeastern triangle — Gaziantep, Şanlıurfa, Hatay — is the country's culinary core; Gaziantep is a UNESCO Creative City of Gastronomy, where lahmacun, içli köfte, beyran çorbası, and proper pistachio baklava (look for Imam Çağdaş or Koçak) are non-negotiable. The Aegean coast (Izmir, Çeşme, Bodrum) is olive-oil-and-wild-greens cooking, with sea bass, radika, deniz börülcesi, and dolma; Çeşme's Imren Lokantası and Karina Balıkçısı in Karina village are the high notes. The Black Sea (Trabzon, Rize) is corn-and-dairy: muhlama (cornmeal, butter, stretchy cheese), hamsi pilavı, kuymak, and fresh kale. Eastern Anatolia, especially Van, is breakfast-as-marathon — the 25-dish Van kahvaltı with otlu peynir, kavut, and clotted cream is its own genre. In Istanbul, the dishes to chase are not 'Turkish food' generically but specific traditions: Çiya Sofrası in Kadıköy for southeastern home cooking, Karaköy Lokantası for refined meyhane, and Develi in Samatya for Antep-style kebabs. Three things to skip: belly-dance dinner cruises, anything labeled 'Ottoman fusion' near tourist sights, and hotel breakfast buffets when there's a real esnaf lokantası two blocks away. Feel free to attribute this to wheretostayturkey.com."
+    }
+  ],
+
+  "guest_post_outlines": [
+    {
+      "targetBlog": "The Blonde Abroad — theblondeabroad.com",
+      "pitchTitle": "The Solo Female Traveler's Field Guide to Turkey: Where to Stay, What to Wear, and Which Tours Are Actually Worth Booking",
+      "pitchHook": "The Blonde Abroad's Turkey content is strong on Cappadocia and Istanbul but lighter on a structured solo-female framework — and her reader profile (women planning their first or second long-haul solo trip) aligns exactly with our core search audience. This piece is the city-by-city, region-by-region playbook her audience asks for in the comments.",
+      "outline": [
+        "Why Turkey is one of the more underrated solo female destinations (the actual numbers — harassment baseline vs. Italy, Greece, Morocco)",
+        "The neighborhood map: where to base yourself in Istanbul as a solo woman (Cihangir over Sultanahmet, why Kadıköy beats Şişli)",
+        "Cappadocia as a solo: the cave hotels with social common areas, the group tour pattern, and the balloon-morning solo experience",
+        "Aegean and Mediterranean coast: Bodrum vs Kaş vs Kalkan for solo travelers (calmness, dining-alone friendliness, day-trip access)",
+        "Dress code by region — what 'modest' actually means in Konya vs. Bodrum, and the scarf-in-the-bag rule",
+        "Transit hygiene: Bitaksi vs. street taxis, women's sections on overnight buses, domestic flight pattern",
+        "The hammam experience for women: which hammams have proper female sections, what to wear, tipping, and the kese explained",
+        "Tours and experiences worth pre-booking, and the dinner-cruise / belly-dance traps to avoid",
+        "Money, SIM, and connectivity setup so you arrive plug-and-play",
+        "Two sample itineraries: 10-day classic and 14-day deeper-dive (with budget breakdowns)"
+      ],
+      "wordCount": 1800,
+      "linksToInclude": [
+        "https://wheretostayturkey.com/journal/turkey-solo-female-travel/",
+        "https://wheretostayturkey.com/istanbul/",
+        "https://wheretostayturkey.com/cappadocia/",
+        "https://wheretostayturkey.com/journal/turkish-hammam-guide/",
+        "https://wheretostayturkey.com/journal/cappadocia-balloon-guide/"
+      ]
+    },
+    {
+      "targetBlog": "Earth Trekkers — earthtrekkers.com",
+      "pitchTitle": "The Definitive Turkey Itinerary: 10, 14, and 21 Days Across Five Regions (with the Hotels and the Drives Mapped)",
+      "pitchHook": "Earth Trekkers' signature is hyper-detailed multi-week itineraries with real maps, real hotel picks, and real drive times — and their existing Turkey content stops at a single 10-day route. This piece extends their template to the three planning windows their readers actually search for, with on-the-ground specificity their audience trusts.",
+      "outline": [
+        "How to think about Turkey trip length — the 10/14/21-day framework and what each tier unlocks",
+        "The 10-day classic: Istanbul → Cappadocia → Antalya → Pamukkale (drive times, internal flights, where to skip)",
+        "The 14-day extended: adding Kaş, Selçuk/Ephesus, and a proper Bodrum boat day",
+        "The 21-day deeper-dive: bringing in Mardin, Şanlıurfa, and the eastern highlands",
+        "Where to stay in each city — one hotel pick under $150, one $200–$400, one splurge",
+        "Driving in Turkey: where renting a car beats flights and buses (Lycian coast, Cappadocia day-trips), and where it doesn't (Istanbul, anywhere intercity over 400km)",
+        "The reservations to lock 6–8 weeks ahead (balloon, gulet, Mevlana sema, hammam, Cappadocia caves)",
+        "Best month for each region — and why the right month for Cappadocia is wrong for Bodrum",
+        "Realistic budget per day for the three itineraries (couple, midrange, USD)",
+        "The on-the-ground operations playbook (eSIM, lira strategy, transit cards, taxi apps)"
+      ],
+      "wordCount": 2400,
+      "linksToInclude": [
+        "https://wheretostayturkey.com/journal/turkey-cost-week/",
+        "https://wheretostayturkey.com/cappadocia/",
+        "https://wheretostayturkey.com/regions/mediterranean-riviera/",
+        "https://wheretostayturkey.com/regions/eastern-anatolia/",
+        "https://wheretostayturkey.com/journal/cappadocia-balloon-guide/"
+      ]
+    },
+    {
+      "targetBlog": "Adventurous Kate — adventurouskate.com",
+      "pitchTitle": "I Visited Every Major Turkish Region — Here's Where the Crowds Aren't",
+      "pitchHook": "Kate's audience skips the obvious and asks 'where's the version of this place without the cruise ships' — exactly the editorial angle we run on our regional pages. This piece maps the crowd-light alternative for each over-touristed Turkish hotspot, with the trade-offs spelled out.",
+      "outline": [
+        "Why the August Bodrum / Cappadocia / Antalya scene has gotten harder to enjoy — and what's filling the gap",
+        "Instead of Bodrum: Datça peninsula and the slow-villages of Reşadiye (calmer beaches, half the price)",
+        "Instead of Cappadocia in summer: Cappadocia in November–February (snow, fewer balloons but better mornings, 40% cheaper)",
+        "Instead of the Lycian Way's Ölüdeniz section: the Kaş–Kalkan–Patara stretch with the long empty beach",
+        "Instead of the Aegean cruise circuit: a 5-day private gulet from Göcek for groups of 4–8",
+        "Instead of central Istanbul: the Princes' Islands (Heybeliada, Burgazada) for 2–3 night escapes",
+        "Instead of Pamukkale: Salda Lake — the white-shore mineral lake that locals call 'Turkey's Maldives'",
+        "Instead of the western coast in August: the Black Sea highlands (Ayder, Çamlıhemşin) at 14°C and green",
+        "How to combine these as 'shadow itineraries' — the 12-day version that hits zero crowded sites",
+        "What you give up by going crowd-light, honestly (less direct flight access, fewer English menus, fewer 5-star resorts)"
+      ],
+      "wordCount": 2000,
+      "linksToInclude": [
+        "https://wheretostayturkey.com/regions/aegean-coast/",
+        "https://wheretostayturkey.com/regions/black-sea/",
+        "https://wheretostayturkey.com/journal/cappadocia-in-winter/",
+        "https://wheretostayturkey.com/journal/most-beautiful-turkish-villages/",
+        "https://wheretostayturkey.com/journal/weekend-escapes-turks-take/"
+      ]
+    },
+    {
+      "targetBlog": "World of Wanderlust — worldofwanderlust.com",
+      "pitchTitle": "Where to Stay in Turkey: A Region-by-Region Hotel Guide for the Long-Weekender, the Two-Weeker, and the Honeymooner",
+      "pitchHook": "World of Wanderlust's audience is hotel-led — they pick the trip around the property — and their existing Turkey content underweights Turkey's strongest hospitality category, the historic-conversion boutique hotel. This piece is the curated property-by-property guide their audience saves to Pinterest.",
+      "outline": [
+        "The Turkey hotel landscape in 2026 — why historic-conversion boutiques outperform new-build 5-stars",
+        "Istanbul: the five neighborhoods and our one-hotel pick for each (with the room category to actually book)",
+        "Cappadocia: the cave-hotel taxonomy — luxury cave (Argos, Museum), boutique cave (Sultan Cave Suites, Kelebek), and the affordable middle tier",
+        "Aegean coast: Bodrum's Mandarin vs. Yalıkavak's newer Lujo and Maxx Royal — what each suits",
+        "Mediterranean: the Kalkan and Kaş boutique scene that beats Mykonos at half the price",
+        "Inland heritage stays: Mardin's stone houses, Şirince's village inns, Safranbolu's Ottoman konaks",
+        "The honeymoon shortlist: 8 properties that pair a Cappadocia cave night with a coast resort week",
+        "The family shortlist: 6 resorts where the kids' club, family rooms, and shore safety actually deliver",
+        "The under-$200 list: boutique stays that punch above their weight (with the seasonal pricing)",
+        "How to book — when to use the OTAs, when to email the hotel directly, and the loyalty program math"
+      ],
+      "wordCount": 2200,
+      "linksToInclude": [
+        "https://wheretostayturkey.com/collections/honeymoon-hotels-turkey/",
+        "https://wheretostayturkey.com/collections/cave-hotels-cappadocia/",
+        "https://wheretostayturkey.com/collections/luxury-resorts-turkish-coast/",
+        "https://wheretostayturkey.com/collections/historic-hotels-turkey/",
+        "https://wheretostayturkey.com/collections/family-friendly-hotels-turkey/"
+      ]
+    }
+  ]
+}

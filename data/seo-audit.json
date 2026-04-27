@@ -1,0 +1,415 @@
+{
+  "_note": "SEO technical audit of wheretostayturkey.com. Generated 2026-04-27. Every fix_action is a concrete code change pointing at build.js by function name and line range. 'Critical' = indexability/duplication risk. 'High' = clear ranking impact. 'Medium' = quality lift. 'Low' = polish.",
+  "lastUpdated": "2026-04-27",
+  "summary": {
+    "total_pages_audited": 223,
+    "critical_issues": 4,
+    "high_priority_fixes": 17,
+    "nice_to_haves": 12
+  },
+  "findings_by_page_type": {
+    "homepage": [
+      {
+        "issue": "Title is 'Where to Stay in Turkey — The fastest way to decide where to stay in Turkey.' (~83 chars, repeats 'where to stay in Turkey' twice, exceeds 60-char limit, no year/freshness signal).",
+        "severity": "high",
+        "fix_action": "In build.js renderHome() (line 843), replace `const title = `${config.siteName} — ${config.siteTagline}`;` with `const title = `Where to Stay in Turkey 2026 — 22 Cities, Real Neighborhoods`;` (57 chars, primary keyword first, year + scope hook)."
+      },
+      {
+        "issue": "Meta description re-uses siteDescription verbatim ('A decision engine for the best neighborhoods and hotels in Turkey.') — only 67 chars, no benefit/CTR hook.",
+        "severity": "high",
+        "fix_action": "In build.js renderHome() (line 844), replace `const description = config.siteDescription;` with `const description = `Pick the right neighborhood in 22 Turkish cities. Hand-picked hotels, real prices, no fluff. Decide in 60 seconds with our quiz.`;` (149 chars)."
+      },
+      {
+        "issue": "Homepage uses default OG SVG (`/assets/img/og-default.svg`) — generic, doesn't show the 22-city scope.",
+        "severity": "medium",
+        "fix_action": "In build.js renderHome(), add `ogImage: `${config.siteUrl}/assets/img/og/home.svg`,` to the head() call (line 963), and add a writeHomeOgImage() generator next to writeCityOgImages() that renders 'Where to Stay in TURKEY · 22 cities · 2026' on the brand gradient."
+      },
+      {
+        "issue": "Missing ItemList schema for 'All destinations' grid — search engines can't treat it as a curated list.",
+        "severity": "medium",
+        "fix_action": "In build.js renderHome() jsonld array (line 943), add a third object: `{ '@context': 'https://schema.org', '@type': 'ItemList', name: 'All Turkish destinations', itemListElement: cities.map((c, i) => ({ '@type': 'ListItem', position: i+1, url: `${config.siteUrl}/${c.slug}/`, name: c.name })) }`."
+      }
+    ],
+    "city_page": [
+      {
+        "issue": "Meta description is built from `c.summary.slice(0, 150) + '… Compare areas and hand-picked hotels.'` — produces mid-word truncation visible in built HTML (e.g. Istanbul page shows '…if it's your firs…'). Hurts CTR and looks unprofessional.",
+        "severity": "critical",
+        "fix_action": "In build.js renderCity() (line 970), replace the slice-based description with a templated one: `const description = `Where to stay in ${c.name}: ${c.areas.length} neighborhoods compared, ${c.hotels.length} hand-picked hotels, ideal for ${c.idealNights}. Best months ${c.whenToGo.split(' and ')[0]}.`;`. This produces ~140-160 chars, never mid-word truncates, and surfaces real entities."
+      },
+      {
+        "issue": "Title 'Where to stay in {City} — neighborhoods & best hotels (2026)' is 55-65 chars depending on city; for long names (Şanlıurfa, Gaziantep) it exceeds 60 with the trailing '(2026)'.",
+        "severity": "medium",
+        "fix_action": "In build.js renderCity() (line 969), change to `const title = `Where to Stay in ${c.name} (2026) — ${c.areas.length} Neighborhoods Compared`;` and verify in build by logging `title.length` per city; trim 'Compared' for cities with names >10 chars."
+      },
+      {
+        "issue": "H1 is just `${c.name}.` (line 993) — drops the primary keyword 'Where to stay'. The eyebrow above carries the keyword but Google scores the H1.",
+        "severity": "high",
+        "fix_action": "In build.js renderCity() (line 993), change `<h1>${esc(c.name)}${c.emoji ? '' : ''}.</h1>` to `<h1>Where to stay in ${esc(c.name)}</h1>` and move the emoji to the eyebrow only."
+      },
+      {
+        "issue": "TouristDestination schema is good, but missing the `image` and `geo` properties that unlock rich results.",
+        "severity": "medium",
+        "fix_action": "In build.js renderCity() jsonld (line 1078), extend the TouristDestination object with `image: c.heroImage || `${config.siteUrl}/assets/img/og/${c.slug}.svg`, geo: { '@type': 'GeoCoordinates', latitude: c.lat, longitude: c.lng }`. Add lat/lng to each entry in cities*.json."
+      },
+      {
+        "issue": "City page has no Article/HowTo schema describing the neighborhood-comparison content; competitors get rich snippets for 'best neighborhoods' queries via Article markup.",
+        "severity": "medium",
+        "fix_action": "In build.js renderCity() jsonld (line 1073), add `{ '@context': 'https://schema.org', '@type': 'Article', headline: `Where to stay in ${c.name}`, description: c.summary, datePublished: '2026-01-01', dateModified: new Date().toISOString().slice(0,10), author: { '@type': 'Organization', name: config.siteName }, mainEntityOfPage: canonical }`."
+      },
+      {
+        "issue": "City page does not link to its monthly weather entries or its region — both pages depend on the city for context but the city doesn't reciprocate.",
+        "severity": "high",
+        "fix_action": "In build.js renderCity() near `relatedCitiesBlock(c)` (line 1064), inject a 'When to visit ${c.name}' block that links to /turkey-by-month/{m.slug}/ for the 2 best months on c.whenToGo, plus a 'Region' card linking to /regions/{r.slug}/ derived from regions.json reverse lookup."
+      },
+      {
+        "issue": "City page does not link to relevant collections (e.g. Cappadocia city page does not link to /best-of-turkey/cave-hotels-turkey/, /best-of-turkey/honeymoon-hotels-turkey/).",
+        "severity": "high",
+        "fix_action": "In build.js renderCity(), add a 'Featured in our collections' section after relatedCitiesBlock that filters COLLECTIONS where any pick.city === c.slug and renders cards linking /best-of-turkey/{slug}/."
+      }
+    ],
+    "journal_post": [
+      {
+        "issue": "Title pattern is `${p.title} — ${config.siteName}` = 'X — Where to Stay in Turkey' which adds 25 chars of brand boilerplate; many titles exceed 60 chars (Cappadocia balloon guide built page is 65 chars).",
+        "severity": "high",
+        "fix_action": "In build.js renderJournalPost() (line 3991), replace with `const title = p.title.length > 50 ? p.title : `${p.title} — Where to Stay Turkey`;` (only append brand when there's room; drop 'in' to save 3 chars)."
+      },
+      {
+        "issue": "Meta description = `p.subtitle` only — subtitles are written for headlines, not search snippets, and several are <80 chars (under-serving SERPs).",
+        "severity": "high",
+        "fix_action": "In build.js renderJournalPost() (line 3992), change to `const description = (p.metaDescription || (p.subtitle + (p.subtitle.length < 130 ? ' — ' + p.summary.slice(0, 160 - p.subtitle.length - 3) : ''))).slice(0, 160);`. Optional: add `metaDescription` field to each entry in data/journal-posts.json."
+      },
+      {
+        "issue": "All journal posts use the default OG SVG. Cappadocia balloon guide has og:image=og-default.svg — losing CTR on social shares.",
+        "severity": "high",
+        "fix_action": "In build.js add writeJournalOgImages() that emits per-post SVG with the title overlaid on a city-themed gradient (use first tag in p.tags to pick the palette via cityPalette()). In renderJournalPost() head() call (line 4053), pass `ogImage: `${config.siteUrl}/assets/img/og/journal-${p.slug}.svg``."
+      },
+      {
+        "issue": "BlogPosting schema is missing `image` and `dateModified`. Google wants both for News/Top Stories eligibility.",
+        "severity": "medium",
+        "fix_action": "In build.js renderJournalPost() jsonld (line 4042), extend BlogPosting with `image: `${config.siteUrl}/assets/img/og/journal-${p.slug}.svg`, dateModified: p.updatedAt || p.publishedAt, mainEntityOfPage: { '@type': 'WebPage', '@id': canonical }`."
+      },
+      {
+        "issue": "Author block in BlogPosting only contains `name`. Add a `url` to /author/ (which exists per renderAuthorPage) for E-E-A-T.",
+        "severity": "medium",
+        "fix_action": "In build.js renderJournalPost() jsonld (line 4049), change `author: { '@type': 'Person', name: AUTHOR.name }` to `author: { '@type': 'Person', name: AUTHOR.name, url: `${config.siteUrl}/about/#author` }` and add a Person section with that anchor in renderAbout()."
+      },
+      {
+        "issue": "Journal posts don't surface 'Where to stay' CTAs to relevant city pages — the lead magnet is the only conversion path. Massive missed internal linking.",
+        "severity": "critical",
+        "fix_action": "In build.js renderJournalPost() after the prose block (around line 4022), inject a 'Where to base yourself for this trip' card linking the cities matching p.tags. Maintain a `JOURNAL_TO_CITY` map: balloon→cappadocia, bosphorus/layover/12-hours→istanbul, rug-scams→istanbul, solo-female→istanbul+cappadocia, etc."
+      },
+      {
+        "issue": "Coming-soon stub posts (where p.bodyHtml is missing) still get indexed with a 50-word body. Thin content risk.",
+        "severity": "high",
+        "fix_action": "In build.js renderJournalPost() before head() (line 4053), if (!p.bodyHtml) add `<meta name=\"robots\" content=\"noindex,follow\">` via a new optional head() param `metaRobots`, then in head() emit it conditionally."
+      }
+    ],
+    "region_page": [
+      {
+        "issue": "Title `${r.name} — where to go and where to stay` (line 2678) lowercases 'where' — looks unintentional vs all other title patterns. Also missing 'Turkey' qualifier; 'Aegean Coast — where to go and where to stay' loses geographic context in SERPs.",
+        "severity": "high",
+        "fix_action": "In build.js renderRegionPage() (line 2678), change to `const title = `${r.name}, Turkey — Where to Go & Where to Stay (2026)`;`."
+      },
+      {
+        "issue": "Meta description = r.summary.slice(0, 160) — same mid-word truncation bug as cities.",
+        "severity": "high",
+        "fix_action": "In build.js renderRegionPage() (line 2679), replace with `const description = `${r.tagline} ${citiesInRegion.length} cities, suggested ${(r.itinerary||[]).length}-day route, when to go, and where to stay in each.`.slice(0, 160);`. Move slice up to compute citiesInRegion before description."
+      },
+      {
+        "issue": "Region page has only BreadcrumbList schema. Missing Place / TouristTrip schema and an ItemList of cities.",
+        "severity": "medium",
+        "fix_action": "In build.js renderRegionPage() jsonld (line 2730), add `{ '@type': 'Place', name: r.name, description: r.summary, url: canonical, containedInPlace: { '@type': 'Country', name: 'Turkey' } }` and `{ '@type': 'ItemList', itemListElement: citiesInRegion.map((c, i) => ({ '@type':'ListItem', position:i+1, url:`${config.siteUrl}/${c.slug}/`, name:c.name })) }`."
+      },
+      {
+        "issue": "Region page has no OG image override — all 5 region pages share og-default.svg.",
+        "severity": "medium",
+        "fix_action": "Add writeRegionOgImages() following the writeCityOgImages() pattern (line 3064) that emits /assets/img/og/region-{slug}.svg with region name + tagline. In renderRegionPage() head() call (line 2735), pass `ogImage: `${config.siteUrl}/assets/img/og/region-${r.slug}.svg``."
+      }
+    ],
+    "monthly_page": [
+      {
+        "issue": "Title is `${m.title}` directly = 'Turkey in January 2026 — what to expect' which is fine length-wise, but inconsistent capitalization vs other types and missing 'where to go/stay' commercial intent for a high-traffic seasonal query.",
+        "severity": "medium",
+        "fix_action": "In build.js renderMonthPage() (line 2924), change to `const title = `Turkey in ${m.monthName} 2026: Weather, Where to Go, What to Pack`;` (always 60-65 chars, hits weather + location + pack queries)."
+      },
+      {
+        "issue": "Meta description = `m.subtitle.slice(0,160)` — subtitle is editorial poetry ('The cheapest month of the year, with snow on the fairy chimneys…'); doesn't surface the actionable verdict (open/closed, balloon rates, prices).",
+        "severity": "high",
+        "fix_action": "In build.js renderMonthPage() (line 2925), replace with `const description = `${m.monthName} in Turkey: ${m.bestCitiesThisMonth?.map(s => cities.find(c=>c.slug===s)?.name).filter(Boolean).join(', ')} are the picks. ${m.balloonFlightRate ? 'Balloon flights '+m.balloonFlightRate+'.' : ''} What to pack, what's open, what to skip.`.slice(0, 160);`."
+      },
+      {
+        "issue": "Month page only has BreadcrumbList schema. Missing Article schema with `temporalCoverage`, and no TouristTrip with `itinerary` items linking to recommended cities.",
+        "severity": "medium",
+        "fix_action": "In build.js renderMonthPage() jsonld (line 2961), add `{ '@type': 'Article', headline: m.title, description: m.summary, datePublished: '2026-01-01', author: { '@type':'Organization', name: config.siteName }, temporalCoverage: `2026-${String(m.monthNum).padStart(2,'0')}` }`."
+      },
+      {
+        "issue": "Month pages already link to cities in the weather table, but don't link to /journal/ articles tagged 'seasonal' or to the relevant collections (e.g. January should link to /best-of-turkey/cave-hotels-turkey/).",
+        "severity": "high",
+        "fix_action": "In build.js renderMonthPage() after the verdict card (line 2947), inject a 'Read this month' block linking journal posts where p.tags includes m.monthName.toLowerCase() OR 'seasonal' OR 'winter/spring/summer/autumn' (mapped from m.monthNum). Also link 1–2 collections matched on m.bestCitiesThisMonth."
+      },
+      {
+        "issue": "Each month page uses default OG image; opportunity for 'January in Turkey · 2026' branded OG.",
+        "severity": "low",
+        "fix_action": "Add writeMonthOgImages() following writeCityOgImages(). In renderMonthPage() head() call (line 2966), pass `ogImage: `${config.siteUrl}/assets/img/og/month-${m.slug}.svg``."
+      }
+    ],
+    "collection_page": [
+      {
+        "issue": "Title = `c.title` directly = 'The 12 best honeymoon hotels in Turkey — verified' (56 chars) — fine, but other collection titles may exceed 60. No year/freshness.",
+        "severity": "medium",
+        "fix_action": "In build.js renderCollectionPage() (line 3007), change to `const title = c.title.length <= 55 ? `${c.title} (2026)` : c.title;` — append year only when room allows."
+      },
+      {
+        "issue": "Meta description = `(c.summary || c.subtitle).slice(0,160)` — same truncation bug; subtitle is sometimes <100 chars and gets used unpadded.",
+        "severity": "high",
+        "fix_action": "In build.js renderCollectionPage() (line 3008), replace with `const description = (c.summary && c.summary.length >= 130) ? c.summary.slice(0,160) : `${c.subtitle} ${c.picks.length} verified picks across ${new Set(c.picks.map(p=>p.city)).size} Turkish cities. Real names, real prices.`.slice(0,160);`."
+      },
+      {
+        "issue": "Collection pages have only BreadcrumbList schema. Missing ItemList of hotels — the most rich-result-eligible content type on the whole site.",
+        "severity": "critical",
+        "fix_action": "In build.js renderCollectionPage() jsonld (line 3054), add `{ '@context':'https://schema.org', '@type':'ItemList', name: c.title, itemListElement: (c.picks||[]).map((p, i) => ({ '@type':'ListItem', position: p.rank || (i+1), item: { '@type':'Hotel', name: p.hotelName, address: { '@type':'PostalAddress', addressLocality: cities.find(x=>x.slug===p.city)?.name, addressCountry:'TR' }, priceRange: p.priceFrom ? '$'+p.priceFrom+'+' : undefined } })) }`."
+      },
+      {
+        "issue": "Collection page does not have a single H1 from `c.title` only — but the title contains a number ('12 best…'), and Google rewards numeric titles. Currently fine; flag is OG image only.",
+        "severity": "low",
+        "fix_action": "Add writeCollectionOgImages() generator. In renderCollectionPage() head() call (line 3059), pass `ogImage: `${config.siteUrl}/assets/img/og/collection-${c.slug}.svg``."
+      }
+    ],
+    "experience_page": [
+      {
+        "issue": "Title pattern `${p.title} — ${config.siteName}` (line 2589) — 'Where to Stay in Turkey' brand suffix is irrelevant for cultural-experience queries (çay culture, hammam, dervishes); pollutes the SERP snippet.",
+        "severity": "high",
+        "fix_action": "In build.js renderExperiencePost() (line 2589), change to `const title = p.title.length <= 60 ? p.title : p.title.slice(0, 57) + '…';` — drop the brand suffix entirely on cultural pages, since they target informational not navigational queries."
+      },
+      {
+        "issue": "Meta description = `p.subtitle || p.summary` — subtitle preferred even when summary is much richer.",
+        "severity": "medium",
+        "fix_action": "In build.js renderExperiencePost() (line 2590), change to `const description = (p.summary && p.summary.length >= 130 ? p.summary : p.subtitle).slice(0, 160);`."
+      },
+      {
+        "issue": "Article schema uses `author: { '@type':'Organization', name: config.siteName }` — Google ranks Person-authored content higher for E-E-A-T on cultural topics.",
+        "severity": "medium",
+        "fix_action": "In build.js renderExperiencePost() jsonld (line 2621), change to `author: { '@type': 'Person', name: AUTHOR.name, url: `${config.siteUrl}/about/#author` }`."
+      },
+      {
+        "issue": "Experience pages don't cross-link to journal posts on related topics (turkish-coffee should link to /journal/turkish-food-20-dishes/, hammam to /istanbul/ neighborhoods).",
+        "severity": "high",
+        "fix_action": "In build.js renderExperiencePost(), after the prose block (line 2604), inject a 'Build it into your trip' card with hard-coded slug→{cities[],journals[]} map: cay-culture → [istanbul, kadikoy area], turkish-coffee → [istanbul, journal/turkish-food-20-dishes], hammam-ritual-deep-dive → [istanbul/#sultanahmet, journal/turkish-hammam-guide], whirling-dervishes → [konya, istanbul]."
+      }
+    ],
+    "practical_page": [
+      {
+        "issue": "Practical pages (visa, esim, insurance, money, packing, arrival-istanbul, transport, safety) have no Article or HowTo schema in any of their renderers (lines 2024-2475). Massive missed rich-result opportunity for queries like 'turkey visa', 'esim turkey'.",
+        "severity": "high",
+        "fix_action": "In build.js inside each practical page renderer (renderVisa line 2024, renderESim line 2246, renderInsurance line 2182, renderMoneyGuide line 2313, renderPackingList line 2378, renderArrivalIstanbul line 2475, renderTransportGuide line 2085, renderSafety line 2133), add to jsonld: `{ '@context':'https://schema.org', '@type':'Article', headline: title, description: description, datePublished: '2026-01-01', dateModified: new Date().toISOString().slice(0,10), author:{ '@type':'Organization', name: config.siteName, url: config.siteUrl } }`."
+      },
+      {
+        "issue": "Best-time-to-visit and how-many-nights (line 3074, 3135) have no FAQ schema despite their content being a Q-and-A pattern.",
+        "severity": "medium",
+        "fix_action": "Manually extract 4-5 Q/A pairs from each page's prose into a `faqs` array, pass to faqLd() helper (already in build.js), append to jsonld."
+      },
+      {
+        "issue": "Day-trips pages (renderDayTrips line 2739) are missing ItemList schema for the trips they list — competitors get rich snippets.",
+        "severity": "medium",
+        "fix_action": "In build.js renderDayTrips() jsonld (line 2775), add `{ '@type':'ItemList', name: `Day trips from ${c.name}`, itemListElement: trips.map((t,i)=>({ '@type':'ListItem', position:i+1, name: t.name, description: t.summary })) }`."
+      },
+      {
+        "issue": "Tours page (renderToursPage line 1692) and programmatic city variants (renderProgrammatic line 1095) emit ItemList but no aggregate Hotel schema for individual properties — their list items are bare strings.",
+        "severity": "medium",
+        "fix_action": "In build.js itemListLd() helper, expand each item to `{ '@type':'ListItem', position:i+1, item:{ '@type':'Hotel', name:h.name, address:{ '@type':'PostalAddress', addressLocality:c.name, addressCountry:'TR' } } }`. Verify by grep `itemListLd` for callers."
+      }
+    ]
+  },
+  "internal_linking_matrix": {
+    "homepage_should_link_to": [
+      "All 22 city pages (already done via cityCard grid)",
+      "/regions/ hub (currently NOT linked from homepage — fix in renderHome)",
+      "/turkey-by-month/ hub (currently NOT linked from homepage — fix)",
+      "/best-of-turkey/ hub (currently NOT linked from homepage — fix)",
+      "/journal/ hub (linked via nav only — add a 'Latest from the journal' strip)",
+      "/turkey-guide/ ultimate guide page (currently NOT linked from homepage — fix)"
+    ],
+    "city_pages_should_link_to": [
+      "/turkey-by-month/{best_month_for_city}/ — derived from c.whenToGo",
+      "/regions/{their_region}/ — reverse lookup from regions.json",
+      "/{city}/day-trips/ — already linked for cities with DAY_TRIPS entries",
+      "/{city}/tours/ — already linked",
+      "/{city}/luxury|budget|families|couples/ — already linked via programmaticLinks",
+      "/journal/{tag-matched-articles} — currently MISSING; route by c.slug match against post.tags",
+      "/best-of-turkey/{collections-where-city-has-pick} — currently MISSING; reverse lookup from collections.json picks[].city",
+      "/experiences/ — currently MISSING (Istanbul especially should link to cay-culture, turkish-coffee, hammam)",
+      "/best-time-to-visit-turkey/ — currently MISSING from city pages"
+    ],
+    "journal_articles_should_link_to": [
+      "Specific city pages by tag mapping (currently most posts only link to cities in body prose, not via a structured CTA block)",
+      "Specific collections (e.g. cappadocia-balloon-guide should link to /best-of-turkey/cave-hotels-turkey/)",
+      "Other journal posts in same tag cluster (currently no related-posts block)",
+      "Practical pages that share intent (turkey-solo-female-travel → /safety/, turkish-rug-scams → /safety/, turkey-cost-week → /planner/)"
+    ],
+    "region_pages_should_link_to": [
+      "All cities in r.cities (already done)",
+      "/turkey-by-month/{months-best-for-region} — currently MISSING",
+      "/best-of-turkey/{collections-relevant-to-region} — currently MISSING",
+      "/journal/ articles geo-tagged to region cities — currently MISSING",
+      "/{cities}/day-trips/ — currently MISSING"
+    ],
+    "month_pages_should_link_to": [
+      "Cities in m.bestCitiesThisMonth (already done in weather table)",
+      "/journal/ posts tagged seasonal/{season} — currently MISSING",
+      "/best-of-turkey/ collection most relevant to month (e.g. january → cave-hotels) — currently MISSING",
+      "Adjacent month pages (prev/next nav) — currently MISSING",
+      "/best-time-to-visit-turkey/ pillar — currently MISSING"
+    ],
+    "collection_pages_should_link_to": [
+      "Each city referenced in picks (already done via 'See {city} guide →')",
+      "Other collections (related collections nav block) — currently MISSING",
+      "/journal/ posts mentioning these hotel categories — currently MISSING"
+    ],
+    "specific_high_value_pairings": [
+      { "from": "/journal/cappadocia-balloon-guide/", "to": "/cappadocia/", "anchor_text": "where to stay in Cappadocia for balloon mornings", "reason": "Highest-intent inbound traffic on the site; balloon searchers are 30 days from booking. Inject as primary CTA." },
+      { "from": "/journal/cappadocia-balloon-guide/", "to": "/best-of-turkey/cave-hotels-turkey/", "anchor_text": "best cave hotels with balloon-view terraces", "reason": "Commercial collection content matches exact intent of post." },
+      { "from": "/journal/cappadocia-in-winter/", "to": "/turkey-by-month/january-in-turkey/", "anchor_text": "January in Turkey month guide", "reason": "Cross-cluster topical reinforcement; both rank for seasonal queries." },
+      { "from": "/journal/cappadocia-in-winter/", "to": "/cappadocia/", "anchor_text": "cave hotels in Cappadocia", "reason": "Commercial intent." },
+      { "from": "/turkey-by-month/january-in-turkey/", "to": "/cappadocia/", "anchor_text": "where to stay in Cappadocia in winter", "reason": "January searchers most likely to book Cappadocia." },
+      { "from": "/turkey-by-month/january-in-turkey/", "to": "/journal/cappadocia-in-winter/", "anchor_text": "why Cappadocia is better in winter", "reason": "Topic cluster reinforcement and reduces bounce." },
+      { "from": "/turkey-by-month/{any-summer}/", "to": "/antalya/, /bodrum/, /fethiye/", "anchor_text": "best beaches in {month}", "reason": "Summer months are the conversion months for coast cities." },
+      { "from": "/journal/12-hours-in-istanbul/", "to": "/istanbul/", "anchor_text": "where to stay in Istanbul", "reason": "Layover traffic converts to overnight; this is a missed CTA today." },
+      { "from": "/journal/best-bosphorus-cruise/", "to": "/istanbul/#beyoglu", "anchor_text": "stay in Beyoğlu near the cruise dock", "reason": "Already mentioned in body but not as a structured CTA card." },
+      { "from": "/journal/turkish-rug-scams/", "to": "/safety/", "anchor_text": "Is Turkey safe? Full FAQ", "reason": "Cross-cluster, addresses next likely query." },
+      { "from": "/journal/turkey-solo-female-travel/", "to": "/istanbul/#kadikoy", "anchor_text": "safest neighborhoods in Istanbul for solo female travelers", "reason": "Demand-matching neighborhood specificity." },
+      { "from": "/experiences/cay-culture/", "to": "/istanbul/#kadikoy", "anchor_text": "stay in Kadıköy for the daily çay rhythm", "reason": "Already partially in body; promote to CTA." },
+      { "from": "/experiences/whirling-dervishes/", "to": "/konya/", "anchor_text": "where to stay in Konya for the sema ceremony", "reason": "Konya gets very thin traffic; this experience is its main inbound funnel." },
+      { "from": "/experiences/turkish-coffee/", "to": "/journal/turkish-food-20-dishes/", "anchor_text": "20 Turkish dishes worth eating", "reason": "Same audience cluster, lifts pages-per-session." },
+      { "from": "/best-of-turkey/honeymoon-hotels-turkey/", "to": "/best-of-turkey/cave-hotels-turkey/", "anchor_text": "cave hotels in Cappadocia", "reason": "Cross-collection navigation; honeymooners shop both." },
+      { "from": "/regions/cappadocia-anatolia/", "to": "/turkey-by-month/january-in-turkey/, /turkey-by-month/october-in-turkey/", "anchor_text": "best months for Cappadocia", "reason": "Seasonal buying signal." },
+      { "from": "/cappadocia/", "to": "/journal/cappadocia-balloon-guide/, /journal/cappadocia-in-winter/", "anchor_text": "complete balloon ride guide / Cappadocia in winter", "reason": "City pages currently rely on relatedCitiesBlock only; tag-matched journal links would lift session depth." }
+    ],
+    "typical_outgoing_link_count_observed": {
+      "city_page": "~28 internal links (nav + footer + areas + hotels + programmatic 4 + related cities). Healthy. Add ~6 more for journal/collections/months.",
+      "journal_post": "~18 internal links (nav + footer + 2-3 in body). Low. Should be ~25 with structured CTA cards.",
+      "region_page": "~15 internal links. Low. Should be ~22 with months + journal + collections.",
+      "month_page": "~14 internal links (nav + footer + city table + 2 body links). Low. Should be ~20.",
+      "collection_page": "~16 internal links (nav + footer + 12 city links from picks). OK but missing other-collection cross-links.",
+      "experience_page": "~12 internal links (nav + footer + 2-3 body). Low. Should be ~18.",
+      "practical_page": "~10 internal links. Low. Each should reinforce 3-5 city pages and 2-3 journal posts."
+    }
+  },
+  "title_tag_template_recommendations": {
+    "homepage": "Where to Stay in Turkey 2026 — 22 Cities, Real Neighborhoods",
+    "city_page": "Where to Stay in {city} (2026) — {n_areas} Neighborhoods Compared",
+    "journal_post": "{title} — Where to Stay Turkey  (only if title.length <= 50, else just {title})",
+    "region_page": "{region}, Turkey — Where to Go & Where to Stay (2026)",
+    "monthly_page": "Turkey in {month} 2026: Weather, Where to Go, What to Pack",
+    "collection_page": "{title} (2026)  (only if title.length <= 55, else {title})",
+    "experience_page": "{title}  (no brand suffix; informational intent)",
+    "practical_page": "{topic} in Turkey 2026 — {benefit_or_qualifier}",
+    "city_variant_page": "Best {variant} hotels in {city} (2026) — Where to Stay Turkey",
+    "day_trips_page": "Day Trips from {city} — {n} Routes Ranked (2026)",
+    "tours_page": "Best Tours in {city} (2026) — {n} Operators Compared",
+    "compare_page": "Compare Turkish Cities — Istanbul vs Cappadocia, Antalya vs Bodrum",
+    "quiz_page": "Which Turkish City Fits Your Trip? — 60-Second Quiz",
+    "planner_page": "Turkey Trip Cost Calculator — Real 2026 Budgets in 20 Seconds"
+  },
+  "meta_description_template_recommendations": {
+    "homepage": "Pick the right neighborhood in 22 Turkish cities. Hand-picked hotels, real prices, no fluff. Decide in 60 seconds with our quiz.",
+    "city_page": "Where to stay in {city}: {n_areas} neighborhoods compared, {n_hotels} hand-picked hotels, ideal for {idealNights}. Best months {best_month}.",
+    "journal_post": "{subtitle}{ — summary clause if subtitle < 130 chars, padded to 140-160}",
+    "region_page": "{tagline} {n_cities} cities, suggested {n_days}-day route, when to go, and where to stay in each.",
+    "monthly_page": "{month} in Turkey: {top_2_cities} are the picks. Balloon flights {balloon_rate}. What to pack, what's open, what to skip.",
+    "collection_page": "{subtitle} {n_picks} verified picks across {n_cities} Turkish cities. Real names, real prices, no padding.",
+    "experience_page": "{summary clause padded to 140-160 with a benefit hook}",
+    "practical_page": "{actionable_summary}: {top_3_facts}. Updated for 2026 travelers.",
+    "day_trips_page": "{n} day-trip options from {city}, ranked. Real distances, time required, best operator for each. From half-day reset to full-day commitment.",
+    "tours_page": "{n} {city} tours compared head-to-head. Operator quality, real prices, who each is best for. The list we'd send a friend."
+  },
+  "top_10_priority_fixes": [
+    {
+      "rank": 1,
+      "issue": "Meta description truncation is broken across city pages, region pages, collection pages, month pages — `summary.slice(0, N) + '…'` produces mid-word cutoffs visible in production HTML.",
+      "page_types_affected": ["city_page", "region_page", "collection_page", "monthly_page"],
+      "fix_action": "Replace every `.slice(0, 150) + '…'` pattern in build.js with templated descriptions per page type (see meta_description_template_recommendations). Search build.js for `.slice(0, 1` to find all 4 occurrences (lines ~970, 2679, 2925, 3008).",
+      "estimated_traffic_impact": "high"
+    },
+    {
+      "rank": 2,
+      "issue": "Journal posts get default OG SVG and weak meta descriptions, suppressing CTR on social and SERPs.",
+      "page_types_affected": ["journal_post"],
+      "fix_action": "Add writeJournalOgImages() in build.js and pass ogImage to renderJournalPost head() call (line 4053). Also rebuild description as `(p.metaDescription || p.subtitle + ' — ' + p.summary).slice(0, 160)`.",
+      "estimated_traffic_impact": "high"
+    },
+    {
+      "rank": 3,
+      "issue": "Journal posts have no structured CTA back to relevant city pages — Cappadocia balloon guide (top traffic post) does not have a Where-to-stay CTA card. Direct revenue impact.",
+      "page_types_affected": ["journal_post"],
+      "fix_action": "In build.js renderJournalPost() after prose block (~line 4022), inject 'Where to base yourself' card based on hard-coded JOURNAL_TO_CITY map driven by p.tags. Map tags 'cappadocia'→cappadocia, 'istanbul/layover/bosphorus/sultanahmet'→istanbul, etc.",
+      "estimated_traffic_impact": "high"
+    },
+    {
+      "rank": 4,
+      "issue": "City H1 is just '{City Name}.' — drops the primary 'where to stay' keyword from the most-weighted on-page signal.",
+      "page_types_affected": ["city_page"],
+      "fix_action": "In build.js renderCity() line 993, change to `<h1>Where to stay in ${esc(c.name)}</h1>`.",
+      "estimated_traffic_impact": "high"
+    },
+    {
+      "rank": 5,
+      "issue": "Collection pages lack ItemList schema describing the hotels — prevents rich snippets on the most rich-result-eligible page type.",
+      "page_types_affected": ["collection_page"],
+      "fix_action": "In build.js renderCollectionPage() jsonld (line 3054), add ItemList object with each pick mapped to `{ '@type':'ListItem', position, item:{ '@type':'Hotel', name, address:{addressLocality:cityName, addressCountry:'TR'}, priceRange } }`.",
+      "estimated_traffic_impact": "high"
+    },
+    {
+      "rank": 6,
+      "issue": "Practical pages (visa, esim, insurance, money, packing, transport, safety, arrival-istanbul) have no Article schema.",
+      "page_types_affected": ["practical_page"],
+      "fix_action": "Add Article jsonld block to each of the 8 practical-page renderers (lines 2024, 2085, 2133, 2182, 2246, 2313, 2378, 2475). Single shared template: `{ '@type':'Article', headline:title, description, datePublished:'2026-01-01', dateModified:today, author:{ '@type':'Organization', name:config.siteName, url:config.siteUrl } }`.",
+      "estimated_traffic_impact": "medium"
+    },
+    {
+      "rank": 7,
+      "issue": "Homepage title and description re-use brand+tagline boilerplate; no commercial qualifier or year.",
+      "page_types_affected": ["homepage"],
+      "fix_action": "In build.js renderHome() lines 843-844, set title='Where to Stay in Turkey 2026 — 22 Cities, Real Neighborhoods' and description per template above.",
+      "estimated_traffic_impact": "high"
+    },
+    {
+      "rank": 8,
+      "issue": "City pages don't link to relevant journal posts, collections, monthly weather, or experiences — orphaning the entire content cluster from its commercial anchor.",
+      "page_types_affected": ["city_page"],
+      "fix_action": "In build.js renderCity() before `relatedCitiesBlock(c)` (line 1064), inject 4 linked blocks: (a) journal posts where post.tags includes c.slug or shared city keywords, (b) collections where any pick.city===c.slug, (c) /turkey-by-month/{best_month_for_city}/, (d) /experiences/ relevant cards (Istanbul→all 4, Konya→whirling-dervishes, etc.).",
+      "estimated_traffic_impact": "high"
+    },
+    {
+      "rank": 9,
+      "issue": "Stub journal posts (no bodyHtml) get indexed as thin content with a 50-word placeholder.",
+      "page_types_affected": ["journal_post"],
+      "fix_action": "In build.js renderJournalPost(), if !p.bodyHtml, add a metaRobots='noindex,follow' parameter to head() and conditionally emit `<meta name=\"robots\" content=\"noindex,follow\">` in head() at line 374.",
+      "estimated_traffic_impact": "medium"
+    },
+    {
+      "rank": 10,
+      "issue": "Region/month/collection/journal/experience pages all use the single default OG SVG. Weak social CTR.",
+      "page_types_affected": ["region_page", "monthly_page", "collection_page", "journal_post", "experience_page"],
+      "fix_action": "Add four OG-image generators following the writeCityOgImages() pattern (line 3064): writeRegionOgImages, writeMonthOgImages, writeCollectionOgImages, writeJournalOgImages, writeExperienceOgImages. Each emits /assets/img/og/{type}-{slug}.svg using the brand gradient and the page's title + tagline. Wire in each renderer's head() call.",
+      "estimated_traffic_impact": "medium"
+    }
+  ],
+  "robots_and_indexing_notes": "Current robots.txt (build.js line 1432) is minimal-OK: 'User-agent: * / Allow: / / Disallow: /thank-you/'. Recommendations: (1) Also Disallow: /thank-you-combo/ (lead-magnet thank-you page mirrors /thank-you/ pattern). (2) Add Disallow: /compare/?* to prevent infinite query-string variations from being crawled (the compare tool is JS-driven; query-string variants would be duplicates). (3) Sitemap currently lists ~223 URLs in a single file — fine for current size but split into sitemap-cities.xml, sitemap-journal.xml, sitemap-content.xml when total exceeds 500 URLs. (4) Sitemap uses changefreq=weekly and lastmod=today() for ALL entries — this is dishonest signal. Replace with per-page real lastmod tracked via a simple JSON manifest, or at minimum static lastmod per page-type (cities: 2026-04-01, journal: per p.publishedAt, months: 2026-{monthNum}-01). (5) Add `<link rel='alternate' hreflang='en' href='...'>` and `<link rel='alternate' hreflang='x-default' href='...'>` in head() once a translation strategy exists; add a stub now to claim the slot. (6) Verify trailing-slash consistency: all canonicals end with '/'; ensure your host serves a 301 from non-slash to slash for /istanbul → /istanbul/. (7) RSS feed at /feed.xml is linked from head() — good. (8) No noindex/x-robots-tag rules currently applied to thin or staging pages — see fix #9 for stub journal posts.",
+  "structured_data_gaps": [
+    "Homepage: missing ItemList schema for the 22-city grid.",
+    "Homepage: WebSite SearchAction target points to '?s=' but there is no /?s= search functionality — either implement search or remove the SearchAction.",
+    "City page: TouristDestination missing image and geo coordinates.",
+    "City page: missing Article schema for the neighborhood-comparison content.",
+    "Journal post: BlogPosting missing image, dateModified, mainEntityOfPage.",
+    "Journal post: author should be Person not just name string, with a url to /about/#author.",
+    "Region page: missing Place + ItemList schemas (only has BreadcrumbList).",
+    "Monthly page: missing Article schema with temporalCoverage.",
+    "Collection page: missing ItemList of Hotel items — the highest-impact gap on the site for rich snippets.",
+    "Experience page: Article author should be Person not Organization.",
+    "Practical pages (8 of them): missing Article schema entirely.",
+    "Day-trips page: missing ItemList schema.",
+    "Tours page: ItemList items are bare strings, not Hotel/TouristAttraction sub-items.",
+    "Programmatic city variants (luxury/budget/families/couples): ItemList present but items lack Hotel sub-typing.",
+    "Sitewide: no Organization schema on non-homepage pages — current Organization JSON-LD is only emitted on homepage. Add a minimal Organization block in head() for every page or use sameAs cross-references."
+  ]
+}

@@ -389,6 +389,7 @@ ${config.twitterHandle ? `<meta name="twitter:site" content="${esc(config.twitte
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
 <link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="/assets/css/filters.css">
 <link rel="preconnect" href="https://www.booking.com">
 <link rel="dns-prefetch" href="https://www.getyourguide.com">
 <link rel="dns-prefetch" href="https://www.hotels.com">
@@ -522,6 +523,7 @@ function tail() {
   return `
 ${cookieBanner()}
 <script src="/assets/js/main.js" defer></script>
+<script src="/assets/js/filters.js" defer></script>
 </body>
 </html>`;
 }
@@ -558,7 +560,7 @@ function hotelCard(hotel, city) {
        </div>`
     : "";
   return `
-<article class="card hotel-card">
+<article class="card hotel-card" data-tier="${esc(hotel.tier)}" data-bestfor="${esc((hotel.bestFor || []).join(","))}">
   <div class="tag-row">
     ${editorsPickBadge(hotel)}
     ${tierTag(hotel.tier)}
@@ -1040,6 +1042,14 @@ ${leadMagnet()}
 
 <section class="container">
   <h2>All featured hotels in ${esc(c.name)}</h2>
+  <div class="persona-filter" role="tablist" aria-label="Filter hotels by traveler type">
+    <button class="persona-chip" data-filter="all" data-active="true" type="button">All <span class="persona-chip-count">${c.hotels.length}</span></button>
+    <button class="persona-chip" data-filter="couples" type="button">Couples</button>
+    <button class="persona-chip" data-filter="families" type="button">Families</button>
+    <button class="persona-chip" data-filter="first-timers" type="button">First-timers</button>
+    <button class="persona-chip" data-filter="luxury" type="button">Luxury</button>
+    <button class="persona-chip" data-filter="budget" type="button">Budget</button>
+  </div>
   <div class="grid grid-2 grid-3">
     ${c.hotels.map((h) => hotelCard(h, c)).join("")}
   </div>
@@ -1175,13 +1185,15 @@ function renderProgrammaticForCity(c) {
   const fams = c.hotels.filter((h) => h.bestFor.some((t) => /family|families|kids|all-inclusive/i.test(t)));
   const couples = c.hotels.filter((h) => h.bestFor.some((t) => /couple|honeymoon|romantic|adults|design/i.test(t)));
 
+  const cityIntros = CITY_THEME_INTROS[c.slug] || {};
+
   if (luxury.length) {
     renderProgrammatic({
       city: c, variant: "luxury",
       heading: `Luxury hotels in ${c.name}`,
       title: `Luxury hotels in ${c.name} — 5-star picks for 2026`,
-      description: `Hand-picked luxury and 5-star hotels in ${c.name}, Turkey. Compare top properties, neighborhoods, and prices.`,
-      intro: `The handful of genuinely special 5-star stays in ${c.name}. Milestone-trip picks, not just the priciest names.`,
+      description: `The genuinely special luxury and 5-star hotels in ${c.name}, with verdicts on which neighborhoods and properties earn the price.`,
+      intro: cityIntros.luxury || `The handful of genuinely special 5-star stays in ${c.name}. Milestone-trip picks, not just the priciest names.`,
       hotels: luxury,
       audience: `Luxury travelers in ${c.name} usually want either a historic landmark or a modern resort on the water.`,
     });
@@ -1192,8 +1204,8 @@ function renderProgrammaticForCity(c) {
       city: c, variant: "budget",
       heading: `Budget hotels in ${c.name} under $100`,
       title: `Budget hotels in ${c.name} — under $100 / night (2026)`,
-      description: `Affordable, well-reviewed hotels in ${c.name} under $100 per night.`,
-      intro: `The best-reviewed hotels in ${c.name} under $100 — all within short reach of the sights.`,
+      description: `Well-reviewed hotels in ${c.name} under $100 per night, ranked by location and value — not just price.`,
+      intro: cityIntros.budget || `The best-reviewed hotels in ${c.name} under $100 — all within short reach of the sights.`,
       hotels: budget,
       audience: `In ${c.name}, budget travelers should prioritize location over everything.`,
     });
@@ -1203,8 +1215,8 @@ function renderProgrammaticForCity(c) {
     city: c, variant: "families",
     heading: `Best hotels in ${c.name} for families`,
     title: `Best hotels in ${c.name} for families (with kids) — 2026`,
-    description: `Family-friendly hotels and neighborhoods in ${c.name}.`,
-    intro: `Pool access, family rooms, and quiet streets — the ${c.name} hotels that deliver all three.`,
+    description: `Family-friendly hotels in ${c.name} with pools, family rooms, and walkable locations — the verdict on which neighborhoods work for kids.`,
+    intro: cityIntros.families || `Pool access, family rooms, and quiet streets — the ${c.name} hotels that deliver all three.`,
     hotels: fams.length ? fams : c.hotels.slice(0, 6),
     audience: `Look for family rooms, pools, and good transport. Skip the party-heavy neighborhoods.`,
   });
@@ -1213,8 +1225,8 @@ function renderProgrammaticForCity(c) {
     city: c, variant: "couples",
     heading: `Best hotels in ${c.name} for couples`,
     title: `Best hotels in ${c.name} for couples — romantic stays 2026`,
-    description: `Romantic, adults-friendly hotels in ${c.name}.`,
-    intro: `The ${c.name} hotels we'd pick for an anniversary or a honeymoon — small, beautiful, quiet.`,
+    description: `Romantic, adults-friendly stays in ${c.name} — anniversary and honeymoon picks ranked by privacy, view, and design.`,
+    intro: cityIntros.couples || `The ${c.name} hotels we'd pick for an anniversary or a honeymoon — small, beautiful, quiet.`,
     hotels: couples.length ? couples : c.hotels.slice(0, 6),
     audience: `Couples usually prefer smaller, adults-friendly hotels over large resorts.`,
   });
@@ -1330,6 +1342,7 @@ ${tail()}`;
 <meta name="robots" content="noindex, follow">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="/assets/css/filters.css">
 </head>
 <body>`;
 
@@ -1670,6 +1683,7 @@ ${tail()}`;
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
 <link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="/assets/css/filters.css">
 </head><body>`;
   writeFile(`${outSlug}/index.html`, customHead + body);
 }
@@ -2627,6 +2641,10 @@ ${tail()}`;
 }
 
 // ---- Regional hubs + Day Trips clusters + Ultimate Guide ----
+const CITY_THEME_INTROS = (() => {
+  try { return require("./data/city-theme-intros.json").intros || {}; }
+  catch (e) { return {}; }
+})();
 const REGIONS = (() => {
   try { return require("./data/regions.json").regions || []; }
   catch (e) { return []; }
@@ -3989,7 +4007,7 @@ ${tail()}`;
 function renderJournalPost(p) {
   const canonical = `${config.siteUrl}/journal/${p.slug}/`;
   const title = `${p.title} — ${config.siteName}`;
-  const description = p.subtitle;
+  const description = (p.subtitle && p.subtitle.length >= 80 ? p.subtitle : (p.summary || p.subtitle || "")).replace(/\s+/g, " ").trim().slice(0, 160);
   const body = `
 ${nav()}
 ${disclosureBanner()}
@@ -4019,6 +4037,12 @@ ${disclosureBanner()}
     `}
     <p style="margin-top:32px;color:var(--ink-muted);font-size:.92rem">Tagged: ${p.tags.map((t) => `<span style="background:var(--accent-soft);padding:2px 8px;border-radius:2px;margin-right:6px">${esc(t)}</span>`).join("")}</p>
   </div>
+  ${(() => {
+    const tagSlug = (p.tags || []).find((t) => cities.find((c) => c.slug === t.toLowerCase()));
+    const targetCity = tagSlug ? cities.find((c) => c.slug === tagSlug.toLowerCase()) : null;
+    if (!targetCity) return "";
+    return `<div class="card mt-4" style="padding:24px;background:var(--c-accent-soft, #f7efe2);border-left:3px solid var(--c-accent, #b45309)"><div class="eyebrow">Plan your stay</div><h3 style="margin:6px 0 8px">Where to stay in ${esc(targetCity.name)}</h3><p style="margin:0 0 14px;color:var(--c-text-soft, #5e6473)">Pick the right neighborhood and the right hotel — our full ${esc(targetCity.name)} guide breaks down every area we recommend.</p><a class="btn btn-primary" href="/${esc(targetCity.slug)}/">See ${esc(targetCity.name)} guide →</a></div>`;
+  })()}
 
   <div class="lead-magnet mt-4">
     <div class="eyebrow">Free, sent instantly</div>
