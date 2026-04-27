@@ -1376,6 +1376,7 @@ function renderSitemap() {
     `${config.siteUrl}/journal/`,
     `${config.siteUrl}/compare/`,
     `${config.siteUrl}/partnerships/`,
+    `${config.siteUrl}/flights/`,
   ];
   for (const p of JOURNAL) urls.push(`${config.siteUrl}/journal/${p.slug}/`);
   for (const c of cities) {
@@ -3098,14 +3099,13 @@ ${disclosureBanner()}
   </div>
 
   <div class="prose mt-4">
-    <p>${esc(p.summary)}</p>
-    <div class="callout-warning" style="background:var(--accent-soft);border-left:2px solid var(--accent);padding:18px 22px;margin:24px 0;font-size:0.95rem;color:var(--ink-muted)">
-      <strong>Demo article.</strong> The full ${p.readMinutes}-minute read is being written and will replace this placeholder soon. Subscribe to the newsletter at the foot of any page and we'll email you when it goes live.
-    </div>
-
-    <h2>What this article will cover</h2>
-    <p>${esc(p.summary)}</p>
-    <p>Tagged: ${p.tags.map((t) => `<a href="/${esc(t)}/" style="text-decoration:underline;text-decoration-color:var(--hairline)">${esc(t)}</a>`).join(", ")}.</p>
+    ${p.bodyHtml ? p.bodyHtml : `
+      <p>${esc(p.summary)}</p>
+      <div class="callout-warning" style="background:var(--accent-soft);border-left:2px solid var(--accent);padding:18px 22px;margin:24px 0;font-size:0.95rem;color:var(--ink-muted)">
+        <strong>Coming soon.</strong> The full ${p.readMinutes}-minute read is being written. Subscribe at the foot of any page and we'll email you when it goes live.
+      </div>
+    `}
+    <p style="margin-top:32px;color:var(--ink-muted);font-size:.92rem">Tagged: ${p.tags.map((t) => `<span style="background:var(--accent-soft);padding:2px 8px;border-radius:2px;margin-right:6px">${esc(t)}</span>`).join("")}</p>
   </div>
 
   <div class="lead-magnet mt-4">
