@@ -418,6 +418,7 @@ function nav() {
       <a href="/guides/">Guides</a>
       <a href="/flights/">Flights</a>
       <a href="/planner/">Planner</a>
+      <a href="/culture/">Culture</a>
       <a href="/quiz/">Quiz</a>
     </nav>
   </div>
@@ -453,6 +454,8 @@ function footer() {
           <li><a href="/best-time-to-visit-turkey/">Best time to visit</a></li>
           <li><a href="/how-many-nights-turkey/">How many nights</a></li>
           <li><a href="/is-turkey-safe/">Is Turkey safe?</a></li>
+          <li><a href="/turkish-phrases/">Turkish phrases &amp; pronunciation</a></li>
+          <li><a href="/culture/">Cultural concepts</a></li>
         </ul>
       </div>
       <div>
@@ -484,6 +487,7 @@ function footer() {
       </div>
     </div>
     <div class="footer-bottom">
+      <span lang="tr" style="font-style:italic;display:block;margin-bottom:6px;color:var(--c-accent)">İyi yolculuklar — have a good journey.</span>
       <span>© ${new Date().getFullYear()} ${esc(config.business ? config.business.legalName : config.siteName)}. An independent editorial site. <a href="/about/#affiliate" style="color:inherit">We earn a commission on qualifying bookings</a>.</span>
       <span><a href="/partnerships/" style="color:inherit">For hoteliers</a> · Last updated ${esc(config.business.lastUpdated)}</span>
     </div>
@@ -497,7 +501,7 @@ function modal() {
   <div class="modal">
     <button class="modal-close" aria-label="Close">×</button>
     <div class="eyebrow">Free download</div>
-    <h3 id="modal-title">Your 3-day Istanbul itinerary</h3>
+    <h3 id="modal-title"><span lang="tr">Buyurun.</span> Your 3-day Istanbul itinerary</h3>
     <p class="text-muted">The exact plan we'd give a friend visiting Istanbul. Where to eat, where to stay, what to skip.</p>
     <form class="lead-form" action="${esc(config.emailCaptureEndpoint)}" data-source="modal">
       <input type="email" name="email" placeholder="your@email.com" required aria-label="Email">
@@ -570,7 +574,7 @@ function hotelCard(hotel, city) {
   <div class="hotel-area">${esc(areaName)}, ${esc(city.name)}</div>
   <p class="hotel-why">${esc(hotel.whyStay)}</p>
   <div class="hotel-meta">
-    <span class="hotel-price">$${hotel.priceFrom} <span class="from">from / night</span></span>
+    <span class="hotel-price">$${hotel.priceFrom}<span style="color:var(--ink-muted);font-size:.78rem;font-weight:400;margin-left:6px">≈ ₺${(hotel.priceFrom * 34).toLocaleString("tr-TR")}</span> <span class="from">from / night</span></span>
   </div>
   <a class="btn btn-primary btn-block" rel="sponsored nofollow" target="_blank" href="${esc(link)}">Check availability →</a>
   ${compareRow}
@@ -851,9 +855,9 @@ ${disclosureBanner()}
 <section class="hero-home">
 
   <div class="container" style="position:relative">
-    <div class="eyebrow">Turkey trip planning, simplified</div>
+    <div class="eyebrow"><span lang="tr">Hoş geldiniz.</span> Turkey trip planning, simplified.</div>
     <h1>Where should you <em>actually</em> stay in Turkey?</h1>
-    <p class="hero-sub">${cities.length} destinations worth flying for. Each one has 3–5 neighborhoods with wildly different vibes. Pick the wrong one and you waste a day commuting. We make the call for you.</p>
+    <p class="hero-sub">${cities.length} destinations worth flying for. Each one has 3–5 mahalleler — neighborhoods with wildly different vibes. Pick the wrong one and you waste a day commuting. We make the call for you.</p>
     <div class="hero-actions mt-3">
       <a class="btn btn-primary btn-lg" href="/quiz/">Take the quiz →</a>
       <a class="btn btn-ghost btn-lg" href="#all-cities">Browse all ${cities.length} cities</a>
@@ -1415,7 +1419,10 @@ function renderSitemap() {
     `${config.siteUrl}/turkey-guide/`,
     `${config.siteUrl}/turkey-by-month/`,
     `${config.siteUrl}/best-of-turkey/`,
+    `${config.siteUrl}/culture/`,
+    `${config.siteUrl}/turkish-phrases/`,
   ];
+  for (const _cc of CULTURAL_CONCEPTS) urls.push(`${config.siteUrl}/culture/${_cc.slug}/`);
   for (const _m of MONTHS) urls.push(`${config.siteUrl}/turkey-by-month/${_m.slug}/`);
   for (const _col of COLLECTIONS) urls.push(`${config.siteUrl}/best-of-turkey/${_col.slug}/`);
   for (const _e of EXPERIENCES) urls.push(`${config.siteUrl}/experiences/${_e.slug}/`);
@@ -3078,6 +3085,163 @@ ${tail()}`;
   writeFile(`best-of-turkey/${c.slug}/index.html`, html);
 }
 
+// ---- Turkish localization layer (cultural concepts + microcopy + phrases) ----
+const CULTURAL_CONCEPTS = (() => {
+  try { return require("./data/cultural-concepts.json").concepts || []; }
+  catch (e) { return []; }
+})();
+const TURKISH_MICROCOPY = (() => {
+  try { return require("./data/turkish-microcopy.json") || {}; }
+  catch (e) { return {}; }
+})();
+const TURKISH_LOCALIZATION = (() => {
+  try { return require("./data/turkish-localization.json") || {}; }
+  catch (e) { return {}; }
+})();
+
+function renderCulturalConceptsHub() {
+  const canonical = `${config.siteUrl}/culture/`;
+  const title = "Turkish culture — six concepts that explain everything";
+  const description = "Misafirperverlik, mahalle, çay, kolay gelsin, imece, bayram. The six Turkish cultural concepts that make sense of everyday Turkey. Each in plain English with Turkish words pinned.";
+  const cards = CULTURAL_CONCEPTS.map((p) => `
+    <a class="card" href="/culture/${esc(p.slug)}/" style="text-decoration:none;color:inherit;padding:24px">
+      <div class="eyebrow">Culture</div>
+      <h3 style="margin:6px 0 8px">${esc(p.title)}</h3>
+      <p style="color:var(--c-text-soft);font-size:.95rem;margin:0">${esc(p.subtitle || "")}</p>
+      <div style="color:var(--c-accent);font-weight:600;font-size:.95rem;margin-top:14px">Read →</div>
+    </a>
+  `).join("");
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Culture</div>
+    <h1>What Turkey actually means</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">Six Turkish cultural concepts that explain why Turkey feels different from any country next to it. Each page is short, written by people who know how it actually works on the street.</p>
+  </div>
+</div>
+<section class="container">
+  <div class="grid grid-1 grid-2 grid-3 mt-3">${cards}</div>
+</section>
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Culture", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("culture/index.html", html);
+}
+
+function renderCulturalConcept(p) {
+  const canonical = `${config.siteUrl}/culture/${p.slug}/`;
+  const title = `${p.title} — ${config.siteName}`;
+  const description = (p.subtitle || p.summary || "").replace(/\s+/g, " ").trim().slice(0, 160);
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="breadcrumb"><a href="/">Home</a> / <a href="/culture/">Culture</a> / ${esc(p.title)}</div>
+</div>
+<article class="container container-narrow">
+  <div class="page-head" style="border-bottom:none;padding-bottom:0">
+    <div class="eyebrow">Culture</div>
+    <h1>${esc(p.title)}</h1>
+    ${p.subtitle ? `<p class="journal-subtitle" style="font-size:1.3rem;color:var(--ink-muted);font-style:italic;margin-top:12px">${esc(p.subtitle)}</p>` : ""}
+    <div class="journal-meta" style="margin-top:24px"><span>${p.readMinutes || 6} min read</span></div>
+  </div>
+  <div class="prose mt-4">${p.bodyHtml || `<p>${esc(p.summary || "")}</p>`}</div>
+</article>
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home", url: `${config.siteUrl}/` },
+      { name: "Culture", url: `${config.siteUrl}/culture/` },
+      { name: p.title, url: canonical },
+    ]),
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: p.title,
+      description: description,
+      url: canonical,
+      author: { "@type": "Organization", name: config.siteName },
+    },
+  ];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile(`culture/${p.slug}/index.html`, html);
+}
+
+function renderTurkishPhrases() {
+  const canonical = `${config.siteUrl}/turkish-phrases/`;
+  const title = "Useful Turkish phrases for travelers — with pronunciation";
+  const description = "The 14 Turkish phrases worth memorizing for a Turkey trip, with phonetic pronunciation and the social context where each one actually works.";
+  const phrases = (TURKISH_LOCALIZATION.useful_visitor_phrases || []);
+  const blessings = (TURKISH_MICROCOPY.blessings_situations || []);
+  const proverbs = (TURKISH_MICROCOPY.proverbs_atasozleri || []);
+  const misunderstandings = (TURKISH_LOCALIZATION.common_misunderstandings || []);
+
+  const phraseRows = phrases.map((p) => `<tr><td><strong lang="tr">${esc(p.tr)}</strong></td><td>${esc(p.en)}</td><td><em>${esc(p.phonetic || "")}</em></td></tr>`).join("");
+  const blessingCards = blessings.map((b) => `
+    <div class="card" style="padding:18px">
+      <strong lang="tr" style="font-size:1.05rem">${esc(b.tr)}</strong>
+      <p style="margin:6px 0;color:var(--c-text-soft)">${esc(b.en)}</p>
+      <p style="margin:0;font-size:.9rem;color:var(--ink-muted);font-style:italic">${esc(b.context || "")}</p>
+    </div>
+  `).join("");
+  const misRows = misunderstandings.map((m) => `<li><strong>${esc(m.issue)}.</strong> ${esc(m.explain)}</li>`).join("");
+
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Turkish phrases</div>
+    <h1>Turkish phrases that actually help</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">English coverage in Istanbul tourist zones is high. In neighborhood Turkey, it's low. These are the phrases worth memorizing — every one of them changes the reaction you get from the locals you'll be ordering from, riding with, or asking for directions.</p>
+  </div>
+</div>
+
+<section class="container container-narrow prose">
+  <h2>The essentials</h2>
+  <table>
+    <thead><tr><th>Turkish</th><th>English</th><th>Pronunciation</th></tr></thead>
+    <tbody>${phraseRows}</tbody>
+  </table>
+
+  <h2>Blessings &amp; everyday situational phrases</h2>
+  <p style="max-width:720px">These aren't survival phrases. They're the small acknowledgements that signal you're not just consuming Turkey — that you're paying attention.</p>
+  <div class="grid grid-1 grid-2 mt-3">${blessingCards}</div>
+
+  <h2>Common misunderstandings</h2>
+  <ul style="max-width:720px;line-height:1.8">${misRows}</ul>
+
+  ${proverbs.length ? `
+    <h2>An old Turkish proverb</h2>
+    <blockquote style="border-left:3px solid var(--c-accent);padding:16px 20px;background:var(--c-accent-soft);margin:20px 0;font-style:italic;font-size:1.1rem">
+      <strong lang="tr">${esc(proverbs[0].tr)}</strong><br>
+      <span style="font-style:normal;color:var(--c-text-soft);font-size:.95rem">${esc(proverbs[0].en)}</span>
+    </blockquote>
+  ` : ""}
+
+  <p class="text-muted" style="margin-top:32px">Want more cultural context? See our <a href="/culture/">six cultural concept guides</a> or read about <a href="/experiences/cay-culture/">çay culture</a>.</p>
+</section>
+
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Turkish phrases", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("turkish-phrases/index.html", html);
+}
+
 // ---- Per-city OG image (SVG) ----
 function writeCityOgImages() {
   for (const c of cities) {
@@ -4319,6 +4483,9 @@ function run() {
   for (const _m of MONTHS) renderMonthPage(_m);
   renderCollectionsHub();
   for (const _c of COLLECTIONS) renderCollectionPage(_c);
+  renderCulturalConceptsHub();
+  for (const _cc of CULTURAL_CONCEPTS) renderCulturalConcept(_cc);
+  renderTurkishPhrases();
 
   for (const c of cities) {
     renderCity(c);

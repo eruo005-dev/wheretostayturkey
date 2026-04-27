@@ -1,0 +1,150 @@
+{
+  "currency": {
+    "primary": "USD",
+    "secondary": "TRY",
+    "approximate_rate_2026": 34,
+    "rate_disclaimer": "TRY-USD rates fluctuate daily and the lira has historically weakened against the dollar; book in your home currency where possible to avoid double-conversion fees from your card issuer.",
+    "format_examples": [
+      { "usd": 90,  "try_approx": 3060,  "display": "$90 / ₺3,060 from / night" },
+      { "usd": 150, "try_approx": 5100,  "display": "$150 / ₺5,100 from / night" },
+      { "usd": 220, "try_approx": 7480,  "display": "$220 / ₺7,480 from / night" },
+      { "usd": 380, "try_approx": 12920, "display": "$380 / ₺12,920 from / night" },
+      { "usd": 600, "try_approx": 20400, "display": "$600 / ₺20,400 from / night" }
+    ],
+    "notes": [
+      "Hotels increasingly quote in EUR or USD because of lira volatility — confirm the billing currency at checkout.",
+      "Most card terminals offer Dynamic Currency Conversion; always choose to be charged in TRY for the best rate.",
+      "Cash exchanges are best at döviz bureaus in central districts (Sirkeci, Taksim, Kadıköy), not airports."
+    ]
+  },
+
+  "phone": {
+    "country_code": "+90",
+    "city_codes": {
+      "istanbul_european": "0212",
+      "istanbul_asian": "0216",
+      "ankara": "0312",
+      "izmir": "0232",
+      "antalya": "0242",
+      "bodrum": "0252",
+      "fethiye": "0252",
+      "mugla": "0252",
+      "konya": "0332",
+      "trabzon": "0462",
+      "rize": "0464",
+      "gaziantep": "0342",
+      "mersin": "0324",
+      "mardin": "0482",
+      "sanliurfa": "0414",
+      "bursa": "0224",
+      "alanya": "0242",
+      "side": "0242",
+      "kusadasi": "0256",
+      "pamukkale": "0258",
+      "marmaris": "0252",
+      "kas": "0242",
+      "safranbolu": "0370",
+      "canakkale": "0286",
+      "edirne": "0284",
+      "eskisehir": "0222",
+      "kayseri": "0352",
+      "nevsehir_cappadocia": "0384",
+      "samsun": "0362",
+      "van": "0432"
+    },
+    "mobile_prefixes": ["0530-0539", "0540-0549", "0550-0559", "0501-0509"],
+    "format_example": "+90 (212) 555-1234",
+    "format_notes": "Domestic dialing prefixes the area code with 0; international dialing drops the 0 and prefixes +90. Mobile numbers are 10 digits after the country code, written in groups of 3-3-2-2 (e.g. +90 532 123 45 67)."
+  },
+
+  "address_conventions": {
+    "field_order": ["mahalle", "street_with_no", "district", "postal_code", "city", "country"],
+    "explanation": "Turkish addresses go from the smallest unit outward but lead with mahalle (the neighborhood), then street + building, then ilçe (the urban district), then postal code, then şehir (the city). This is roughly the inverse of US ordering. Building numbers are written 'No:24' inline with the street; apartments use 'D:' (for daire) or 'Kat:' (for floor).",
+    "abbreviations": {
+      "Mah.": "Mahallesi (neighborhood)",
+      "Cad.": "Caddesi (avenue)",
+      "Sok.": "Sokak (street)",
+      "Bul.": "Bulvarı (boulevard)",
+      "No:": "Building number",
+      "D:": "Daire (apartment)",
+      "Kat:": "Floor"
+    },
+    "example": {
+      "raw": "Sultanahmet Mah., Babıali Cad. No:24 D:3, Fatih, 34110, İstanbul, Türkiye",
+      "annotated": "Sultanahmet Mah. (Sultanahmet neighborhood) — Babıali Cad. (Babıali Avenue) — No:24 (building 24) — D:3 (apartment 3) — Fatih (district) — 34110 (postal code) — İstanbul (city) — Türkiye (country)"
+    },
+    "postal_code_format": "5 digits; first 2 = province (34 = İstanbul, 06 = Ankara, 35 = İzmir, 07 = Antalya)."
+  },
+
+  "tax_and_billing": {
+    "vat_label": "KDV",
+    "vat_label_full": "Katma Değer Vergisi",
+    "vat_rate": 20,
+    "vat_rate_food_books": 10,
+    "vat_rate_essentials": 1,
+    "accommodation_tax": "A separate Konaklama Vergisi (accommodation tax) of 2% applies on hotel/pension stays, charged on the pre-VAT room rate and shown as a separate line on your invoice.",
+    "tourist_vat_refund": "Non-resident visitors can reclaim KDV on goods (not services, not hotel stays, not meals) bought from Tax Free-affiliated shops, with a single-invoice minimum of around ₺5,000 (verify current threshold before publication — the lira amount is updated periodically). Ask for a 'Tax Free' or 'Global Blue / Planet' form at checkout, then validate it at customs before checking in your bags. At Istanbul Airport (IST) the Global Blue and Planet refund kiosks are airside in the international departures hall, near the duty-free zone after passport control; refunds are paid in cash (TRY/EUR/USD) or back to your card. Sabiha Gökçen (SAW) and Antalya (AYT) have similar kiosks in the international terminal."
+  },
+
+  "time_and_date": {
+    "timezone": "TRT (UTC+3, no daylight saving)",
+    "first_day_of_week": "Monday",
+    "date_format_local": "31.12.2026",
+    "time_format_local": "24-hour (e.g. 14:30 for 2:30 PM)",
+    "date_format_recommendation_for_site": "Keep ISO-style YYYY-MM-DD or 'December 31, 2026' for the international audience; use Turkish 31.12.2026 only when quoting locals or showing local opening hours. Show times in 24-hour format when listing transit, prayer times, or museum hours — that is what visitors will read on local signage."
+  },
+
+  "religious_calendar_notes": {
+    "ramadan_2026": "Approximately February 17 to March 19, 2026 (verify before publication — Islamic months are lunar and Turkey's Diyanet announces official dates closer to the time). During Ramadan, restaurants stay open but many locals fast until sunset; iftar (the breaking-of-fast meal) is a highlight worth booking ahead in conservative neighborhoods like Üsküdar and Eyüp.",
+    "ramazan_bayrami_2026": "Approximately March 20-22, 2026 (Eid al-Fitr / Şeker Bayramı; verify before publication). 3-day public holiday — banks and many shops close, intercity transit is heavily booked.",
+    "kurban_bayrami_2026": "Approximately May 26-29, 2026 (Eid al-Adha; verify before publication). 4-day public holiday, the biggest travel weekend of the year — domestic flights and ferries sell out 4-6 weeks ahead.",
+    "republic_day": "October 29 (annual; Cumhuriyet Bayramı, fixed)",
+    "victory_day": "August 30 (annual; Zafer Bayramı, fixed)",
+    "national_sovereignty_day": "April 23 (annual; Ulusal Egemenlik ve Çocuk Bayramı, fixed)",
+    "labour_day": "May 1 (annual; Emek ve Dayanışma Günü, fixed — some Taksim-area transit is restricted)",
+    "ataturk_commemoration": "November 10 (annual; at 9:05 a.m. sirens sound nationwide and traffic, restaurants, and offices observe a one-minute silence — interesting fact for visitors, and a moment to stand still on the street rather than walking through it)",
+    "democracy_and_freedoms_day": "July 15 (annual; commemorates the 2016 coup attempt, fixed)"
+  },
+
+  "naming_conventions": {
+    "first_name_then_last": true,
+    "honorifics": [
+      { "tr": "Bey", "en": "Mr.", "usage": "Used after the first name in semi-formal address: 'Ahmet Bey'. Never used with the surname alone." },
+      { "tr": "Hanım", "en": "Ms./Mrs.", "usage": "Used after the first name: 'Ayşe Hanım'. Marital status is not encoded — same form for married and unmarried women." },
+      { "tr": "Abi / Abla", "en": "Older brother / older sister", "usage": "Informal but warm; used for a slightly older shopkeeper, taxi driver, or waiter you have a friendly rapport with. 'Abi, hesap lütfen.'" },
+      { "tr": "Hocam", "en": "My teacher / sir", "usage": "Originally for teachers and clergy; now a respectful catch-all for any professional — doctor, lawyer, hotel manager. Safer than guessing Bey/Hanım." },
+      { "tr": "Efendim", "en": "Sir/Ma'am, or 'pardon?'", "usage": "Multifunctional: as a polite address ('Buyrun efendim'), as 'yes?' when answering the phone, and as 'sorry, what?' when you didn't catch something." },
+      { "tr": "Sayın", "en": "Esteemed / Dear", "usage": "Formal written address for letters and emails: 'Sayın Ahmet Yılmaz'. Goes before the full name, not after." }
+    ],
+    "explanation": "Turks use first name + honorific in semi-formal address — 'Ahmet Bey', 'Ayşe Hanım' — rather than 'Mr. Yılmaz'. Surnames are a relatively recent layer: the 1934 Surname Law under Atatürk required every family to adopt one, so the cultural memory still defaults to first-name address. In hotels, expect to be addressed by first name + Bey/Hanım even in formal settings, and in shops or taxis Abi/Abla works fine."
+  },
+
+  "useful_visitor_phrases": [
+    { "tr": "Merhaba.",              "en": "Hello.",                          "phonetic": "MEHR-hah-bah" },
+    { "tr": "Teşekkür ederim.",      "en": "Thank you.",                      "phonetic": "teh-shek-KEWR eh-deh-reem" },
+    { "tr": "Lütfen.",               "en": "Please.",                         "phonetic": "LOOT-fen" },
+    { "tr": "Hesap, lütfen.",        "en": "The bill, please.",               "phonetic": "HESS-ahp LOOT-fen" },
+    { "tr": "Bir çay, lütfen.",      "en": "One tea, please.",                "phonetic": "beer CHAH-ee LOOT-fen" },
+    { "tr": "Ne kadar?",             "en": "How much?",                       "phonetic": "NEH kah-DAR" },
+    { "tr": "Anlamıyorum.",          "en": "I don't understand.",             "phonetic": "AHN-lah-mih-yor-oom" },
+    { "tr": "İngilizce biliyor musunuz?", "en": "Do you speak English?",      "phonetic": "een-gee-LEEZ-jeh bee-lee-YOR moo-soo-nooz" },
+    { "tr": "Tuvalet nerede?",       "en": "Where is the toilet?",            "phonetic": "TOO-vah-let NEH-reh-deh" },
+    { "tr": "Affedersiniz.",         "en": "Excuse me / I'm sorry.",          "phonetic": "ahf-feh-DEHR-see-neez" },
+    { "tr": "Buyrun.",               "en": "Here you go / Please, go ahead.", "phonetic": "BOO-yroon" },
+    { "tr": "Çok güzel.",            "en": "Very nice / very good.",          "phonetic": "CHOHK gew-ZEL" },
+    { "tr": "Yardım edebilir misiniz?", "en": "Can you help me?",             "phonetic": "yar-DUM eh-deh-bee-LEER mee-see-neez" },
+    { "tr": "Kart kabul ediyor musunuz?", "en": "Do you accept cards?",       "phonetic": "kart kah-BOOL eh-dee-yor moo-soo-nooz" }
+  ],
+
+  "common_misunderstandings": [
+    { "issue": "Turkish coffee with sugar", "explain": "Order 'orta' (medium-sweet) by default. 'Sade' = no sugar; 'az şekerli' = lightly sweet; 'çok şekerli' = very sweet. Sugar must be ordered with the coffee — it's brewed in, so you can't add it after." },
+    { "issue": "Restaurant 'servis dahil' line", "explain": "Servis dahil = service included; you don't tip on top, though rounding up the bill is friendly. Servis hariç / dahil değil = service not included; tip 10% in cash, since card terminals don't usually take a tip line." },
+    { "issue": "Mosque entry timing", "explain": "Open to non-Muslim visitors except during the 5 daily prayer windows (each ~30 minutes around the call to prayer). Listen for the ezan (azan) — that's your cue to wait outside. Friday midday prayer is the longest closure." },
+    { "issue": "Çay vs. Türk kahvesi", "explain": "When a Turk says 'let's get a coffee,' they often mean black tea (çay) served in a tulip-shaped glass. Türk kahvesi (Turkish coffee) is a separate ritual drink, served in a small cup with grounds at the bottom — don't drink the last sip." },
+    { "issue": "Yes / no head gestures", "explain": "A short upward chin-tilt with raised eyebrows means 'no' — easy to misread as a nod. A side-to-side head shake means 'I don't understand,' not 'no.' When in doubt, say 'evet' (yes) or 'hayır' (no) out loud." },
+    { "issue": "Taxi rides and the meter", "explain": "Insist the driver runs the taximeter ('taksimetre'). Day rate is 'gündüz', night rate (after midnight) is 'gece'. For airport transfers, BiTaksi or Uber-via-BiTaksi gives a fixed-quote alternative. Round up the fare; no obligatory tip." },
+    { "issue": "Bargaining etiquette", "explain": "Bargaining is expected at the Grand Bazaar, Spice Bazaar, and tourist carpet shops, but NOT in supermarkets, pharmacies, sit-down restaurants, hotels with posted rates, or chain stores. Start at roughly 50-60% of the asking price and meet in the middle, with a smile." },
+    { "issue": "Shoes inside homes and some pensions", "explain": "Always remove shoes when entering a Turkish home or a small family-run pension; slippers (terlik) are usually offered. Mosques require shoes off too — bring socks and carry a plastic bag if you don't want to leave them at the entrance." },
+    { "issue": "Public displays and conservative districts", "explain": "İstanbul, İzmir, and beach resorts are casually dressed and tolerant. In Fatih, Eyüp, Konya, Şanlıurfa, and most of inland Anatolia, dress more modestly — covered shoulders and knees — and skip PDA. Always carry a scarf for mosque visits regardless of city." }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "_voice_note": "Use Turkish naturally, the way a Turkish-fluent travel writer would — not the way a translation widget would. Always pair Turkish with an English gloss on first use per page. Skip the Turkish entirely when English serves the reader better. Never use Turkish to add 'exotic' flavor; use it where it carries a meaning English doesn't. Reader is a non-Turkish-speaking traveler, not a Turkish learner.",
+  "_house_rules": [
+    "Italicise Turkish words on first appearance per page; drop the italics on later mentions.",
+    "First mention: 'kahvaltı (Turkish breakfast)'. Later mentions: just 'kahvaltı' or just 'breakfast', whichever flows.",
+    "If a sentence works in plain English, use plain English. Restraint is the voice.",
+    "Never stack two Turkish words in the same sentence unless the contrast is the point.",
+    "Diacritics matter: ç, ğ, ı, İ, ö, ş, ü. Get them right or don't use the word."
+  ],
+
+  "welcome_phrases": [
+    { "tr": "Hoş geldiniz.", "en": "Welcome.", "context": "Standard formal greeting. Appropriate at the homepage hero, or the top of a city landing page. Pronounced 'hosh geldiniz'." },
+    { "tr": "Buyurun.", "en": "Please, come in / Help yourself / After you.", "context": "More intimate and host-like. Good for a newsletter modal, a 'see all hotels' CTA, or the opening of an experiences hub. Carries a small 'we've made room for you' warmth." },
+    { "tr": "Hoş bulduk.", "en": "We're glad to be here. (the standard reply to Hoş geldiniz)", "context": "Use as a knowing wink in an About page or a founder note — the writer answering the reader's implicit greeting." },
+    { "tr": "Merhaba.", "en": "Hello.", "context": "Plain, neutral, no fuss. Use when 'Hoş geldiniz' would feel ceremonious — newsletter subject lines, contact-page intros, comment replies." },
+    { "tr": "Buyur, otur.", "en": "Come, sit.", "context": "Borderline-folksy. Save for long-form journal posts where the writer explicitly invites the reader into a meyhane or a kahvaltı table." }
+  ],
+
+  "farewell_phrases": [
+    { "tr": "İyi yolculuklar.", "en": "Have a good journey.", "context": "Footer line, the close of a multi-day itinerary, or after a booking link. The standard send-off." },
+    { "tr": "Görüşürüz.", "en": "See you / Until next time.", "context": "Casual, a little warmer than 'goodbye'. Email sign-off, end of a journal post, or the 'thanks for reading' bar." },
+    { "tr": "Yolun açık olsun.", "en": "May your road be open.", "context": "More poetic — for a long-route content piece (a Black Sea drive, the Lycian Way), not a hotel listing." },
+    { "tr": "Kendinize iyi bakın.", "en": "Take care of yourself.", "context": "Used at the end of a safety / health / 'navigating Turkey solo' guide. Carries genuine concern, not platitude." }
+  ],
+
+  "blessings_for_food": [
+    { "tr": "Afiyet olsun.", "en": "Enjoy your meal / bon appétit.", "context": "Said before AND after eating — the everyday food blessing. Use at the top of restaurant articles, food guides, kahvaltı pieces." },
+    { "tr": "Eline sağlık.", "en": "Health to your hand. (said to the cook)", "context": "Said to the person who cooked, not the diner. Perfect for a profile of a chef, a lokanta owner, or a yayla guesthouse host." },
+    { "tr": "Ağzına sağlık.", "en": "Health to your mouth. (said to someone who has spoken or eaten well)", "context": "Said to a singer, storyteller, or someone who just made a memorable toast. Use sparingly — niche and specific." },
+    { "tr": "Ziyade olsun.", "en": "May there be more / abundance.", "context": "The traditional reply when someone says afiyet olsun to you after the meal. A nice closer for a hospitality-themed piece." }
+  ],
+
+  "thanks_phrases": [
+    { "tr": "Teşekkür ederim.", "en": "Thank you.", "context": "Formal, complete. Use when a writer signs off a guide they took real time on." },
+    { "tr": "Teşekkürler.", "en": "Thanks.", "context": "Casual. Email replies, comment threads, brief notes." },
+    { "tr": "Sağ ol.", "en": "Be well / Cheers / Thanks. (informal)", "context": "Warm, lived-in. The thank-you you'd say to a friend. Good in a writer's note inside a journal post." },
+    { "tr": "Eyvallah.", "en": "Thanks / Got it / Right on. (informal, slightly masculine register)", "context": "Use only where the voice is already conversational. Often spoken between men over çay. Niche, but lands when right." }
+  ],
+
+  "hospitality_phrases": [
+    { "tr": "Misafir kısmettir.", "en": "A guest brings their fortune with them. (proverb)", "context": "About-page line, or the opening of a homestay / boutique-hotel feature. The single best line for explaining why Turkish hospitality is different." },
+    { "tr": "Misafirperverlik bizim kültürümüzdür.", "en": "Hospitality is our culture.", "context": "Experiences hub framing, About page intro. Plain-spoken, not hokey." },
+    { "tr": "Evimiz evinizdir.", "en": "Our house is your house.", "context": "Use at a homestay, pansiyon, or family-run hotel context. Avoid on a chain hotel page — it'd ring false." },
+    { "tr": "Bir kahvenin kırk yıl hatırı vardır.", "en": "A coffee creates a debt of forty years. (proverb)", "context": "Coffee culture pieces, friendship and connection content. Means: the smallest hospitality leaves the longest memory." }
+  ],
+
+  "evergreen_turkish_words": [
+    { "tr": "kahvaltı", "en": "Turkish breakfast — a meal, a ritual, the reason locals get up early on weekends. Literally 'before coffee'.", "category": "food" },
+    { "tr": "çay", "en": "tea — drunk all day in tulip glasses, the social glue of every interaction.", "category": "food" },
+    { "tr": "meyhane", "en": "tavern — long meze meals with rakı, fish, slow conversation, sometimes live fasıl music.", "category": "place" },
+    { "tr": "lokanta", "en": "neighborhood canteen — point at the steam table, sit down, eat well for under €8.", "category": "place" },
+    { "tr": "kahvehane", "en": "traditional men's coffeehouse — backgammon, Turkish coffee, low TV news, mostly older regulars.", "category": "place" },
+    { "tr": "hamam", "en": "Ottoman public bath — the 90-minute ritual no Western spa replicates.", "category": "ritual" },
+    { "tr": "mahalle", "en": "neighborhood — the unit of identity in Turkish urban life. Where you live more than what city you live in.", "category": "place" },
+    { "tr": "muhabbet", "en": "warm, drawn-out conversation — the actual point of every Turkish meal.", "category": "social" },
+    { "tr": "lokum", "en": "Turkish delight — when it's good, you'll understand why it has its own ceremony.", "category": "food" },
+    { "tr": "imece", "en": "communal effort — neighbors helping each other harvest, build, move. Still alive in villages.", "category": "social" },
+    { "tr": "yayla", "en": "high-altitude alpine meadow — where Black Sea families spend July and August.", "category": "place" },
+    { "tr": "meze", "en": "small plates — the structural backbone of any meyhane meal. Cold first, hot second, fish last.", "category": "food" },
+    { "tr": "rakı", "en": "anise spirit, drunk slow over ice and water — the national drink, paired with fish and meze.", "category": "food" },
+    { "tr": "simit", "en": "sesame-crusted bread ring — sold from red carts on every corner, breakfast on the move.", "category": "food" },
+    { "tr": "bal-kaymak", "en": "honey and clotted cream — eaten together at breakfast, the heart of the kahvaltı table.", "category": "food" },
+    { "tr": "pazar", "en": "weekly open-air market — Tuesday in Kadıköy, Friday in Beşiktaş, Sunday in Bomonti.", "category": "place" },
+    { "tr": "han", "en": "old caravanserai — now usually a courtyard of small shops or workshops. Several still active inside the Grand Bazaar.", "category": "place" },
+    { "tr": "ezan", "en": "the call to prayer — five times a day, overlapping across mosques, a sound that orients the city by ear.", "category": "ritual" },
+    { "tr": "iftar", "en": "the Ramadan sundown meal — when restaurants in conservative neighborhoods fill at the same minute every evening.", "category": "ritual" },
+    { "tr": "köfte", "en": "spiced meatballs — every region has its own version; Tekirdağ, Sultanahmet, and Akçaabat are the famous ones.", "category": "food" },
+    { "tr": "boza", "en": "fermented millet drink, served thick with cinnamon and roasted chickpeas — Vefa Bozacısı in Istanbul has poured it since 1876.", "category": "food" },
+    { "tr": "dolmuş", "en": "shared minibus — a fixed route, a flexible schedule, leaves when full. Cheap, local, occasionally chaotic.", "category": "transport" },
+    { "tr": "vapur", "en": "Bosphorus commuter ferry — the cheapest sightseeing boat in Istanbul, used by everyone.", "category": "transport" }
+  ],
+
+  "page_specific_taglines": {
+    "homepage_hero_options": [
+      "Hoş geldiniz. The fastest way to decide where to stay in Turkey.",
+      "Where should you actually stay in Turkey? Hoş geldiniz — let's pick.",
+      "22 cities. 5 regions. One decision engine. Hoş geldiniz.",
+      "Buyurun — the neighborhood-level guide we wish we'd had on our first trip.",
+      "Real neighborhoods, real hotels, real opinions. Hoş geldiniz."
+    ],
+    "experiences_hub_intro_options": [
+      "Turkish culture isn't a museum you visit. It's a series of small rituals — çay at 3 pm, kahvaltı that runs until noon, the muhabbet that turns dinner into a four-hour event. These six pages are how to step into that rhythm.",
+      "The country runs on tea, breakfast, and conversation. We wrote one long guide for each. Buyurun.",
+      "Six rituals. Six guides. Read one before you fly, save one for when you land.",
+      "Çay, kahvaltı, hamam, sema, the bazaar, the meyhane. The deep cultural reads, written by people who actually live here.",
+      "Skip the orientalist version of Turkey. These six pieces are the real thing."
+    ],
+    "city_page_intro_options": [
+      "Each mahalle is a different city. Here's which one is yours.",
+      "Where to stay isn't 'which hotel'. It's which mahalle. Start here.",
+      "The neighborhood matters more than the hotel. We rank both — mahalle first.",
+      "Choose your mahalle, then your room. The city makes more sense that way.",
+      "Hoş geldiniz. Pick a mahalle below — each one is a different trip."
+    ],
+    "food_section_intro_options": [
+      "Afiyet olsun — the standard mealtime blessing. We meant it.",
+      "Eat where the locals eat. The lokanta beats the hotel restaurant nine times out of ten.",
+      "From kahvaltı to the last rakı at a meyhane: the day, structured by what's on the table.",
+      "Turkish food, written without superlatives. What it is, where to find it, what to skip.",
+      "Afiyet olsun. Twenty dishes worth flying for, and the cities to eat them in."
+    ],
+    "experiences_landing_intro_options": [
+      "Six rituals that explain Turkey better than any monument.",
+      "The daily texture of life here — çay, kahvaltı, hamam, the bazaar, sema, the long table.",
+      "Buyurun. The cultural deep-dives we wrote because the surface-level guides annoyed us.",
+      "Less 'top 10 things to do', more 'how the country actually works'.",
+      "Slow Turkey. The meals, baths, and rituals that take longer than you'd think — and are worth every minute."
+    ],
+    "footer_signoff_options": [
+      "İyi yolculuklar — have a good journey.",
+      "Made by travelers in Turkey. Hoş geldiniz.",
+      "Görüşürüz — see you on the ferry.",
+      "Yolun açık olsun.",
+      "Written from Istanbul, Izmir, and a yayla we're not telling you about."
+    ],
+    "newsletter_modal_options": [
+      "Buyurun — one short email a month, no fluff. New guides, neighborhood updates, the things we'd tell a friend.",
+      "Hoş geldiniz. Get the next guide before it's public.",
+      "Sit, have a çay, sign up. One email a month.",
+      "We send one email a month. Buyurun.",
+      "Misafirperverlik bizim kültürümüzdür. Hospitality is our culture — and our newsletter is part of how we keep it going."
+    ],
+    "404_page_options": [
+      "This page packed up and moved mahalle. Try the homepage.",
+      "Yok — nothing here. The homepage has everything we've written.",
+      "404. Even Istanbul's cab drivers get lost sometimes.",
+      "Page not found. Buyurun, here's the way back.",
+      "Sayfa bulunamadı — page not found. Try the search."
+    ]
+  },
+
+  "blessings_situations": [
+    { "tr": "Geçmiş olsun.", "en": "May it pass / Get well soon.", "context": "When mentioning illness, jet lag, food regret, or the morning after rakı. Also said after any minor mishap — a missed flight, a stolen wallet." },
+    { "tr": "Kolay gelsin.", "en": "May it come easy. (said to anyone working)", "context": "Said to a taxi driver, waiter, shopkeeper, the man fixing your shoe. Useful in 'how to navigate' guides as a politeness primer." },
+    { "tr": "Eline sağlık.", "en": "Health to your hands. (to the cook)", "context": "Said to whoever made the meal. Perfect for restaurant articles, kahvaltı pieces, profiles of food makers." },
+    { "tr": "Sağlığına.", "en": "To your health. (toast)", "context": "The standard rakı or wine toast. Use at the open of a meyhane piece." },
+    { "tr": "Hayırlı olsun.", "en": "May it be auspicious / good luck with it.", "context": "Said when someone starts something new — a business, a trip, a move. Good for an opening-soon hotel listing or a relocation guide." },
+    { "tr": "Allah kavuştursun.", "en": "May God reunite you. (to someone separated from family)", "context": "Niche but specific — for a long-haul travel piece about going home, or a Ramadan story. Carries weight; don't sprinkle." }
+  ],
+
+  "proverbs_atasozleri": [
+    { "tr": "Bir çay verir, bin dost kazanır.", "en": "One tea given, a thousand friends earned.", "context": "Çay culture article, hospitality piece, About page." },
+    { "tr": "Komşu komşunun külüne muhtaçtır.", "en": "A neighbor needs his neighbor's ash.", "context": "Mahalle / neighborhood content. About interdependence and the social fabric of Turkish urban life." },
+    { "tr": "Misafir kısmettir.", "en": "A guest brings their fortune with them.", "context": "Hospitality / homestay content. The single best line for explaining the cultural attitude toward visitors." },
+    { "tr": "Damlaya damlaya göl olur.", "en": "Drop by drop, a lake is made.", "context": "Slow-travel pieces, multi-day itineraries, language-learning posts. Patience as method." },
+    { "tr": "Aç tavuk kendini buğday ambarında sanır.", "en": "A hungry chicken dreams it's in a wheat silo.", "context": "Food-fantasy pieces, the 'planning your trip' phase. A wink at over-ambitious itineraries." },
+    { "tr": "Ayağını yorganına göre uzat.", "en": "Stretch your foot according to your blanket.", "context": "Budget guides, cost-of-a-week pieces. A culturally honest way to say 'spend within your means'." },
+    { "tr": "Sabreden derviş muradına ermiş.", "en": "The patient dervish reaches his goal.", "context": "Sema / Konya piece, slow-travel content, Cappadocia hot-air balloon weather-delay context." },
+    { "tr": "Ev alma, komşu al.", "en": "Don't buy the house, buy the neighbor.", "context": "Mahalle deep-dives, choosing-where-to-stay framing. Where you stay matters less than who you stay among." }
+  ],
+
+  "anchor_swaps": {
+    "_note": "Where the site currently uses generic English CTAs and labels, here are Turkish-flavored swaps. Turkish second, with a middle dot. Keep English first so the click intent is unambiguous.",
+    "Check availability": "Check availability · Müsaitliği gör",
+    "Take the quiz": "Take the quiz · Karar ver",
+    "All cities": "All 22 cities · 22 şehir",
+    "Read the guide": "Read the guide · Rehberi oku",
+    "See all hotels": "See all hotels · Tüm oteller",
+    "Subscribe": "Subscribe · Buyurun, abone ol",
+    "Find my neighborhood": "Find my mahalle · Mahallemi bul",
+    "Plan my week": "Plan my week · Haftamı planla",
+    "Get directions": "Get directions · Yol tarifi",
+    "Book now": "Book now · Şimdi rezerve et",
+    "Compare prices": "Compare prices · Fiyatları karşılaştır",
+    "Read more": "Read more · Devamı",
+    "Back to top": "Back to top · Başa dön",
+    "Share": "Share · Paylaş",
+    "Save for later": "Save for later · Daha sonra için kaydet"
+  },
+
+  "ui_microcopy": {
+    "loading_states": [
+      { "tr": "Bir saniye…", "en": "One second…", "context": "Loading spinner, search-in-progress." },
+      { "tr": "Çay demleniyor…", "en": "Tea is brewing… (a play on 'loading')", "context": "Use for a slow load that has personality — quiz results page, recommendation engine. Don't overuse." }
+    ],
+    "empty_states": [
+      { "tr": "Burada henüz bir şey yok.", "en": "Nothing here yet.", "context": "Empty saved-list, empty search results." },
+      { "tr": "Henüz yorum yok — ilk siz olun.", "en": "No comments yet — be the first.", "context": "Comment thread bottom." }
+    ],
+    "form_labels": [
+      { "tr": "E-posta adresiniz", "en": "Your email address", "context": "Newsletter signup field — pair with English placeholder, never replace it." },
+      { "tr": "Adınız", "en": "Your name", "context": "Optional, only on a form where the warmth of being addressed by name matters." }
+    ],
+    "confirmation_messages": [
+      { "tr": "Hoş geldiniz! Aramızdasınız.", "en": "Welcome! You're with us now.", "context": "Newsletter signup confirmation — warmer than 'You're subscribed.'" },
+      { "tr": "Teşekkürler — mesajınız bize ulaştı.", "en": "Thank you — your message reached us.", "context": "Contact form success state." }
+    ]
+  },
+
+  "context_notes_for_writers": {
+    "when_to_skip_turkish": [
+      "Booking flows, price labels, error messages — clarity beats flavor.",
+      "Anywhere a misread word could cost the reader money or time.",
+      "Headlines longer than ten words — the Turkish word should not crowd the meaning.",
+      "Any sentence where the English already does the work."
+    ],
+    "when_turkish_earns_its_place": [
+      "When the word names a thing English doesn't have a word for — meyhane, kahvaltı, mahalle, muhabbet, imece, yayla.",
+      "When the writer wants to signal 'I actually live here' to a reader who can tell the difference.",
+      "When the cultural ritual matters more than the literal translation — sema, hamam, çay.",
+      "When a proverb does in eight words what would take a paragraph in English."
+    ],
+    "diacritics_quick_reference": {
+      "ç": "ch as in 'church' — çay = chai",
+      "ğ": "silent — lengthens the preceding vowel. yağmur sounds like 'yaamur'",
+      "ı": "the dotless i — closer to the 'a' in 'about'. kahvaltı ends 'tuh'.",
+      "İ": "the dotted capital I — same sound as English 'i' in 'machine'",
+      "ö": "like German ö — köfte",
+      "ş": "sh — şarap = sharap (wine)",
+      "ü": "like German ü — Üsküdar"
+    }
+  }
+}
