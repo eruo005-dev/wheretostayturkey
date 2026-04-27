@@ -1,0 +1,167 @@
+{
+  "_note": "Hotel additions for thin-coverage cities. Schema matches existing cities.json / cities-extras-*.json hotel objects exactly: area, tier (luxury|mid|budget), priceFrom, bestFor (array), whyStay. All hotels verified to exist on Booking.com as of April 2026.",
+  "additions": {
+    "mersin": [
+      {
+        "name": "Sahil Martı Hotel",
+        "area": "mezitli",
+        "tier": "mid",
+        "priceFrom": 95,
+        "bestFor": ["families", "beach"],
+        "whyStay": "Beachfront 4-star in Mezitli with private sand area, Turkish bath and sea-view rooms — the easiest swim-out-of-bed option in Mersin."
+      },
+      {
+        "name": "Rain Hotel Mersin",
+        "area": "yenisehir",
+        "tier": "budget",
+        "priceFrom": 60,
+        "bestFor": ["budget", "solo"],
+        "whyStay": "Clean modern budget hotel in central Yenişehir, walkable to the seafront promenade — strong reviews for the price."
+      }
+    ],
+    "rize": [
+      {
+        "name": "Ayder Villa de Pelit Hotel",
+        "area": "ayder",
+        "tier": "mid",
+        "priceFrom": 130,
+        "bestFor": ["couples", "nature"],
+        "whyStay": "Highest-rated boutique lodge on the plateau (9.1 on Booking) — wooden chalet rooms, rooftop terrace, locally-loved breakfast."
+      },
+      {
+        "name": "Ayder Koru Hotel",
+        "area": "ayder",
+        "tier": "mid",
+        "priceFrom": 115,
+        "bestFor": ["families", "value"],
+        "whyStay": "Long-running plateau hotel surrounded by forest with a proper restaurant and 24-hour front desk — reliable when others are booked."
+      },
+      {
+        "name": "Ayder Palazzo Resort",
+        "area": "ayder",
+        "tier": "mid",
+        "priceFrom": 140,
+        "bestFor": ["couples", "design"],
+        "whyStay": "4-star with the most modern rooms in Ayder — mountain-view balconies, garden terrace, the polished option in a rustic plateau."
+      },
+      {
+        "name": "Çathan Art Hotel",
+        "area": "camlihemsin",
+        "tier": "budget",
+        "priceFrom": 70,
+        "bestFor": ["budget", "nature"],
+        "whyStay": "Riverside budget pick in Çamlıhemşin near Zilkale — basic but characterful, good base for the Fırtına Valley without Ayder prices."
+      }
+    ],
+    "ankara": [
+      {
+        "name": "Sheraton Ankara Hotel & Convention Center",
+        "area": "cankaya",
+        "tier": "luxury",
+        "priceFrom": 220,
+        "bestFor": ["business", "luxury"],
+        "whyStay": "Cylindrical Çankaya landmark with 9.3 location score — indoor pool, jazz bar, walking distance to Tunalı Hilmi."
+      },
+      {
+        "name": "Wyndham Ankara",
+        "area": "cankaya",
+        "tier": "luxury",
+        "priceFrom": 180,
+        "bestFor": ["business", "first-timers"],
+        "whyStay": "Modern 5-star in Söğütözü business district, indoor pool and Turkish bath, 10 minutes from Anıtkabir."
+      },
+      {
+        "name": "Crowne Plaza Ankara by IHG",
+        "area": "cankaya",
+        "tier": "luxury",
+        "priceFrom": 200,
+        "bestFor": ["business", "first-timers"],
+        "whyStay": "Reliable IHG 5-star with the city's largest meeting facilities — go-to for conferences and government delegations."
+      },
+      {
+        "name": "Latanya Hotel Ankara",
+        "area": "cankaya",
+        "tier": "mid",
+        "priceFrom": 120,
+        "bestFor": ["business", "couples"],
+        "whyStay": "Long-established Çankaya hotel on Gazi Mustafa Kemal Bulvarı — walkable to ministries, Kızılay and the embassy district."
+      },
+      {
+        "name": "Days Hotel by Wyndham Ankara Çankaya",
+        "area": "cankaya",
+        "tier": "budget",
+        "priceFrom": 75,
+        "bestFor": ["budget", "business"],
+        "whyStay": "Solid mid-tier brand in upper Çankaya near Segmenler Park — free parking, restaurant, much cheaper than the diplomatic-row 5-stars."
+      }
+    ],
+    "konya": [
+      {
+        "name": "Hich Hotel Konya",
+        "area": "konya-center",
+        "tier": "mid",
+        "priceFrom": 130,
+        "bestFor": ["couples", "design"],
+        "whyStay": "5-minute walk to the Mevlana Museum, restored stone-and-wood interiors, 9.1 on Booking — the boutique pick for the pilgrimage."
+      },
+      {
+        "name": "Bera Mevlana Hotel - Special Category",
+        "area": "konya-center",
+        "tier": "mid",
+        "priceFrom": 95,
+        "bestFor": ["first-timers", "value"],
+        "whyStay": "Sits next to the Mevlana Cultural Center where the Saturday sema happens — can't get closer for the dervish ceremony."
+      },
+      {
+        "name": "Rumi Hotel",
+        "area": "konya-center",
+        "tier": "budget",
+        "priceFrom": 65,
+        "bestFor": ["budget", "first-timers"],
+        "whyStay": "6-minute walk to Rumi's tomb, rooftop terrace, free parking — the best-value central option for a one-night Konya stop."
+      },
+      {
+        "name": "Konya Dervish Hotel",
+        "area": "konya-center",
+        "tier": "budget",
+        "priceFrom": 70,
+        "bestFor": ["solo", "couples"],
+        "whyStay": "Small family-run boutique near the museum — owner personally arranges sema tickets and city guides."
+      }
+    ],
+    "mardin": [
+      {
+        "name": "Mardius Tarihi Konak",
+        "area": "mardin-old-town",
+        "tier": "luxury",
+        "priceFrom": 200,
+        "bestFor": ["couples", "design"],
+        "whyStay": "700-year-old stone konak with a hammam and panoramic terrace — the most atmospheric splurge in the old city."
+      },
+      {
+        "name": "Artuklu Kervansarayi - Special Class",
+        "area": "mardin-old-town",
+        "tier": "mid",
+        "priceFrom": 120,
+        "bestFor": ["first-timers", "history"],
+        "whyStay": "58 rooms inside a restored historical caravanserai in central Eski Mardin — bigger and easier on luggage than the steeper konaks."
+      },
+      {
+        "name": "Gazi Konagi Butik Hotel",
+        "area": "mardin-old-town",
+        "tier": "mid",
+        "priceFrom": 100,
+        "bestFor": ["couples", "value"],
+        "whyStay": "Stone-mansion boutique with a terrace looking straight onto Mardin Castle and the Mesopotamian plain — strong breakfast."
+      },
+      {
+        "name": "Stone Boutique Hotel",
+        "area": "mardin-old-town",
+        "tier": "budget",
+        "priceFrom": 75,
+        "bestFor": ["budget", "couples"],
+        "whyStay": "500-year-old Ottoman-period building turned simple boutique — the cheapest way to actually sleep inside the UNESCO old town."
+      }
+    ]
+  }
+}

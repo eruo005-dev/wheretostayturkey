@@ -98,6 +98,50 @@
             "value"
           ],
           "whyStay": "Restored 19th-century mansion in the historic core, friendly family-run service."
+        },
+        {
+          "name": "Mardius Tarihi Konak",
+          "area": "mardin-old-town",
+          "tier": "luxury",
+          "priceFrom": 200,
+          "bestFor": [
+            "couples",
+            "design"
+          ],
+          "whyStay": "700-year-old stone konak with a hammam and panoramic terrace — the most atmospheric splurge in the old city."
+        },
+        {
+          "name": "Artuklu Kervansarayi - Special Class",
+          "area": "mardin-old-town",
+          "tier": "mid",
+          "priceFrom": 120,
+          "bestFor": [
+            "first-timers",
+            "history"
+          ],
+          "whyStay": "58 rooms inside a restored historical caravanserai in central Eski Mardin — bigger and easier on luggage than the steeper konaks."
+        },
+        {
+          "name": "Gazi Konagi Butik Hotel",
+          "area": "mardin-old-town",
+          "tier": "mid",
+          "priceFrom": 100,
+          "bestFor": [
+            "couples",
+            "value"
+          ],
+          "whyStay": "Stone-mansion boutique with a terrace looking straight onto Mardin Castle and the Mesopotamian plain — strong breakfast."
+        },
+        {
+          "name": "Stone Boutique Hotel",
+          "area": "mardin-old-town",
+          "tier": "budget",
+          "priceFrom": 75,
+          "bestFor": [
+            "budget",
+            "couples"
+          ],
+          "whyStay": "500-year-old Ottoman-period building turned simple boutique — the cheapest way to actually sleep inside the UNESCO old town."
         }
       ],
       "faqs": [
@@ -187,6 +231,50 @@
             "value"
           ],
           "whyStay": "Long-running reliable Dedeman with good breakfast and conference-friendly rooms."
+        },
+        {
+          "name": "Hich Hotel Konya",
+          "area": "konya-center",
+          "tier": "mid",
+          "priceFrom": 130,
+          "bestFor": [
+            "couples",
+            "design"
+          ],
+          "whyStay": "5-minute walk to the Mevlana Museum, restored stone-and-wood interiors, 9.1 on Booking — the boutique pick for the pilgrimage."
+        },
+        {
+          "name": "Bera Mevlana Hotel - Special Category",
+          "area": "konya-center",
+          "tier": "mid",
+          "priceFrom": 95,
+          "bestFor": [
+            "first-timers",
+            "value"
+          ],
+          "whyStay": "Sits next to the Mevlana Cultural Center where the Saturday sema happens — can't get closer for the dervish ceremony."
+        },
+        {
+          "name": "Rumi Hotel",
+          "area": "konya-center",
+          "tier": "budget",
+          "priceFrom": 65,
+          "bestFor": [
+            "budget",
+            "first-timers"
+          ],
+          "whyStay": "6-minute walk to Rumi's tomb, rooftop terrace, free parking — the best-value central option for a one-night Konya stop."
+        },
+        {
+          "name": "Konya Dervish Hotel",
+          "area": "konya-center",
+          "tier": "budget",
+          "priceFrom": 70,
+          "bestFor": [
+            "solo",
+            "couples"
+          ],
+          "whyStay": "Small family-run boutique near the museum — owner personally arranges sema tickets and city guides."
         }
       ],
       "faqs": [

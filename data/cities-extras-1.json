@@ -717,6 +717,28 @@
             "couples"
           ],
           "whyStay": "Simple sea-view hotel in Kızkalesi with direct castle views — incredible value for the area."
+        },
+        {
+          "name": "Sahil Martı Hotel",
+          "area": "mezitli",
+          "tier": "mid",
+          "priceFrom": 95,
+          "bestFor": [
+            "families",
+            "beach"
+          ],
+          "whyStay": "Beachfront 4-star in Mezitli with private sand area, Turkish bath and sea-view rooms — the easiest swim-out-of-bed option in Mersin."
+        },
+        {
+          "name": "Rain Hotel Mersin",
+          "area": "yenisehir",
+          "tier": "budget",
+          "priceFrom": 60,
+          "bestFor": [
+            "budget",
+            "solo"
+          ],
+          "whyStay": "Clean modern budget hotel in central Yenişehir, walkable to the seafront promenade — strong reviews for the price."
         }
       ],
       "faqs": [

@@ -1397,7 +1397,9 @@ function renderSitemap() {
     `${config.siteUrl}/money/`,
     `${config.siteUrl}/packing/`,
     `${config.siteUrl}/arrival-istanbul/`,
+    `${config.siteUrl}/experiences/`,
   ];
+  for (const _e of EXPERIENCES) urls.push(`${config.siteUrl}/experiences/${_e.slug}/`);
   for (const p of JOURNAL) urls.push(`${config.siteUrl}/journal/${p.slug}/`);
   for (const c of cities) {
     urls.push(`${config.siteUrl}/${c.slug}/`);
@@ -2522,6 +2524,98 @@ ${tail()}`;
   ])];
   const html = head({ title, description, canonical, jsonld }) + body;
   writeFile("arrival-istanbul/index.html", html);
+}
+
+// ---- Turkish Experiences hub + per-page rendering ----
+const EXPERIENCES = (() => {
+  try { return require("./data/experiences.json").experiences || []; }
+  catch (e) { return []; }
+})();
+
+function renderExperiencesHub() {
+  const canonical = `${config.siteUrl}/experiences/`;
+  const title = "Authentic Turkish experiences — beyond the tourist circuit";
+  const description = "Six cultural experiences that show you the real Turkey: çay culture, Turkish coffee, hammam ritual, whirling dervishes, the bazaar masterclass, and Anatolian breakfast.";
+  const cards = EXPERIENCES.map((e) => `
+    <a class="card" href="/experiences/${esc(e.slug)}/" style="text-decoration:none;color:inherit;padding:24px">
+      <div class="eyebrow">Experience</div>
+      <h3 style="margin:6px 0 8px">${esc(e.title)}</h3>
+      <p style="color:var(--c-text-soft);font-size:.95rem;margin:0 0 14px">${esc(e.subtitle || "")}</p>
+      <div style="color:var(--c-accent);font-weight:600;font-size:.95rem">Read →</div>
+    </a>
+  `).join("");
+
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Experiences</div>
+    <h1>The real Turkey, beyond the tourist circuit</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">Six cultural experiences that turn a generic Turkey trip into a Turkey trip worth remembering. Each one is what locals do — not what's sold at the airport souvenir kiosk.</p>
+  </div>
+</div>
+
+<section class="container">
+  <div class="grid grid-1 grid-2 grid-3 mt-3">
+    ${cards}
+  </div>
+</section>
+
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home", url: `${config.siteUrl}/` },
+      { name: "Experiences", url: canonical },
+    ]),
+  ];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("experiences/index.html", html);
+}
+
+function renderExperiencePost(p) {
+  const canonical = `${config.siteUrl}/experiences/${p.slug}/`;
+  const title = `${p.title} — ${config.siteName}`;
+  const description = p.subtitle || p.summary;
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="breadcrumb"><a href="/">Home</a> / <a href="/experiences/">Experiences</a> / ${esc(p.title)}</div>
+</div>
+<article class="container container-narrow">
+  <div class="page-head" style="border-bottom:none;padding-bottom:0">
+    <div class="eyebrow">Experience</div>
+    <h1>${esc(p.title)}</h1>
+    ${p.subtitle ? `<p class="journal-subtitle" style="font-size:1.3rem;color:var(--ink-muted);font-style:italic;margin-top:12px">${esc(p.subtitle)}</p>` : ""}
+    <div class="journal-meta" style="margin-top:24px"><span>${p.readMinutes || 7} min read</span></div>
+  </div>
+  <div class="prose mt-4">${p.bodyHtml || `<p>${esc(p.summary || "")}</p>`}</div>
+</article>
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home", url: `${config.siteUrl}/` },
+      { name: "Experiences", url: `${config.siteUrl}/experiences/` },
+      { name: p.title, url: canonical },
+    ]),
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: p.title,
+      description: description,
+      url: canonical,
+      author: { "@type": "Organization", name: config.siteName },
+      publisher: { "@type": "Organization", name: config.siteName, url: config.siteUrl },
+    },
+  ];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile(`experiences/${p.slug}/index.html`, html);
 }
 
 // ---- Per-city OG image (SVG) ----
@@ -3749,6 +3843,8 @@ function run() {
   renderMoneyGuide();
   renderPackingList();
   renderArrivalIstanbul();
+  renderExperiencesHub();
+  for (const _exp of EXPERIENCES) renderExperiencePost(_exp);
 
   for (const c of cities) {
     renderCity(c);
