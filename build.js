@@ -440,12 +440,29 @@ function footer() {
         <ul>${cityLinks}</ul>
       </div>
       <div>
+        <h4>Plan your trip</h4>
+        <ul>
+          <li><a href="/visa/">Turkey visa</a></li>
+          <li><a href="/flights/">Flights to Turkey</a></li>
+          <li><a href="/arrival-istanbul/">Arrival at Istanbul Airport</a></li>
+          <li><a href="/esim/">eSIM &amp; data</a></li>
+          <li><a href="/money/">Money &amp; tipping</a></li>
+          <li><a href="/insurance/">Travel insurance</a></li>
+          <li><a href="/packing/">What to pack</a></li>
+          <li><a href="/best-time-to-visit-turkey/">Best time to visit</a></li>
+          <li><a href="/how-many-nights-turkey/">How many nights</a></li>
+          <li><a href="/is-turkey-safe/">Is Turkey safe?</a></li>
+        </ul>
+      </div>
+      <div>
         <h4>Collections</h4>
         <ul>
           <li><a href="/istanbul/luxury/">Luxury stays</a></li>
           <li><a href="/istanbul/budget/">Budget stays</a></li>
           <li><a href="/istanbul/families/">For families</a></li>
           <li><a href="/istanbul/couples/">For couples</a></li>
+          <li><a href="/turkey-luxury/">Turkey luxury</a></li>
+          <li><a href="/turkey-couples/">Turkey for couples</a></li>
         </ul>
       </div>
       <div>
@@ -600,8 +617,6 @@ function transferBlock(city) {
     { partner: "Welcome Pickups", tag: "Fixed-price airport transfer", url: wp, active: true },
     { partner: "Kiwitaxi",        tag: "Pre-book a private car",       url: kt, active: true },
     { partner: "Localrent",       tag: "Rental cars — Turkey-focused, no deposit",       url: lr, active: true },
-    { partner: "Discover Cars",   tag: "Rental cars — compare 500+ providers",            url: dc, active: !!A.discoverCars.aAid },
-    { partner: "Rentalcars.com",  tag: "Rental cars — Booking Group",                     url: rc, active: !!A.rentalcars.aid },
   ].filter((c) => c.active);
   return `
 <section class="container section-sm">
@@ -1377,6 +1392,11 @@ function renderSitemap() {
     `${config.siteUrl}/compare/`,
     `${config.siteUrl}/partnerships/`,
     `${config.siteUrl}/flights/`,
+    `${config.siteUrl}/insurance/`,
+    `${config.siteUrl}/esim/`,
+    `${config.siteUrl}/money/`,
+    `${config.siteUrl}/packing/`,
+    `${config.siteUrl}/arrival-istanbul/`,
   ];
   for (const p of JOURNAL) urls.push(`${config.siteUrl}/journal/${p.slug}/`);
   for (const c of cities) {
@@ -2146,6 +2166,362 @@ ${tail()}`;
   ])];
   const html = head({ title, description, canonical, jsonld }) + body;
   writeFile("is-turkey-safe/index.html", html);
+}
+
+// ---- Travel insurance landing ----
+function renderInsurance() {
+  const canonical = `${config.siteUrl}/insurance/`;
+  const title = "Travel insurance for Turkey — what's actually worth buying";
+  const description = "Honest comparison of travel insurance for Turkey trips: SafetyWing vs World Nomads vs credit-card cover. What's worth paying for, what to skip, and how much it actually costs.";
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Travel insurance</div>
+    <h1>Travel insurance for Turkey</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">Most Western travelers need it for Turkey. The healthcare system is good but expects payment up-front, and the activities most people add (balloon ride, paragliding, scooters) aren't always covered by your home policy.</p>
+  </div>
+</div>
+
+<section class="container">
+  <div class="grid grid-1 grid-2 mt-3">
+    <div class="card" style="padding:28px">
+      <div class="eyebrow">Recommended for most travelers</div>
+      <h3 style="margin:6px 0">SafetyWing — Nomad Insurance</h3>
+      <p style="color:var(--ink-muted);margin:10px 0">Subscription model from $45.08 / 4 weeks. Covers trip interruption, medical, baggage, emergency evacuation. Activity coverage extends to the standard Turkey adventure list (balloon flight, paragliding, scuba). Renew month-by-month if your trip extends.</p>
+      <a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(safetyWingLink())}">Get a SafetyWing quote →</a>
+    </div>
+    <div class="card" style="padding:28px">
+      <div class="eyebrow">Best for adventure-heavy trips</div>
+      <h3 style="margin:6px 0">World Nomads</h3>
+      <p style="color:var(--ink-muted);margin:10px 0">Higher trip-cost coverage, multiple plan tiers, broader adventure-activity list (kitesurfing, motorbike rentals, mountain trekking). Better for Cappadocia + Antalya combo trips with several adventure bookings.</p>
+      <a class="btn btn-ghost" rel="sponsored nofollow" target="_blank" href="${esc(worldNomadsLink())}">Get a World Nomads quote →</a>
+    </div>
+  </div>
+</section>
+
+<section class="container container-narrow prose mt-4">
+  <h2>What you need vs what you don't</h2>
+  <p><strong>You need:</strong> emergency medical (€100,000+), emergency evacuation, trip interruption, lost baggage. Basic Turkey trip cost: $40–80 for two weeks.</p>
+  <p><strong>You probably don't need:</strong> rental car CDW (Localrent's prices already include basic insurance; just bring a credit card with rental coverage), trip cancellation if you're booking refundable hotels.</p>
+  <h2>Activities that need adventure coverage</h2>
+  <ul>
+    <li>Hot-air balloon flight in <a href="/cappadocia/">Cappadocia</a> — most policies cover commercial passenger balloon flights but verify language explicitly says "passenger / commercial" not "piloting"</li>
+    <li>Paragliding from Babadağ at <a href="/oludeniz/">Ölüdeniz</a> — needs explicit adventure-sports rider</li>
+    <li>Scuba diving in <a href="/kas/">Kaş</a> — depth limits matter; check policy depth cap</li>
+    <li>Scooter / motorbike rental — frequently excluded; assume not covered unless explicitly listed</li>
+  </ul>
+  <h2>What about my credit card cover?</h2>
+  <p>Most premium credit cards (Chase Sapphire, Amex Platinum, Capital One Venture) have built-in trip insurance and rental-car coverage. They cover delays, cancellations, and rental cars. They do NOT cover medical emergencies abroad — that's a separate purchase. Read your card's benefits guide; the activation usually requires booking the trip on that specific card.</p>
+  <h2>Healthcare in Turkey if you don't insure</h2>
+  <p>Public hospitals in Istanbul and Ankara are good but the queue is long and English limited. Private hospitals (Acıbadem, Memorial, Liv Hospital) have English-speaking staff and Western standards but charge €300–800 for an ER visit, €4,000–15,000 for a serious admission. Your insurance policy negotiates these; without it, you pay cash or credit card up front and claim later from your home insurer (slow, often partial).</p>
+  <h2>What to buy two days before flying</h2>
+  <p>Buy insurance after you've booked flights and hotels (so you know the trip cost) and before you fly (so any pre-existing condition you discover doesn't disqualify you). Two days before is the sweet spot.</p>
+  <p class="text-soft small"><em>This is general information, not insurance advice. We earn a small commission if you buy through our links — this doesn't change your price. Read the policy documents, especially exclusions, and verify coverage for your specific activities before purchasing. Insurance providers change terms; verify the latest on their site.</em></p>
+</section>
+
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Travel insurance", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("insurance/index.html", html);
+}
+
+// ---- eSIM / connectivity landing ----
+function renderESim() {
+  const canonical = `${config.siteUrl}/esim/`;
+  const title = "Best eSIM for Turkey 2026 — instant data the moment you land";
+  const description = "Compare eSIM options for Turkey: Airalo vs Holafly vs local SIM. Plans, prices, install steps, and how to have working data the second your plane wheels touch down at IST.";
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / eSIM &amp; connectivity</div>
+    <h1>Best eSIM for Turkey</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">Land at Istanbul Airport with working mobile data. No SIM card swap, no broken phone, no roaming bill. The two providers worth using and the install steps that actually work.</p>
+  </div>
+</div>
+
+<section class="container">
+  <div class="grid grid-1 grid-2 mt-3">
+    <div class="card" style="padding:28px">
+      <div class="eyebrow">Most popular — best value</div>
+      <h3 style="margin:6px 0">Airalo</h3>
+      <p style="color:var(--ink-muted);margin:10px 0">Cheapest mainstream eSIM provider. Turkey plans from $4.50 (1 GB / 7 days) to $26 (20 GB / 30 days). Activates instantly, works on every iPhone XS+ and any Android with eSIM support.</p>
+      <a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(airaloLink())}">Browse Airalo Turkey plans →</a>
+    </div>
+    <div class="card" style="padding:28px">
+      <div class="eyebrow">Unlimited data, simpler choice</div>
+      <h3 style="margin:6px 0">Holafly</h3>
+      <p style="color:var(--ink-muted);margin:10px 0">Unlimited data plans from $19 / 5 days to $59 / 30 days. No data caps, but no Turkish phone number — outgoing SMS limited to in-app. Best if you stream a lot or share data with a partner.</p>
+      <a class="btn btn-ghost" rel="sponsored nofollow" target="_blank" href="${esc(holaflyLink())}">Browse Holafly Turkey plans →</a>
+    </div>
+  </div>
+</section>
+
+<section class="container container-narrow prose mt-4">
+  <h2>Does your phone support eSIM?</h2>
+  <p><strong>iPhone:</strong> XS, XR, 11 series and newer (2018+). All current iPhones support dual SIM (your existing line + an eSIM).</p>
+  <p><strong>Android:</strong> Pixel 3 onwards, Galaxy S20 onwards, OnePlus 11 onwards, most 2020+ flagships. Older mid-range devices often skip eSIM. Settings → Network → check for "eSIM" or "Add cellular plan."</p>
+  <p>If your phone doesn't support eSIM: buy a Turkcell or Vodafone Turkey local SIM at the airport. ₺350–500 ($14–20) for 25 GB / 30 days. Bring an unlocked phone.</p>
+  <h2>Install before you fly</h2>
+  <ol>
+    <li>Buy your plan online while still at home (on hotel WiFi day-of departure works too).</li>
+    <li>Scan the QR code Airalo / Holafly emails you with your phone camera. Phone prompts to add cellular plan.</li>
+    <li>Label the new line "Turkey" so you can toggle it.</li>
+    <li>Set the eSIM as your data line, leave home line on for SMS / 2-factor auth.</li>
+    <li>Toggle "Data Roaming" ON for the Turkey line — confusingly required even though it's an eSIM, not roaming.</li>
+    <li>The eSIM activates the moment you connect to a Turkish cell tower (usually mid-descent). You'll have data the second you turn airplane mode off.</li>
+  </ol>
+  <h2>Plan size — what you actually need</h2>
+  <p>For 7 days in Turkey: 5 GB Airalo plan ($14) is enough if you mostly use hotel WiFi. 10 GB ($18) if you tether or stream. 20 GB unlimited Holafly if you share data with a partner or work remotely.</p>
+  <h2>Coverage</h2>
+  <p>Both Airalo and Holafly use Turkcell or Vodafone Turkey towers. Coverage is excellent across Istanbul, Cappadocia, Antalya, Bodrum, Fethiye, Izmir. Black Sea coast (Trabzon, Rize) is fine in towns, patchy in remote yaylas. Eastern Turkey villages can have signal gaps.</p>
+  <h2>Why not roaming?</h2>
+  <p>UK / EU / US roaming on Turkey is brutal. EE, Vodafone UK, Verizon US all charge $5–15/day on top of your base plan, with daily caps and throttling. A two-week trip = $70–200 in roaming fees. An eSIM is $14.</p>
+  <p class="text-soft small"><em>Prices update frequently; check current rates on each provider's site. We earn a small commission if you buy through our links — this doesn't change your price.</em></p>
+</section>
+
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "eSIM", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("esim/index.html", html);
+}
+
+// ---- Money / lira / ATM / tipping guide ----
+function renderMoneyGuide() {
+  const canonical = `${config.siteUrl}/money/`;
+  const title = "Money in Turkey — lira, ATMs, tipping, and exchange in 2026";
+  const description = "Practical money guide for travelers to Turkey: how the lira works, where to exchange, what ATMs charge, tipping etiquette, and the scams to avoid.";
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Money in Turkey</div>
+    <h1>Money in Turkey</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">The Turkish lira is volatile, ATMs are everywhere, contactless cards work in 95% of places, and tipping is more like Europe than the US. Here's the practical playbook.</p>
+  </div>
+</div>
+
+<section class="container container-narrow prose">
+  <h2>Currency basics</h2>
+  <p>Currency is the Turkish lira (₺, TRY). Coins from 1 to 100 kuruş plus 1 lira; banknotes ₺5, ₺10, ₺20, ₺50, ₺100, ₺200. The ₺200 note is the largest commonly circulated and many small shops can't break it — keep a stack of ₺20s and ₺50s.</p>
+  <p>Inflation has run high in recent years; lira-USD rates move noticeably week-to-week. <a href="/planner/">Use our trip cost calculator</a> for current-month estimates.</p>
+  <h2>Best way to get lira</h2>
+  <p><strong>ATMs at major Turkish banks (Garanti, Yapı Kredi, İş Bankası, Akbank).</strong> Withdraw in lira, decline the "convert to my currency" prompt (called dynamic currency conversion — it adds 4–7%). Most ATMs allow ₺2,000–6,000 per withdrawal. Daily ATM limit on your home card matters more than the local cap.</p>
+  <p><strong>Avoid airport exchange counters.</strong> They quote 4–8% worse than city ATMs. Take just enough lira from one ATM at the airport for your taxi/metro and find a city ATM for the rest.</p>
+  <p><strong>Wise / Revolut / Charles Schwab Investor Checking</strong> are the cards travelers swear by — no foreign transaction fees, mid-market exchange rate, ATM fee rebates (Schwab) or low fees (Wise/Revolut). If you don't have one of these, even a regular debit card works fine; expect 1–3% in foreign transaction fees from your home bank.</p>
+  <h2>Cards vs cash</h2>
+  <p>Contactless cards (tap-to-pay, Apple Pay, Google Pay) work in 95% of Istanbul and major cities. Restaurants, hotels, big bazaar shops, taxis (BiTaksi), public transit (Istanbulkart top-up), supermarkets — all card-friendly.</p>
+  <p>Cash territory: street food carts, fish-sandwich boats, smaller bazaar stalls, hammam tips, mosque donations, taxi tips, smaller hotels in non-tourist towns. Keep ₺500–1,000 in pocket.</p>
+  <h2>Tipping</h2>
+  <table>
+    <thead><tr><th>Service</th><th>Tip</th></tr></thead>
+    <tbody>
+      <tr><td>Restaurants (mid-range)</td><td>10% (sometimes already on bill — check for "servis dahil")</td></tr>
+      <tr><td>Restaurants (high-end)</td><td>10–15%</td></tr>
+      <tr><td>Lokanta / casual</td><td>Round up, ₺10–20</td></tr>
+      <tr><td>Taxi</td><td>Round up; 10% in tourist areas</td></tr>
+      <tr><td>Hotel housekeeping (mid-range)</td><td>₺40–80 per day, left on bedside</td></tr>
+      <tr><td>Hotel porter</td><td>₺40–60 per bag</td></tr>
+      <tr><td>Hammam attendant</td><td>15% of paid price (tip the kese person directly)</td></tr>
+      <tr><td>Tour guide (full day)</td><td>₺200–400 per person</td></tr>
+      <tr><td>Bartender</td><td>10% of bill</td></tr>
+    </tbody>
+  </table>
+  <h2>Money scams to know</h2>
+  <p><strong>Taxi double-charge:</strong> driver "swipes again because the first failed" — both charges process. Always check your receipt and bank app before leaving. Use BiTaksi or Uber instead.</p>
+  <p><strong>Bazaar credit card double-swipe:</strong> identical pattern at rug or leather shops. <a href="/journal/turkish-rug-scams/">Our rug scam guide</a> walks through the full script.</p>
+  <p><strong>Restaurant bill rounding:</strong> some tourist-zone restaurants round generously upward and quietly add a "service" line. Check the line items.</p>
+  <p><strong>Counterfeit notes:</strong> rare but happens. Old red ₺50 notes (pre-2009) are no longer valid. Real ₺50s are blue-purple.</p>
+  <h2>Should you exchange currency before flying?</h2>
+  <p>No. Home-country currency exchange is always worse than a Turkish ATM by 3–8%. Exception: bring $50–100 USD or €50–100 emergency cash hidden separately from your wallet. Hotels and bigger shops accept either USD or EUR in a pinch.</p>
+  <h2>Closing the trip</h2>
+  <p>Don't bring leftover lira home — banks abroad don't change it back at usable rates. Spend it down at the airport on the duty-free or your last meal. Or leave it as a tip for housekeeping at your last hotel.</p>
+  <p>For more practical pre-trip prep, see <a href="/visa/">our visa guide</a>, <a href="/esim/">eSIM guide</a>, and the <a href="/journal/turkey-cost-week/">full trip-cost breakdown</a>.</p>
+</section>
+
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Money in Turkey", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("money/index.html", html);
+}
+
+// ---- Packing list ----
+function renderPackingList() {
+  const canonical = `${config.siteUrl}/packing/`;
+  const title = "What to pack for Turkey — season-by-season list (2026)";
+  const description = "Specific packing list for Turkey trips: what to bring for summer beach trips, autumn city breaks, winter Cappadocia, mosque dress code, and the weird-but-essential items.";
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Packing for Turkey</div>
+    <h1>What to pack for Turkey</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">Turkey runs cold-and-snowy in Cappadocia winter, hot-and-coastal in Bodrum summer, and there's a mosque dress code regardless of where you go. Here's the season-by-season list.</p>
+  </div>
+</div>
+
+<section class="container container-narrow prose">
+  <h2>Universal essentials (any trip, any season)</h2>
+  <ul>
+    <li>Light pashmina or scarf — covers shoulders for mosque visits, packs small, doubles as a blanket on overnight buses</li>
+    <li>Comfortable walking shoes broken in — Istanbul cobblestones eat new shoes in a day</li>
+    <li>Power adapter — Type C and F (European two-prong)</li>
+    <li>Reusable water bottle — tap water is technically safe but most travelers prefer bottled; refill from cafes</li>
+    <li>Anti-pickpocket front-pocket wallet (in busy bazaars) or money belt</li>
+    <li>Daypack (small) — for half-day excursions when your hotel holds your luggage</li>
+    <li>Travel adapter with USB ports</li>
+    <li>Photocopies of passport + visa kept separate from originals</li>
+  </ul>
+  <h2>Mosque visit kit</h2>
+  <p>You'll visit at least one mosque. Pack:</p>
+  <ul>
+    <li>Long pants or long skirt (knee-cover minimum)</li>
+    <li>Sleeved top (no tanks for either gender at major mosques)</li>
+    <li>Headscarf for women (Hagia Sophia, Blue Mosque, Süleymaniye all provide loaners but bringing one is faster)</li>
+    <li>Easy-off shoes — slip-ons are 10 seconds in/out, laces are 60</li>
+  </ul>
+  <h2>Summer (June–September) — coastal trips</h2>
+  <ul>
+    <li>Two swimsuits — they don't dry overnight in humid air</li>
+    <li>Light cotton shirts (not synthetic — Aegean heat is unforgiving)</li>
+    <li>Sunglasses (the salt-and-sun glare on Turkish beaches is brutal)</li>
+    <li>SPF 50, water-resistant — Turkish drugstores sell good options if you forget</li>
+    <li>Sandals for beaches + closed shoes for evening cobblestone walks</li>
+    <li>Light cardigan for over-air-conditioned restaurants</li>
+    <li>Mosquito repellent (Aegean evenings)</li>
+  </ul>
+  <h2>Shoulder seasons (April–May, October)</h2>
+  <p>Best Turkey weather. Pack as if it's spring in Italy: layers, light jacket for evenings, breathable trousers, walking shoes. Cappadocia gets cold at night even in May — pack a fleece.</p>
+  <h2>Winter (November–March) — Cappadocia + Istanbul</h2>
+  <ul>
+    <li>Down jacket or warm parka — Cappadocia balloon flights at sunrise are -8°C in the basket</li>
+    <li>Thermal base layer top + bottom</li>
+    <li>Fleece or wool sweater</li>
+    <li>Hat that fits under a balloon harness</li>
+    <li>Gloves (touchscreen-compatible if you want to take balloon photos)</li>
+    <li>Two pairs of warm socks per Cappadocia day</li>
+    <li>Waterproof boots with grip — Cappadocia trails get icy</li>
+    <li>Sunglasses — winter snow glare on Cappadocia rocks is intense</li>
+  </ul>
+  <h2>Electronics</h2>
+  <ul>
+    <li>Phone with eSIM support (see <a href="/esim/">our eSIM guide</a>)</li>
+    <li>Portable battery pack (10,000 mAh+) — long sightseeing days drain phones fast</li>
+    <li>Real camera if you care about balloon photos — phone cameras lose detail at sunrise</li>
+    <li>Lightning / USB-C cable + 20W charging brick</li>
+    <li>Small power strip — hotels often have 1-2 outlets, not enough</li>
+  </ul>
+  <h2>Documents</h2>
+  <ul>
+    <li>Passport with at least 6 months validity from your entry date and 3 blank pages</li>
+    <li>e-Visa printout (most nationalities — check <a href="/visa/">our visa page</a>)</li>
+    <li>Travel insurance policy number printed (see <a href="/insurance/">insurance guide</a>)</li>
+    <li>Hotel reservations printed (immigration sometimes asks)</li>
+    <li>Credit cards in two locations (one in your wallet, one in your suitcase)</li>
+  </ul>
+  <h2>What you DON'T need</h2>
+  <ul>
+    <li>Travel iron / steamer — every hotel has one</li>
+    <li>Heavy guidebooks — Google Maps + this site cover what you'd use them for</li>
+    <li>Plug adapters with multiple country options — just pack a Europe-specific Type F</li>
+    <li>Turkish phrasebook — English coverage in tourist areas is good; learn "merhaba" (hello) and "teşekkür ederim" (thank you) and you're fine</li>
+  </ul>
+  <h2>Buy in Turkey</h2>
+  <p>Cheaper to buy in Turkey than to pack: cosmetics (Turkish brands are good), pashmina/scarves (Grand Bazaar), Turkish bath products, fresh-roasted coffee, baklava. Don't buy: anything from the airport duty-free that you can get in a city for half the price.</p>
+</section>
+
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Packing for Turkey", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("packing/index.html", html);
+}
+
+// ---- Arrival in Istanbul (first day at IST) ----
+function renderArrivalIstanbul() {
+  const canonical = `${config.siteUrl}/arrival-istanbul/`;
+  const title = "Landing at Istanbul Airport (IST) — your first 4 hours, sorted";
+  const description = "Step-by-step: from your plane wheels touching down at IST to checked into your Sultanahmet hotel with working data, lira in pocket, and dinner in front of you. The first-day playbook.";
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Arrival in Istanbul</div>
+    <h1>Landing at Istanbul Airport (IST)</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">Your first 4 hours, in order. Get through immigration, get connected, get into the city, get into your hotel — without the standard tourist-tax decisions on the way.</p>
+  </div>
+</div>
+
+<section class="container container-narrow prose">
+  <h2>Before the plane lands</h2>
+  <p><strong>15 minutes before landing:</strong> turn airplane mode off and let your eSIM activate (you bought one before flying — see <a href="/esim/">our eSIM guide</a>). The Turkcell or Vodafone Turkey signal usually appears mid-descent. By the time you're at the gate, you have data, Maps, WhatsApp, and the BiTaksi app working.</p>
+  <p><strong>Have ready:</strong> passport, e-visa printout (most nationalities), hotel address printed (in case asked at immigration). <a href="/visa/">Visa requirements by country here</a>.</p>
+  <h2>Step 1: Immigration (15–40 minutes)</h2>
+  <p>IST has automated e-passport gates for most Western passports — way faster than the human queues. Look for the lane marked "e-Passport" not "Foreign Nationals." If you have an e-visa, you go through normal immigration (no separate visa-on-arrival queue exists for e-visa holders).</p>
+  <p>Officer questions: "How long?" "Hotel?" "Tourism?" One-word answers, smile, you're through.</p>
+  <h2>Step 2: Baggage + customs (10–20 minutes)</h2>
+  <p>Carousel halls are organized by flight number. Wait, grab your bag, walk the green "Nothing to Declare" lane unless you brought more than $20,000 USD or commercial goods.</p>
+  <h2>Step 3: ATM (5 minutes)</h2>
+  <p>In the arrivals hall, find a Garanti, Yapı Kredi, İş Bankası, or Akbank ATM — NOT the bright airport-branded exchange counters (4–8% worse rates). Withdraw ₺1,500–2,500 ($60–100) for your first 2 days. Decline the "convert to my home currency" option. <a href="/money/">Full money guide here</a>.</p>
+  <h2>Step 4: Get to your hotel — three options</h2>
+
+  <h3>Option A: Pre-booked transfer (the smart move)</h3>
+  <p>Book Welcome Pickups or a similar service before you fly. Driver waits at arrivals with a sign with your name. Fixed price (~€35–50 to most central hotels). No haggling, no language confusion, no wrong-zone taxi gotchas. <strong>This is what we recommend for first-time visitors.</strong></p>
+  <p><a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(welcomePickupsLink('istanbul'))}">Pre-book Welcome Pickups →</a></p>
+
+  <h3>Option B: M11 metro to city + connection</h3>
+  <p>The M11 metro from IST to Gayrettepe takes 35 minutes (€1.50 with Istanbulkart). From there, M2 metro to Vezneciler (Sultanahmet) or Taksim (Beyoğlu). Total time: ~80 minutes. Total cost: €3. Buy Istanbulkart from the IDO machine before the metro turnstiles, top up ₺100 ($4) — covers your first 2 days of metro / ferry / bus.</p>
+
+  <h3>Option C: Taxi (don't, unless you have to)</h3>
+  <p>Airport taxis charge €40–60 fixed to most central hotels. Acceptable in a pinch, but the meter scams and "extra luggage" surcharges happen. If you take one, demand the meter ("taksimetre"), photograph the meter, agree the route ("Sultanahmet, Galip Dede otel" or wherever), pay only the meter reading.</p>
+  <h2>Step 5: Hotel check-in</h2>
+  <p>Most boutique Istanbul hotels have flexible check-in but the room may not be ready before 2 PM. Drop your bag at reception, head straight to a kahvaltı place. Sleep dep + Turkish breakfast = the right reset.</p>
+  <h2>First-day rules of thumb</h2>
+  <ul>
+    <li><strong>Don't try to do too much.</strong> Sleep dep + jet lag eats decision-making. Wander your neighborhood, eat a long breakfast, take a 90-minute nap, walk to one site late afternoon, dinner at a meyhane.</li>
+    <li><strong>Sleep on the plane / acclimate.</strong> If you fly in from the US west coast, the time change is 10 hours — it'll take you 2–3 days. Plan your first two days in one neighborhood.</li>
+    <li><strong>Don't overdo dinner.</strong> Stomach + jet lag is a bad first-night-in-Istanbul experience. Eat light: simit, salad, soup. Save the meyhane meal for night two.</li>
+  </ul>
+  <h2>Where to stay your first night</h2>
+  <p>Stay central. <a href="/istanbul/#sultanahmet">Sultanahmet</a> if you want to walk to Hagia Sophia / Blue Mosque first thing. <a href="/istanbul/#beyoglu">Beyoğlu</a> if you want a more contemporary vibe and walkability to nightlife and ferries. Avoid airport-area hotels unless you have a 7am next-day departure — you save 20 minutes of taxi but lose the entire arrival evening.</p>
+  <h2>What to do tomorrow</h2>
+  <p>Day 2 is when Turkey starts. We've got a full <a href="/thank-you/">3-day Istanbul itinerary</a> as a free download — gives you the day-by-day plan locals would actually recommend. Or just open <a href="/istanbul/">our Istanbul guide</a> and pick the neighborhood that fits your trip.</p>
+</section>
+
+${essentialsBlock()}
+${footer()}
+${tail()}`;
+  const jsonld = [breadcrumbLd([
+    { name: "Home", url: `${config.siteUrl}/` },
+    { name: "Arrival at Istanbul", url: canonical },
+  ])];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("arrival-istanbul/index.html", html);
 }
 
 // ---- Per-city OG image (SVG) ----
@@ -3368,6 +3744,11 @@ function run() {
   renderNightsGuide();
   renderGuidesHub();
   renderFlights();
+  renderInsurance();
+  renderESim();
+  renderMoneyGuide();
+  renderPackingList();
+  renderArrivalIstanbul();
 
   for (const c of cities) {
     renderCity(c);
