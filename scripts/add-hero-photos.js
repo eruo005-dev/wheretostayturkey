@@ -37,7 +37,9 @@ const HERO_PHOTOS = {
 };
 
 function buildUrl(file) {
-  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=1600`;
+  // 1200px wide is plenty for hero rendering on retina displays at 100% width.
+  // Smaller request = ~40% lighter than 1600px while still crisp on most screens.
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=1200`;
 }
 
 const DATA_DIR = path.join(__dirname, "..", "data");

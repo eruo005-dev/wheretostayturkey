@@ -394,9 +394,12 @@ function compareOtaLinks(query) {
 
 // --------------------------- shared chrome ---------------------------
 
-function head({ title, description, canonical, ogImage, jsonld = [] }) {
+function head({ title, description, canonical, ogImage, jsonld = [], preloadHero = null }) {
   const og = ogImage || `${config.siteUrl}${config.defaultOgImage}`;
   const ldBlocks = jsonld.map((obj) => `<script type="application/ld+json">${JSON.stringify(obj)}</script>`).join("\n");
+  const heroPreload = preloadHero
+    ? `<link rel="preload" as="image" href="${esc(preloadHero)}" fetchpriority="high">`
+    : "";
   const analytics = [];
   if (config.plausibleDomain) {
     analytics.push(`<script defer data-domain="${esc(config.plausibleDomain)}" src="https://plausible.io/js/script.js"></script>`);
@@ -442,6 +445,7 @@ ${config.twitterHandle ? `<meta name="twitter:site" content="${esc(config.twitte
 <link rel="dns-prefetch" href="https://www.agoda.com">
 <link rel="dns-prefetch" href="https://www.welcomepickups.com">
 <link rel="dns-prefetch" href="https://www.airalo.com">
+${heroPreload}
 ${ldBlocks}
 ${analytics.join("\n")}
 ${(config.verificationScripts || []).join("\n")}
@@ -1141,7 +1145,7 @@ ${disclosureBanner()}
 <main id="main">
 <section class="hero-immersive ${c.heroImage ? "has-photo" : ""}" style="${cityPaletteStyle(c.slug)}">
   ${c.heroImage
-    ? `<img class="hero-photo" src="${esc(c.heroImage)}" alt="${esc(c.name)}, Turkey" loading="eager" fetchpriority="high">`
+    ? `<img class="hero-photo" src="${esc(c.heroImage)}" alt="${esc(c.name)}, Turkey" loading="eager" fetchpriority="high" width="1200" height="800" decoding="async">`
     : `<div class="hero-art">${cityHeroSvg(c.slug)}</div>`}
   <div class="container">
     <div class="eyebrow">Where to stay in ${esc(c.name)}, Turkey ${c.emoji || ""}</div>
@@ -1251,7 +1255,7 @@ ${tail()}`;
   if (faq) jsonld.push(faq);
 
   const ogImage = c.heroImage || `${config.siteUrl}/assets/img/og/${c.slug}.svg`;
-  const html = head({ title, description, canonical, ogImage, jsonld }) + body;
+  const html = head({ title, description, canonical, ogImage, jsonld, preloadHero: c.heroImage || null }) + body;
   writeFile(`${c.slug}/index.html`, html);
 }
 
@@ -1615,11 +1619,12 @@ function renderSitemap() {
   push(`${config.siteUrl}/quiz/`,    "0.4", "monthly");
 
   // Operational
-  push(`${config.siteUrl}/about/`,         "0.4", "monthly");
-  push(`${config.siteUrl}/partnerships/`,  "0.4", "monthly");
-  push(`${config.siteUrl}/contact/`,       "0.2", "yearly");
-  push(`${config.siteUrl}/privacy/`,       "0.2", "yearly");
-  push(`${config.siteUrl}/terms/`,         "0.2", "yearly");
+  push(`${config.siteUrl}/about/`,                   "0.4", "monthly");
+  push(`${config.siteUrl}/about/${AUTHOR.slug}/`,    "0.3", "yearly");
+  push(`${config.siteUrl}/partnerships/`,            "0.4", "monthly");
+  push(`${config.siteUrl}/contact/`,                 "0.2", "yearly");
+  push(`${config.siteUrl}/privacy/`,                 "0.2", "yearly");
+  push(`${config.siteUrl}/terms/`,                   "0.2", "yearly");
 
   // Programmatic content
   for (const _cc of CULTURAL_CONCEPTS) push(`${config.siteUrl}/culture/${_cc.slug}/`,           "0.7", "monthly");
@@ -1647,23 +1652,60 @@ function renderRobots() {
 }
 
 function render404() {
+  // Pick the 6 highest-priority destinations to surface (matches sitemap priority).
+  const topCities = ["istanbul", "cappadocia", "antalya", "bodrum", "fethiye", "izmir"]
+    .map((s) => cities.find((c) => c.slug === s))
+    .filter(Boolean);
+  const popularGuides = [
+    { url: "/turkey-guide/",                title: "The full Turkey guide",          desc: "Where to stay across 22 cities" },
+    { url: "/best-time-to-visit-turkey/",   title: "Best time to visit Turkey",      desc: "Month-by-month breakdown" },
+    { url: "/how-many-nights-turkey/",      title: "How many nights do you need?",   desc: "Real itineraries by length" },
+    { url: "/quiz/",                        title: "Take the 60-second quiz",        desc: "Find your ideal Turkish city" },
+    { url: "/visa/",                        title: "Turkey visa & eVisa",            desc: "Who needs one, who doesn't" },
+    { url: "/journal/",                     title: "Journal — long reads",           desc: "Tested itineraries and deep-dives" },
+  ];
   const body = `${nav()}
 ${disclosureBanner()}
-<section class="hero-home" style="min-height:60vh;display:flex;align-items:center">
+<section class="hero-home" style="min-height:40vh;display:flex;align-items:center">
   <div class="container" style="text-align:center">
     <div class="eyebrow">Error 404</div>
     <h1>We can't find that page.</h1>
-    <p class="hero-sub" style="margin:0 auto 28px">It may have been moved or the URL is mistyped. Here's where most people go next.</p>
+    <p class="hero-sub" style="margin:0 auto 28px;max-width:560px">It may have been moved or the URL is mistyped. Try one of these instead — or use the navigation above.</p>
     <div class="hero-actions" style="justify-content:center">
-      <a class="btn btn-primary btn-lg" href="/">Go to homepage</a>
-      <a class="btn btn-ghost btn-lg" href="/quiz/">Take the quiz</a>
-      <a class="btn btn-ghost btn-lg" href="/istanbul/">Where to stay in Istanbul</a>
+      <a class="btn btn-primary btn-lg" href="/">Homepage</a>
+      <a class="btn btn-ghost btn-lg" href="/quiz/">Take the 60-second quiz</a>
     </div>
   </div>
 </section>
+
+<section class="container section-sm">
+  <h2 style="font-size:1.4rem">Popular cities</h2>
+  <div class="grid grid-2 grid-3 mt-3">
+    ${topCities.map((c) => `<a class="card" href="/${esc(c.slug)}/" style="text-decoration:none;color:inherit">
+      <div style="font-size:24px;margin-bottom:4px">${esc(c.emoji || "")}</div>
+      <h3 style="font-size:1.1rem;margin:0 0 4px;font-family:var(--font-serif);font-weight:500">${esc(c.name)}</h3>
+      <p class="text-muted small" style="margin:0">${esc(c.tagline || "")}</p>
+    </a>`).join("")}
+  </div>
+</section>
+
+<section class="container section-sm">
+  <h2 style="font-size:1.4rem">Or start with a planning guide</h2>
+  <div class="grid grid-2 grid-3 mt-3">
+    ${popularGuides.map((g) => `<a class="card" href="${esc(g.url)}" style="text-decoration:none;color:inherit">
+      <h3 style="font-size:1rem;margin:0 0 4px;font-family:var(--font-serif);font-weight:500">${esc(g.title)}</h3>
+      <p class="text-muted small" style="margin:0">${esc(g.desc)}</p>
+    </a>`).join("")}
+  </div>
+</section>
+
 ${footer()}
 ${tail()}`;
-  const html = head({ title: `Page not found — ${config.siteName}`, description: `404 — page not found.`, canonical: `${config.siteUrl}/404.html` }) + body;
+  // Tell crawlers not to index the 404 itself even though it returns 200 on
+  // many static hosts. Vercel serves it with a 404 status — defensive nonetheless.
+  const html = head({ title: `Page not found — ${config.siteName}`, description: `404 — page not found.`, canonical: `${config.siteUrl}/404.html` })
+    .replace("</head>", `<meta name="robots" content="noindex">\n</head>`)
+    + body;
   writeFile("404.html", html);
 }
 
@@ -3851,7 +3893,7 @@ function bylineBlock(cityOrNull) {
   <div class="byline-avatar" aria-hidden="true">${esc(AUTHOR.avatarInitials)}</div>
   <div class="byline-info">
     <div class="byline-name">${esc(AUTHOR.name)}</div>
-    <div class="byline-meta">Last verified <time>${esc(verified)}</time> · <a href="/about/eruo/">About ${esc(AUTHOR.name.split(" — ")[0])}</a></div>
+    <div class="byline-meta">Last verified <time>${esc(verified)}</time> · <a href="/about/${esc(AUTHOR.slug)}/">About ${esc(AUTHOR.name.split(" — ")[0])}</a></div>
   </div>
 </div>`;
 }
@@ -4425,6 +4467,50 @@ ${disclosureBanner()}
   </div>`;
   })()}
 </article>
+
+${(() => {
+  // Related-articles block: rank other journal posts by tag overlap, take top 3.
+  const myTags = new Set((p.tags || []).map((t) => t.toLowerCase()));
+  if (myTags.size === 0) return "";
+  const scored = JOURNAL
+    .filter((q) => q.slug !== p.slug)
+    .map((q) => {
+      const qt = (q.tags || []).map((t) => t.toLowerCase());
+      const shared = qt.filter((t) => myTags.has(t)).length;
+      return { q, score: shared };
+    })
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score || (b.q.publishedAt || "").localeCompare(a.q.publishedAt || ""))
+    .slice(0, 3);
+  if (!scored.length) return "";
+  return `<section class="container container-narrow section-sm">
+  <h2 style="font-size:1.4rem">Keep reading</h2>
+  <div class="grid grid-1 grid-3 mt-3">
+    ${scored.map(({ q }) => `<a class="card" href="/journal/${esc(q.slug)}/" style="text-decoration:none;color:inherit">
+      <div class="eyebrow">${esc((q.tags || [])[0] || "Article")}</div>
+      <h3 style="font-size:1.1rem;margin:6px 0 8px">${esc(q.title)}</h3>
+      <p class="text-muted small" style="margin:0">${esc(q.subtitle || q.summary || "")}</p>
+    </a>`).join("")}
+  </div>
+</section>`;
+})()}
+
+${(() => {
+  // Author bio block — surfaces /about/{slug}/ link, gives the article
+  // a face. Only on journal posts (high engagement, where bylines matter).
+  return `<section class="container container-narrow section-sm">
+  <div class="card" style="display:flex;gap:18px;align-items:flex-start;padding:22px">
+    <div class="byline-avatar" aria-hidden="true" style="flex:0 0 auto;width:54px;height:54px;border-radius:999px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:1.3rem">${esc(AUTHOR.avatarInitials || AUTHOR.name.charAt(0))}</div>
+    <div style="flex:1 1 auto">
+      <div class="eyebrow">Written by</div>
+      <div style="font-family:var(--font-serif);font-size:1.15rem;margin:2px 0 6px">${esc(AUTHOR.name)}</div>
+      <p class="text-muted small" style="margin:0 0 10px">${esc(AUTHOR.shortBio || AUTHOR.credentials || "")}</p>
+      <a class="small" href="/about/${esc(AUTHOR.slug)}/">More about ${esc((AUTHOR.name || "").split(" ")[0] || "the author")} →</a>
+    </div>
+  </div>
+</section>`;
+})()}
+
 ${essentialsBlock()}
 ${footer()}
 ${tail()}`;
@@ -4441,7 +4527,7 @@ ${tail()}`;
       description: p.subtitle,
       url: canonical,
       datePublished: p.publishedAt,
-      author: { "@type": "Person", name: AUTHOR.name },
+      author: { "@type": "Person", name: AUTHOR.name, url: `${config.siteUrl}/about/${AUTHOR.slug}/` },
       publisher: { "@type": "Organization", name: config.siteName, url: config.siteUrl },
     },
   ];
@@ -4659,6 +4745,7 @@ function run() {
 
   renderHome();
   renderAbout();
+  renderAuthorPage();
   renderThankYouNew();                 // both /thank-you/ and /thank-you-combo/
   renderQuiz();
   renderVisa();
