@@ -28,6 +28,23 @@
   ],
   "redirects": [
     { "source": "/home", "destination": "/", "permanent": true },
-    { "source": "/index", "destination": "/", "permanent": true }
+    { "source": "/index", "destination": "/", "permanent": true },
+    { "source": "/safety", "destination": "/is-turkey-safe/", "permanent": true },
+    { "source": "/safety/", "destination": "/is-turkey-safe/", "permanent": true },
+    { "source": "/transport-istanbul-cappadocia", "destination": "/istanbul-to-cappadocia/", "permanent": true },
+    { "source": "/transport-istanbul-cappadocia/", "destination": "/istanbul-to-cappadocia/", "permanent": true },
+    { "source": "/oludeniz", "destination": "/fethiye/", "permanent": true },
+    { "source": "/oludeniz/", "destination": "/fethiye/", "permanent": true },
+    { "source": "/cesme", "destination": "/izmir/", "permanent": true },
+    { "source": "/cesme/", "destination": "/izmir/", "permanent": true },
+    { "source": "/tours", "destination": "/experiences/", "permanent": true },
+    { "source": "/tours/", "destination": "/experiences/", "permanent": true },
+    { "source": "/cities-extras/black-sea", "destination": "/regions/black-sea/", "permanent": true },
+    { "source": "/cities-extras/black-sea/", "destination": "/regions/black-sea/", "permanent": true },
+    { "source": "/experiences/cay-as-currency/", "destination": "/culture/cay-as-currency/", "permanent": true },
+    { "source": "/experiences/imece-collective-work/", "destination": "/culture/imece-collective-work/", "permanent": true },
+    { "source": "/experiences/kolay-gelsin-the-everyday-blessing/", "destination": "/culture/kolay-gelsin-the-everyday-blessing/", "permanent": true },
+    { "source": "/experiences/mahalle-the-turkish-neighborhood/", "destination": "/culture/mahalle-the-turkish-neighborhood/", "permanent": true },
+    { "source": "/experiences/misafirperverlik-turkish-hospitality/", "destination": "/culture/misafirperverlik-turkish-hospitality/", "permanent": true }
   ]
 }

@@ -5,7 +5,7 @@
 const tp = { marker: "722878", trs: "523094" };
 
 const affiliates = {
-  booking:        { aid: "BOOKING_AID" },
+  booking:        { aid: "" },
   hotelsCom:      { camref: "" },
   agoda:          { cid: "" },
   tripcom:        { allianceid: "8157710", sid: "308782349", tripSub3: "D16205590" },
