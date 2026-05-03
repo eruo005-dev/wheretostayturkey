@@ -286,7 +286,9 @@
           "q": "Worth combining with Cappadocia?",
           "a": "Yes — Konya is 3 hours by car from Cappadocia, and the route passes Sultanhanı caravanserai. Easy 1-night addition to a Cappadocia trip."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Mevlana%20Museum%20(Green%20Mausoleum)%20in%20Konya%20Turkey%20By%20Mardetanha%20(41).JPG?width=1600",
+      "heroImageCredit": "Mevlana Museum, Konya / Wikimedia Commons"
     },
     {
       "slug": "sanliurfa",
@@ -375,7 +377,9 @@
           "q": "Is it safe?",
           "a": "Şanlıurfa is significantly inland from any current security concerns and well-touristed by archaeology travelers. Standard southeastern-Turkey caution applies; check your foreign-office advisory."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/G%C3%B6bekli%20Tepe%20surrounding%20area.JPG?width=1600",
+      "heroImageCredit": "Göbekli Tepe, Şanlıurfa / Wikimedia Commons"
     },
     {
       "slug": "safranbolu",

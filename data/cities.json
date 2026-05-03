@@ -871,7 +871,9 @@
           "q": "Is Antalya safe for families?",
           "a": "Yes — it's one of Turkey's most family-friendly destinations. Resorts in Belek and Lara are purpose-built for families with kids."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Antalya%20-%20Kalei%C3%A7i.JPG?width=1600",
+      "heroImageCredit": "Kaleiçi, Antalya / Wikimedia Commons"
     },
     {
       "slug": "bodrum",
@@ -1283,7 +1285,9 @@
           "q": "Is Fethiye good for families?",
           "a": "Yes — Hillside Beach Club and Liberty Lykia are some of the best family resorts in Turkey. The area is very safe and oriented around beach activities."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Oludeniz-beach.JPG?width=1600",
+      "heroImageCredit": "Ölüdeniz beach, Fethiye / Wikimedia Commons"
     },
     {
       "slug": "izmir",
@@ -1721,7 +1725,9 @@
           "q": "Marmaris or İçmeler?",
           "a": "Marmaris if you want nightlife and a buzzing town. İçmeler for families and couples who want a calmer beach."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Marmaris%20old%20town%20near%20castle.JPG?width=1600",
+      "heroImageCredit": "Marmaris old town / Wikimedia Commons"
     },
     {
       "slug": "kas",
@@ -1978,7 +1984,9 @@
           "q": "When is Trabzon best to visit?",
           "a": "June to September. The Black Sea region is very rainy — pack layers and waterproofs even in summer."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Sumela%20From%20Across%20Valley.JPG?width=1600",
+      "heroImageCredit": "Sumela Monastery, Trabzon / Wikimedia Commons"
     }
   ]
 }

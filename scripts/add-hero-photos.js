@@ -11,12 +11,25 @@ const path = require("path");
 
 // Wikimedia filename → photo credit. The cdn URL is built via
 // Special:FilePath which is the canonical, redirect-stable embed pattern.
+// All filenames verified to exist on Wikimedia Commons (May 2026).
 const HERO_PHOTOS = {
-  istanbul:   { file: "Side_view_of_Hagia_Sophia.JPG",            credit: "Hagia Sophia / Wikimedia Commons" },
-  cappadocia: { file: "Hot_air_balloon_over_Cappadocia,_Turkey.JPG", credit: "Cappadocia balloons / Wikimedia Commons" },
-  pamukkale:  { file: "Pamukkale_Hierapolis_Travertine_pools.JPG", credit: "Pamukkale travertines / Wikimedia Commons" },
-  bodrum:     { file: "Bodrum_castle_3.JPG",                       credit: "Bodrum Castle / Wikimedia Commons" },
-  izmir:      { file: "Celsus_library_in_Ephesus.JPG",             credit: "Library of Celsus, Ephesus / Wikimedia Commons" },
+  istanbul:   { file: "Side_view_of_Hagia_Sophia.JPG",                              credit: "Hagia Sophia / Wikimedia Commons" },
+  cappadocia: { file: "Hot_air_balloon_over_Cappadocia,_Turkey.JPG",                credit: "Cappadocia balloons / Wikimedia Commons" },
+  pamukkale:  { file: "Pamukkale_Hierapolis_Travertine_pools.JPG",                  credit: "Pamukkale travertines / Wikimedia Commons" },
+  bodrum:     { file: "Bodrum_castle_3.JPG",                                        credit: "Bodrum Castle / Wikimedia Commons" },
+  izmir:      { file: "Celsus_library_in_Ephesus.JPG",                              credit: "Library of Celsus, Ephesus / Wikimedia Commons" },
+  antalya:    { file: "Antalya - Kaleiçi.JPG",                                      credit: "Kaleiçi, Antalya / Wikimedia Commons" },
+  fethiye:    { file: "Oludeniz-beach.JPG",                                         credit: "Ölüdeniz beach, Fethiye / Wikimedia Commons" },
+  marmaris:   { file: "Marmaris old town near castle.JPG",                          credit: "Marmaris old town / Wikimedia Commons" },
+  trabzon:    { file: "Sumela From Across Valley.JPG",                              credit: "Sumela Monastery, Trabzon / Wikimedia Commons" },
+  alanya:     { file: "Red tower and harbour From Alanya castle-Antalya - panoramio.jpg", credit: "Red Tower & harbour, Alanya / Wikimedia Commons" },
+  mersin:     { file: "Kızkalesi and Kızkalesi Beach, Erdemli, Mersin.jpg",         credit: "Kızkalesi (Maiden's Castle), Mersin / Wikimedia Commons" },
+  rize:       { file: "Ayder Yaylasi @ Rize-Turkey.JPG",                            credit: "Ayder yayla, Rize / Wikimedia Commons" },
+  ankara:     { file: "Anıtkabir in Ankara Turkey by Mardetanha (73).JPG",          credit: "Anıtkabir, Ankara / Wikimedia Commons" },
+  gaziantep:  { file: "Gaziantep Zeugma Museum Dionysos Triumf mosaic 1921.jpg",    credit: "Zeugma mosaics, Gaziantep / Wikimedia Commons" },
+  bursa:      { file: "Yeşil camii bursa - panoramio (14).jpg",                     credit: "Yeşil Cami, Bursa / Wikimedia Commons" },
+  konya:      { file: "Mevlana Museum (Green Mausoleum) in Konya Turkey By Mardetanha (41).JPG", credit: "Mevlana Museum, Konya / Wikimedia Commons" },
+  sanliurfa:  { file: "Göbekli Tepe surrounding area.JPG",                          credit: "Göbekli Tepe, Şanlıurfa / Wikimedia Commons" },
 };
 
 function buildUrl(file) {
