@@ -552,7 +552,9 @@
           "q": "How far is Ephesus from Kuşadası?",
           "a": "Around 20 minutes by car. Day tours pick up at Kuşadası hotels every morning."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Kusadasi_banner_Pigeon_Island.jpg?width=1600",
+      "heroImageCredit": "Pigeon Island, Kuşadası / Wikimedia Commons"
     },
     {
       "slug": "mersin",

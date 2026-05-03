@@ -153,7 +153,9 @@
           "q": "How long do I need?",
           "a": "Two nights minimum: arrive afternoon, sunset terrace, full day for the old town + Deyrulzafaran monastery, leave morning of day three. Add a third night to add Midyat."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Mardin_old_town.JPG?width=1600",
+      "heroImageCredit": "Mardin old town / Wikimedia Commons"
     },
     {
       "slug": "konya",
@@ -468,7 +470,9 @@
           "q": "How do I get there?",
           "a": "From Ankara: 3 hours by car or bus. From Istanbul: 5 hours by car, 6+ by bus. There's no airport; the closest is Ankara."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Safranbolu_traditional_houses-2.jpg?width=1600",
+      "heroImageCredit": "Safranbolu Ottoman houses / Wikimedia Commons"
     }
   ]
 }

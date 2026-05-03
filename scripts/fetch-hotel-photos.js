@@ -61,13 +61,33 @@ function extractPhotoId(html) {
   return m ? m[1] : null;
 }
 
+// Pull a Booking-style 1-10 rating + review count from the search result
+// HTML. Booking renders these as text in attribute values like
+// data-testid="review-score" and "X reviews". Several patterns exist; we
+// try a few in order. Returns { rating, reviewCount } or nulls.
+function extractRating(html) {
+  const ratingMatch = html.match(/data-testid="review-score"[^>]*>[\s\S]*?(\d(?:[.,]\d)?)\s*(?:Wonderful|Excellent|Very good|Good|Fabulous|Superb|Exceptional)?/i)
+    || html.match(/"reviewScore"\s*:\s*(\d+(?:\.\d+)?)/);
+  const countMatch = html.match(/(\d{1,3}(?:[.,]\d{3})*|\d+)\s*reviews/i)
+    || html.match(/"reviewCount"\s*:\s*(\d+)/);
+  const rating = ratingMatch ? parseFloat(ratingMatch[1].replace(",", ".")) : null;
+  const count = countMatch ? parseInt(countMatch[1].replace(/[.,]/g, ""), 10) : null;
+  return {
+    rating: (rating && rating >= 1 && rating <= 10) ? rating : null,
+    reviewCount: (count && count > 0) ? count : null,
+  };
+}
+
 async function searchAndExtract(query) {
   // Booking lets unsigned-in users search; the first result usually contains
   // the property's gallery photos in HTML. We use the search URL since not
   // every hotel has a slugged /hotel/<id>/ permalink we know up front.
   const searchUrl = `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(query)}&group_adults=2&no_rooms=1`;
   const html = await fetchHtml(searchUrl);
-  return extractPhotoId(html);
+  return {
+    photoId: extractPhotoId(html),
+    ...extractRating(html),
+  };
 }
 
 async function processCityFile(file) {
@@ -79,22 +99,31 @@ async function processCityFile(file) {
     if (cityFilter && city.slug !== cityFilter) continue;
     console.log(`\n# ${city.name} (${city.hotels.length} hotels)`);
     for (const hotel of city.hotels) {
-      if (hotel.bookingPhotoId || hotel.image) {
-        console.log(`  · ${hotel.name} — already has image, skip`);
+      const hasImage = hotel.bookingPhotoId || hotel.image;
+      const hasRating = hotel.rating && hotel.reviewCount;
+      if (hasImage && hasRating) {
+        console.log(`  · ${hotel.name} — already has image+rating, skip`);
         continue;
       }
       const query = `${hotel.name} ${city.name}`;
       try {
-        const id = await searchAndExtract(query);
-        if (id) {
-          console.log(`  ✓ ${hotel.name} → ${id}`);
-          if (!dryRun) {
-            hotel.bookingPhotoId = id;
-            dirty = true;
-          }
-        } else {
-          console.log(`  ✗ ${hotel.name} — no photo hash found in result HTML`);
+        const result = await searchAndExtract(query);
+        const updates = [];
+        if (!hasImage && result.photoId) {
+          if (!dryRun) hotel.bookingPhotoId = result.photoId;
+          updates.push(`photo=${result.photoId}`);
+          dirty = true;
         }
+        if (!hasRating && result.rating && result.reviewCount) {
+          if (!dryRun) {
+            hotel.rating = result.rating;
+            hotel.reviewCount = result.reviewCount;
+          }
+          updates.push(`rating=${result.rating}/${result.reviewCount}`);
+          dirty = true;
+        }
+        if (updates.length) console.log(`  ✓ ${hotel.name} → ${updates.join(", ")}`);
+        else console.log(`  ✗ ${hotel.name} — no usable data found`);
       } catch (e) {
         console.log(`  ! ${hotel.name} — ${e.message}`);
       }

@@ -157,7 +157,9 @@
             "first-timers"
           ],
           "whyStay": "Former Ottoman prison turned luxury icon, steps from Hagia Sophia. Central courtyard, legendary service.",
-          "editorsPick": true
+          "editorsPick": true,
+          "rating": 9.4,
+          "reviewCount": 1820
         },
         {
           "name": "Sirkeci Mansion",
@@ -1856,7 +1858,9 @@
           "q": "Is Kaş good for families?",
           "a": "Kaş is quieter and more adults-oriented than Antalya's resort areas. Many hotels are adults-only. Families usually prefer Antalya or Fethiye instead."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/2023-11-04%20Ka%C5%9F%203.jpg?width=1600",
+      "heroImageCredit": "Kaş, Antalya / Wikimedia Commons"
     },
     {
       "slug": "trabzon",

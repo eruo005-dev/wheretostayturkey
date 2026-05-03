@@ -30,6 +30,10 @@ const HERO_PHOTOS = {
   bursa:      { file: "Yeşil camii bursa - panoramio (14).jpg",                     credit: "Yeşil Cami, Bursa / Wikimedia Commons" },
   konya:      { file: "Mevlana Museum (Green Mausoleum) in Konya Turkey By Mardetanha (41).JPG", credit: "Mevlana Museum, Konya / Wikimedia Commons" },
   sanliurfa:  { file: "Göbekli Tepe surrounding area.JPG",                          credit: "Göbekli Tepe, Şanlıurfa / Wikimedia Commons" },
+  kas:        { file: "2023-11-04 Kaş 3.jpg",                                       credit: "Kaş, Antalya / Wikimedia Commons" },
+  kusadasi:   { file: "Kusadasi_banner_Pigeon_Island.jpg",                          credit: "Pigeon Island, Kuşadası / Wikimedia Commons" },
+  mardin:     { file: "Mardin_old_town.JPG",                                        credit: "Mardin old town / Wikimedia Commons" },
+  safranbolu: { file: "Safranbolu_traditional_houses-2.jpg",                        credit: "Safranbolu Ottoman houses / Wikimedia Commons" },
 };
 
 function buildUrl(file) {
