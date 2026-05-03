@@ -357,6 +357,15 @@ small, .small { font-size: 0.86rem; }
   position: relative;
 }
 .hotel-card:hover { border-color: var(--ink); transform: translateY(-3px); }
+.hotel-card .hotel-image {
+  display: block;
+  width: calc(100% + 52px);
+  height: 200px;
+  object-fit: cover;
+  margin: -26px -26px 18px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--hairline);
+}
 .hotel-card .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--s-3); }
 .hotel-card h3 {
   font-family: var(--font-serif);

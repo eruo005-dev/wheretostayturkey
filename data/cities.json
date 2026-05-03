@@ -361,7 +361,9 @@
           "q": "Is Sultanahmet or Beyoğlu better?",
           "a": "Sultanahmet for first-timers who want to walk everywhere historic. Beyoğlu for repeat visitors, food/nightlife lovers, and anyone who wants the 'real Istanbul' energy. Many travelers split: two nights each."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Side_view_of_Hagia_Sophia.JPG?width=1600",
+      "heroImageCredit": "Hagia Sophia / Wikimedia Commons"
     },
     {
       "slug": "cappadocia",
@@ -609,7 +611,9 @@
           "q": "Is a cave hotel worth it?",
           "a": "Yes — it's the whole point of coming. Rooms stay cool in summer, warm in winter, and waking up inside rock is memorable. Pick one with a good terrace."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Hot_air_balloon_over_Cappadocia%2C_Turkey.JPG?width=1600",
+      "heroImageCredit": "Cappadocia balloons / Wikimedia Commons"
     },
     {
       "slug": "antalya",
@@ -1095,7 +1099,9 @@
           "q": "Is Bodrum expensive?",
           "a": "Parts of it are now among the priciest destinations in the Mediterranean. Bitez and Gümüşlük are still reasonable. Yalıkavak and Türkbükü are genuinely expensive in summer."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Bodrum_castle_3.JPG?width=1600",
+      "heroImageCredit": "Bodrum Castle / Wikimedia Commons"
     },
     {
       "slug": "fethiye",
@@ -1455,7 +1461,9 @@
           "q": "Where to stay for Ephesus?",
           "a": "Selçuk is the small town 5 min from the ruins — best for a quick overnight. Izmir Alsancak is better if you want city amenities and just day-trip to Ephesus."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Celsus_library_in_Ephesus.JPG?width=1600",
+      "heroImageCredit": "Library of Celsus, Ephesus / Wikimedia Commons"
     },
     {
       "slug": "pamukkale",
@@ -1583,7 +1591,9 @@
           "q": "Do I need to stay overnight in Pamukkale?",
           "a": "Yes if you want a quiet morning or sunset at the travertines. Day-trippers arrive at peak hours and it gets crowded. A cheap village hotel lets you walk over at dawn."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Pamukkale_Hierapolis_Travertine_pools.JPG?width=1600",
+      "heroImageCredit": "Pamukkale travertines / Wikimedia Commons"
     },
     {
       "slug": "marmaris",
