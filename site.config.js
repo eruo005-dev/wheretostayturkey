@@ -53,7 +53,6 @@ module.exports = {
   affiliates,
   bookingAid: affiliates.booking.aid,
   getYourGuidePartnerId: affiliates.getYourGuide.partnerId,
-  adsense: { clientId: "", slotCity: "" },
   plausibleDomain: "",
   gaMeasurementId: "",
   emailCaptureEndpoint: "https://assets.mailerlite.com/jsonp/2296486/forms/185895210894493012/subscribe",
