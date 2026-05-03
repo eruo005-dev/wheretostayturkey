@@ -394,12 +394,22 @@ function compareOtaLinks(query) {
 
 // --------------------------- shared chrome ---------------------------
 
-function head({ title, description, canonical, ogImage, jsonld = [], preloadHero = null }) {
+function head({ title, description, canonical, ogImage, jsonld = [], preloadHero = null, ogType = "website", article = null }) {
   const og = ogImage || `${config.siteUrl}${config.defaultOgImage}`;
   const ldBlocks = jsonld.map((obj) => `<script type="application/ld+json">${JSON.stringify(obj)}</script>`).join("\n");
   const heroPreload = preloadHero
     ? `<link rel="preload" as="image" href="${esc(preloadHero)}" fetchpriority="high">`
     : "";
+  // OpenGraph article meta — emitted only when ogType === "article" and the
+  // article object is supplied. Used by Facebook, LinkedIn, and (despite the
+  // name) most sharing tools as cross-platform article metadata.
+  const articleTags = (ogType === "article" && article) ? [
+    article.publishedTime ? `<meta property="article:published_time" content="${esc(article.publishedTime)}">` : "",
+    article.modifiedTime ? `<meta property="article:modified_time" content="${esc(article.modifiedTime)}">` : "",
+    article.author ? `<meta property="article:author" content="${esc(article.author)}">` : "",
+    article.section ? `<meta property="article:section" content="${esc(article.section)}">` : "",
+    ...(Array.isArray(article.tags) ? article.tags.map((t) => `<meta property="article:tag" content="${esc(t)}">`) : []),
+  ].filter(Boolean).join("\n") : "";
   const analytics = [];
   if (config.plausibleDomain) {
     analytics.push(`<script defer data-domain="${esc(config.plausibleDomain)}" src="https://plausible.io/js/script.js"></script>`);
@@ -418,11 +428,12 @@ function head({ title, description, canonical, ogImage, jsonld = [], preloadHero
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(canonical)}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="${esc(ogType)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:image" content="${esc(og)}">
+${articleTags}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
@@ -976,6 +987,92 @@ function itemListLd(name, items) {
       "@type": "ListItem",
       position: i + 1,
       name: it.name,
+    })),
+  };
+}
+
+// Process a journal-article bodyHtml: extract H2 headings to build a
+// table of contents, slug-id each H2 for anchor links, and emit a
+// candidate "midpoint" anchor where a mid-article CTA can be injected
+// (immediately AFTER the closing </p> following the middle H2).
+//
+// Returns { html, toc, wordCount }. Plain JS string transforms — no DOM
+// parser dependency, kept narrow on the patterns we actually emit in
+// data/journal-posts.json.
+function processArticleBody(bodyHtml) {
+  if (!bodyHtml) return { html: "", toc: "", wordCount: 0 };
+  const headings = [];
+  const slugify = (s) => String(s).toLowerCase().replace(/<[^>]+>/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
+  const seen = new Set();
+  // Add `id` to each <h2> that doesn't already have one.
+  let html = bodyHtml.replace(/<h2(\s[^>]*)?>([\s\S]*?)<\/h2>/gi, (m, attrs, inner) => {
+    if (attrs && /\sid=/.test(attrs)) {
+      const idMatch = attrs.match(/id="([^"]+)"/);
+      if (idMatch) headings.push({ id: idMatch[1], text: inner.replace(/<[^>]+>/g, "").trim() });
+      return m;
+    }
+    let id = slugify(inner);
+    if (!id) return m;
+    let unique = id;
+    let n = 2;
+    while (seen.has(unique)) unique = `${id}-${n++}`;
+    seen.add(unique);
+    headings.push({ id: unique, text: inner.replace(/<[^>]+>/g, "").trim() });
+    return `<h2 id="${unique}"${attrs || ""}>${inner}</h2>`;
+  });
+  // Inject the mid-article CTA placeholder marker after the H2 closest to
+  // the middle of the article. Renderer can split on <!-- midpoint --> to
+  // insert custom content. Only when there are >= 4 H2s (i.e. genuinely
+  // long-form). For shorter posts, no mid-CTA.
+  if (headings.length >= 4) {
+    const mid = Math.floor(headings.length / 2);
+    const midId = headings[mid].id;
+    const re = new RegExp(`<h2 id="${midId.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}"`);
+    // Find the END of the section started by the midpoint H2: i.e. the
+    // next </p> after this heading. We replace that </p> with </p><!-- midpoint -->.
+    const idx = html.search(re);
+    if (idx >= 0) {
+      const after = html.indexOf("</p>", idx);
+      if (after > 0) {
+        html = html.slice(0, after + 4) + "<!--midpoint-->" + html.slice(after + 4);
+      }
+    }
+  }
+  const toc = headings.length >= 3
+    ? `<nav class="article-toc" aria-label="Table of contents">
+  <div class="article-toc-label">Contents</div>
+  <ol>
+    ${headings.map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join("")}
+  </ol>
+</nav>`
+    : "";
+  const wordCount = bodyHtml.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  return { html, toc, wordCount };
+}
+
+// HowTo structured data — for procedural guides where each step is a
+// distinct action (e.g. "Install eSIM before you fly"). Steps must be a
+// non-empty array of strings; supplyOf and toolOf are optional.
+function howToLd({ name, description, totalTime, estimatedCost, steps }) {
+  if (!steps || !steps.length) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    ...(description ? { description } : {}),
+    ...(totalTime ? { totalTime } : {}),
+    ...(estimatedCost ? {
+      estimatedCost: {
+        "@type": "MonetaryAmount",
+        currency: estimatedCost.currency || "USD",
+        value: String(estimatedCost.value),
+      },
+    } : {}),
+    step: steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: typeof s === "string" ? `Step ${i + 1}` : (s.name || `Step ${i + 1}`),
+      text: typeof s === "string" ? s : s.text,
     })),
   };
 }
@@ -2335,6 +2432,19 @@ ${tail()}`;
       { name: "Home", url: `${config.siteUrl}/` },
       { name: "Visa", url: canonical },
     ]),
+    howToLd({
+      name: "How to apply for a Turkey e-Visa",
+      description: "Apply for a Turkey e-Visa online in about 10 minutes. Cost: $35–50 depending on passport. Validity: 180 days from issue.",
+      totalTime: "PT10M",
+      estimatedCost: { value: 50, currency: "USD" },
+      steps: [
+        { name: "Confirm eligibility", text: "Check whether your passport is e-Visa eligible at evisa.gov.tr. Most US, Canadian, Australian, UAE, and Saudi passport holders qualify; many EU/UK/Japan passports are visa-free." },
+        { name: "Open the official site", text: "Go to evisa.gov.tr — only the official site. Third-party 'visa services' charge 2–4× more for the identical form." },
+        { name: "Fill in passport details", text: "Enter your passport number, full name as printed, expiry date, and travel dates. Passport must be valid for at least 6 months from your arrival." },
+        { name: "Pay by card", text: "Pay the $35–50 fee by credit or debit card. Most issues take a few minutes; allow up to 24 hours for edge cases." },
+        { name: "Save the PDF", text: "You'll receive an e-Visa PDF by email within minutes. Print it or save it to your phone — bring both when you fly." },
+      ],
+    }),
   ];
   const html = head({ title, description, canonical, jsonld }) + body;
   writeFile("visa/index.html", html);
@@ -2560,10 +2670,26 @@ ${disclosureBanner()}
 ${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
-  const jsonld = [breadcrumbLd([
-    { name: "Home", url: `${config.siteUrl}/` },
-    { name: "eSIM", url: canonical },
-  ])];
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home", url: `${config.siteUrl}/` },
+      { name: "eSIM", url: canonical },
+    ]),
+    howToLd({
+      name: "How to install a Turkey eSIM before you fly",
+      description: "Set up your Turkey eSIM at home so you have working data the moment you land at Istanbul Airport — no roaming bill, no SIM swap.",
+      totalTime: "PT10M",
+      estimatedCost: { value: 14, currency: "USD" },
+      steps: [
+        { name: "Buy your plan online", text: "Buy your plan online while still at home (on hotel WiFi day-of departure works too)." },
+        { name: "Scan the QR code", text: "Scan the QR code Airalo or Holafly emails you with your phone camera. The phone prompts to add the cellular plan." },
+        { name: "Label the new line", text: "Label the new line 'Turkey' so you can toggle it." },
+        { name: "Set as data line", text: "Set the eSIM as your data line. Leave your home line on for SMS and 2-factor auth." },
+        { name: "Toggle Data Roaming on", text: "Toggle Data Roaming ON for the Turkey line — confusingly required even though it's an eSIM, not roaming." },
+        { name: "Land and connect", text: "The eSIM activates the moment you connect to a Turkish cell tower (usually mid-descent). You'll have data the second you turn airplane mode off." },
+      ],
+    }),
+  ].filter(Boolean);
   const html = head({ title, description, canonical, jsonld }) + body;
   writeFile("esim/index.html", html);
 }
@@ -4416,6 +4542,27 @@ function renderJournalPost(p) {
   const canonical = `${config.siteUrl}/journal/${p.slug}/`;
   const title = `${p.title} — ${config.siteName}`;
   const description = (p.subtitle && p.subtitle.length >= 80 ? p.subtitle : (p.summary || p.subtitle || "")).replace(/\s+/g, " ").trim().slice(0, 160);
+  // Process the article body: add anchor ids to H2s, build a TOC, and
+  // mark a midpoint where a mid-article CTA can be injected.
+  const processed = processArticleBody(p.bodyHtml);
+  // Mid-article CTA — only injected on long posts (4+ H2s) and only
+  // when we found a midpoint marker. Targets the post's first city tag.
+  const midCta = (() => {
+    const tagSlug = (p.tags || []).find((t) => cities.find((c) => c.slug === t.toLowerCase()));
+    const targetCity = tagSlug ? cities.find((c) => c.slug === tagSlug.toLowerCase()) : null;
+    if (!targetCity) return "";
+    return `<aside class="mid-cta" style="margin:32px 0;padding:22px 24px;background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:var(--radius)">
+      <div class="eyebrow" style="margin-bottom:6px">While you're reading</div>
+      <p style="margin:0 0 12px;font-family:var(--font-serif);font-size:1.1rem;color:var(--ink)">Picking where to stay in ${esc(targetCity.name)}? Our full neighborhood guide breaks it down.</p>
+      <a class="btn btn-primary btn-sm" href="/${esc(targetCity.slug)}/">Open the ${esc(targetCity.name)} guide →</a>
+    </aside>`;
+  })();
+  const articleHtml = processed.html
+    ? processed.html.replace("<!--midpoint-->", midCta)
+    : `<p>${esc(p.summary)}</p>
+       <div class="callout-warning" style="background:var(--accent-soft);border-left:2px solid var(--accent);padding:18px 22px;margin:24px 0;font-size:0.95rem;color:var(--ink-muted)">
+         <strong>Coming soon.</strong> The full ${p.readMinutes}-minute read is being written. Subscribe at the foot of any page and we'll email you when it goes live.
+       </div>`;
   const body = `
 ${nav()}
 ${disclosureBanner()}
@@ -4436,13 +4583,10 @@ ${disclosureBanner()}
     </div>
   </div>
 
+  ${processed.toc}
+
   <div class="prose mt-4">
-    ${p.bodyHtml ? p.bodyHtml : `
-      <p>${esc(p.summary)}</p>
-      <div class="callout-warning" style="background:var(--accent-soft);border-left:2px solid var(--accent);padding:18px 22px;margin:24px 0;font-size:0.95rem;color:var(--ink-muted)">
-        <strong>Coming soon.</strong> The full ${p.readMinutes}-minute read is being written. Subscribe at the foot of any page and we'll email you when it goes live.
-      </div>
-    `}
+    ${articleHtml}
     <p style="margin-top:32px;color:var(--ink-muted);font-size:.92rem">Tagged: ${p.tags.map((t) => `<span style="background:var(--accent-soft);padding:2px 8px;border-radius:2px;margin-right:6px">${esc(t)}</span>`).join("")}</p>
   </div>
   ${(() => {
@@ -4514,6 +4658,13 @@ ${(() => {
 ${essentialsBlock()}
 ${footer()}
 ${tail()}`;
+  // Resolve article-image candidate: use the post's image if set, else
+  // the target-city hero photo if any, else the default OG.
+  const articleTagSlug = (p.tags || []).find((t) => cities.find((c) => c.slug === t.toLowerCase()));
+  const articleCity = articleTagSlug ? cities.find((c) => c.slug === articleTagSlug.toLowerCase()) : null;
+  const articleImage = p.image || (articleCity && articleCity.heroImage) || `${config.siteUrl}${config.defaultOgImage}`;
+  const primarySection = (p.tags && p.tags[0]) ? p.tags[0] : "Travel";
+
   const jsonld = [
     breadcrumbLd([
       { name: "Home", url: `${config.siteUrl}/` },
@@ -4523,15 +4674,42 @@ ${tail()}`;
     {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
+      mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
       headline: p.title,
-      description: p.subtitle,
+      description: p.subtitle || p.summary || "",
       url: canonical,
+      image: articleImage,
       datePublished: p.publishedAt,
+      dateModified: p.updatedAt || p.publishedAt,
+      articleSection: primarySection,
+      keywords: (p.tags || []).join(", "),
+      wordCount: processed.wordCount,
+      timeRequired: `PT${p.readMinutes || 6}M`,
+      inLanguage: "en",
       author: { "@type": "Person", name: AUTHOR.name, url: `${config.siteUrl}/about/${AUTHOR.slug}/` },
-      publisher: { "@type": "Organization", name: config.siteName, url: config.siteUrl },
+      publisher: {
+        "@type": "Organization",
+        name: config.siteName,
+        url: config.siteUrl,
+        logo: { "@type": "ImageObject", url: `${config.siteUrl}/assets/img/favicon.svg` },
+      },
     },
   ];
-  const html = head({ title, description, canonical, jsonld }) + body;
+  const html = head({
+    title,
+    description,
+    canonical,
+    jsonld,
+    ogImage: articleImage,
+    ogType: "article",
+    article: {
+      publishedTime: p.publishedAt,
+      modifiedTime: p.updatedAt || p.publishedAt,
+      author: AUTHOR.name,
+      section: primarySection,
+      tags: p.tags || [],
+    },
+  }) + body;
   writeFile(`journal/${p.slug}/index.html`, html);
 }
 
