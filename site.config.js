@@ -2,34 +2,91 @@
 
 // Travelpayouts shared credentials (single account: Wheretostayturkey site)
 // Marker = TP account ID, trs = website-source ID. Used by tp.media redirect URLs.
+// Account dashboard at https://app.travelpayouts.com/dashboard?source=523094
 const tp = { marker: "722878", trs: "523094" };
 
+// Travelpayouts program registry — every program approved on this account
+// where we have at least the campaign_id.
+//
+// `campaignId` is required; `partnerId` (the `p=` parameter on tp.media) is
+// what TP uses to actually credit the click. When BOTH are populated the
+// build emits a working tp.media wrapper. When only campaignId is known,
+// the wrapper falls back to the bare partner URL until partnerId is filled
+// (run scripts/fetch-tp-partners.js or copy from the TP "Generate links"
+// dialog: open https://app.travelpayouts.com/tools/links/recent → pick the
+// program → "Show full link" → the `p=` value).
+const tpPrograms = {
+  klook:          { campaignId: "137", partnerId: "4110" },
+  kiwitaxi:       { campaignId: "1",   partnerId: "647" },
+  localrent:      { campaignId: "87",  partnerId: "2043" },
+  // Below: campaignId confirmed via TP dashboard "Ready-made by brands";
+  // partnerId pending. The link builder skips tp.media wrapping until
+  // partnerId is filled, so leaving them empty is safe.
+  tiqets:         { campaignId: "89",  partnerId: "" },
+  airalo:         { campaignId: "541", partnerId: "" },
+  kiwiCom:        { campaignId: "111", partnerId: "" },
+  getTransfer:    { campaignId: "147", partnerId: "" },
+  welcomePickups: { campaignId: "627", partnerId: "" },
+  yesim:          { campaignId: "224", partnerId: "" },
+  visitorsCoverage:{ campaignId: "153", partnerId: "" },
+  gigsky:         { campaignId: "636", partnerId: "" },
+  airHelp:        { campaignId: "120", partnerId: "" },
+  insubuy:        { campaignId: "165", partnerId: "" },
+  eatwith:        { campaignId: "164", partnerId: "" },
+  qeeq:           { campaignId: "172", partnerId: "" },
+  ticketmaster:   { campaignId: "183", partnerId: "" },
+  autoEurope:     { campaignId: "143", partnerId: "" },
+  nordvpn:        { campaignId: "631", partnerId: "" },
+  saily:          { campaignId: "629", partnerId: "" },
+};
+
 const affiliates = {
+  // ---- Hotels (none of these are TP programs — keep blank fields here for
+  // direct partner approvals) ----
   booking:        { aid: "" },
   hotelsCom:      { camref: "" },
   agoda:          { cid: "" },
+  // Trip.com is a TP partner but uses native Allianceid/SID format, NOT the
+  // tp.media wrapper. Confirmed values below are from TP dashboard.
   tripcom:        { allianceid: "8157710", sid: "308782349", tripSub3: "D16205590" },
   hostelworld:    { urlPrefix: "" },
   vrbo:           { camref: "" },
-  getYourGuide:   { partnerId: "" },
-  viator:         { pid: "" },
-  klook:          { aid: "" },
-  tiqets:         { partner: "" },
-  civitatis:      { partner: "" },
-  welcomePickups: { ref: "" },
-  kiwitaxi:       { marker: "" },
-  // Localrent — Turkey-strong car rental aggregator. Active TP partnership.
-  // tp.media wrapper format: campaign_id=87, p=2043 (Localrent ids inside TP).
-  localrent:      { campaignId: "87", partnerId: "2043", marker: tp.marker, trs: tp.trs },
-  discoverCars:   { aAid: "" },
-  rentalcars:     { aid: "" },
-  airalo:         { ref: "" },
-  holafly:        { ref: "" },
-  safetywing:     { ref: "" },
-  worldNomads:    { ref: "" },
-  wise:           { invite: "" },
-  kiwiCom:        { marker: "" },
-  wayaway:        { marker: "" },
+  // ---- Tours / activities ----
+  getYourGuide:   { partnerId: "" },               // direct GYG, not in TP
+  viator:         { pid: "" },                     // direct Viator, not in TP
+  klook:          { ...tpPrograms.klook, marker: tp.marker, trs: tp.trs },
+  tiqets:         { ...tpPrograms.tiqets, marker: tp.marker, trs: tp.trs },
+  civitatis:      { partner: "" },                 // direct Civitatis, not in TP
+  // ---- Transfers / car rental ----
+  welcomePickups: { ...tpPrograms.welcomePickups, marker: tp.marker, trs: tp.trs },
+  kiwitaxi:       { ...tpPrograms.kiwitaxi, marker: tp.marker, trs: tp.trs },
+  localrent:      { ...tpPrograms.localrent, marker: tp.marker, trs: tp.trs },
+  getTransfer:    { ...tpPrograms.getTransfer, marker: tp.marker, trs: tp.trs },
+  autoEurope:     { ...tpPrograms.autoEurope, marker: tp.marker, trs: tp.trs },
+  qeeq:           { ...tpPrograms.qeeq, marker: tp.marker, trs: tp.trs },
+  discoverCars:   { aAid: "" },                    // direct, not in TP
+  rentalcars:     { aid: "" },                     // direct, not in TP
+  // ---- eSIM ----
+  airalo:         { ...tpPrograms.airalo, marker: tp.marker, trs: tp.trs },
+  yesim:          { ...tpPrograms.yesim, marker: tp.marker, trs: tp.trs },
+  gigsky:         { ...tpPrograms.gigsky, marker: tp.marker, trs: tp.trs },
+  saily:          { ...tpPrograms.saily, marker: tp.marker, trs: tp.trs },
+  holafly:        { ref: "" },                     // direct, not in TP
+  // ---- Insurance ----
+  visitorsCoverage:{ ...tpPrograms.visitorsCoverage, marker: tp.marker, trs: tp.trs },
+  insubuy:        { ...tpPrograms.insubuy, marker: tp.marker, trs: tp.trs },
+  airHelp:        { ...tpPrograms.airHelp, marker: tp.marker, trs: tp.trs },
+  safetywing:     { ref: "" },                     // direct, not in TP
+  worldNomads:    { ref: "" },                     // direct, not in TP
+  // ---- Money / utilities ----
+  wise:           { invite: "" },                  // direct, not in TP
+  nordvpn:        { ...tpPrograms.nordvpn, marker: tp.marker, trs: tp.trs },
+  // ---- Flights ----
+  kiwiCom:        { ...tpPrograms.kiwiCom, marker: tp.marker, trs: tp.trs },
+  wayaway:        { marker: "" },                  // direct, not on this account
+  // ---- Experiences ----
+  eatwith:        { ...tpPrograms.eatwith, marker: tp.marker, trs: tp.trs },
+  ticketmaster:   { ...tpPrograms.ticketmaster, marker: tp.marker, trs: tp.trs },
 };
 
 const business = {
@@ -51,6 +108,8 @@ module.exports = {
   siteDescription: "A decision engine for the best neighborhoods and hotels in Turkey.",
   business,
   affiliates,
+  tp,
+  tpPrograms,
   bookingAid: affiliates.booking.aid,
   getYourGuidePartnerId: affiliates.getYourGuide.partnerId,
   plausibleDomain: "",
