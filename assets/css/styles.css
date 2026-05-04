@@ -1491,7 +1491,8 @@ body.has-sticky .cookie-banner { bottom: 86px; }
 }
 .footer-grid { display: grid; gap: var(--s-6); grid-template-columns: 1fr; margin-bottom: var(--s-6); }
 @media (min-width: 720px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
-.footer h4 { font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-soft); margin-bottom: var(--s-3); font-weight: 500; }
+.footer h4,
+.footer .footer-col-h { font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-soft); margin-bottom: var(--s-3); font-weight: 500; }
 .footer ul { list-style: none; padding: 0; margin: 0; }
 .footer li { margin-bottom: var(--s-2); }
 .footer a { color: var(--ink-muted); font-size: 0.92rem; text-decoration: none; }

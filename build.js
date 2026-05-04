@@ -636,11 +636,11 @@ function footer() {
         <p class="text-muted small">A decision engine for choosing the best neighborhood and hotel in Turkey — curated, quick, conversion-focused.</p>
       </div>
       <div>
-        <h4>Destinations</h4>
+        <h3 class="footer-col-h">Destinations</h3>
         <ul>${cityLinks}</ul>
       </div>
       <div>
-        <h4>Plan your trip</h4>
+        <h3 class="footer-col-h">Plan your trip</h3>
         <ul>
           <li><a href="/visa/">Turkey visa</a></li>
           <li><a href="/flights/">Flights to Turkey</a></li>
@@ -657,7 +657,7 @@ function footer() {
         </ul>
       </div>
       <div>
-        <h4>Collections</h4>
+        <h3 class="footer-col-h">Collections</h3>
         <ul>
           <li><a href="/istanbul/luxury/">Luxury stays</a></li>
           <li><a href="/istanbul/budget/">Budget stays</a></li>
@@ -668,7 +668,7 @@ function footer() {
         </ul>
       </div>
       <div>
-        <h4>About</h4>
+        <h3 class="footer-col-h">About</h3>
         <ul>
           <li><a href="/guides/">Guides hub</a></li>
           <li><a href="/journal/">Journal</a></li>
@@ -1274,6 +1274,37 @@ function resolveHeroImage(slug, dataHeroImage) {
   if (config.useHeroPhotos && dataHeroImage) return dataHeroImage;
   return null;
 }
+
+// Geographic coordinates per city — well-known centroids for the
+// destination, accurate to ~1km. Drives the Place + GeoCoordinates
+// schema injected into city pages so Google's geo-aware result panels
+// (Maps cards, "places nearby", knowledge graph) can pin the page to
+// a real location. For multi-place destinations (Cappadocia, the
+// Black Sea coast etc.), we use the canonical visitor centre.
+const CITY_GEO = {
+  istanbul:    { lat: 41.0082, lng: 28.9784, region: "Marmara" },
+  cappadocia:  { lat: 38.6431, lng: 34.8289, region: "Central Anatolia" },  // Göreme
+  antalya:     { lat: 36.8969, lng: 30.7133, region: "Mediterranean" },
+  bodrum:      { lat: 37.0344, lng: 27.4305, region: "Aegean" },
+  fethiye:     { lat: 36.6517, lng: 29.1244, region: "Aegean" },
+  izmir:       { lat: 38.4192, lng: 27.1287, region: "Aegean" },
+  pamukkale:   { lat: 37.9203, lng: 29.1196, region: "Aegean" },
+  marmaris:    { lat: 36.8550, lng: 28.2680, region: "Aegean" },
+  kas:         { lat: 36.2010, lng: 29.6420, region: "Mediterranean" },
+  trabzon:     { lat: 41.0050, lng: 39.7178, region: "Black Sea" },
+  alanya:      { lat: 36.5447, lng: 31.9997, region: "Mediterranean" },
+  side:        { lat: 36.7672, lng: 31.3886, region: "Mediterranean" },
+  kusadasi:    { lat: 37.8597, lng: 27.2598, region: "Aegean" },
+  mersin:      { lat: 36.8121, lng: 34.6415, region: "Mediterranean" },
+  rize:        { lat: 41.0250, lng: 40.5170, region: "Black Sea" },
+  ankara:      { lat: 39.9334, lng: 32.8597, region: "Central Anatolia" },
+  gaziantep:   { lat: 37.0662, lng: 37.3833, region: "Southeastern Anatolia" },
+  bursa:       { lat: 40.1828, lng: 29.0670, region: "Marmara" },
+  konya:       { lat: 37.8714, lng: 32.4847, region: "Central Anatolia" },
+  mardin:      { lat: 37.3128, lng: 40.7245, region: "Southeastern Anatolia" },
+  safranbolu:  { lat: 41.2526, lng: 32.6939, region: "Black Sea" },
+  sanliurfa:   { lat: 37.1671, lng: 38.7958, region: "Southeastern Anatolia" },
+};
 
 // Per-month palette + emoji, grouped by season for cohesion.
 const MONTH_THEME = {
@@ -1909,14 +1940,41 @@ ${tail()}`;
       { name: "Home", url: `${config.siteUrl}/` },
       { name: c.name, url: canonical },
     ]),
-    {
-      "@context": "https://schema.org",
-      "@type": "TouristDestination",
-      name: c.name,
-      description: c.summary,
-      url: canonical,
-      containedInPlace: { "@type": "Country", name: "Turkey" },
-    },
+    (() => {
+      const geo = CITY_GEO[c.slug];
+      const td = {
+        "@context": "https://schema.org",
+        "@type": "TouristDestination",
+        "@id": `${canonical}#place`,
+        name: c.name,
+        description: c.summary,
+        url: canonical,
+        image: resolveHeroImage(c.slug, c.heroImage) || `${config.siteUrl}/assets/img/og/${c.slug}.svg`,
+        isPartOf: { "@id": `${config.siteUrl}/#website` },
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: c.name,
+          addressRegion: geo ? geo.region : undefined,
+          addressCountry: "TR",
+        },
+        containedInPlace: [
+          geo ? { "@type": "AdministrativeArea", name: geo.region + ", Turkey" } : null,
+          { "@type": "Country", name: "Turkey" },
+        ].filter(Boolean),
+        touristType: c.bestFor && c.bestFor.length ? c.bestFor : undefined,
+      };
+      if (geo) {
+        td.geo = { "@type": "GeoCoordinates", latitude: geo.lat, longitude: geo.lng };
+        // Helps Google understand the rough extent of the destination
+        // (city limits roughly within 15km of centre — better than
+        // pretending the geo coordinate is the only relevant point).
+        td.geoCoveredBy = {
+          "@type": "GeoShape",
+          circle: `${geo.lat} ${geo.lng} 15000`,
+        };
+      }
+      return td;
+    })(),
   ];
   const faq = faqLd(c.faqs);
   if (faq) jsonld.push(faq);
@@ -3564,7 +3622,8 @@ ${disclosureBanner()}
   </div>
 </div>
 
-<section class="container">
+<section class="container" aria-labelledby="esim-providers-h">
+  <h2 id="esim-providers-h" class="visually-hidden">eSIM providers worth using in Turkey</h2>
   <div class="grid grid-1 grid-2 mt-3">
     <div class="card" style="padding:28px">
       <div class="eyebrow">Most popular — best value</div>
@@ -5381,9 +5440,37 @@ ${tail()}`;
     {
       "@context": "https://schema.org",
       "@type": "Person",
+      "@id": `${canonical}#person`,
       name: AUTHOR.name,
-      worksFor: { "@type": "Organization", name: config.siteName, url: config.siteUrl },
       url: canonical,
+      mainEntityOfPage: { "@id": canonical },
+      jobTitle: "Editor",
+      description: AUTHOR.credentials,
+      worksFor: { "@id": `${config.siteUrl}/#organization` },
+      knowsAbout: [
+        "Turkey travel",
+        "Istanbul neighborhoods",
+        "Cappadocia",
+        "Hotel reviews",
+        "Mediterranean coast",
+        "Aegean coast",
+        "Black Sea region",
+        "Ottoman architecture",
+        "Turkish cuisine",
+        "Editorial standards",
+      ],
+      knowsLanguage: ["English", "Turkish"],
+      image: { "@type": "ImageObject", url: `${config.siteUrl}/assets/img/favicon.svg` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "@id": canonical,
+      url: canonical,
+      name: title,
+      isPartOf: { "@id": `${config.siteUrl}/#website` },
+      mainEntity: { "@id": `${canonical}#person` },
+      inLanguage: "en",
     },
   ];
   const html = head({ title, description, canonical, jsonld }) + body;
@@ -5625,7 +5712,7 @@ ${tail()}
       wordCount: processed.wordCount,
       timeRequired: `PT${p.readMinutes || 6}M`,
       inLanguage: "en",
-      author: { "@type": "Person", name: AUTHOR.name, url: `${config.siteUrl}/about/${AUTHOR.slug}/` },
+      author: { "@id": `${config.siteUrl}/about/${AUTHOR.slug}/#person`, "@type": "Person", name: AUTHOR.name, url: `${config.siteUrl}/about/${AUTHOR.slug}/` },
       publisher: {
         "@type": "Organization",
         name: config.siteName,
