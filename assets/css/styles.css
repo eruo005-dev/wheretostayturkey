@@ -801,6 +801,228 @@ small, .small { font-size: 0.86rem; }
 }
 .nav-search:hover { color: var(--accent); background: var(--accent-soft); text-decoration: none; }
 
+/* ---------- 12.83 Competitive-edge widgets ---------- */
+
+/* Last-visited trust badge — small inline pill near the top of city
+   pages. Signals editorial freshness in a way most affiliate sites
+   don't bother with. */
+.last-visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.last-visited svg { flex-shrink: 0; }
+
+/* 12-month climate strip — 12 evenly-sized clickable cells, each
+   colored by season + tier (great / ok / avoid). No chart library. */
+.climate-strip-section { margin: 32px auto 12px; }
+.climate-strip {
+  background: var(--surface);
+  border: 1px solid var(--hairline-soft);
+  border-radius: 8px;
+  padding: 18px 20px;
+}
+.climate-strip-label {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.climate-strip-bars {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
+}
+.climate-month {
+  display: flex; flex-direction: column; align-items: stretch;
+  text-decoration: none;
+  color: inherit;
+  padding: 6px 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  transition: background .15s;
+}
+.climate-month:hover { background: var(--accent-soft); text-decoration: none; }
+.climate-month-name {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.climate-month-bar {
+  display: block;
+  width: 100%;
+  height: 28px;
+  border-radius: 3px;
+  background: var(--hairline);
+}
+.climate-month.tier-great .climate-month-bar { background: linear-gradient(180deg, #166534 0%, #22c55e 100%); }
+.climate-month.tier-ok    .climate-month-bar { background: linear-gradient(180deg, #b45309 0%, #fbbf24 100%); }
+.climate-month.tier-avoid .climate-month-bar { background: linear-gradient(180deg, #4b5563 0%, #9ca3af 100%); }
+.climate-month.season-summer.tier-ok    .climate-month-bar { background: linear-gradient(180deg, #c2410c 0%, #f97316 100%); }
+.climate-month.season-winter.tier-ok    .climate-month-bar { background: linear-gradient(180deg, #1e3a8a 0%, #60a5fa 100%); }
+.climate-strip-legend {
+  margin-top: 12px;
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-family: var(--font-sans);
+}
+.climate-strip-legend .legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.climate-strip-legend .dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 2px;
+}
+.climate-strip-legend .tier-great { background: #22c55e; }
+.climate-strip-legend .tier-ok { background: #fbbf24; }
+.climate-strip-legend .tier-avoid { background: #9ca3af; }
+@media (max-width: 600px) {
+  .climate-month-name { font-size: 0.62rem; }
+  .climate-month-bar { height: 22px; }
+}
+
+/* Cost-per-day widget — three tiers. */
+.cost-per-day { margin: 8px auto 24px; }
+.cost-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.cost-tier {
+  background: var(--surface);
+  border: 1px solid var(--hairline-soft);
+  border-left-width: 4px;
+  border-radius: 6px;
+  padding: 14px 16px 12px;
+  display: flex; flex-direction: column;
+}
+.cost-tier.cost-budget { border-left-color: var(--success); }
+.cost-tier.cost-mid    { border-left-color: var(--accent); }
+.cost-tier.cost-lux    { border-left-color: var(--ink); }
+.cost-tier .cost-label {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.cost-tier .cost-amount {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 2px 0;
+}
+.cost-tier .cost-try {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+  margin-left: 4px;
+}
+.cost-tier .cost-note {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-top: auto;
+  font-family: var(--font-sans);
+}
+.cost-disclaimer {
+  font-family: var(--font-sans);
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .cost-grid { grid-template-columns: 1fr; }
+  .cost-tier .cost-try { display: block; margin-left: 0; }
+}
+
+/* "What we'd skip" anti-recommendation callout. Differentiator vs every
+   other affiliate-funded travel site. */
+.skip-callout-section { margin: 28px auto; }
+.skip-callout {
+  background: #fef3c7;
+  border-left: 4px solid #b45309;
+  border-radius: 6px;
+  padding: 22px 26px 20px;
+}
+.skip-callout .skip-eyebrow {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #92400e;
+}
+.skip-callout .skip-h {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #451a03;
+  margin: 4px 0 10px;
+}
+.skip-callout .skip-text {
+  margin: 0 0 8px;
+  color: #1c1917;
+  line-height: 1.55;
+  font-size: 0.96rem;
+}
+.skip-callout .skip-meta { margin: 0; }
+.skip-callout .skip-meta a { color: #92400e; }
+
+/* Sticky back-to-top button — visible after 60vh of scroll. */
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(11, 15, 25, 0.15);
+  transition: transform .18s, background .18s, color .18s;
+}
+.back-to-top[hidden] {
+  display: none !important;
+}
+.back-to-top:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.back-to-top:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .back-to-top { bottom: 76px; right: 16px; }   /* clear of mobile sticky CTA */
+}
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top:hover { transform: none; }
+}
+
 /* ---------- 12.84 Site search page ---------- */
 .search-form input[type="search"] {
   width: 100%;

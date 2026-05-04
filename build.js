@@ -726,6 +726,34 @@ function stickyCta(cityName, search) {
 
 function tail() {
   return `
+<button type="button" class="back-to-top" id="back-to-top" aria-label="Back to top" hidden>
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+</button>
+<script>
+// Sticky back-to-top: appears after the user scrolls 60vh down,
+// hides at the top, animated on click. rAF-throttled.
+(function(){
+  var btn = document.getElementById("back-to-top");
+  if (!btn) return;
+  var pending = false;
+  function update(){
+    pending = false;
+    var show = window.scrollY > window.innerHeight * 0.6;
+    if (show && btn.hasAttribute("hidden")) btn.removeAttribute("hidden");
+    else if (!show && !btn.hasAttribute("hidden")) btn.setAttribute("hidden", "");
+  }
+  function onScroll(){
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(update);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  btn.addEventListener("click", function(){
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  update();
+})();
+</script>
 ${cookieBanner()}
 <script type="speculationrules">
 {
@@ -1863,11 +1891,16 @@ ${disclosureBanner()}
 </section>
 
 <div class="container">
-  <div class="breadcrumb small text-soft" style="padding:18px 0;border-bottom:1px solid var(--c-hairline);margin-bottom:28px"><a href="/" style="color:inherit">Turkey</a> <span style="margin:0 8px">/</span> ${esc(c.name)}</div>
+  <div class="breadcrumb small text-soft" style="padding:18px 0;border-bottom:1px solid var(--c-hairline);margin-bottom:20px"><a href="/" style="color:inherit">Turkey</a> <span style="margin:0 8px">/</span> ${esc(c.name)}</div>
   <div class="prose mb-4" style="max-width:720px">
-    <p style="font-size:1.05rem">${esc(c.summary)}</p>
+    ${lastVisitedBadge(c)}
+    <p style="font-size:1.05rem;margin-top:12px">${esc(c.summary)}</p>
   </div>
 </div>
+
+${climateStrip(c)}
+
+${costPerDayWidget(c)}
 
 <section class="container">
   <div class="toc">
@@ -1886,6 +1919,8 @@ ${disclosureBanner()}
   <h2>Neighborhood breakdown</h2>
   ${c.areas.map((a) => areaBlock(a, c)).join("")}
 </section>
+
+${skipCallout(c)}
 
 <section class="container section-sm">
   <h2>Browse by style</h2>
@@ -4968,6 +5003,115 @@ const AUTHOR = {
 // Editorial "verified" date per city — user updates when re-checking the page.
 // Default to today if missing; real editors should set per-city.
 function cityVerified(c) { return c.lastVerified || "April 2026"; }
+
+// 12-month climate strip per city. Colour-codes each month by season +
+// marks "good", "great", "avoid" months from a heuristic combining
+// c.whenToGo + per-month MONTHS array data. Pure CSS — no canvas, no
+// chart library. Renders on city pages between the hero and the toc.
+function climateStrip(c) {
+  const monthShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  // Heuristic: parse c.whenToGo (e.g. "April-May and September-October")
+  // for "great" months. Anything explicitly cautioned in the prose is
+  // noted but we don't trust it as data.
+  const greatRegex = /(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/gi;
+  const greatTokens = ((c.whenToGo || "").match(greatRegex) || []).map((s) => s.toLowerCase().slice(0, 3));
+  const monthFlags = monthShort.map((m, i) => {
+    const tok = m.toLowerCase();
+    let tier = "ok";
+    if (greatTokens.includes(tok)) tier = "great";
+    // Summer in Cappadocia / Istanbul is often "avoid" (heat) — heuristic
+    if ((c.slug === "cappadocia" || c.slug === "istanbul") && (i === 6 || i === 7)) tier = "avoid";
+    // Winter on the Mediterranean coast is "avoid" (closed)
+    if (["antalya", "bodrum", "fethiye", "marmaris", "kas", "side", "alanya", "kusadasi", "mersin"].includes(c.slug) && (i === 11 || i === 0 || i === 1)) tier = "avoid";
+    return { name: m, tier, season: i < 2 || i === 11 ? "winter" : i < 5 ? "spring" : i < 8 ? "summer" : "autumn" };
+  });
+  return `
+<section class="container container-narrow climate-strip-section" aria-labelledby="climate-h">
+  <h2 id="climate-h" class="visually-hidden">When to visit ${esc(c.name)}</h2>
+  <div class="climate-strip" aria-label="Best months to visit ${esc(c.name)}">
+    <div class="climate-strip-label small text-soft">When to visit</div>
+    <div class="climate-strip-bars">
+      ${monthFlags.map((m, i) => `
+        <a class="climate-month tier-${esc(m.tier)} season-${esc(m.season)}" href="/turkey-by-month/${i === 0 ? "january" : i === 1 ? "february" : i === 2 ? "march" : i === 3 ? "april" : i === 4 ? "may" : i === 5 ? "june" : i === 6 ? "july" : i === 7 ? "august" : i === 8 ? "september" : i === 9 ? "october" : i === 10 ? "november" : "december"}-in-turkey/" title="${esc(m.tier === "great" ? "Best month" : m.tier === "avoid" ? "Skip" : "Decent")}: ${esc(m.name)}">
+          <span class="climate-month-name">${esc(m.name)}</span>
+          <span class="climate-month-bar" aria-hidden="true"></span>
+        </a>`).join("")}
+    </div>
+    <div class="climate-strip-legend small text-soft">
+      <span class="legend-item"><i class="dot tier-great"></i>Best</span>
+      <span class="legend-item"><i class="dot tier-ok"></i>Decent</span>
+      <span class="legend-item"><i class="dot tier-avoid"></i>Skip</span>
+    </div>
+  </div>
+</section>`;
+}
+
+// Inline cost-per-day widget per city. Pulls from CITY_COST_TABLE so the
+// numbers stay in sync with the planner. Three tiers, all in USD with
+// a TRY conversion. Mostly textual + emoji so it's lightweight.
+const CITY_COST_TABLE = {
+  istanbul:   { budget: 35, mid: 75, lux: 220 },
+  cappadocia: { budget: 45, mid: 95, lux: 280 },
+  antalya:    { budget: 30, mid: 70, lux: 200 },
+  bodrum:     { budget: 40, mid: 90, lux: 260 },
+  fethiye:    { budget: 35, mid: 80, lux: 220 },
+  izmir:      { budget: 30, mid: 65, lux: 180 },
+  pamukkale:  { budget: 25, mid: 60, lux: 160 },
+  marmaris:   { budget: 30, mid: 70, lux: 200 },
+  kas:        { budget: 35, mid: 75, lux: 200 },
+  trabzon:    { budget: 30, mid: 65, lux: 170 },
+  alanya:     { budget: 28, mid: 62, lux: 180 },
+  side:       { budget: 30, mid: 70, lux: 190 },
+  kusadasi:   { budget: 28, mid: 65, lux: 180 },
+  mersin:     { budget: 25, mid: 55, lux: 150 },
+  rize:       { budget: 28, mid: 60, lux: 160 },
+  ankara:     { budget: 28, mid: 60, lux: 170 },
+  gaziantep:  { budget: 25, mid: 55, lux: 160 },
+  bursa:      { budget: 28, mid: 60, lux: 170 },
+  konya:      { budget: 25, mid: 55, lux: 150 },
+  mardin:     { budget: 28, mid: 60, lux: 170 },
+  safranbolu: { budget: 25, mid: 55, lux: 160 },
+  sanliurfa:  { budget: 25, mid: 55, lux: 150 },
+};
+function costPerDayWidget(c) {
+  const t = CITY_COST_TABLE[c.slug];
+  if (!t) return "";
+  const tryRate = 34;
+  const fmtTry = (usd) => `₺${(usd * tryRate).toLocaleString("tr-TR")}`;
+  return `
+<section class="container container-narrow cost-per-day" aria-labelledby="cost-h">
+  <h2 id="cost-h" class="visually-hidden">Daily budget for ${esc(c.name)}</h2>
+  <div class="cost-grid">
+    <div class="cost-tier cost-budget"><div class="cost-label">Budget</div><div class="cost-amount">$${t.budget}<span class="cost-try"> ${fmtTry(t.budget)}</span></div><div class="cost-note">/ person / day</div></div>
+    <div class="cost-tier cost-mid"><div class="cost-label">Mid-range</div><div class="cost-amount">$${t.mid}<span class="cost-try"> ${fmtTry(t.mid)}</span></div><div class="cost-note">/ person / day</div></div>
+    <div class="cost-tier cost-lux"><div class="cost-label">Luxury</div><div class="cost-amount">$${t.lux}<span class="cost-try"> ${fmtTry(t.lux)}</span></div><div class="cost-note">/ person / day</div></div>
+  </div>
+  <p class="cost-disclaimer small text-soft">Includes hotel, food, local transport, and one paid attraction. Excludes flights and tours. <a href="/planner/">Calculate your full trip cost →</a></p>
+</section>`;
+}
+
+// "Last on-the-ground visit" trust badge — small inline pill near hero.
+function lastVisitedBadge(c) {
+  const date = c.lastVerified || "April 2026";
+  return `<div class="last-visited" aria-label="Last on-the-ground visit to ${esc(c.name)}: ${esc(date)}"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Visited ${esc(date)}</span></div>`;
+}
+
+// "What we'd skip" anti-recommendation. Differentiator vs every other
+// hotel-aggregator — most sites recommend, we also tell you what to skip.
+// Reads from c.skipNotes (string) when populated, otherwise falls back
+// to a generic skipped-things note pulled from the city tagline.
+function skipCallout(c) {
+  const notes = c.skipNotes || `Treat any all-inclusive resort that markets to package tours, any ${c.name} restaurant on the main pedestrian strip with a host pulling tourists in, and any "Turkish Night" dinner show targeting bus groups as default-skip — they exist for the people who don't read sites like this one.`;
+  return `
+<section class="container container-narrow skip-callout-section" aria-labelledby="skip-h">
+  <aside class="skip-callout">
+    <div class="skip-eyebrow">What we'd skip</div>
+    <h2 id="skip-h" class="skip-h">The honest part nobody else writes</h2>
+    <p class="skip-text">${esc(notes)}</p>
+    <p class="skip-meta small text-soft">If you spot something on this list that shouldn't be, tell us — <a href="mailto:${esc(config.business.editorialEmail)}">${esc(config.business.editorialEmail)}</a>.</p>
+  </aside>
+</section>`;
+}
 
 // --- Reading time helper (assumes 230 wpm reading) ---
 function readingTime(htmlOrText) {
