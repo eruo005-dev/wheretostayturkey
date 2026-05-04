@@ -256,13 +256,38 @@ function viatorLink(query) {
   if (!A.viator.pid) return null;
   return `https://www.viator.com/search/${encodeURIComponent(query)}?pid=${A.viator.pid}&mcid=42383`;
 }
+// Travelpayouts redirector. Marker = TP account, trs = site source, p =
+// per-program partner id, campaign_id = program id. ALL four are required
+// for tp.media to credit the click — when any are missing, callers should
+// fall back to the partner's bare URL (or return null to hide the CTA).
+function tpMediaLink({ campaignId, partnerId, destUrl, sub1 }) {
+  const params = new URLSearchParams({
+    campaign_id: campaignId,
+    marker: config.tp.marker,
+    p: partnerId,
+    trs: config.tp.trs,
+  });
+  if (sub1) params.set("sub_id", sub1);
+  return `https://tp.media/r?${params.toString()}&u=${encodeURIComponent(destUrl)}`;
+}
+// Helper: route a destination URL through tp.media when the program has
+// both campaignId AND partnerId. Otherwise return the raw URL so the user
+// still gets to the partner page (unattributed but functional).
+function tpRouteOrDirect(programKey, destUrl, sub1) {
+  const cfg = A[programKey];
+  if (cfg && cfg.campaignId && cfg.partnerId) {
+    return tpMediaLink({ campaignId: cfg.campaignId, partnerId: cfg.partnerId, destUrl, sub1 });
+  }
+  return destUrl;
+}
 function klookLink(query) {
-  if (!A.klook.aid) return null;
-  return `https://www.klook.com/en-US/search/result/?query=${encodeURIComponent(query)}&aid=${A.klook.aid}`;
+  // Deep-link to Klook search; route through tp.media when configured.
+  const dest = `https://www.klook.com/en-US/search/result/?query=${encodeURIComponent(query)}`;
+  return tpRouteOrDirect("klook", dest, `klook-${slug(query).slice(0, 24)}`);
 }
 function tiqetsLink(query) {
-  if (!A.tiqets.partner) return null;
-  return `https://www.tiqets.com/en/search?q=${encodeURIComponent(query)}&partner=${A.tiqets.partner}`;
+  const dest = `https://www.tiqets.com/en/search?q=${encodeURIComponent(query)}`;
+  return tpRouteOrDirect("tiqets", dest, `tiqets-${slug(query).slice(0, 24)}`);
 }
 function civitatisLink(query) {
   if (!A.civitatis.partner) return null;
@@ -272,18 +297,29 @@ function civitatisLink(query) {
 // ---- Transfers, car rental ----
 function welcomePickupsLink(city) {
   // Real URL pattern: www.welcomepickups.com/{city}/airport-transfer/
-  const base = `https://www.welcomepickups.com/${slug(city)}/airport-transfer/`;
-  return A.welcomePickups.ref ? `${base}?ref=${A.welcomePickups.ref}` : base;
+  const dest = `https://www.welcomepickups.com/${slug(city)}/airport-transfer/`;
+  return tpRouteOrDirect("welcomePickups", dest, `wp-${slug(city)}`);
 }
 function kiwitaxiLink(city) {
   // Real URL pattern: kiwitaxi.com/en/turkey/{city}-airport-transfers
-  const base = `https://kiwitaxi.com/en/turkey/${slug(city)}-airport-transfers`;
-  return A.kiwitaxi.marker ? `${base}?marker=${A.kiwitaxi.marker}` : base;
+  const dest = `https://kiwitaxi.com/en/turkey/${slug(city)}-airport-transfers`;
+  return tpRouteOrDirect("kiwitaxi", dest, `kiwitaxi-${slug(city)}`);
+}
+function getTransferLink(cityOrQuery) {
+  // GetTransfer.com — broad coverage, alternative to WelcomePickups.
+  // Land them on the Turkey transfers search.
+  const dest = `https://gettransfer.com/en/transfers?from=${encodeURIComponent(cityOrQuery + " Airport")}`;
+  return tpRouteOrDirect("getTransfer", dest, `gt-${slug(cityOrQuery)}`);
 }
 function discoverCarsLink(city) {
-  // Real URL pattern: www.discovercars.com/turkey/{city}
+  // Direct (non-TP) — falls back to the partner page when aAid is blank.
   const base = `https://www.discovercars.com/turkey/${slug(city)}`;
   return A.discoverCars.aAid ? `${base}?a_aid=${A.discoverCars.aAid}` : base;
+}
+function autoEuropeLink(city) {
+  // AutoEurope (TP-routed when configured).
+  const dest = `https://www.autoeurope.eu/lp/CarRental/Turkey/${slug(city)}`;
+  return tpRouteOrDirect("autoEurope", dest, `ae-${slug(city)}`);
 }
 // Localrent — Turkey-strong rental aggregator via Travelpayouts redirector.
 // Cities Localrent supports in Turkey: istanbul, antalya, bodrum, dalaman, izmir,
@@ -302,21 +338,11 @@ function localrentDestUrl(cityName) {
   }
   return `https://localrent.com/en/turkey`;
 }
-function tpMediaLink(campaignId, partnerId, destUrl, sub1) {
-  // TP redirector pattern. Marker = TP account, trs = website source.
-  const params = new URLSearchParams({
-    campaign_id: campaignId,
-    marker: A.localrent.marker,  // shared TP marker for the project
-    p: partnerId,
-    trs: A.localrent.trs,
-  });
-  if (sub1) params.set("sub_id", sub1);
-  return `https://tp.media/r?${params.toString()}&u=${encodeURIComponent(destUrl)}`;
-}
 function localrentLink(cityName, sub1) {
-  return tpMediaLink(A.localrent.campaignId, A.localrent.partnerId, localrentDestUrl(cityName), sub1);
+  return tpRouteOrDirect("localrent", localrentDestUrl(cityName), sub1 || `lr-${slug(cityName)}`);
 }
 function rentalcarsLink(city) {
+  // Direct (non-TP).
   const base = `https://www.rentalcars.com/SearchResults.do?location=${encodeURIComponent(city)}`;
   return A.rentalcars.aid ? `${base}&aid=${A.rentalcars.aid}` : base;
 }
@@ -350,13 +376,40 @@ function tripcomFlightSearchLink(destIata, sub1) {
 }
 
 // ---- eSIM / insurance / money ----
+// All TP-routed: Airalo, Yesim, GigSky, Saily (eSIMs); VisitorsCoverage,
+// Insubuy, AirHelp (insurance / flight comp). Holafly, SafetyWing,
+// WorldNomads, Wise are NOT TP partners on this account — kept direct.
 function airaloLink() {
-  const base = "https://www.airalo.com/turkey-esim";
-  return A.airalo.ref ? `${base}?ref=${A.airalo.ref}` : base;
+  const dest = "https://www.airalo.com/turkey-esim";
+  return tpRouteOrDirect("airalo", dest, "airalo-turkey");
+}
+function yesimLink() {
+  const dest = "https://yesim.app/";
+  return tpRouteOrDirect("yesim", dest, "yesim-turkey");
+}
+function gigskyLink() {
+  const dest = "https://www.gigsky.com/";
+  return tpRouteOrDirect("gigsky", dest, "gigsky-turkey");
+}
+function sailyLink() {
+  const dest = "https://saily.com/";
+  return tpRouteOrDirect("saily", dest, "saily-turkey");
 }
 function holaflyLink() {
   const base = "https://esim.holafly.com/esim-turkey/";
   return A.holafly.ref ? `${base}?ref=${A.holafly.ref}` : base;
+}
+function visitorsCoverageLink() {
+  const dest = "https://www.visitorscoverage.com/";
+  return tpRouteOrDirect("visitorsCoverage", dest, "vc-turkey");
+}
+function insubuyLink() {
+  const dest = "https://www.insubuy.com/";
+  return tpRouteOrDirect("insubuy", dest, "insubuy-turkey");
+}
+function airHelpLink() {
+  const dest = "https://www.airhelp.com/";
+  return tpRouteOrDirect("airHelp", dest, "airhelp");
 }
 function safetyWingLink() {
   const base = "https://safetywing.com/nomad-insurance/";
@@ -373,8 +426,9 @@ function wiseLink() {
 
 // ---- Flights ----
 function kiwiFlightsLink(city) {
-  const base = `https://www.kiwi.com/en/search/results/anywhere/${encodeURIComponent(city)}-turkey`;
-  return A.kiwiCom.marker ? `${base}?marker=${A.kiwiCom.marker}` : base;
+  // Kiwi.com is a TP partner (campaign_id=111). Land on their search page.
+  const dest = `https://www.kiwi.com/en/search/results/anywhere/${encodeURIComponent(city)}-turkey`;
+  return tpRouteOrDirect("kiwiCom", dest, `kiwi-${slug(city)}`);
 }
 function wayawayLink(city) {
   const base = `https://wayaway.io/search/${encodeURIComponent(city)}`;
