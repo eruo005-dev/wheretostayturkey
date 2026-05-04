@@ -45,5 +45,28 @@ jobs:
           test -f site/terms/index.html
           test -f site/planner/index.html
           test -f site/quiz/index.html
-          test $(find site -name '*.html' | wc -l) -gt 100
+          test -f site/editorial-standards/index.html
+          test -f site/ads.txt
+          test $(find site -name '*.html' | wc -l) -gt 200
           echo "✓ Build verified"
+
+      - name: ads.txt format check (must be `pub-`, not `ca-pub-`)
+        run: |
+          if grep -q '^google\.com, ca-pub-' site/ads.txt; then
+            echo "::error::ads.txt has 'ca-pub-' prefix — AdSense will flag it Unauthorized. Strip the 'ca-' prefix."
+            exit 1
+          fi
+          grep -E '^google\.com, pub-[0-9]+, DIRECT, [a-f0-9]+' site/ads.txt
+          echo "✓ ads.txt format OK"
+
+      - name: Broken internal links
+        run: node scripts/broken-link-check.js
+
+      - name: Accessibility (WCAG 2.2 AA, severe-only)
+        run: node scripts/a11y-survey.js
+
+      - name: Performance budget (HTML/CSS/JS sizes)
+        run: node scripts/perf-budget.js
+
+      - name: SEO survey (informational, doesn't fail)
+        run: node scripts/seo-survey.js || echo "::warning::SEO survey reported issues (non-blocking)"
