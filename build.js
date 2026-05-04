@@ -205,20 +205,15 @@ function cityHeroSvg(slug) {
 const A = config.affiliates;
 
 // ---- Hotels / accommodation ----
-function bookingLink(query, extra = {}) {
-  const base = {
-    ss: query,
-    group_adults: "2",
-    no_rooms: "1",
-    ...extra,
-  };
-  // Only attach affiliate tag when a real one is configured. Treat empty
-  // string and the historical "BOOKING_AID" placeholder as unconfigured so
-  // we never ship literal placeholder text in production URLs.
-  const aid = A.booking.aid;
-  if (aid && aid !== "BOOKING_AID") base.aid = aid;
-  const params = new URLSearchParams(base);
-  return `https://www.booking.com/searchresults.html?${params.toString()}`;
+// All hotel links route through Trip.com — the only TP-affiliated hotel
+// program on this account. Booking.com / Hotels.com / Agoda are kept in
+// the affiliate config for future direct partnerships but no link
+// builders emit those URLs anymore (operator's call: TP-only).
+function bookingLink(query) {
+  // Kept under the historical name so call sites don't need to change.
+  // Returns a Trip.com search URL with our Travelpayouts Allianceid/SID
+  // attached. Falls back to a bare Trip.com search if config is empty.
+  return tripcomLink(query) || `https://www.trip.com/hotels/list?city=${encodeURIComponent(query)}`;
 }
 function hotelLink(hotel, cityName) {
   // Don't duplicate city name if it's already in the hotel name
@@ -471,12 +466,14 @@ function wayawayLink(city) {
   return A.wayaway.marker ? `${base}?marker=${A.wayaway.marker}` : base;
 }
 
-// Active-only compare links array (any enabled OTAs for this city/hotel)
+// Active-only compare-row OTAs. Trip.com is intentionally excluded
+// because it's already the primary "Check availability" CTA; listing
+// it again would be confusing. Only includes partners with configured
+// affiliate IDs — empty means the row is suppressed.
 function compareOtaLinks(query) {
   const out = [];
   const hc = hotelsComLink(query); if (hc) out.push({ name: "Hotels.com", url: hc });
   const ag = agodaLink(query);      if (ag) out.push({ name: "Agoda",      url: ag });
-  const tc = tripcomLink(query);    if (tc) out.push({ name: "Trip.com",   url: tc });
   const hw = hostelworldLink(query);if (hw) out.push({ name: "Hostelworld",url: hw });
   const vr = vrboLink(query);       if (vr) out.push({ name: "Vrbo",       url: vr });
   return out;
@@ -580,10 +577,10 @@ section.section-sm,section.container.section-sm,article + section.container,#als
 <link rel="preload" as="style" href="/assets/css/styles.css" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/styles.css" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/filters.css">
-<link rel="preconnect" href="https://www.booking.com">
+<link rel="preconnect" href="https://www.trip.com">
+<link rel="dns-prefetch" href="https://tp.media">
 <link rel="dns-prefetch" href="https://www.getyourguide.com">
-<link rel="dns-prefetch" href="https://www.hotels.com">
-<link rel="dns-prefetch" href="https://www.agoda.com">
+<link rel="dns-prefetch" href="https://localrent.com">
 <link rel="dns-prefetch" href="https://www.welcomepickups.com">
 <link rel="dns-prefetch" href="https://www.airalo.com">
 ${(config.adsense && config.adsense.clientId) ? `<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
@@ -1801,7 +1798,7 @@ ${essentialsBlock()}
     <h2>How this site works</h2>
     <div class="prose">
       <p>Most travel sites bury the answer. We put it up front: for each major Turkish city, we tell you which neighborhoods are worth staying in, who each one is best for, and which hotels are genuinely recommended in each.</p>
-      <p>We link to hotels on Booking.com, Hotels.com, and Agoda; to tours on GetYourGuide and Viator; to airport transfers on Welcome Pickups; and to a handful of essentials like Turkish eSIMs and travel insurance. If you book through any of these links, we earn a small commission — at no extra cost to you. That's how we keep this site ad-free.</p>
+      <p>We link to hotels and flights on Trip.com; to car rentals on Localrent; to tours on GetYourGuide and Klook; to airport transfers on Welcome Pickups and Kiwitaxi; and to a handful of essentials like Turkish eSIMs (Airalo) and travel insurance. If you book through any of these links, we earn a small commission — at no extra cost to you. That's how we keep this site ad-free.</p>
       <p>We don't accept PR trips or paid placements. Listings are based on price, location, and long-term review consistency.</p>
     </div>
   </div>
@@ -2213,7 +2210,7 @@ function renderThankYou() {
     { partner: "GetYourGuide",    tag: "Bosphorus cruise + Hagia Sophia tickets", url: getYourGuideLink("Istanbul Bosphorus cruise") },
     { partner: "GetYourGuide",    tag: "Cappadocia balloon add-on (book early)",  url: getYourGuideLink("Cappadocia hot air balloon") },
     { partner: "SafetyWing",      tag: "Travel insurance (flexible, monthly)",    url: safetyWingLink() },
-    { partner: "Booking.com",     tag: "Istanbul hotels — see availability",      url: bookingLink("Istanbul") },
+    { partner: "Trip.com",        tag: "Istanbul hotels — see availability",      url: bookingLink("Istanbul") },
   ];
 
   const body = `
@@ -2328,7 +2325,7 @@ ${disclosureBanner()}
   <p>We tell you which neighborhood to stay in based on how you travel, rather than describing all of them.</p>
   <h2>How we pick hotels</h2>
   <ul>
-    <li>Long-running review average above 8.5 on Booking.com</li>
+    <li>Long-running review average above 8.5 across major aggregators (Trip.com, Tripadvisor, Google reviews)</li>
     <li>Location inside the neighborhood it represents</li>
     <li>Consistency across 200+ reviews</li>
     <li>Clear best-for fit</li>
@@ -2336,7 +2333,7 @@ ${disclosureBanner()}
   <h2>How we research</h2>
   <p>Every city is visited at least annually. Different neighborhoods on different trips. Restaurants we recommend, we eat at. Public ferries, not chartered ones. We pay for our own bookings. No PR-funded trips. No paid placements. Read our full <a href="/editorial-standards/">editorial standards</a> for the methodology.</p>
   <h2 id="affiliate">Affiliate disclosure</h2>
-  <p>We partner with Booking.com, Hotels.com, Agoda, Trip.com, Hostelworld, Vrbo, GetYourGuide, Viator, Klook, Tiqets, Welcome Pickups, Kiwitaxi, Discover Cars, Airalo, SafetyWing, World Nomads, Wise, Kiwi.com, and WayAway. Booking through our links earns us a commission at no cost to you.</p>
+  <p>We partner with Trip.com (hotels and flights), Localrent (car rental), GetYourGuide and Klook (tours and tickets), Welcome Pickups and Kiwitaxi (airport transfers), and Airalo (eSIM) — all through Travelpayouts. Booking through our links earns us a commission at no extra cost to you.</p>
   <h2 id="photo-credits">Photo credits</h2>
   <p>City hero photography from <a rel="noopener" href="https://commons.wikimedia.org/">Wikimedia Commons</a> contributors, used under their respective Creative Commons or Public Domain licenses:</p>
   <ul>
@@ -2378,7 +2375,7 @@ ${disclosureBanner()}
 <h2>How we pick hotels</h2>
 <p>A hotel ships in our shortlist only if it meets all four:</p>
 <ul>
-  <li><strong>Booking.com review average ≥ 8.5 across 200+ reviews,</strong> sustained across at least the last 12 months. Recent dips matter more than the lifetime number.</li>
+  <li><strong>Review average ≥ 8.5 across 200+ reviews</strong> on Trip.com / Tripadvisor / Google, sustained across at least the last 12 months. Recent dips matter more than the lifetime number.</li>
   <li><strong>Located inside the neighborhood it represents,</strong> not "10 minutes by taxi from" it. We've walked there.</li>
   <li><strong>Consistent best-for fit</strong> — a "couples" pick can't have a karaoke pool deck; a "families" pick can't have a 9pm cocktail-only restriction.</li>
   <li><strong>Editorial visit within the past 24 months,</strong> either by us or by a trusted contributor we know personally. We mark older verifications "last verified" with the date.</li>
@@ -2386,7 +2383,7 @@ ${disclosureBanner()}
 <p>What rejects a hotel: persistent complaints about cleanliness, sustained "value" issues (overpriced for the actual room), missing accessibility info on a property that markets to it, or anything our visit found that contradicts marketing claims.</p>
 
 <h2>Where pricing comes from</h2>
-<p>Listed prices are the <em>typical lowest standard double room rate</em> in the property's main season, sourced from Booking.com's published rates and our own search history across the year. Prices change daily; ours are quarterly snapshots, refreshed every March and September. We don't claim live pricing on this site — every "Check availability" link goes to the partner's live booking page where you'll see the exact current rate.</p>
+<p>Listed prices are the <em>typical lowest standard double room rate</em> in the property's main season, sourced from Trip.com's published rates and our own search history across the year. Prices change daily; ours are quarterly snapshots, refreshed every March and September. We don't claim live pricing on this site — every "Check availability" link goes to the partner's live booking page where you'll see the exact current rate.</p>
 
 <h2>Where neighborhood claims come from</h2>
 <p>Three sources, ranked: (1) <strong>residing in the area</strong> — for Istanbul we have a year-round contributor in Cihangir; for Cappadocia we visit annually for at least a week, off-season; (2) <strong>repeated visits over multiple years</strong> for Antalya, Bodrum, Fethiye, Izmir; (3) <strong>a single multi-day visit + verified local sources</strong> for the smaller cities. We mark which tier applies on each city page.</p>
@@ -2400,7 +2397,7 @@ ${disclosureBanner()}
 </ul>
 
 <h2>Affiliate disclosure</h2>
-<p>Every commercial link on this site is an affiliate link, marked with <code>rel="sponsored nofollow"</code>. We earn a commission from successful bookings through Booking.com, Trip.com, GetYourGuide, Localrent, and a handful of others. <strong>The commission does not change what we recommend.</strong> Our hotel picks predate any affiliate relationship — every property in our shortlist would be there even if Booking.com paid us nothing. Read the full <a href="/about/#affiliate">affiliate disclosure</a>.</p>
+<p>Every commercial link on this site is an affiliate link, marked with <code>rel="sponsored nofollow"</code>. We earn a commission from successful bookings through Trip.com, Localrent, GetYourGuide, and a handful of others — all routed through Travelpayouts. <strong>The commission does not change what we recommend.</strong> Our hotel picks predate any affiliate relationship — every property in our shortlist would be there even if every partner paid us nothing. Read the full <a href="/about/#affiliate">affiliate disclosure</a>.</p>
 
 <h2>What we don't accept</h2>
 <ul>
@@ -2804,7 +2801,7 @@ function renderLeadMagnetPage(dataFile, outSlug, heroUpsellQueries) {
     { partner: "GetYourGuide",    tag: heroUpsellQueries.tour || "Top-rated tours",url: getYourGuideLink(heroUpsellQueries.tourQuery || "Istanbul tours") },
     { partner: "GetYourGuide",    tag: "Cappadocia balloon (book early)",          url: getYourGuideLink("Cappadocia hot air balloon") },
     { partner: "SafetyWing",      tag: "Travel insurance",                         url: safetyWingLink() },
-    { partner: "Booking.com",     tag: `${heroUpsellQueries.city} hotels`,         url: bookingLink(heroUpsellQueries.city || "Istanbul") },
+    { partner: "Trip.com",        tag: `${heroUpsellQueries.city} hotels`,         url: bookingLink(heroUpsellQueries.city || "Istanbul") },
   ];
 
   const body = `
@@ -4937,7 +4934,7 @@ function disclosureBanner() {
 function priceDisclaimer() {
   return `
 <p class="text-soft small mt-2" style="text-align:center">
-  Prices are editorial "from" estimates based on recent booking data. Always check <a rel="sponsored nofollow" target="_blank" href="${esc(bookingLink("Turkey"))}">live Booking.com rates</a> for real-time availability and current pricing.
+  Prices are editorial "from" estimates based on recent booking data. Always check <a rel="sponsored nofollow" target="_blank" href="${esc(bookingLink("Turkey"))}">live Trip.com rates</a> for real-time availability and current pricing.
 </p>`;
 }
 
@@ -4979,7 +4976,7 @@ ${disclosureBanner()}
   <ul>
     <li>We collect your email only if you sign up for our newsletter. That's it for personal data.</li>
     <li>We use essential cookies to make the site work. We do not run advertising cookies by default.</li>
-    <li>Third-party embeds (Booking.com, GetYourGuide, Google Maps) may set their own cookies once you click out.</li>
+    <li>Third-party embeds (Trip.com, GetYourGuide, Google Maps) may set their own cookies once you click out.</li>
     <li>You can opt out of our emails with one click, and request data deletion anytime.</li>
   </ul>
 
@@ -4996,7 +4993,7 @@ ${disclosureBanner()}
   </ul>
 
   <h2>Affiliate tracking</h2>
-  <p>When you click an affiliate link (Booking.com, GetYourGuide, Welcome Pickups, Airalo, SafetyWing, etc.), that partner may set tracking cookies to attribute a booking to us. These cookies are set by the partner, not by us, and are governed by their privacy policy. We don't receive any personally identifiable info about you from them.</p>
+  <p>When you click an affiliate link (Trip.com, Localrent, GetYourGuide, Welcome Pickups, Airalo, etc.), that partner may set tracking cookies to attribute a booking to us. These cookies are set by the partner, not by us, and are governed by their privacy policy. We don't receive any personally identifiable info about you from them.</p>
 
   <h2>Your rights (GDPR / UK GDPR / CCPA)</h2>
   <ul>
@@ -5055,7 +5052,7 @@ ${disclosureBanner()}
   <p>${esc(config.siteUrl)} is an independent editorial site that reviews accommodations and experiences in Turkey. We are <strong>not</strong> a travel agency, hotel operator, insurance broker, or tour company. We don't take your payment, process bookings, or stand behind any third-party provider's service quality.</p>
 
   <h2>Affiliate links</h2>
-  <p>We link to third-party booking platforms (Booking.com, Hotels.com, Agoda, GetYourGuide, etc.) and earn commissions when you book through them. This has no effect on the price you pay. We disclose this on every page and in full in our <a href="/about/#affiliate">affiliate disclosure</a>.</p>
+  <p>We link to third-party booking platforms (Trip.com, Localrent, GetYourGuide, etc.) and earn commissions when you book through them. This has no effect on the price you pay. We disclose this on every page and in full in our <a href="/about/#affiliate">affiliate disclosure</a>.</p>
 
   <h2>No travel, legal, medical, or financial advice</h2>
   <p>Content on this site is for general informational purposes only. It is <strong>not</strong> professional advice. Specifically:</p>
@@ -5078,7 +5075,7 @@ ${disclosureBanner()}
 
   <h2>Content and intellectual property</h2>
   <p>All editorial content (neighborhood guides, hotel reviews, itineraries, illustrations) is © ${esc(b.legalName)} unless otherwise noted. You may share our content with credit and a link back. You may not republish in bulk, create derivative editorial works, or train AI models on our content without permission.</p>
-  <p>Third-party trademarks (Booking.com®, Hilton®, Airalo®, etc.) are property of their respective owners and used nominatively to identify the service. We claim no endorsement or partnership beyond publicly disclosed affiliate programs.</p>
+  <p>Third-party trademarks (Trip.com®, Localrent®, Airalo®, etc.) are property of their respective owners and used nominatively to identify the service. We claim no endorsement or partnership beyond publicly disclosed affiliate programs.</p>
 
   <h2>Governing law</h2>
   <p>These terms are governed by the laws of ${esc(b.jurisdiction)}. Any dispute shall be heard in the competent courts of ${esc(b.jurisdiction)}.</p>
@@ -5528,7 +5525,8 @@ ${tail()}
 
 <script>
 const CITY_COST = ${CITY_COST};
-const BOOKING_AID = ${JSON.stringify(A.booking.aid && A.booking.aid !== "BOOKING_AID" ? A.booking.aid : "")};
+const TRIP_ALLIANCE_ID = ${JSON.stringify(A.tripcom.allianceid || "")};
+const TRIP_SID = ${JSON.stringify(A.tripcom.sid || "")};
 const DAY_FOOD = { budget: 25, mid: 55, lux: 140 }; // per person
 const DAY_LOCAL_TRANSPORT = { budget: 8, mid: 15, lux: 30 };
 const STYLE_MULT = { budget: 0.55, mid: 1.0, lux: 2.3 }; // hotel price multiplier vs avg
@@ -5568,10 +5566,11 @@ function compute() {
     (state.extras.size ? '<div class="pb-row"><span>Extras</span><strong>' + fmt(extrasUSD) + '</strong></div>' : '') +
     '<div class="pb-row pb-total"><span>Total</span><strong>' + fmt(totalUSD) + '</strong></div>';
 
-  // Update book CTA: deep link to that city on Booking
-  var bkParams = "ss=" + encodeURIComponent(c.name) + "&group_adults=" + state.travelers + "&no_rooms=" + roomsNeeded;
-  if (BOOKING_AID) bkParams = "aid=" + encodeURIComponent(BOOKING_AID) + "&" + bkParams;
-  $("p-book").href = "https://www.booking.com/searchresults.html?" + bkParams;
+  // Update book CTA: deep link to that city on Trip.com (Travelpayouts).
+  var tripParams = "city=" + encodeURIComponent(c.name);
+  if (TRIP_ALLIANCE_ID) tripParams += "&allianceid=" + encodeURIComponent(TRIP_ALLIANCE_ID);
+  if (TRIP_SID) tripParams += "&sid=" + encodeURIComponent(TRIP_SID);
+  $("p-book").href = "https://www.trip.com/hotels/list?" + tripParams;
 }
 
 // Wire interactions
@@ -6239,7 +6238,7 @@ ${disclosureBanner()}
     <p>That said, we read every introduction. If you'd like us to consider your property, the form below is the right way in.</p>
 
     <h2>Submit your property for consideration</h2>
-    <p>Send us a one-paragraph note — what your property is, where it is, what makes it specific. Photos and Booking.com / Tripadvisor links help. Address it to:</p>
+    <p>Send us a one-paragraph note — what your property is, where it is, what makes it specific. Photos and Trip.com / Tripadvisor links help. Address it to:</p>
     <p><a href="mailto:${esc(b.editorialEmail)}?subject=Submission%20-%20[Your%20property%20name]">${esc(b.editorialEmail)}</a></p>
     <p>We don't respond to every submission, but every one is read. Properties we add typically appear in a guide within 30 days of acceptance, and we visit every newly added property within 12 months.</p>
 
