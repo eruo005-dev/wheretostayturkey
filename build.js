@@ -1160,6 +1160,71 @@ function cityCard(c) {
 </a>`;
 }
 
+// Local hero photos: scan assets/img/heroes/ once at build start. The operator
+// drops a curated JPG/PNG/WebP/SVG at e.g. assets/img/heroes/istanbul.jpg and
+// the build wires it as the hero. Local photos always win over external
+// data-URL heroImages (operator-curated > stock).
+const HERO_PHOTO_DIR = "assets/img/heroes";
+const HERO_PHOTO_EXTS = ["jpg", "jpeg", "png", "webp", "avif", "svg"];
+const localHeroBySlug = (function () {
+  const map = {};
+  try {
+    const dir = path.join(__dirname, HERO_PHOTO_DIR);
+    if (fs.existsSync(dir)) {
+      for (const f of fs.readdirSync(dir)) {
+        const ext = (f.split(".").pop() || "").toLowerCase();
+        if (!HERO_PHOTO_EXTS.includes(ext)) continue;
+        const slug = f.slice(0, -(ext.length + 1));
+        if (!map[slug]) map[slug] = `/${HERO_PHOTO_DIR}/${f}`;
+      }
+    }
+  } catch (e) { /* directory missing — that's fine, no local heroes yet */ }
+  return map;
+})();
+// Resolve a hero image path for any showcase entity:
+//   1. local curated photo at assets/img/heroes/{slug}.{ext} — always wins
+//   2. data-supplied heroImage URL (Wikimedia, etc.) — gated by useHeroPhotos
+//   3. null — caller renders the themed art fallback
+function resolveHeroImage(slug, dataHeroImage) {
+  if (slug && localHeroBySlug[slug]) return localHeroBySlug[slug];
+  if (config.useHeroPhotos && dataHeroImage) return dataHeroImage;
+  return null;
+}
+
+// Per-month palette + emoji, grouped by season for cohesion.
+const MONTH_THEME = {
+  "january-in-turkey":   { emoji: "❄️", a: "#1e3a8a", b: "#bae6fd" },
+  "february-in-turkey":  { emoji: "🌨️", a: "#1e3a8a", b: "#bae6fd" },
+  "march-in-turkey":     { emoji: "🌷", a: "#065f46", b: "#86efac" },
+  "april-in-turkey":     { emoji: "🌼", a: "#065f46", b: "#86efac" },
+  "may-in-turkey":       { emoji: "🌹", a: "#065f46", b: "#86efac" },
+  "june-in-turkey":      { emoji: "☀️", a: "#b45309", b: "#fdba74" },
+  "july-in-turkey":      { emoji: "🏖️", a: "#b45309", b: "#fdba74" },
+  "august-in-turkey":    { emoji: "🌞", a: "#b45309", b: "#fdba74" },
+  "september-in-turkey": { emoji: "🍇", a: "#7c2d12", b: "#f59e0b" },
+  "october-in-turkey":   { emoji: "🍂", a: "#7c2d12", b: "#f59e0b" },
+  "november-in-turkey":  { emoji: "🍵", a: "#7c2d12", b: "#f59e0b" },
+  "december-in-turkey":  { emoji: "✨", a: "#1e3a8a", b: "#bae6fd" },
+};
+// Per-experience theme.
+const EXPERIENCE_THEME = {
+  "cay-culture":                 { emoji: "🍵", a: "#7c2d12", b: "#fbbf24" },
+  "turkish-coffee":              { emoji: "☕", a: "#451a03", b: "#fef3c7" },
+  "whirling-dervishes":          { emoji: "🌀", a: "#1e1b4b", b: "#fbbf24" },
+  "turkish-bazaars":             { emoji: "🏺", a: "#7c2d12", b: "#0e7490" },
+  "hammam-ritual-deep-dive":     { emoji: "♨️", a: "#0e7490", b: "#e0f2fe" },
+  "anatolian-breakfast-culture": { emoji: "🍳", a: "#65a30d", b: "#dc2626" },
+};
+// Per-cultural-concept theme.
+const CULTURE_THEME = {
+  "misafirperverlik-turkish-hospitality": { emoji: "🤝", a: "#9a3412", b: "#fed7aa" },
+  "mahalle-the-turkish-neighborhood":     { emoji: "🏘️", a: "#7c2d12", b: "#fef3c7" },
+  "cay-as-currency":                      { emoji: "🍵", a: "#7c2d12", b: "#fbbf24" },
+  "kolay-gelsin-the-everyday-blessing":   { emoji: "🤲", a: "#0369a1", b: "#fde68a" },
+  "imece-collective-work":                { emoji: "🌾", a: "#65a30d", b: "#fde68a" },
+  "bayram-traditions-turkey":             { emoji: "🎉", a: "#9d174d", b: "#86efac" },
+};
+
 // Per-collection visual identity — emoji + palette (mirrors CITY_PALETTES
 // pattern). Used by the collections hub showcase grid. Not all collections
 // are wired below; missing keys fall back to the default accent palette.
@@ -1227,12 +1292,20 @@ function showcaseCard({
 // instead of an external photo. The visible result still looks intentional
 // (consistent palette, animated gradient, large emoji watermark) — not
 // like a "missing photo" placeholder.
+// Reusable count badge — black pill with white number, used by collection/
+// region/month/experience cards.
+function countBadge(n, label) {
+  if (!n || n <= 0) return "";
+  return `<span class="showcase-badge" title="${esc(label)}" aria-label="${esc(label)}" style="background:var(--ink);color:#fff;font-family:var(--font-sans);font-weight:700;font-size:0.78rem;padding:0 8px;width:auto;height:28px;border-radius:14px">${esc(String(n))}</span>`;
+}
+
 function cityShowcaseCard(c) {
   const description = (c.intro || c.tagline || "").replace(/\s+/g, " ").trim();
   const editorsPick = !!(c.hotels || []).find((h) => h.editorsPick);
   const badge = editorsPick
     ? `<span class="showcase-badge" title="Has editor's-pick hotels" aria-label="Editor's pick"><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"/></svg></span>`
     : "";
+  const photoUrl = resolveHeroImage(c.slug, c.heroImage);
   return showcaseCard({
     href: `/${c.slug}/`,
     title: `Where to stay in ${c.name}`,
@@ -1242,8 +1315,8 @@ function cityShowcaseCard(c) {
     emoji: c.emoji || "📍",
     paletteStyle: cityPaletteStyle(c.slug),
     artSvg: cityHeroSvg(c.slug),
-    photoUrl: c.heroImage,
-    usePhoto: config.useHeroPhotos && c.heroImage,
+    photoUrl,
+    usePhoto: !!photoUrl,
     dataAttrs: `data-city="${esc(c.slug)}" data-name="${esc(c.name.toLowerCase())}" data-popularity="${esc(String(c.popularity || 0))}"`,
   });
 }
@@ -1253,20 +1326,18 @@ function collectionShowcaseCard(c) {
   const theme = COLLECTION_THEME[c.slug] || { emoji: "🏨", a: "#0b0f19", b: "#b45309" };
   const description = (c.subtitle || (c.intro || "").slice(0, 200)).replace(/\s+/g, " ").trim();
   const count = (c.picks || []).length;
-  const badge = count > 0
-    ? `<span class="showcase-badge" title="${count} verified picks" aria-label="${count} verified picks" style="background:var(--ink);color:#fff;font-family:var(--font-sans);font-weight:700;font-size:0.78rem;padding:0 8px;width:auto;height:28px;border-radius:14px">${count}</span>`
-    : "";
+  const photoUrl = resolveHeroImage(c.slug, c.heroImage);
   return showcaseCard({
     href: `/best-of-turkey/${c.slug}/`,
     title: c.title,
     description,
     chip: "Collection",
-    badge,
+    badge: countBadge(count, `${count} verified picks`),
     emoji: theme.emoji,
     paletteStyle: `--city-a:${theme.a};--city-b:${theme.b};--city-ink:#fff`,
     artSvg: null,
-    photoUrl: c.heroImage,
-    usePhoto: config.useHeroPhotos && c.heroImage,
+    photoUrl,
+    usePhoto: !!photoUrl,
     dataAttrs: `data-name="${esc((c.title || "").toLowerCase())}"`,
     cta: "Open collection",
   });
@@ -1277,22 +1348,83 @@ function regionShowcaseCard(r) {
   const theme = REGION_THEME[r.slug] || { emoji: "🗺️", a: "#0b0f19", b: "#b45309" };
   const description = (r.summary || r.tagline || "").replace(/\s+/g, " ").trim();
   const cityCount = (r.cities || []).length;
-  const badge = cityCount > 0
-    ? `<span class="showcase-badge" title="${cityCount} cities" aria-label="${cityCount} cities" style="background:var(--ink);color:#fff;font-family:var(--font-sans);font-weight:700;font-size:0.78rem;padding:0 8px;width:auto;height:28px;border-radius:14px">${cityCount}</span>`
-    : "";
+  const photoUrl = resolveHeroImage(r.slug, r.heroImage);
   return showcaseCard({
     href: `/regions/${r.slug}/`,
     title: r.name,
     description,
     chip: "Region",
-    badge,
+    badge: countBadge(cityCount, `${cityCount} cities`),
     emoji: theme.emoji,
     paletteStyle: `--city-a:${theme.a};--city-b:${theme.b};--city-ink:#fff`,
     artSvg: null,
-    photoUrl: r.heroImage,
-    usePhoto: config.useHeroPhotos && r.heroImage,
+    photoUrl,
+    usePhoto: !!photoUrl,
     dataAttrs: `data-name="${esc((r.name || "").toLowerCase())}"`,
     cta: "Explore region",
+  });
+}
+
+// Month showcase card.
+function monthShowcaseCard(m) {
+  const theme = MONTH_THEME[m.slug] || { emoji: "📅", a: "#0b0f19", b: "#b45309" };
+  const description = (m.subtitle || (m.summary || "").slice(0, 200)).replace(/\s+/g, " ").trim();
+  const photoUrl = resolveHeroImage(m.slug, m.heroImage);
+  return showcaseCard({
+    href: `/turkey-by-month/${m.slug}/`,
+    title: `Turkey in ${m.monthName}`,
+    description,
+    chip: m.monthName,
+    badge: "",
+    emoji: theme.emoji,
+    paletteStyle: `--city-a:${theme.a};--city-b:${theme.b};--city-ink:#fff`,
+    artSvg: null,
+    photoUrl,
+    usePhoto: !!photoUrl,
+    dataAttrs: `data-name="${esc((m.monthName || "").toLowerCase())}" data-month="${esc(String(m.monthNum || 0))}"`,
+    cta: "See the month",
+  });
+}
+
+// Experience showcase card.
+function experienceShowcaseCard(e) {
+  const theme = EXPERIENCE_THEME[e.slug] || { emoji: "✨", a: "#0b0f19", b: "#b45309" };
+  const description = (e.subtitle || (e.intro || "").slice(0, 200)).replace(/\s+/g, " ").trim();
+  const photoUrl = resolveHeroImage(e.slug, e.heroImage);
+  return showcaseCard({
+    href: `/experiences/${e.slug}/`,
+    title: e.title,
+    description,
+    chip: "Experience",
+    badge: "",
+    emoji: theme.emoji,
+    paletteStyle: `--city-a:${theme.a};--city-b:${theme.b};--city-ink:#fff`,
+    artSvg: null,
+    photoUrl,
+    usePhoto: !!photoUrl,
+    dataAttrs: `data-name="${esc((e.title || "").toLowerCase())}"`,
+    cta: "Read",
+  });
+}
+
+// Cultural-concept showcase card.
+function culturalConceptShowcaseCard(c) {
+  const theme = CULTURE_THEME[c.slug] || { emoji: "🇹🇷", a: "#0b0f19", b: "#b45309" };
+  const description = (c.subtitle || (c.intro || "").slice(0, 200)).replace(/\s+/g, " ").trim();
+  const photoUrl = resolveHeroImage(c.slug, c.heroImage);
+  return showcaseCard({
+    href: `/culture/${c.slug}/`,
+    title: c.title,
+    description,
+    chip: "Culture",
+    badge: "",
+    emoji: theme.emoji,
+    paletteStyle: `--city-a:${theme.a};--city-b:${theme.b};--city-ink:#fff`,
+    artSvg: null,
+    photoUrl,
+    usePhoto: !!photoUrl,
+    dataAttrs: `data-name="${esc((c.title || "").toLowerCase())}"`,
+    cta: "Read",
   });
 }
 
@@ -1547,10 +1679,13 @@ function renderCity(c) {
 ${nav()}
 ${disclosureBanner()}
 <main id="main">
-<section class="hero-immersive ${c.heroImage ? "has-photo" : ""}" style="${cityPaletteStyle(c.slug)}">
-  ${c.heroImage
-    ? `<img class="hero-photo" src="${esc(c.heroImage)}" alt="${esc(c.name)}, Turkey" loading="eager" fetchpriority="high" width="1200" height="800" decoding="async">`
-    : `<div class="hero-art">${cityHeroSvg(c.slug)}</div>`}
+<section class="hero-immersive ${resolveHeroImage(c.slug, c.heroImage) ? "has-photo" : ""}" style="${cityPaletteStyle(c.slug)}">
+  ${(() => {
+    const heroSrc = resolveHeroImage(c.slug, c.heroImage);
+    return heroSrc
+      ? `<img class="hero-photo" src="${esc(heroSrc)}" alt="${esc(c.name)}, Turkey" loading="eager" fetchpriority="high" width="1200" height="800" decoding="async">`
+      : `<div class="hero-art">${cityHeroSvg(c.slug)}</div>`;
+  })()}
   <div class="container">
     <div class="eyebrow">Where to stay in ${esc(c.name)}, Turkey ${c.emoji || ""}</div>
     <h1>${esc(c.name)}${c.emoji ? "" : ""}.</h1>
@@ -1659,7 +1794,7 @@ ${tail()}`;
   if (faq) jsonld.push(faq);
 
   const ogImage = c.heroImage || `${config.siteUrl}/assets/img/og/${c.slug}.svg`;
-  const html = head({ title, description, canonical, ogImage, jsonld, preloadHero: c.heroImage || null }) + body;
+  const html = head({ title, description, canonical, ogImage, jsonld, preloadHero: resolveHeroImage(c.slug, c.heroImage) }) + body;
   writeFile(`${c.slug}/index.html`, html);
 }
 
@@ -3244,15 +3379,6 @@ function renderExperiencesHub() {
   const canonical = `${config.siteUrl}/experiences/`;
   const title = "Authentic Turkish experiences — beyond the tourist circuit";
   const description = "Six cultural experiences that show you the real Turkey: çay culture, Turkish coffee, hammam ritual, whirling dervishes, the bazaar masterclass, and Anatolian breakfast.";
-  const cards = EXPERIENCES.map((e) => `
-    <a class="card" href="/experiences/${esc(e.slug)}/" style="text-decoration:none;color:inherit;padding:24px">
-      <div class="eyebrow">Experience</div>
-      <h3 style="margin:6px 0 8px">${esc(e.title)}</h3>
-      <p style="color:var(--c-text-soft);font-size:.95rem;margin:0 0 14px">${esc(e.subtitle || "")}</p>
-      <div style="color:var(--c-accent);font-weight:600;font-size:.95rem">Read →</div>
-    </a>
-  `).join("");
-
   const body = `
 ${nav()}
 ${disclosureBanner()}
@@ -3265,8 +3391,8 @@ ${disclosureBanner()}
 </div>
 
 <section class="container">
-  <div class="grid grid-1 grid-2 grid-3 mt-3">
-    ${cards}
+  <div class="grid grid-1 grid-2 grid-3 mt-3 showcase-grid" data-view="grid">
+    ${EXPERIENCES.map(experienceShowcaseCard).join("")}
   </div>
 </section>
 
@@ -3586,13 +3712,6 @@ function renderMonthsHub() {
   const canonical = `${config.siteUrl}/turkey-by-month/`;
   const title = "Turkey by month — pick the right time to visit";
   const description = "Month-by-month Turkey guide. Weather by city, balloon flight rates, festivals, what's open and closed, and the verdict on whether to go.";
-  const cards = MONTHS.map((m) => `
-    <a class="card" href="/turkey-by-month/${esc(m.slug)}/" style="text-decoration:none;color:inherit;padding:22px">
-      <div class="eyebrow">Month ${m.monthNum}</div>
-      <h3 style="margin:6px 0 8px">${esc(m.monthName)}</h3>
-      <p style="color:var(--c-text-soft);font-size:.92rem;margin:0">${esc((m.subtitle || "").slice(0, 110))}</p>
-    </a>
-  `).join("");
   const body = `
 ${nav()}
 ${disclosureBanner()}
@@ -3604,7 +3723,9 @@ ${disclosureBanner()}
   </div>
 </div>
 <section class="container">
-  <div class="grid grid-1 grid-2 grid-3 grid-4 mt-3">${cards}</div>
+  <div class="grid grid-1 grid-2 grid-3 grid-4 mt-3 showcase-grid" data-view="grid">
+    ${MONTHS.map(monthShowcaseCard).join("")}
+  </div>
 </section>
 ${leadAndEssentials()}
 ${footer()}
@@ -3771,14 +3892,6 @@ function renderCulturalConceptsHub() {
   const canonical = `${config.siteUrl}/culture/`;
   const title = "Turkish culture — six concepts that explain everything";
   const description = "Misafirperverlik, mahalle, çay, kolay gelsin, imece, bayram. The six Turkish cultural concepts that make sense of everyday Turkey. Each in plain English with Turkish words pinned.";
-  const cards = CULTURAL_CONCEPTS.map((p) => `
-    <a class="card" href="/culture/${esc(p.slug)}/" style="text-decoration:none;color:inherit;padding:24px">
-      <div class="eyebrow">Culture</div>
-      <h3 style="margin:6px 0 8px">${esc(p.title)}</h3>
-      <p style="color:var(--c-text-soft);font-size:.95rem;margin:0">${esc(p.subtitle || "")}</p>
-      <div style="color:var(--c-accent);font-weight:600;font-size:.95rem;margin-top:14px">Read →</div>
-    </a>
-  `).join("");
   const body = `
 ${nav()}
 ${disclosureBanner()}
@@ -3790,7 +3903,9 @@ ${disclosureBanner()}
   </div>
 </div>
 <section class="container">
-  <div class="grid grid-1 grid-2 grid-3 mt-3">${cards}</div>
+  <div class="grid grid-1 grid-2 grid-3 mt-3 showcase-grid" data-view="grid">
+    ${CULTURAL_CONCEPTS.map(culturalConceptShowcaseCard).join("")}
+  </div>
 </section>
 ${leadAndEssentials()}
 ${footer()}
