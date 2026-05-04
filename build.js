@@ -2741,7 +2741,10 @@ ${tail()}`;
     ]),
     itemListLd(heading, matches.map((m) => m.h)),
   ];
-  const html = head({ title, description, canonical, jsonld }) + body;
+  // Reuse the per-collection OG generator for cross-collections (turkey-luxury,
+  // turkey-couples, etc.) by writing a synthesized SVG keyed on the slug.
+  const ogImage = `${config.siteUrl}/assets/img/og/cross/${slug}.svg`;
+  const html = head({ title, description, canonical, jsonld, ogImage }) + body;
   writeFile(`${slug}/index.html`, html);
 }
 
@@ -4493,7 +4496,8 @@ ${tail()}`;
     { name: "Best of Turkey", url: `${config.siteUrl}/best-of-turkey/` },
     { name: c.title, url: canonical },
   ])];
-  const html = head({ title, description, canonical, jsonld }) + body;
+  const ogImage = `${config.siteUrl}/assets/img/og/collection/${c.slug}.svg`;
+  const html = head({ title, description, canonical, jsonld, ogImage }) + body;
   writeFile(`best-of-turkey/${c.slug}/index.html`, html);
 }
 
@@ -4655,6 +4659,109 @@ function writeCityOgImages() {
     const bg1 = "#FFE4E6", bg2 = "#FEF3C7";
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"><defs><linearGradient id="g${c.slug}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="${bg1}"/><stop offset="1" stop-color="${bg2}"/></linearGradient></defs><rect width="1200" height="630" fill="url(#g${c.slug})"/><text x="80" y="220" font-family="sans-serif" font-size="100" font-weight="800" fill="#0f172a">Where to Stay in</text><text x="80" y="340" font-family="sans-serif" font-size="140" font-weight="800" fill="#E11D48">${esc(c.name)}.</text><text x="80" y="420" font-family="sans-serif" font-size="32" fill="#6b6b6b">${esc(c.tagline).slice(0, 90)}</text><text x="1080" y="570" font-family="sans-serif" font-size="32" text-anchor="end" fill="#8a8a8a">wheretostayturkey.com</text></svg>`;
     writeFile(`assets/img/og/${c.slug}.svg`, svg);
+  }
+}
+
+// Per-collection OG cards. Same template as journal but with a
+// collection emoji in the corner + palette derived from the collection's
+// themed showcase color (kept consistent with showcase cards).
+function writeCollectionOgImages() {
+  const palettes = {
+    honeymoon:    { e: "💍", a: "#fbcfe8", b: "#fde68a" },
+    family:       { e: "👨‍👩‍👧", a: "#dbeafe", b: "#fef3c7" },
+    historic:     { e: "🏛️", a: "#fef3c7", b: "#fde68a" },
+    beachfront:   { e: "🏖️", a: "#dbeafe", b: "#a7f3d0" },
+    cave:         { e: "🏞️", a: "#fef3c7", b: "#fcd34d" },
+    luxury:       { e: "✨", a: "#f3e8ff", b: "#fde68a" },
+  };
+  function pick(slug) {
+    if (slug.includes("honeymoon")) return palettes.honeymoon;
+    if (slug.includes("family")) return palettes.family;
+    if (slug.includes("historic")) return palettes.historic;
+    if (slug.includes("beach")) return palettes.beachfront;
+    if (slug.includes("cave")) return palettes.cave;
+    if (slug.includes("luxury") || slug.includes("5-star")) return palettes.luxury;
+    return palettes.honeymoon;
+  }
+  function wrap(text, maxChars) {
+    const words = String(text).split(/\s+/);
+    const lines = [];
+    let cur = "";
+    for (const w of words) {
+      if ((cur + " " + w).trim().length > maxChars && cur) { lines.push(cur.trim()); cur = w; }
+      else cur = (cur + " " + w).trim();
+      if (lines.length === 3) break;
+    }
+    if (cur && lines.length < 3) lines.push(cur.trim());
+    return lines.slice(0, 3);
+  }
+  for (const c of COLLECTIONS) {
+    const pal = pick(c.slug);
+    const lines = wrap(c.title || c.slug, 22);
+    const startY = lines.length === 1 ? 320 : lines.length === 2 ? 280 : 230;
+    const tspans = lines.map((ln, i) => `<text x="80" y="${startY + i * 92}" font-family="Georgia, serif" font-size="76" font-weight="600" fill="#0f172a">${esc(ln)}</text>`).join("");
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"><defs><linearGradient id="cg${esc(c.slug)}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="${pal.a}"/><stop offset="1" stop-color="${pal.b}"/></linearGradient></defs><rect width="1200" height="630" fill="url(#cg${esc(c.slug)})"/><text x="80" y="120" font-family="sans-serif" font-size="22" font-weight="600" fill="#b45309" letter-spacing="6">COLLECTION</text>${tspans}<text x="80" y="565" font-family="sans-serif" font-size="26" fill="#5e6473">${esc((c.subtitle || c.summary || "").slice(0, 80))}</text><text x="1080" y="160" font-size="120" text-anchor="end">${pal.e}</text><text x="1120" y="600" font-family="sans-serif" font-size="22" text-anchor="end" fill="#8a8a8a">wheretostayturkey.com</text></svg>`;
+    writeFile(`assets/img/og/collection/${c.slug}.svg`, svg);
+  }
+}
+
+// Cross-collection OG cards (turkey-luxury, turkey-couples, etc.) —
+// hand-curated palette per slug since cross-collections aren't in
+// COLLECTIONS data. Picture-equivalent to writeCollectionOgImages.
+function writeCrossCollectionOgImages() {
+  const entries = [
+    { slug: "turkey-luxury",            title: "Luxury hotels in Turkey",        e: "✨", a: "#f3e8ff", b: "#fde68a" },
+    { slug: "turkey-couples",           title: "Romantic stays for couples",     e: "💕", a: "#fbcfe8", b: "#fde68a" },
+    { slug: "turkey-families",          title: "Family-friendly hotels",         e: "👨‍👩‍👧", a: "#dbeafe", b: "#fef3c7" },
+    { slug: "turkey-off-beaten-path",   title: "Off the beaten path",            e: "🗺️", a: "#d1fae5", b: "#fef3c7" },
+  ];
+  function wrap(text, maxChars) {
+    const words = String(text).split(/\s+/);
+    const lines = [];
+    let cur = "";
+    for (const w of words) {
+      if ((cur + " " + w).trim().length > maxChars && cur) { lines.push(cur.trim()); cur = w; }
+      else cur = (cur + " " + w).trim();
+      if (lines.length === 3) break;
+    }
+    if (cur && lines.length < 3) lines.push(cur.trim());
+    return lines.slice(0, 3);
+  }
+  for (const x of entries) {
+    const lines = wrap(x.title, 22);
+    const startY = lines.length === 1 ? 320 : lines.length === 2 ? 280 : 230;
+    const tspans = lines.map((ln, i) => `<text x="80" y="${startY + i * 92}" font-family="Georgia, serif" font-size="76" font-weight="600" fill="#0f172a">${esc(ln)}</text>`).join("");
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"><defs><linearGradient id="xg${esc(x.slug)}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="${x.a}"/><stop offset="1" stop-color="${x.b}"/></linearGradient></defs><rect width="1200" height="630" fill="url(#xg${esc(x.slug)})"/><text x="80" y="120" font-family="sans-serif" font-size="22" font-weight="600" fill="#b45309" letter-spacing="6">CURATED</text>${tspans}<text x="1080" y="160" font-size="120" text-anchor="end">${x.e}</text><text x="1120" y="600" font-family="sans-serif" font-size="22" text-anchor="end" fill="#8a8a8a">wheretostayturkey.com</text></svg>`;
+    writeFile(`assets/img/og/cross/${x.slug}.svg`, svg);
+  }
+}
+
+// Per-journal-post OG cards — large title centered on themed gradient.
+// Wraps title across up to 3 lines so long titles don't overflow.
+function writeJournalOgImages() {
+  function wrap(text, maxChars) {
+    const words = String(text).split(/\s+/);
+    const lines = [];
+    let cur = "";
+    for (const w of words) {
+      if ((cur + " " + w).trim().length > maxChars && cur) {
+        lines.push(cur.trim());
+        cur = w;
+      } else {
+        cur = (cur + " " + w).trim();
+      }
+      if (lines.length === 3) break;
+    }
+    if (cur && lines.length < 3) lines.push(cur.trim());
+    return lines.slice(0, 3);
+  }
+  for (const p of JOURNAL) {
+    const lines = wrap(p.title, 28);
+    const startY = lines.length === 1 ? 320 : lines.length === 2 ? 270 : 220;
+    const lineSpacing = 92;
+    const tspans = lines.map((ln, i) => `<text x="80" y="${startY + i * lineSpacing}" font-family="Georgia, serif" font-size="76" font-weight="600" fill="#0f172a">${esc(ln)}</text>`).join("");
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"><defs><linearGradient id="jg${esc(p.slug)}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#FAF8F3"/><stop offset="1" stop-color="#F3EDE0"/></linearGradient></defs><rect width="1200" height="630" fill="url(#jg${esc(p.slug)})"/><text x="80" y="120" font-family="sans-serif" font-size="22" font-weight="600" fill="#b45309" letter-spacing="6">JOURNAL</text>${tspans}<text x="80" y="565" font-family="sans-serif" font-size="26" fill="#5e6473">${esc((p.subtitle || p.summary || "").slice(0, 80))}</text><text x="1120" y="600" font-family="sans-serif" font-size="22" text-anchor="end" fill="#8a8a8a">wheretostayturkey.com</text></svg>`;
+    writeFile(`assets/img/og/journal/${p.slug}.svg`, svg);
   }
 }
 
@@ -5909,7 +6016,7 @@ ${tail()}
   // the target-city hero photo if any, else the default OG.
   const articleTagSlug = (p.tags || []).find((t) => cities.find((c) => c.slug === t.toLowerCase()));
   const articleCity = articleTagSlug ? cities.find((c) => c.slug === articleTagSlug.toLowerCase()) : null;
-  const articleImage = p.image || (articleCity && articleCity.heroImage) || `${config.siteUrl}${config.defaultOgImage}`;
+  const articleImage = p.image || (articleCity && articleCity.heroImage) || `${config.siteUrl}/assets/img/og/journal/${p.slug}.svg`;
   const primarySection = (p.tags && p.tags[0]) ? p.tags[0] : "Travel";
 
   const jsonld = [
@@ -6217,6 +6324,9 @@ function run() {
 
   renderAllCrossCollections();
   writeCityOgImages();
+  writeJournalOgImages();
+  writeCollectionOgImages();
+  writeCrossCollectionOgImages();
   writeFavicon();
   writeOgImage();
   writeAppleTouchIcon();
