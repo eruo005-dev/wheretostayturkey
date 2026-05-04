@@ -2104,6 +2104,34 @@ ${tail()}`;
 
 function renderProgrammatic({ city, variant, title, description, heading, intro, hotels, audience }) {
   const canonical = `${config.siteUrl}/${city.slug}/${variant}/`;
+  // Variant-specific prose. Adds ~150-220 words of unique content per
+  // page (was thin / doorway-shaped). Falls back to a templated default
+  // when the city doesn't have variant-specific copy yet.
+  const variantCopy = (function () {
+    const copy = (city.variantCopy || {})[variant];
+    if (copy) return copy;
+    const generic = {
+      luxury: `${city.name}'s 5-star and design-led options sit in the neighborhoods with the highest review averages and the longest views — typically the historic core or the waterfront, never the airport hotels. Expect $250–$900 per night in season; book 8–12 weeks ahead for the named properties. Most luxury picks include breakfast, airport transfer, and pool access; spa packages are usually à la carte. The best months to splurge are ${city.whenToGo}, when the light is right and the crowds are thinner than peak summer.`,
+      budget: `${city.name}'s budget tier (under $100/night) clusters in the older central districts and the modern student/transit areas — both walkable to the main sights, both safe by Turkish big-city standards. Expect basic but clean rooms, often with simple Turkish breakfast included; lifts and 24-hour reception aren't standard at this tier so check the listing carefully. Booking 2–4 weeks ahead works for most months; the August beach-resort weeks and the May–early-June shoulder push prices up sharply.`,
+      families: `${city.name} for families works best in the residential-but-walkable neighborhoods rather than the bar-and-restaurant strips. Look for properties with two-bedroom suites or connecting rooms, a real pool (most "rooftop pools" are decorative), and a 24-hour kitchen for late arrivals. The dolmuş minibus network is genuinely usable with kids — stroller access is hit-or-miss but car seats are not legally required and most drivers are fine with one in your lap. Pediatric clinics in tourist areas accept walk-ins; bring your insurance card.`,
+      couples: `${city.name} reads romantic in the neighborhoods that prioritise atmosphere over efficiency — restored mansion hotels with courtyards, sunset terraces, and walking distance to the dinner-and-tea-after-dinner ritual. The single best month for a couples trip is typically ${city.whenToGo.split(/[,&]| and /)[0]}. Avoid the all-inclusive resort blocks unless that's the point of your trip; they're built for groups, not for the long-dinner-then-walk evening that defines a Turkish romantic stay.`,
+    };
+    return generic[variant] || "";
+  })();
+  // Filter areas by variant fit; if the filter empties the list, fall
+  // back to all areas so the page still has neighborhood depth.
+  const filteredAreas = (city.areas || []).filter((a) => !variant || variantMatchesArea(variant, a));
+  const areasToShow = (filteredAreas.length ? filteredAreas : city.areas || []).slice(0, 3);
+  // Variant-relevant FAQs (city.faqs filtered to ones matching the
+  // variant tag, falls back to all city faqs).
+  const variantFaqs = ((city.faqs || []).filter((f) => {
+    const t = (f.q + " " + f.a).toLowerCase();
+    if (variant === "luxury") return /luxur|5[- ]star|splurge|honeymoon|spa/.test(t);
+    if (variant === "budget") return /budget|cheap|hostel|under\s*\$/.test(t);
+    if (variant === "families") return /famil|kid|child/.test(t);
+    if (variant === "couples") return /coupl|romant|honeymoon/.test(t);
+    return false;
+  }).slice(0, 4));
 
   const body = `
 ${nav()}
@@ -2116,8 +2144,12 @@ ${disclosureBanner()}
   </div>
 </div>
 
+${variantCopy ? `<section class="container container-narrow prose">
+  <p>${esc(variantCopy)}</p>
+</section>` : ""}
+
 <section class="container" aria-labelledby="prog-picks-h">
-  <h2 id="prog-picks-h" class="visually-hidden">${esc(heading)} — picks</h2>
+  <h2 id="prog-picks-h">${esc(heading)} — our picks</h2>
   <div class="grid grid-2 grid-3">
     ${hotels.length
       ? hotels.map((h) => hotelCard(h, city)).join("")
@@ -2127,22 +2159,16 @@ ${disclosureBanner()}
 
 ${leadMagnet({ citySlug: city.slug })}
 
-<section class="container" aria-labelledby="prog-areas-h">
-  <h2 id="prog-areas-h" class="visually-hidden">Top neighborhoods in ${esc(city.name)}</h2>
+<section class="container" id="neighborhoods">
+  <h2>Best neighborhoods for ${esc(heading.toLowerCase())}</h2>
   ${audience ? `<p class="text-muted">${esc(audience)}</p>` : ""}
-  <div class="grid grid-2 mt-3">
-    ${city.areas
-      .filter((a) => !variant || variantMatchesArea(variant, a))
-      .slice(0, 4)
-      .map((a) => `
-        <a class="card" href="/${city.slug}/#${esc(a.slug)}" style="text-decoration:none;color:inherit">
-          <h3 style="margin-bottom:4px">${esc(a.name)}</h3>
-          <div class="text-soft small mb-2">${esc(a.vibe)}</div>
-          <p class="text-muted">${esc(a.oneLiner)}</p>
-        </a>
-      `).join("")}
-  </div>
+  ${areasToShow.map((a) => areaBlock(a, city)).join("")}
 </section>
+
+${variantFaqs.length ? `<section class="container container-narrow prose">
+  <h2>FAQs</h2>
+  ${variantFaqs.map((f) => `<h3 style="margin-top:24px">${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join("")}
+</section>` : ""}
 
 <section class="container section-sm">
   <h2>Explore more in ${esc(city.name)}</h2>
