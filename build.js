@@ -614,6 +614,10 @@ function nav() {
       <a href="/planner/">Planner</a>
       <a href="/culture/">Culture</a>
       <a href="/quiz/">Quiz</a>
+      <a class="nav-search" href="/search/" aria-label="Search the site">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <span class="visually-hidden">Search</span>
+      </a>
     </nav>
   </div>
 </header>`;
@@ -1727,7 +1731,7 @@ ${tail()}`;
       publisher: { "@id": `${config.siteUrl}/#organization` },
       potentialAction: {
         "@type": "SearchAction",
-        target: { "@type": "EntryPoint", urlTemplate: `${canonical}?s={search_term_string}` },
+        target: { "@type": "EntryPoint", urlTemplate: `${config.siteUrl}/search/?q={search_term_string}` },
         "query-input": "required name=search_term_string",
       },
     },
@@ -2393,6 +2397,7 @@ function renderSitemap() {
   push(`${config.siteUrl}/planner/`, "0.4", "monthly");
   push(`${config.siteUrl}/compare/`, "0.4", "monthly");
   push(`${config.siteUrl}/quiz/`,    "0.4", "monthly");
+  push(`${config.siteUrl}/search/`,  "0.4", "monthly");
 
   // Operational
   push(`${config.siteUrl}/about/`,                   "0.4", "monthly");
@@ -2800,7 +2805,8 @@ ${disclosureBanner()}
   </div>
 </div>
 
-<section class="container">
+<section class="container" aria-labelledby="tours-h">
+  <h2 id="tours-h" class="visually-hidden">Tour categories in ${esc(c.name)}</h2>
   ${buckets.map((b) => {
     const gyg = getYourGuideLink(b.query);
     const viator = viatorLink(b.query);
@@ -2976,6 +2982,205 @@ ${tail()}`;
 }
 
 // ---- Interactive decision quiz ----
+// Site-wide search. Builds a JSON index of every searchable entity at
+// build time (cities, journal posts, collections, regions, experiences,
+// cultural concepts, top-level guides) then ships an inline IIFE that
+// filters the index on the client. Powers the `?q=` deep links from the
+// homepage WebSite SearchAction schema and the nav search button. No
+// fancy fuzzy matching — substring + word-prefix on title/description/
+// tags, scored by where the match lands.
+function renderSearchPage() {
+  const canonical = `${config.siteUrl}/search/`;
+  const title = "Search wheretostayturkey.com";
+  const description = "Search 22 cities, 30+ journal articles, 6 collections, 5 regions, and the full guides library — all of Turkey, one search box.";
+
+  const index = [];
+  for (const c of cities) {
+    index.push({
+      kind: "City", url: `/${c.slug}/`, title: c.name, description: c.tagline || c.summary || "",
+      tags: ["city", c.slug, ...(c.areas || []).map((a) => a.slug)],
+    });
+  }
+  for (const p of JOURNAL) {
+    index.push({
+      kind: "Journal", url: `/journal/${p.slug}/`, title: p.title, description: p.subtitle || p.summary || "",
+      tags: ["journal", ...(p.tags || [])],
+    });
+  }
+  for (const col of COLLECTIONS) {
+    index.push({
+      kind: "Collection", url: `/best-of-turkey/${col.slug}/`, title: col.title, description: col.subtitle || col.intro || "",
+      tags: ["collection", col.slug],
+    });
+  }
+  for (const r of REGIONS) {
+    index.push({
+      kind: "Region", url: `/regions/${r.slug}/`, title: r.name, description: r.tagline || r.summary || "",
+      tags: ["region", r.slug, ...(r.cities || [])],
+    });
+  }
+  for (const e of EXPERIENCES) {
+    index.push({
+      kind: "Experience", url: `/experiences/${e.slug}/`, title: e.title, description: e.subtitle || "",
+      tags: ["experience", e.slug],
+    });
+  }
+  for (const cc of CULTURAL_CONCEPTS) {
+    index.push({
+      kind: "Culture", url: `/culture/${cc.slug}/`, title: cc.title, description: cc.subtitle || "",
+      tags: ["culture", cc.slug],
+    });
+  }
+  for (const m of MONTHS) {
+    index.push({
+      kind: "Month", url: `/turkey-by-month/${m.slug}/`, title: `Turkey in ${m.monthName}`, description: m.subtitle || "",
+      tags: ["month", m.slug, m.monthName.toLowerCase()],
+    });
+  }
+  // Top-level evergreen guides
+  const TOP_GUIDES = [
+    { url: "/visa/",                       title: "Turkey visa guide",            desc: "Who needs an e-Visa, how to apply, what to bring." },
+    { url: "/is-turkey-safe/",             title: "Is Turkey safe?",              desc: "Honest safety guide for travelers — what's actually risky vs media noise." },
+    { url: "/best-time-to-visit-turkey/",  title: "Best time to visit Turkey",    desc: "Month-by-month breakdown by weather, crowds, and price." },
+    { url: "/how-many-nights-turkey/",     title: "How many nights in Turkey?",   desc: "From 3 to 21 nights — exact city mixes per length." },
+    { url: "/turkey-guide/",               title: "The ultimate Turkey guide",    desc: "Every region, every city, every essential — one page." },
+    { url: "/istanbul-to-cappadocia/",     title: "Istanbul to Cappadocia",       desc: "Flight, bus, drive: time, cost, and which to pick." },
+    { url: "/insurance/",                  title: "Travel insurance for Turkey",  desc: "What's worth paying for, what to skip, real cost ranges." },
+    { url: "/esim/",                       title: "Best Turkey eSIM",             desc: "Airalo vs Holafly vs local SIM — compared." },
+    { url: "/money/",                      title: "Money in Turkey",              desc: "Lira, ATMs, tipping, exchange rates." },
+    { url: "/packing/",                    title: "What to pack for Turkey",      desc: "Season-by-season list, mosque dress code, the weird-but-essentials." },
+    { url: "/arrival-istanbul/",           title: "Landing at Istanbul Airport",  desc: "First 4 hours sorted — transfer, SIM, lira, dinner." },
+    { url: "/turkish-phrases/",            title: "Turkish phrases for travelers",desc: "14 phrases that change every interaction." },
+    { url: "/quiz/",                       title: "Which Turkish city quiz",      desc: "60 seconds, 4 questions, one answer." },
+    { url: "/planner/",                    title: "Trip cost calculator",         desc: "Realistic budget in 20 seconds." },
+    { url: "/compare/",                    title: "Compare Turkish cities",       desc: "Side-by-side comparison of any two destinations." },
+  ];
+  for (const g of TOP_GUIDES) {
+    index.push({ kind: "Guide", url: g.url, title: g.title, description: g.desc, tags: ["guide"] });
+  }
+
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / Search</div>
+    <h1>Search</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">${index.length} pages indexed — cities, journal articles, themed collections, regions, experiences, cultural concepts, monthly guides, and the planning library.</p>
+  </div>
+</div>
+
+<section class="container container-narrow">
+  <form class="search-form no-prerender" role="search" aria-label="Site search" onsubmit="return false">
+    <label for="search-q" class="visually-hidden">Search the site</label>
+    <input type="search" id="search-q" name="q" placeholder="Try 'cappadocia balloon' or 'istanbul couples'" autocomplete="off" autofocus>
+  </form>
+
+  <div class="search-meta text-muted small mt-3" id="search-meta" aria-live="polite"></div>
+
+  <ul class="search-results" id="search-results" role="list"></ul>
+
+  <div class="search-empty" id="search-empty" hidden>
+    <p>No matches. Try a shorter query, or browse:</p>
+    <ul>
+      <li><a href="/#all-cities">All 22 cities</a></li>
+      <li><a href="/journal/">Journal index</a></li>
+      <li><a href="/best-of-turkey/">Themed hotel collections</a></li>
+      <li><a href="/quiz/">Take the 60-second quiz</a></li>
+    </ul>
+  </div>
+</section>
+
+${leadAndEssentials()}
+${footer()}
+${tail()}
+
+<script>
+(function () {
+  var INDEX = ${JSON.stringify(index)};
+  var input = document.getElementById("search-q");
+  var resultsEl = document.getElementById("search-results");
+  var metaEl = document.getElementById("search-meta");
+  var emptyEl = document.getElementById("search-empty");
+  if (!input || !resultsEl) return;
+
+  function score(item, query) {
+    var q = query.toLowerCase();
+    var t = (item.title || "").toLowerCase();
+    var d = (item.description || "").toLowerCase();
+    var tags = (item.tags || []).map(function (x) { return String(x).toLowerCase(); });
+    var s = 0;
+    if (t === q) s += 100;
+    if (t.indexOf(q) === 0) s += 60;
+    if (t.indexOf(q) > -1) s += 30;
+    if (tags.indexOf(q) > -1) s += 25;
+    if (tags.some(function (x) { return x.indexOf(q) === 0; })) s += 12;
+    if (d.indexOf(q) > -1) s += 8;
+    // word-prefix matches across multi-word query
+    var words = q.split(/\\s+/).filter(Boolean);
+    var matchedWords = words.filter(function (w) { return t.indexOf(w) > -1 || d.indexOf(w) > -1 || tags.indexOf(w) > -1; }).length;
+    s += matchedWords * 5;
+    return s;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function render(query) {
+    var q = (query || "").trim();
+    resultsEl.innerHTML = "";
+    if (!q) {
+      metaEl.textContent = INDEX.length + " pages indexed. Type to search.";
+      emptyEl.hidden = true;
+      return;
+    }
+    var hits = INDEX.map(function (item) { return { item: item, s: score(item, q) }; })
+                    .filter(function (x) { return x.s > 0; })
+                    .sort(function (a, b) { return b.s - a.s; })
+                    .slice(0, 30);
+    if (hits.length === 0) {
+      metaEl.textContent = "No results for \\"" + q + "\\".";
+      emptyEl.hidden = false;
+      return;
+    }
+    emptyEl.hidden = true;
+    metaEl.textContent = hits.length + " result" + (hits.length === 1 ? "" : "s") + " for \\"" + q + "\\"";
+    resultsEl.innerHTML = hits.map(function (h) {
+      var it = h.item;
+      return '<li class="search-hit"><a href="' + escapeHtml(it.url) + '"><span class="kind">' + escapeHtml(it.kind) + '</span><span class="t">' + escapeHtml(it.title) + '</span><span class="d">' + escapeHtml(it.description) + '</span></a></li>';
+    }).join("");
+  }
+
+  input.addEventListener("input", function () { render(input.value); });
+  // Honour ?q= deep links (used by the WebSite SearchAction schema and nav).
+  var initialQ = new URLSearchParams(window.location.search).get("q") || "";
+  if (initialQ) {
+    input.value = initialQ;
+    render(initialQ);
+  } else {
+    render("");
+  }
+})();
+</script>`;
+
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home", url: `${config.siteUrl}/` },
+      { name: "Search", url: canonical },
+    ]),
+    {
+      "@context": "https://schema.org",
+      "@type": "SearchResultsPage",
+      url: canonical,
+      name: title,
+      isPartOf: { "@id": `${config.siteUrl}/#website` },
+    },
+  ];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("search/index.html", html);
+}
+
 function renderQuiz() {
   const canonical = `${config.siteUrl}/quiz/`;
   const title = `Which Turkish city should you visit? — 60-second quiz`;
@@ -3672,7 +3877,8 @@ ${disclosureBanner()}
   </div>
 </div>
 
-<section class="container">
+<section class="container" aria-labelledby="experiences-h">
+  <h2 id="experiences-h" class="visually-hidden">Six Turkish experiences worth seeking out</h2>
   <div class="grid grid-1 grid-2 grid-3 mt-3 showcase-grid" data-view="grid">
     ${EXPERIENCES.map(experienceShowcaseCard).join("")}
   </div>
@@ -3762,7 +3968,8 @@ ${disclosureBanner()}
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">Turkey is geographically as varied as Italy + Greece combined. Pick the region that fits your trip style — coast, mountains, ruins, or the cradle of civilization.</p>
   </div>
 </div>
-<section class="container">
+<section class="container" aria-labelledby="regions-h">
+  <h2 id="regions-h" class="visually-hidden">The 5 regions of Turkey, ranked by distinct trip-style</h2>
   <div class="grid grid-1 grid-2 grid-3 mt-3 showcase-grid" data-view="grid">
     ${REGIONS.map(regionShowcaseCard).join("")}
   </div>
@@ -4005,7 +4212,8 @@ ${disclosureBanner()}
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">Each month in Turkey is a different country. We've ranked all 12 with weather, festival, balloon-flight rate and verdict — so you can pick the month that fits your trip.</p>
   </div>
 </div>
-<section class="container">
+<section class="container" aria-labelledby="months-h">
+  <h2 id="months-h" class="visually-hidden">Turkey month by month</h2>
   <div class="grid grid-1 grid-2 grid-3 grid-4 mt-3 showcase-grid" data-view="grid">
     ${MONTHS.map(monthShowcaseCard).join("")}
   </div>
@@ -4083,7 +4291,8 @@ ${disclosureBanner()}
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">Six themed collections of the best hotels across Turkey, picked from our 22-city database. Every property is real and verified — no padding.</p>
   </div>
 </div>
-<section class="container">
+<section class="container" aria-labelledby="collections-h">
+  <h2 id="collections-h" class="visually-hidden">Themed hotel collections</h2>
   <div class="grid grid-1 grid-2 grid-3 mt-3 showcase-grid" data-view="grid">
     ${COLLECTIONS.map(collectionShowcaseCard).join("")}
   </div>
@@ -4186,7 +4395,8 @@ ${disclosureBanner()}
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">Six Turkish cultural concepts that explain why Turkey feels different from any country next to it. Each page is short, written by people who know how it actually works on the street.</p>
   </div>
 </div>
-<section class="container">
+<section class="container" aria-labelledby="culture-h">
+  <h2 id="culture-h" class="visually-hidden">Six Turkish cultural concepts</h2>
   <div class="grid grid-1 grid-2 grid-3 mt-3 showcase-grid" data-view="grid">
     ${CULTURAL_CONCEPTS.map(culturalConceptShowcaseCard).join("")}
   </div>
@@ -5656,6 +5866,7 @@ function run() {
   renderAuthorPage();
   renderThankYouNew();                 // both /thank-you/ and /thank-you-combo/
   renderQuiz();
+  renderSearchPage();
   renderVisa();
   renderTransportGuide();
   renderSafety();
