@@ -1160,6 +1160,44 @@ function cityCard(c) {
 </a>`;
 }
 
+// Showcase card — the photo-led "Top 10 places to stay in X" card pattern.
+// Used on the homepage destinations grid and (optionally) collection hubs.
+// When site config has useHeroPhotos=false, OR when a city has no heroImage,
+// renders an on-brand themed gradient with the city emoji + themed art SVG
+// instead of an external photo. The visible result still looks intentional
+// (consistent palette, animated gradient, large emoji watermark) — not
+// like a "missing photo" placeholder.
+function cityShowcaseCard(c) {
+  const description = (c.intro || c.tagline || "").replace(/\s+/g, " ").trim();
+  const editorsPick = !!(c.hotels || []).find((h) => h.editorsPick);
+  const usePhoto = config.useHeroPhotos && c.heroImage;
+  const heroMarkup = usePhoto
+    ? `<img src="${esc(c.heroImage)}" alt="${esc(c.name)}, Turkey" loading="lazy" decoding="async">`
+    : `<div class="showcase-art" style="${cityPaletteStyle(c.slug)}">
+         <div class="showcase-art-emoji">${c.emoji || "📍"}</div>
+         <div class="showcase-art-svg">${cityHeroSvg(c.slug)}</div>
+       </div>`;
+  const badge = editorsPick
+    ? `<span class="showcase-badge" title="Has editor's-pick hotels" aria-label="Editor's pick"><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"/></svg></span>`
+    : "";
+  return `
+<a class="showcase-card ${usePhoto ? "has-photo" : "has-art"}" data-city="${esc(c.slug)}" data-name="${esc(c.name.toLowerCase())}" data-popularity="${esc(String(c.popularity || 0))}" href="/${esc(c.slug)}/">
+  <div class="showcase-photo">
+    <span class="showcase-chip"><span class="showcase-chip-flag" aria-hidden="true">🇹🇷</span><span>${esc(c.name)}</span></span>
+    ${badge}
+    ${heroMarkup}
+  </div>
+  <div class="showcase-body">
+    <h3 class="showcase-title">Where to stay in ${esc(c.name)}</h3>
+    <p class="showcase-desc">${esc(description)}</p>
+  </div>
+  <div class="showcase-cta">
+    <span>See more</span>
+    <span class="showcase-cta-arrow" aria-hidden="true">→</span>
+  </div>
+</a>`;
+}
+
 function renderHome() {
   const canonical = `${config.siteUrl}/`;
   const title = `${config.siteName} — ${config.siteTagline}`;
@@ -1233,13 +1271,118 @@ ${disclosureBanner()}
 
 <section class="section" id="all-cities">
   <div class="container">
-    <h2>All destinations</h2>
-    <p class="text-muted">${cities.length} Turkish destinations, each broken down by neighborhood.</p>
-    <div class="grid grid-2 grid-3 mt-3">
-      ${cities.map(cityCard).join("")}
+    <div class="dest-layout">
+      <aside class="dest-sidebar" aria-label="Filter destinations">
+        <h3><span class="pin" aria-hidden="true">📍</span>Destinations in Turkey</h3>
+        <div class="dest-search"><input type="search" id="dest-search" placeholder="Search destinations in Turkey" aria-label="Search destinations" autocomplete="off"></div>
+        <ul class="dest-list" id="dest-list" role="group">
+          ${cities.slice().sort((a, b) => a.name.localeCompare(b.name)).map((c) => `
+            <li data-name="${esc(c.name.toLowerCase())}" data-slug="${esc(c.slug)}">
+              <label><input type="checkbox" data-city="${esc(c.slug)}"><span>${esc(c.name)}</span></label>
+            </li>`).join("")}
+          <button type="button" class="reset" id="dest-reset">Reset filters</button>
+        </ul>
+      </aside>
+      <div class="dest-main">
+        <div class="dest-toolbar">
+          <div class="view-toggle" role="tablist" aria-label="View mode">
+            <button type="button" data-view="grid" class="is-active" aria-label="Grid view"><svg viewBox="0 0 24 24"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg></button>
+            <button type="button" data-view="list" aria-label="List view"><svg viewBox="0 0 24 24"><path d="M3 5h18v2H3zm0 6h18v2H3zm0 6h18v2H3z"/></svg></button>
+          </div>
+          <h2 class="dest-title">Top Places To Stay in Turkey</h2>
+          <div class="sort">
+            <svg class="sort-fire" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67M11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8"/></svg>
+            <span>Sort by:</span>
+            <select id="dest-sort" aria-label="Sort destinations">
+              <option value="popular" selected>Popular</option>
+              <option value="alpha">A → Z</option>
+              <option value="alpha-desc">Z → A</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-2 grid-3 showcase-grid" id="dest-grid" data-view="grid">
+          ${cities.map(cityShowcaseCard).join("")}
+        </div>
+        <div class="dest-empty" id="dest-empty" hidden>No destinations match your filter. <button type="button" class="btn btn-ghost btn-sm" onclick="document.getElementById('dest-reset').click()" style="margin-left:8px">Reset filters</button></div>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+// Destinations grid: filter by checkbox + free-text search, sort, view toggle.
+// Lightweight, no framework. Plays nicely with reveal/animation.
+(function () {
+  var grid = document.getElementById("dest-grid");
+  var list = document.getElementById("dest-list");
+  var search = document.getElementById("dest-search");
+  var sort = document.getElementById("dest-sort");
+  var emptyState = document.getElementById("dest-empty");
+  var reset = document.getElementById("dest-reset");
+  if (!grid || !list || !search || !sort) return;
+  var cards = Array.from(grid.querySelectorAll(".showcase-card"));
+  var listItems = Array.from(list.querySelectorAll("li"));
+
+  function applyFilter() {
+    var q = (search.value || "").trim().toLowerCase();
+    var checkedSlugs = Array.from(list.querySelectorAll("input:checked")).map(function (i) { return i.dataset.city; });
+    // Filter sidebar list by search text
+    listItems.forEach(function (li) {
+      li.classList.toggle("is-hidden", q && li.dataset.name.indexOf(q) === -1);
+    });
+    // Filter grid by (checkbox set OR search match)
+    var visible = 0;
+    cards.forEach(function (c) {
+      var slug = c.dataset.city;
+      var name = c.dataset.name || "";
+      var matchesSearch = !q || name.indexOf(q) !== -1;
+      var matchesChecks = checkedSlugs.length === 0 || checkedSlugs.indexOf(slug) !== -1;
+      var show = matchesSearch && matchesChecks;
+      c.style.display = show ? "" : "none";
+      if (show) visible++;
+    });
+    emptyState.hidden = visible !== 0;
+  }
+
+  function applySort() {
+    var mode = sort.value;
+    var sorted = cards.slice();
+    if (mode === "alpha") {
+      sorted.sort(function (a, b) { return a.dataset.name.localeCompare(b.dataset.name); });
+    } else if (mode === "alpha-desc") {
+      sorted.sort(function (a, b) { return b.dataset.name.localeCompare(a.dataset.name); });
+    } else {
+      // Popular: rank by data-popularity desc, fallback to insertion order
+      sorted.sort(function (a, b) {
+        return (parseFloat(b.dataset.popularity) || 0) - (parseFloat(a.dataset.popularity) || 0);
+      });
+    }
+    sorted.forEach(function (c) { grid.appendChild(c); });
+  }
+
+  search.addEventListener("input", applyFilter);
+  list.addEventListener("change", applyFilter);
+  sort.addEventListener("change", applySort);
+
+  // View toggle
+  var toggleButtons = document.querySelectorAll(".dest-toolbar .view-toggle button");
+  toggleButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      toggleButtons.forEach(function (b) { b.classList.remove("is-active"); });
+      btn.classList.add("is-active");
+      grid.dataset.view = btn.dataset.view;
+    });
+  });
+
+  reset.addEventListener("click", function () {
+    search.value = "";
+    list.querySelectorAll("input:checked").forEach(function (i) { i.checked = false; });
+    sort.value = "popular";
+    applyFilter();
+    applySort();
+  });
+})();
+</script>
 
 ${editorsPicksStrip()}
 
