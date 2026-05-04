@@ -21,3 +21,7 @@ site/
 # Scratch
 /tmp/
 data/_staging/
+
+# Claude Code runtime — local only
+.claude/scheduled_tasks.lock
+.claude/worktrees/

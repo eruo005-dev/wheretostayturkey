@@ -430,13 +430,16 @@
             "Walking distance to the bazaars",
             "Best baklava houses at your door",
             "Historic stone architecture",
-            "Zeugma Museum is 15 min away"
+            "Zeugma Museum is 15 min away",
+            "Walk to the world's best baklava (İmam Çağdaş, Güllüoğlu)"
           ],
           "cons": [
             "Gets hot in summer",
             "Parts are run-down",
-            "Less English than tourist cities"
-          ]
+            "Less English than tourist cities",
+            "Steep cobbled lanes — wheelies struggle"
+          ],
+          "longDescription": "Gaziantep's old city wraps around the medieval Antep Castle (Kale) and the warren of bazaars (Bakırcılar Çarşısı for copper, Zincirli Bedesten for cloth) that have run continuously since the Mamluk period. Stay here for the food — Gaziantep is UNESCO's Creative City of Gastronomy and the lahmacun, baklava, and katmer are best within a 10-minute walk of the bazaar. Restored konak hotels with stone courtyards are the atmospheric stock; the Anadolu Evleri street is the picture-perfect address. Distances are short but the streets are steep."
         },
         {
           "slug": "sahinbey",
@@ -453,11 +456,40 @@
           "pros": [
             "Modern hotel chains",
             "Malls and modern dining",
-            "Easy airport access"
+            "Easy airport access",
+            "Cheaper than konak hotels in the old city"
           ],
           "cons": [
             "Generic feel",
-            "10–15 min drive to the old city and food scene"
+            "10–15 min drive to the old city and food scene",
+            "Less atmosphere than the bazaar"
+          ],
+          "longDescription": "Şahinbey is the older residential district between the old city and Şehitkamil — a mix of 1960s-80s apartment blocks, leafy back streets, and a few restored stone mansions on the way up to the castle. Most mid-range business hotels (3-4 star) sit here, with a 5-10 minute taxi to the bazaar. Stay here if you want a working-city experience — the morning bakery queues, the local market — without paying konak-hotel rates and without the modern-suburb sterility of Şehitkamil."
+        },
+        {
+          "slug": "sehitkamil",
+          "name": "Şehitkamil (modern district)",
+          "oneLiner": "The newer, leafier western district — Gaziantep's residential and chain-hotel side, 10 minutes from the old city.",
+          "longDescription": "Şehitkamil is where modern Gaziantep lives. Wide boulevards, the city's main park (100. Yıl Parkı), the SANKO Park shopping mall, and most of the international-brand hotels — Tugcan, Ramada, Holiday Inn. Stay here if you want gym, parking, and a 10-minute taxi to the old city for food. The trade-off: less atmosphere, fewer authentic restaurants nearby. Best for business travelers and for anyone arriving by car who wants modern hotel reliability.",
+          "verdict": "Pick this for chain-hotel comfort and easy parking, with a 10-minute taxi or tram to the food in the old city.",
+          "vibe": "Modern, residential, leafy",
+          "walkability": "Limited — taxi/tram to old city",
+          "bestForTags": [
+            "business",
+            "first-timers",
+            "drivers"
+          ],
+          "priceRange": "$60–$140 / night",
+          "pros": [
+            "International chain hotels with gyms",
+            "Easy parking + closer to airport",
+            "100. Yıl Park for morning walks",
+            "Quieter at night"
+          ],
+          "cons": [
+            "10-min taxi/tram each way for food",
+            "Less atmosphere — could be any city",
+            "Few authentic restaurants — chain food courts dominate"
           ]
         }
       ],
@@ -526,10 +558,38 @@
         {
           "q": "Is Gaziantep safe?",
           "a": "Yes. It's a large, established Turkish city. The southeastern location means you should pay routine attention but it's not a destination with notable safety concerns."
+        },
+        {
+          "q": "How long do I need in Gaziantep?",
+          "a": "Two nights minimum — one for the bazaar, the Zeugma museum, and a proper food crawl; one for Halfeti or Birecik. Foodies could happily stay three. Most travelers pair Gaziantep with Şanlıurfa (2.5 hours east) for a four-night southeastern Turkey loop."
+        },
+        {
+          "q": "Best baklava shop in Gaziantep?",
+          "a": "İmam Çağdaş (since 1887, three locations including the original on Uzun Çarşı) is the local consensus for traditional pistachio baklava. Güllüoğlu is the bigger global brand and runs a credible second. Try both and pick — the difference is butter ratio and cooking time."
         }
       ],
       "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Gaziantep%20Zeugma%20Museum%20Dionysos%20Triumf%20mosaic%201921.jpg?width=1200",
-      "heroImageCredit": "Zeugma mosaics, Gaziantep / Wikimedia Commons"
+      "heroImageCredit": "Zeugma mosaics, Gaziantep / Wikimedia Commons",
+      "gettingAround": "Gaziantep Airport (GZT) is 20km east — taxi or hotel transfer (~$15). Daily flights from Istanbul (1h45) and Ankara. Inside the city, the modern tram (Gaziray) runs east-west across the central districts, single-fare $0.80; walking covers the old city itself. For Halfeti and Birecik day trips, rent a car (Localrent's Gaziantep depot is reliable) or hire a half-day private driver — public buses run but are slow. Intercity bus to Şanlıurfa is 2.5 hours, to Mardin 4 hours.",
+      "nearbyDayTrips": [
+        {
+          "name": "Halfeti",
+          "description": "Half-submerged village on the Euphrates, 90 minutes east. Black-rose gardens, a flooded minaret, riverboat tours — Turkey's most photogenic dam-displaced site."
+        },
+        {
+          "name": "Zeugma Mosaic Museum",
+          "description": "Inside Gaziantep itself but worth a separate half-day. The world's largest mosaic museum, with pieces rescued from the rising Euphrates dam waters. The Gypsy Girl mosaic alone justifies the visit."
+        },
+        {
+          "name": "Birecik",
+          "description": "Bald-ibis breeding centre + the Euphrates crossing the highway. 75 minutes east. Pair with Halfeti for a long day trip."
+        },
+        {
+          "name": "Yesemek Open-Air Museum",
+          "description": "1500 BC Hittite stone-carving workshop, UNESCO-tentative, 90 minutes south. Almost no visitors. Bring water and grip-soled shoes."
+        }
+      ],
+      "localFood": "Gaziantep is Turkey's food capital — UNESCO Creative City of Gastronomy since 2015 — and you don't really come here for the architecture. The headline foods: lahmacun (the local version is thinner and spicier than Istanbul's), beyran çorbası (a garlic-rice-lamb breakfast soup that locals queue for at 7am), katmer (pistachio-cream pancake, the regional breakfast splurge), and baklava — Gaziantep pistachio baklava is the global benchmark and İmam Çağdaş has been making it since 1887. Don't leave without a kilo of fıstık (Antep pistachio) from the bazaar; it's a different cultivar from the Iranian/Italian varieties and ships well."
     },
     {
       "slug": "bursa",
