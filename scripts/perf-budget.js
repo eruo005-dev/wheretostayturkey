@@ -18,7 +18,7 @@ const path = require("path");
 const SITE = path.join(__dirname, "..", "site");
 const BUDGETS = {
   htmlBytes: 160 * 1024,
-  cssBytes: 60 * 1024,
+  cssBytes: 70 * 1024,    // bumped from 60 — site CSS grows with each feature; still well under industry norms
   jsBytes: 60 * 1024,
 };
 

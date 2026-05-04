@@ -787,6 +787,101 @@ small, .small { font-size: 0.86rem; }
   border-radius: 8px;
 }
 
+/* ---------- 12.85 A11y polish (WCAG 2.2 AA) ---------- */
+
+/* Visual class for headings that need to be a different element than
+   their visual size suggests. .toc-heading is an <h2> (semantic) but
+   styled like the old <h4> so the visual hierarchy stays intact. */
+.toc-heading {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+
+/* Card-title heading. Semantic <h3> (so the page hierarchy doesn't jump
+   from h2 → h4 inside cards) but styled at h4 weight/size to keep the
+   visual rhythm. Used inside .card and showcase grids. */
+.card-h {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+/* Stronger :focus-visible — clear keyboard outline on every interactive
+   element, no outline on mouse focus (WCAG 2.4.7 + 2.4.11). */
+*:focus { outline: none; }
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.btn:focus-visible,
+a.btn:focus-visible,
+.nav-links a:focus-visible,
+.dest-list label:focus-visible,
+.dest-list input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+/* Min 44×44 tap targets (WCAG 2.5.5 / 2.5.8). The .btn classes already
+   meet this; ensure smaller nav items, sidebar checkboxes, and chip
+   tags also do. */
+.nav-links a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.dest-list li {
+  min-height: 44px;
+}
+.dest-list input[type="checkbox"] {
+  /* visible box stays small; padded label parent handles the tap target */
+  width: 18px; height: 18px;
+}
+.dest-toolbar .view-toggle button {
+  min-width: 44px;
+  min-height: 44px;
+}
+.cookie-actions .btn-sm {
+  min-height: 44px;
+}
+
+/* Visually-hidden helper for screen-reader-only text. Used for adding
+   labels to icon-only controls without showing them. */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* prefers-reduced-motion — kill non-essential animation when the OS
+   says so. (WCAG 2.3.3 + 2.2.2.) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reading-progress-bar { transition: none !important; }
+  .showcase-card:hover { transform: none !important; }
+  .city-card-rich:hover { transform: none !important; }
+  .hero-immersive .container > * { animation: none !important; }
+}
+
 /* ---------- 12.6 Reading progress bar (journal posts) ---------- */
 .reading-progress {
   position: fixed;

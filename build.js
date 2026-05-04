@@ -875,7 +875,7 @@ function experiencesBlock(city) {
     ${cards.map((c) => `
       <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(c.url)}" style="text-decoration:none;color:inherit">
         <div class="eyebrow" style="color:var(--c-text-soft)">${esc(c.partner)}</div>
-        <h4 style="margin:4px 0">${esc(c.tag)}</h4>
+        <h3 class="card-h" style="margin:4px 0">${esc(c.tag)}</h3>
         <p class="text-muted small" style="margin:0">Browse ${esc(city.name)} experiences →</p>
       </a>
     `).join("")}
@@ -903,7 +903,7 @@ function transferBlock(city) {
     ${cards.map((c) => `
       <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(c.url)}" style="text-decoration:none;color:inherit">
         <div class="eyebrow" style="color:var(--c-text-soft)">${esc(c.partner)}</div>
-        <h4 style="margin:4px 0">${esc(c.tag)}</h4>
+        <h3 class="card-h" style="margin:4px 0">${esc(c.tag)}</h3>
       </a>
     `).join("")}
   </div>
@@ -927,7 +927,7 @@ function essentialsBlock() {
     ${cards.map((c) => `
       <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(c.url)}" style="text-decoration:none;color:inherit">
         <div class="eyebrow" style="color:var(--c-text-soft)">${esc(c.partner)}</div>
-        <h4 style="margin:4px 0">${esc(c.tag)}</h4>
+        <h3 class="card-h" style="margin:4px 0">${esc(c.tag)}</h3>
       </a>
     `).join("")}
   </div>
@@ -949,7 +949,7 @@ function flightsBlock(city) {
     ${cards.map((c) => `
       <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(c.url)}" style="text-decoration:none;color:inherit">
         <div class="eyebrow" style="color:var(--c-text-soft)">${esc(c.partner)}</div>
-        <h4 style="margin:4px 0">${esc(c.tag)}</h4>
+        <h3 class="card-h" style="margin:4px 0">${esc(c.tag)}</h3>
       </a>
     `).join("")}
   </div>
@@ -1588,7 +1588,7 @@ ${disclosureBanner()}
         <ul class="dest-list" id="dest-list" role="group">
           ${cities.slice().sort((a, b) => a.name.localeCompare(b.name)).map((c) => `
             <li data-name="${esc(c.name.toLowerCase())}" data-slug="${esc(c.slug)}">
-              <label><input type="checkbox" data-city="${esc(c.slug)}"><span>${esc(c.name)}</span></label>
+              <label><input type="checkbox" data-city="${esc(c.slug)}" aria-label="Filter by ${esc(c.name)}"><span>${esc(c.name)}</span></label>
             </li>`).join("")}
           <button type="button" class="reset" id="dest-reset">Reset filters</button>
         </ul>
@@ -1793,10 +1793,10 @@ function renderCity(c) {
 
   const programmaticLinks = `
 <div class="grid grid-2 grid-3 grid-4 mt-3">
-  ${luxury.length ? `<a class="card" href="/${c.slug}/luxury/"><h4 style="margin:0">Luxury hotels</h4><p class="text-muted small mt-1">5-star picks in ${esc(c.name)}</p></a>` : ""}
-  ${budget.length ? `<a class="card" href="/${c.slug}/budget/"><h4 style="margin:0">Budget hotels</h4><p class="text-muted small mt-1">Under $100 / night</p></a>` : ""}
-  <a class="card" href="/${c.slug}/families/"><h4 style="margin:0">For families</h4><p class="text-muted small mt-1">Best areas for kids</p></a>
-  <a class="card" href="/${c.slug}/couples/"><h4 style="margin:0">For couples</h4><p class="text-muted small mt-1">Romantic stays</p></a>
+  ${luxury.length ? `<a class="card" href="/${c.slug}/luxury/"><h3 class="card-h" style="margin:0">Luxury hotels</h3><p class="text-muted small mt-1">5-star picks in ${esc(c.name)}</p></a>` : ""}
+  ${budget.length ? `<a class="card" href="/${c.slug}/budget/"><h3 class="card-h" style="margin:0">Budget hotels</h3><p class="text-muted small mt-1">Under $100 / night</p></a>` : ""}
+  <a class="card" href="/${c.slug}/families/"><h3 class="card-h" style="margin:0">For families</h3><p class="text-muted small mt-1">Best areas for kids</p></a>
+  <a class="card" href="/${c.slug}/couples/"><h3 class="card-h" style="margin:0">For couples</h3><p class="text-muted small mt-1">Romantic stays</p></a>
 </div>`;
 
   const body = `
@@ -1836,7 +1836,7 @@ ${disclosureBanner()}
 
 <section class="container">
   <div class="toc">
-    <h4>At a glance</h4>
+    <h2 class="toc-heading">At a glance</h2>
     <ol>
       ${c.areas.map((a) => `<li><a href="#${esc(a.slug)}">${esc(a.name)}</a> — ${esc(a.oneLiner)}</li>`).join("")}
     </ol>
@@ -1936,7 +1936,8 @@ ${disclosureBanner()}
   </div>
 </div>
 
-<section class="container">
+<section class="container" aria-labelledby="prog-picks-h">
+  <h2 id="prog-picks-h" class="visually-hidden">${esc(heading)} — picks</h2>
   <div class="grid grid-2 grid-3">
     ${hotels.length
       ? hotels.map((h) => hotelCard(h, city)).join("")
@@ -1946,7 +1947,8 @@ ${disclosureBanner()}
 
 ${leadMagnet({ citySlug: city.slug })}
 
-<section class="container">
+<section class="container" aria-labelledby="prog-areas-h">
+  <h2 id="prog-areas-h" class="visually-hidden">Top neighborhoods in ${esc(city.name)}</h2>
   ${audience ? `<p class="text-muted">${esc(audience)}</p>` : ""}
   <div class="grid grid-2 mt-3">
     ${city.areas
@@ -1965,11 +1967,11 @@ ${leadMagnet({ citySlug: city.slug })}
 <section class="container section-sm">
   <h2>Explore more in ${esc(city.name)}</h2>
   <div class="grid grid-2 grid-4 mt-3">
-    <a class="card" href="/${city.slug}/"><h4 style="margin:0">All neighborhoods</h4><p class="text-muted small mt-1">Full ${esc(city.name)} area guide</p></a>
-    ${variant !== "luxury" && city.hotels.some((h) => h.tier === "luxury") ? `<a class="card" href="/${city.slug}/luxury/"><h4 style="margin:0">Luxury hotels</h4><p class="text-muted small mt-1">5-star picks</p></a>` : ""}
-    ${variant !== "budget" && city.hotels.some((h) => h.tier === "budget") ? `<a class="card" href="/${city.slug}/budget/"><h4 style="margin:0">Budget hotels</h4><p class="text-muted small mt-1">Under $100</p></a>` : ""}
-    ${variant !== "families" ? `<a class="card" href="/${city.slug}/families/"><h4 style="margin:0">For families</h4><p class="text-muted small mt-1">Best areas for kids</p></a>` : ""}
-    ${variant !== "couples" ? `<a class="card" href="/${city.slug}/couples/"><h4 style="margin:0">For couples</h4><p class="text-muted small mt-1">Romantic stays</p></a>` : ""}
+    <a class="card" href="/${city.slug}/"><h3 class="card-h" style="margin:0">All neighborhoods</h3><p class="text-muted small mt-1">Full ${esc(city.name)} area guide</p></a>
+    ${variant !== "luxury" && city.hotels.some((h) => h.tier === "luxury") ? `<a class="card" href="/${city.slug}/luxury/"><h3 class="card-h" style="margin:0">Luxury hotels</h3><p class="text-muted small mt-1">5-star picks</p></a>` : ""}
+    ${variant !== "budget" && city.hotels.some((h) => h.tier === "budget") ? `<a class="card" href="/${city.slug}/budget/"><h3 class="card-h" style="margin:0">Budget hotels</h3><p class="text-muted small mt-1">Under $100</p></a>` : ""}
+    ${variant !== "families" ? `<a class="card" href="/${city.slug}/families/"><h3 class="card-h" style="margin:0">For families</h3><p class="text-muted small mt-1">Best areas for kids</p></a>` : ""}
+    ${variant !== "couples" ? `<a class="card" href="/${city.slug}/couples/"><h3 class="card-h" style="margin:0">For couples</h3><p class="text-muted small mt-1">Romantic stays</p></a>` : ""}
   </div>
 </section>
 
@@ -2106,7 +2108,7 @@ ${disclosureBanner()}
       ${upsells.slice(0, 3).map((u) => `
         <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(u.url)}" style="text-decoration:none;color:inherit">
           <div class="eyebrow" style="color:var(--c-text-soft)">${esc(u.partner)}</div>
-          <h4 style="margin:4px 0">${esc(u.tag)}</h4>
+          <h3 class="card-h" style="margin:4px 0">${esc(u.tag)}</h3>
         </a>`).join("")}
     </div>
   </div>
@@ -2450,12 +2452,18 @@ function renderIndexNowKey() {
   writeFile(`${key}.txt`, key);
 }
 
-// AdSense recommends serving ads.txt at the site root with one DIRECT
-// line per ad system. The TAG-ID f08c47fec0942fa0 is Google's universal
-// publisher identifier and is the same for every AdSense account.
+// AdSense ads.txt. Format: domain, publisher-id, relationship, TAG-ID.
+// IMPORTANT: ads.txt expects the bare `pub-XXXXXXXXXXXXXXXX` form, NOT
+// the `ca-pub-XXXXXXXXXXXXXXXX` form used in the JS loader's data-ad-
+// client attribute. AdSense flags ads.txt as "unauthorized" if the
+// `ca-` prefix slips in (the original cause of the error here). We
+// strip it so config.adsense.clientId can stay in either form. The
+// TAG-ID f08c47fec0942fa0 is Google's universal publisher identifier
+// and is the same for every AdSense account.
 function renderAdsTxt() {
   if (!config.adsense || !config.adsense.clientId) return;
-  writeFile("ads.txt", `google.com, ${config.adsense.clientId}, DIRECT, f08c47fec0942fa0\n`);
+  const pubId = config.adsense.clientId.replace(/^ca-/, "");
+  writeFile("ads.txt", `google.com, ${pubId}, DIRECT, f08c47fec0942fa0\n`);
 }
 
 function render404() {
@@ -2587,7 +2595,7 @@ ${essentialsBlock()}
 <section class="container section-sm">
   <h2>Or explore by destination</h2>
   <div class="grid grid-2 grid-3 grid-4 mt-3">
-    ${cities.slice(0, 8).map((c) => `<a class="card" href="/${c.slug}/"><h4 style="margin:0">${esc(c.name)}</h4><p class="text-muted small mt-1">${esc(c.tagline)}</p></a>`).join("")}
+    ${cities.slice(0, 8).map((c) => `<a class="card" href="/${c.slug}/"><h3 class="card-h" style="margin:0">${esc(c.name)}</h3><p class="text-muted small mt-1">${esc(c.tagline)}</p></a>`).join("")}
   </div>
 </section>
 ${footer()}
@@ -2686,7 +2694,7 @@ ${disclosureBanner()}
       ${upsells.slice(0, 3).map((u) => `
         <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(u.url)}" style="text-decoration:none;color:inherit">
           <div class="eyebrow" style="color:var(--c-text-soft)">${esc(u.partner)}</div>
-          <h4 style="margin:4px 0">${esc(u.tag)}</h4>
+          <h3 class="card-h" style="margin:4px 0">${esc(u.tag)}</h3>
         </a>`).join("")}
     </div>
   </div>
@@ -2805,11 +2813,11 @@ ${disclosureBanner()}
         <div class="grid grid-2 grid-4">
           <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(gyg)}" style="text-decoration:none;color:inherit">
             <div class="eyebrow">GetYourGuide</div>
-            <h4 style="margin:4px 0">Browse on GetYourGuide →</h4>
+            <h3 class="card-h" style="margin:4px 0">Browse on GetYourGuide →</h3>
           </a>
-          ${viator ? `<a class="card" rel="sponsored nofollow" target="_blank" href="${esc(viator)}" style="text-decoration:none;color:inherit"><div class="eyebrow">Viator</div><h4 style="margin:4px 0">Browse on Viator →</h4></a>` : ""}
-          ${klook ? `<a class="card" rel="sponsored nofollow" target="_blank" href="${esc(klook)}" style="text-decoration:none;color:inherit"><div class="eyebrow">Klook</div><h4 style="margin:4px 0">Browse on Klook →</h4></a>` : ""}
-          ${tiqets ? `<a class="card" rel="sponsored nofollow" target="_blank" href="${esc(tiqets)}" style="text-decoration:none;color:inherit"><div class="eyebrow">Tiqets</div><h4 style="margin:4px 0">Attraction tickets →</h4></a>` : ""}
+          ${viator ? `<a class="card" rel="sponsored nofollow" target="_blank" href="${esc(viator)}" style="text-decoration:none;color:inherit"><div class="eyebrow">Viator</div><h3 class="card-h" style="margin:4px 0">Browse on Viator →</h3></a>` : ""}
+          ${klook ? `<a class="card" rel="sponsored nofollow" target="_blank" href="${esc(klook)}" style="text-decoration:none;color:inherit"><div class="eyebrow">Klook</div><h3 class="card-h" style="margin:4px 0">Browse on Klook →</h3></a>` : ""}
+          ${tiqets ? `<a class="card" rel="sponsored nofollow" target="_blank" href="${esc(tiqets)}" style="text-decoration:none;color:inherit"><div class="eyebrow">Tiqets</div><h3 class="card-h" style="margin:4px 0">Attraction tickets →</h3></a>` : ""}
         </div>
       </div>
     `;
@@ -3083,7 +3091,7 @@ function showResult() {
     '<div class="grid grid-3 mt-2">' +
       runners.map(function (c) {
         return '<a class="card" href="/' + c.slug + '/" style="text-decoration:none;color:inherit">' +
-          '<h4 style="margin:0">' + c.emoji + ' ' + c.name + '</h4>' +
+          '<h3 class="card-h" style="margin:0">' + c.emoji + ' ' + c.name + '</h3>' +
           '<p class="text-muted small mt-1">' + c.tagline + '</p></a>';
       }).join("") +
     '</div></div>';
@@ -3851,7 +3859,8 @@ ${disclosureBanner()}
   </div>
 </div>
 
-<section class="container">
+<section class="container" aria-labelledby="trips-h">
+  <h2 id="trips-h" class="visually-hidden">Day trips from ${esc(c.name)} — ranked options</h2>
   ${trips.map((t, i) => `
     <div class="card mt-3" style="padding:28px">
       <div class="eyebrow">${esc(t.distance)} · ${esc(t.time)}</div>
@@ -4123,7 +4132,8 @@ ${disclosureBanner()}
   </div>
 </div>
 
-<section class="container">
+<section class="container" aria-labelledby="picks-h">
+  <h2 id="picks-h" class="visually-hidden">${esc(c.title)} — verified picks</h2>
   ${pickCards}
 </section>
 
@@ -4470,7 +4480,7 @@ function disclosureBanner() {
   return `
 <div class="disclosure" role="note">
   <div class="container" style="padding-top:10px;padding-bottom:10px;font-size:0.82rem;color:var(--c-text-muted)">
-    <strong>Disclosure:</strong> This page contains affiliate links. If you book through them we may earn a commission at no extra cost to you — and it's how we keep the site ad-free. <a href="/about/#affiliate">Read more →</a>
+    <strong>Disclosure:</strong> This page contains affiliate links. If you book through them we may earn a commission at no extra cost to you — and it's how we keep the site ad-free. <a href="/about/#affiliate">Read our affiliate policy →</a>
   </div>
 </div>`;
 }
@@ -4857,7 +4867,7 @@ ${disclosureBanner()}
 
     <div class="planner-field">
       <label>Nights: <span id="p-nights-val">5</span></label>
-      <input type="range" id="p-nights" min="1" max="21" value="5" step="1">
+      <input type="range" id="p-nights" min="1" max="21" value="5" step="1" aria-label="Number of nights">
     </div>
 
     <div class="planner-field">
