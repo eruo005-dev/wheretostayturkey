@@ -34,14 +34,17 @@
             "Walk to every sight",
             "Restored Ottoman mansion hotels",
             "Sunset terraces over the plain",
-            "Few western tourists"
+            "Few western tourists",
+            "Mesopotamian plain views from sunset terraces"
           ],
           "cons": [
             "Stairs everywhere — not luggage-friendly",
             "Limited fine dining",
-            "Hot in midsummer"
+            "Hot in midsummer",
+            "No vehicles in the lower lanes — porters carry luggage"
           ],
-          "verdict": "Pick this for atmospheric stone-mansion stays — UNESCO architecture without the crowds."
+          "verdict": "Pick this for atmospheric stone-mansion stays — UNESCO architecture without the crowds.",
+          "longDescription": "Mardin Old Town is one of the most architecturally distinctive places in Turkey — a hillside city of carved limestone, layered terraces, and Syriac, Armenian, and Arab heritage that pre-dates the Ottoman period by centuries. The single 'main street' (Birinci Cadde) runs along the hill's north face, with hotels and restaurants in restored stone mansions tucked above and below it. The Mesopotamian plain stretches south to the horizon — sunset terraces are the evening event, and you can almost see the Syrian border. Stay here if your trip is about heritage architecture, Christian-Muslim-Yazidi history, and food. Conservative-dress norms apply."
         },
         {
           "slug": "midyat",
@@ -56,13 +59,16 @@
           "priceRange": "$50–$180 / night",
           "pros": [
             "Authentic, almost no tourists",
-            "Beautiful stonework"
+            "Beautiful stonework",
+            "Living Syriac Christian heritage (active monasteries, silver workshops)"
           ],
           "cons": [
             "Need a car",
-            "Limited dining"
+            "Limited dining",
+            "Need a car — public transport is limited"
           ],
-          "verdict": "Pick this only with a car — silversmith bazaar, monastery access, almost no tourists."
+          "verdict": "Pick this only with a car — silversmith bazaar, monastery access, almost no tourists.",
+          "longDescription": "Midyat is 65km east of Mardin — a smaller, even quieter old town built from the same honey-coloured stone, and home to the largest concentration of Syriac (Süryani) Christian communities still in Turkey. The old quarter, Estel, is a maze of stone alleys, restored konak hotels, and silver workshops. Stay here only if you want the deepest dive into Syriac Christianity (Mor Gabriel Monastery is 20 minutes east), and only if you have a rental car or driver — public transport from Mardin is limited and the rest of the day-trip circuit needs wheels."
         }
       ],
       "hotels": [
@@ -152,10 +158,34 @@
         {
           "q": "How long do I need?",
           "a": "Two nights minimum: arrive afternoon, sunset terrace, full day for the old town + Deyrulzafaran monastery, leave morning of day three. Add a third night to add Midyat."
+        },
+        {
+          "q": "How long do I need in Mardin?",
+          "a": "Two full nights minimum. Day 1 for the old town walking and the Mesopotamian sunset; Day 2 for Deyrulzafaran + Dara; a third day if you're adding Midyat or Hasankeyf. The food alone justifies an extra night."
         }
       ],
       "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Mardin_old_town.JPG?width=1200",
-      "heroImageCredit": "Mardin old town / Wikimedia Commons"
+      "heroImageCredit": "Mardin old town / Wikimedia Commons",
+      "gettingAround": "Mardin Airport (MQM) is 20km south — taxi or transfer in (~$15). Pegasus and AnadoluJet fly daily from Istanbul. Inside the old town, walking is the only option — the lanes are stairs and the street layout is medieval. The new city ('Yenişehir') is below the hill, a short taxi away, and is where supermarkets and most chain stores live. For Mor Gabriel, Dara, and Hasankeyf day trips, you need a rental car or a half-day private driver ($60-100).",
+      "nearbyDayTrips": [
+        {
+          "name": "Dara",
+          "description": "5th-century Roman frontier city ruins, 30km southeast. Underground cisterns and rock-cut churches. Free entry, almost no tourists."
+        },
+        {
+          "name": "Deyrulzafaran Monastery",
+          "description": "The 'Saffron Monastery' — Syrian Orthodox, founded 493 CE. 5km east of Mardin. Active monastery with a small museum. Modest dress required."
+        },
+        {
+          "name": "Mor Gabriel Monastery",
+          "description": "Founded 397 CE, one of the oldest functioning monasteries in the world. 80km east near Midyat. Active monastic community; visitors welcomed during day hours."
+        },
+        {
+          "name": "Hasankeyf",
+          "description": "Once a 12,000-year-old Tigris town, partially submerged by the Ilısu Dam in 2020. The relocated minarets and reconstructed bridge are now visited from the new village. 3 hours northeast — a long day trip but historically singular."
+        }
+      ],
+      "localFood": "Mardin's food is Mesopotamian, not Turkish-classical — a heavy Arab-Kurdish-Syriac influence. Try kaburga dolması (rice-stuffed lamb ribs, slow-cooked then carved at the table), içli köfte (bulgur shells stuffed with spiced meat — the mother of all Levantine kibbeh recipes), and sembusek (savoury crescents with meat or cheese, fried in lamb fat). Wash it down with mırra coffee — bitter, dense, served in small cups, and traditionally accompanied by a sweet pastry to balance. Most restaurants on Birinci Cadde do a credible version; ask the konak hotels for their family-recipe versions."
     },
     {
       "slug": "konya",
@@ -190,14 +220,43 @@
           "pros": [
             "Walk to the Mevlana Museum",
             "Sema ceremony venue 5 min away",
-            "Easy train station access"
+            "Easy train station access",
+            "10pm sema (whirling dervish) ceremonies during winter season"
           ],
           "cons": [
             "Not a 'leisure' destination",
             "Limited nightlife by Turkish big-city standards",
-            "Dress conservatively"
+            "Dress conservatively",
+            "Quiet on Friday afternoons (prayer hours)"
           ],
-          "verdict": "Pick this for the Mevlana pilgrimage — one or two nights, then move on."
+          "verdict": "Pick this for the Mevlana pilgrimage — one or two nights, then move on.",
+          "longDescription": "Konya's old centre is built around the green-tiled mausoleum of Mevlana Celaleddin Rumi — the 13th-century Sufi mystic whose Mathnawi is one of the foundational texts of Islamic poetry. The Mevlana Museum (the actual mausoleum), the historic Aziziye Mosque, and the 9pm whirling-dervish sema ceremonies at the Mevlana Cultural Centre are all within a 10-minute walk. Stay here if your trip is about the Mevlana experience — the calls to prayer and the mausoleum's evening floodlighting are the experience. Conservative dress norms; this is one of Turkey's most religious cities."
+        },
+        {
+          "slug": "selcuklu",
+          "name": "Selçuklu (modern district)",
+          "oneLiner": "The 21st-century west of Konya — wide boulevards, Kent Park, modern shopping, and the chain hotels.",
+          "longDescription": "Selçuklu is where modern Konya lives. Wide six-lane streets, the city's main park (Kent Park) with its shaded jogging loops, the new Selçuk shopping mall, and almost all of the international-brand hotels — Hilton, DoubleTree, Bera, Dedeman. Stay here if you want gym, parking, business amenities, and a 10-minute taxi to Mevlana Müzesi. It's the practical choice for business travelers and for anyone arriving by car who'd rather not navigate the old-town one-way grid.",
+          "verdict": "Pick this for chain-hotel reliability and parking, with a 10-minute taxi to the Mevlana Museum.",
+          "vibe": "Modern, broad, calm",
+          "walkability": "Limited — taxi/tram to old centre",
+          "bestForTags": [
+            "business",
+            "families",
+            "drivers"
+          ],
+          "priceRange": "$70–$160 / night",
+          "pros": [
+            "International chain hotels with gyms",
+            "Easy parking + closer to airport",
+            "Kent Park for morning walks",
+            "Quieter at night than the old centre"
+          ],
+          "cons": [
+            "10-min taxi/tram each way to Mevlana Müzesi",
+            "Less atmosphere — 'could be any city'",
+            "Few authentic restaurants — chain food courts"
+          ]
         }
       ],
       "hotels": [
@@ -287,10 +346,38 @@
         {
           "q": "Worth combining with Cappadocia?",
           "a": "Yes — Konya is 3 hours by car from Cappadocia, and the route passes Sultanhanı caravanserai. Easy 1-night addition to a Cappadocia trip."
+        },
+        {
+          "q": "How long do I need in Konya?",
+          "a": "One full day covers Mevlana Müzesi, the Aziziye Mosque, the Karatay tile museum, and the evening sema. Two days if you're adding Çatalhöyük. Konya is more often a one-night stop on a Cappadocia/Antalya road-trip than a destination on its own."
+        },
+        {
+          "q": "Are the whirling dervish ceremonies real?",
+          "a": "The official Saturday-evening sema at the Mevlana Cultural Centre is led by trained Mevlevi semazenler and is free; it's a religious ceremony, not a tourist show. Photography is restricted, dress modestly. Tourist-targeted dervish dinners in restaurants are entertainment-grade re-enactments — fine, but not the same thing."
         }
       ],
       "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Mevlana%20Museum%20(Green%20Mausoleum)%20in%20Konya%20Turkey%20By%20Mardetanha%20(41).JPG?width=1200",
-      "heroImageCredit": "Mevlana Museum, Konya / Wikimedia Commons"
+      "heroImageCredit": "Mevlana Museum, Konya / Wikimedia Commons",
+      "gettingAround": "Konya is on Turkey's high-speed rail (YHT) line — 1h45 from Ankara, 4h30 from Istanbul. The KYA airport (35km east) has Turkish Airlines and Pegasus links to Istanbul. Inside the city, the modern tram (1 line, single TRY 17 fare) connects the YHT station, the modern Selçuklu district, and the old centre. Walking covers the Mevlana area; the tram or a $4 taxi handles the rest. For Çatalhöyük (45 minutes south), rent a car or hire a half-day driver.",
+      "nearbyDayTrips": [
+        {
+          "name": "Çatalhöyük",
+          "description": "9,000-year-old Neolithic settlement, UNESCO site. 45 minutes south. Bring water; minimal shade. Pair with a stop in Çumra for lunch."
+        },
+        {
+          "name": "Sille",
+          "description": "Old Greek-Christian village 8km north — restored stone churches and a quiet stream. Half-day, good with kids."
+        },
+        {
+          "name": "Beyşehir Gölü",
+          "description": "Turkey's third-largest lake, 1 hour west. Eşrefoğlu Mosque (1297, all-wood interior, UNESCO-tentative) is the headline."
+        },
+        {
+          "name": "Sultanhanı Caravanserai",
+          "description": "Largest Seljuk caravanserai in Turkey, 1 hour east on the way to Cappadocia. Free 30-minute stop on a long drive."
+        }
+      ],
+      "localFood": "Konya's signature dish is etli ekmek — long thin flatbread topped with minced lamb, often cut with scissors at the table. The classic place is Halil Ibrahim Sofrası near the Mevlana Müzesi. Tirit (a stew of bread, broth, and meat) is the Friday-prayer dish many old Konya families still serve. Don't miss the Mevlevi candy stalls in the bazaar — the city's saffron-and-cinnamon Mevlevi-style helva is local-only and travels well."
     },
     {
       "slug": "sanliurfa",
@@ -325,14 +412,44 @@
           "pros": [
             "Walk to Balıklıgöl + bazaars",
             "Restored mansion hotels with courtyards",
-            "Authentic Urfa cuisine at the door"
+            "Authentic Urfa cuisine at the door",
+            "Best Urfa kebabs and çiğ köfte at the door"
           ],
           "cons": [
             "Hot in summer",
             "Conservative dress expected",
-            "Limited international dining"
+            "Limited international dining",
+            "Cobblestone streets — wheeled luggage struggles",
+            "Sound of dawn call to prayer carries"
           ],
-          "verdict": "Pick this for the Göbekli Tepe trip — atmospheric base, walk to Balıklıgöl."
+          "verdict": "Pick this for the Göbekli Tepe trip — atmospheric base, walk to Balıklıgöl.",
+          "longDescription": "The historic core wraps around Balıklıgöl (the Pool of Sacred Fish) and the warren of stone-arched bazaars where Urfa's spice and copper trades have run for centuries. Mansion hotels — locally called konaks — fill restored 19th-century courtyards with citrus trees, arched colonnades, and breakfast served on tiled terraces. Distances are short: Balıklıgöl, the Archaeology Museum (where the original Göbekli Tepe steles live), and the Kazancı bazaar are all walkable. This is the neighborhood for travelers prioritizing atmosphere and food over hotel amenities."
+        },
+        {
+          "slug": "urfa-modern",
+          "name": "Modern Şanlıurfa (Karaköprü)",
+          "oneLiner": "The new commercial district north of the old city — chain hotels, malls, and the airport bus link.",
+          "longDescription": "Karaköprü is where Şanlıurfa is growing. Wide boulevards, post-2000 apartment blocks, the city's main shopping mall (Piazza), and most of the international-brand hotels (Hilton Garden Inn, DoubleTree, Divan). Stay here if you want hotel-room consistency, a gym, parking, and a 15-minute taxi to the old city — most archaeology travelers prefer the old-city mansions for atmosphere, but if you have a rental car or a long stay, the modern district is calmer and cheaper.",
+          "verdict": "Pick this for chain-hotel consistency and easy parking, with a quick taxi to the old city.",
+          "vibe": "Modern, suburban, calm",
+          "walkability": "Limited — taxi to old city",
+          "bestForTags": [
+            "business",
+            "first-timers",
+            "families"
+          ],
+          "priceRange": "$60–$130 / night",
+          "pros": [
+            "Wider, quieter streets",
+            "International chain hotels with gyms",
+            "Easy parking + closer to GAP airport",
+            "Lower rates than the old-city mansion hotels"
+          ],
+          "cons": [
+            "10-15 minutes from Balıklıgöl by taxi",
+            "Limited atmosphere — bring books",
+            "Few authentic restaurants — chain food courts dominate"
+          ]
         }
       ],
       "hotels": [
@@ -378,10 +495,38 @@
         {
           "q": "Is it safe?",
           "a": "Şanlıurfa is significantly inland from any current security concerns and well-touristed by archaeology travelers. Standard southeastern-Turkey caution applies; check your foreign-office advisory."
+        },
+        {
+          "q": "Should I stay in the old city or near the airport?",
+          "a": "Old city for archaeology travelers — the mansion hotels are the experience and Balıklıgöl is on your doorstep. Modern district (Karaköprü) only if you have a rental car or need international-chain reliability."
+        },
+        {
+          "q": "Is Şanlıurfa safe?",
+          "a": "Yes for travelers — the city is well-touristed by archaeology visitors and well removed from any current security concerns. Standard southeastern-Turkey awareness applies; check your foreign office advisory before booking. Solo female travelers should expect more conservative dress norms than coastal Turkey."
         }
       ],
       "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/G%C3%B6bekli%20Tepe%20surrounding%20area.JPG?width=1200",
-      "heroImageCredit": "Göbekli Tepe, Şanlıurfa / Wikimedia Commons"
+      "heroImageCredit": "Göbekli Tepe, Şanlıurfa / Wikimedia Commons",
+      "gettingAround": "Şanlıurfa GAP Airport (SFQ) is 35km north — taxi or hotel transfer is the only practical option (~$25). Inside the city, the old town is walkable; for the modern district or Göbekli Tepe (20 minutes by car), use the city's metered yellow taxis or hire a half-day driver through your hotel for $30-50, which is the standard approach for Göbekli Tepe + Karahan Tepe + the Archaeology Museum. Intercity buses run from Şanlıurfa Otogar to Gaziantep (2.5h), Mardin (3h), and Diyarbakır (3h).",
+      "nearbyDayTrips": [
+        {
+          "name": "Göbekli Tepe",
+          "description": "11,000-year-old temple complex — the reason most travelers come to Urfa. 20 minutes by car."
+        },
+        {
+          "name": "Karahan Tepe",
+          "description": "Sister site to Göbekli Tepe, recently opened to visitors. 1-hour drive east. Best paired with a half-day private driver."
+        },
+        {
+          "name": "Harran",
+          "description": "Ancient beehive-house village 45 minutes south. UNESCO-tentative; the conical mud-brick architecture is unique to this corner of Mesopotamia."
+        },
+        {
+          "name": "Şanlıurfa Archaeology Museum",
+          "description": "Holds the original Göbekli Tepe steles — visit AFTER the site, not before. The museum is the deeper second half of the experience."
+        }
+      ],
+      "localFood": "Şanlıurfa is one of Turkey's serious food cities. Çiğ köfte (raw bulgur kneaded with isot pepper) is the local invention — Urfa's version is fierier and more aromatic than the western adaptations. Urfa kebabı (skewered minced lamb with isot, served on flatbread) is the headline meat dish. Lahmacun comes thinner and less dressed than Istanbul's. End meals at a sıra gecesi (a music night with raki, mezes, and live saz) — most old-city mansion hotels can arrange one."
     },
     {
       "slug": "safranbolu",
@@ -417,13 +562,42 @@
           "pros": [
             "Sleep inside a UNESCO site",
             "Restored 19th-century konak hotels",
-            "Walk to every sight"
+            "Walk to every sight",
+            "No traffic — quietest old town in Turkey at night"
           ],
           "cons": [
             "Cobblestone streets — wheeled luggage struggles",
-            "Rooms can be small (historic constraints)"
+            "Rooms can be small (historic constraints)",
+            "Steep walk back up the hill from the bottom of Çarşı"
           ],
-          "verdict": "Pick this to sleep inside a UNESCO Ottoman village — restored konak hotels at every turn."
+          "verdict": "Pick this to sleep inside a UNESCO Ottoman village — restored konak hotels at every turn.",
+          "longDescription": "Çarşı is the UNESCO-protected core of Safranbolu — 800 restored Ottoman timber-frame houses (called konak), narrow cobbled lanes, the 17th-century Cinci Han caravanserai, and the small Tabaklar bridge over the Akçasu stream. Sleeping inside a konak hotel is the experience: small wood-panelled rooms, breakfast served in the courtyard with safran-laced lokum, and the sound of nothing at night because cars are largely banished. Distances are short — every notable sight is within 10 minutes' walk. Best for couples and history travelers who don't mind small bathrooms and the occasional creaky floorboard."
+        },
+        {
+          "slug": "kiranköy",
+          "name": "Kıranköy (modern town)",
+          "oneLiner": "The 'new' part of Safranbolu on the ridge above Çarşı — chain hotels, supermarkets, and the panoramic viewpoints over the old town.",
+          "longDescription": "Kıranköy is the 20th-century half of Safranbolu, perched on the ridge that looks down into the UNESCO old town. Stay here for modern hotel rooms (Hilton Garden Inn, plus several mid-range chains), parking that doesn't involve a cobblestone drag, and the famous Hıdırlık Hill viewpoint where every photographer ends up. Trade-off: you'll taxi or walk steeply down to Çarşı each evening. Best for travelers who want the UNESCO sights but prefer modern bedrooms.",
+          "verdict": "Pick this for chain-hotel comfort and panoramic views, with a 5-minute walk down into the UNESCO old town.",
+          "vibe": "Modern, suburban, ridgetop",
+          "walkability": "Walk down to Çarşı (steep return)",
+          "bestForTags": [
+            "families",
+            "first-timers",
+            "drivers"
+          ],
+          "priceRange": "$55–$120 / night",
+          "pros": [
+            "Easy parking + modern bathrooms",
+            "Hıdırlık Hill viewpoint within walking distance",
+            "Cheaper than konak hotels in Çarşı",
+            "Better for families with strollers (no cobbles)"
+          ],
+          "cons": [
+            "Less atmospheric than the konak hotels below",
+            "Walking back up from dinner is a workout",
+            "You're sleeping above the experience, not in it"
+          ]
         }
       ],
       "hotels": [
@@ -469,10 +643,38 @@
         {
           "q": "How do I get there?",
           "a": "From Ankara: 3 hours by car or bus. From Istanbul: 5 hours by car, 6+ by bus. There's no airport; the closest is Ankara."
+        },
+        {
+          "q": "How long do I need in Safranbolu?",
+          "a": "One full night is enough to walk the old town, eat a proper konak breakfast, and visit Cinci Han. Two nights if you want to add Yörük Köyü or Amasra. More than two and you've usually exhausted the village."
+        },
+        {
+          "q": "Is Safranbolu wheelchair / pram friendly?",
+          "a": "Çarşı is challenging — cobblestones, steps, narrow lanes, no curb cuts. Kıranköy on the ridge is flatter and more accessible. The viewpoints at Hıdırlık Hill have paved paths."
         }
       ],
       "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Safranbolu_traditional_houses-2.jpg?width=1200",
-      "heroImageCredit": "Safranbolu Ottoman houses / Wikimedia Commons"
+      "heroImageCredit": "Safranbolu Ottoman houses / Wikimedia Commons",
+      "gettingAround": "Safranbolu has no airport. Most travelers take a domestic flight to Karabük (the next town, 15 minutes away) — though service is irregular — or to Ankara Esenboğa and then a 3-hour intercity bus. Inside Safranbolu the old town is walking-only (cars can't fit anyway); use the dolmuş minibus for the climb between Çarşı and Kıranköy, or just walk if your knees agree. Day trips need a rental car or a hotel-arranged driver.",
+      "nearbyDayTrips": [
+        {
+          "name": "Yörük Köyü",
+          "description": "Smaller, less restored Ottoman village 15 minutes east. Same architectural family, more authentic, fewer tour buses."
+        },
+        {
+          "name": "Bulak Mağarası",
+          "description": "Limestone cave system 8km away — guided 1km loop with platforms and lighting. Easy half-day add-on."
+        },
+        {
+          "name": "Amasra",
+          "description": "Black Sea coastal town 90 minutes north. Tiny harbour, fish restaurants, walk-to citadel — the best 'pair Safranbolu with the coast' day trip."
+        },
+        {
+          "name": "İncekaya Aqueduct",
+          "description": "Ottoman-era stone aqueduct in the Tokatlı canyon, 7km from Çarşı. Short hike + dramatic photos."
+        }
+      ],
+      "localFood": "Safranbolu's name comes from saffron (safran) — the surrounding farms grew it for the Ottoman court and small-batch production has restarted. Try saffron lokum (Turkish delight) at Hacı Bekir's outpost, saffron-laced rice with chicken at any old-town konak restaurant, and bandık (a regional bean stew thickened with grape molasses). Don't miss the breakfast spreads — Safranbolu's konak breakfasts are among Turkey's most generous, with 15+ small dishes and the saffron-rose tea that defines the region."
     }
   ]
 }

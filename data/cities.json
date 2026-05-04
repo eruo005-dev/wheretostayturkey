@@ -1503,13 +1503,16 @@
           "pros": [
             "Walk to the entrance",
             "Cheap pensions with pools",
-            "Quiet evenings"
+            "Quiet evenings",
+            "6am terrace entry beats the tour-bus crowds"
           ],
           "cons": [
             "Limited restaurants",
             "No real nightlife",
-            "Most hotels are simple"
-          ]
+            "Most hotels are simple",
+            "Most pansiyons are basic — don't expect chain-hotel amenities"
+          ],
+          "longDescription": "Pamukkale Village is the small town directly below the white travertine terraces, and the practical base for most travelers. Family-run pansiyons and small hotels line the village's three main streets, sunset views of the terraces are the evening event, and the south gate to Hierapolis is a 5-minute walk uphill. Stay here if you want the cheapest functional base, an early morning entry to the terraces (6am opening before the bus crowds), and proper home-cooked Anatolian breakfast at every pansiyon. Most rooms are basic but the locations are unbeatable."
         },
         {
           "slug": "karahayit",
@@ -1526,13 +1529,16 @@
           "pros": [
             "Large spa resorts",
             "Thermal pools at the hotel",
-            "More amenities than the village"
+            "More amenities than the village",
+            "Red-water mineral baths (different mineralogy from Pamukkale white)"
           ],
           "cons": [
             "Shuttle needed to walk travertines",
             "Draws bus-tour groups",
-            "Less scenic base"
-          ]
+            "Less scenic base",
+            "10-minute shuttle to the travertines"
+          ],
+          "longDescription": "Karahayıt is 4km north of Pamukkale Village — a separate small town built around its red-mineral hot springs (the Kırmızı Su / 'Red Water' baths). Larger thermal-spa hotels dominate here: 4-5 star resorts with multiple pools, all-meals included, package-tour groups. Stay here if you want the proper spa-resort experience — water-therapy treatments, full board, kids' pools — and don't mind a 10-minute shuttle or taxi to Pamukkale's travertines. Best for travelers prioritizing thermal water over walking access to Hierapolis."
         }
       ],
       "hotels": [
@@ -1596,10 +1602,38 @@
         {
           "q": "Do I need to stay overnight in Pamukkale?",
           "a": "Yes if you want a quiet morning or sunset at the travertines. Day-trippers arrive at peak hours and it gets crowded. A cheap village hotel lets you walk over at dawn."
+        },
+        {
+          "q": "How long do I need in Pamukkale?",
+          "a": "One night is enough for most travelers — arrive afternoon, see the travertines + Hierapolis at sunset, sleep over, swim in Cleopatra's pool the next morning, leave by 11am. Two nights only if you're doing Aphrodisias as well."
+        },
+        {
+          "q": "Are the travertines actually still white?",
+          "a": "Mostly yes — the upper terraces are kept water-filled by managed flow and shoes are banned to protect the calcium carbonate surface. The lower terraces are drier in late summer when the springs run lower. Best photographs are at sunset (golden light) or 6am (no crowds)."
         }
       ],
       "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Pamukkale_Hierapolis_Travertine_pools.JPG?width=1200",
-      "heroImageCredit": "Pamukkale travertines / Wikimedia Commons"
+      "heroImageCredit": "Pamukkale travertines / Wikimedia Commons",
+      "gettingAround": "Denizli Çardak Airport (DNZ) is 65km east — about 75 minutes by transfer. Most travelers arrive on the overnight bus from Istanbul (10 hours, $25-40) or by domestic flight via Denizli. From Denizli Otogar, the Pamukkale dolmuş runs every 20 minutes ($2). Inside Pamukkale Village, you walk; for Hierapolis-Pamukkale combined entry, the south or north gate are both walkable from the village. Karahayıt connects by 10-minute taxi or hourly dolmuş.",
+      "nearbyDayTrips": [
+        {
+          "name": "Hierapolis",
+          "description": "The ancient Roman city above the travertines — included in the same ticket. Allow 2-3 hours to see the necropolis, theatre, and Cleopatra's antique pool."
+        },
+        {
+          "name": "Cleopatra's Antique Pool",
+          "description": "Swim in 36°C mineral water above sunken Roman columns — inside Hierapolis, separate ticket. Touristy but unique."
+        },
+        {
+          "name": "Laodicea",
+          "description": "Ancient city 10km south, less visited than Hierapolis. The Council of Laodicea (363 CE) was held here. Quiet ruins, free of tour buses."
+        },
+        {
+          "name": "Aphrodisias",
+          "description": "2-hour drive south. UNESCO site, smaller than Ephesus but better preserved — the marble friezes are extraordinary. Best as a long day trip with a driver."
+        }
+      ],
+      "localFood": "Denizli province isn't a food destination on the level of Gaziantep or Hatay, but a few regional specialities are worth seeking out: Denizli kebabı (lamb braised in clay pot, then cracked open at the table), tandır kuzu (slow-roasted lamb shoulder from the village tandır oven), and the local çeykek pastry filled with cheese. Most Pamukkale Village pansiyons serve a generous Anatolian breakfast spread (10+ small dishes); skip the hotel restaurant lunches in Karahayıt — they're geared toward package tours."
     },
     {
       "slug": "marmaris",
@@ -1633,13 +1667,16 @@
           "pros": [
             "Lots of bars and clubs",
             "Cheap all-inclusive options",
-            "Easy boat trips"
+            "Easy boat trips",
+            "Closest base for Cleopatra Beach + Dalyan day boats"
           ],
           "cons": [
             "Very touristy",
             "Bar Street is loud into the night",
-            "Not scenic"
-          ]
+            "Not scenic",
+            "Bar Street can be loud past midnight"
+          ],
+          "longDescription": "Marmaris town centre wraps around the marina and the old castle (Marmaris Kalesi). The 6-mile palm-lined seafront promenade is the spine of the resort experience: yacht charters, day-cruise touts, fish restaurants, and the still-functioning Bar Street that earned Marmaris its nightlife reputation in the 90s. Stay here if you want everything walkable — boats out to Cleopatra Beach, dinner restaurants, the bazaar — and you don't mind the occasional bachelor-party energy. Modern hotel options range from mid-tier 4-star resorts on the promenade to a handful of harbourfront boutiques."
         },
         {
           "slug": "icmeler",
@@ -1656,12 +1693,41 @@
           "pros": [
             "Nicer beach than central Marmaris",
             "Quieter evenings",
-            "Dolmuş to town in 15 min"
+            "Dolmuş to town in 15 min",
+            "Wider sandy beach than Marmaris itself"
           ],
           "cons": [
             "Less dining variety",
             "Fewer adult-only resorts",
-            "Small town feel"
+            "Small town feel",
+            "You'll need a dolmuş for any non-resort dinner"
+          ],
+          "longDescription": "İçmeler is Marmaris's quieter neighbour, a 10-minute taxi west around the bay. Same long sand-and-shingle beach, same Aegean water, but the bars are tamer, restaurants close earlier, and most hotels are larger 4-5 star all-inclusives that sell heavily on the British and German package markets. Stay here if you want the resort experience — pool, kids' club, all-meals-included — without Marmaris's late-night noise. The dolmuş minibus runs every 5 minutes to Marmaris if you want to dip in for an evening."
+        },
+        {
+          "slug": "turunc",
+          "name": "Turunç",
+          "oneLiner": "Quiet pine-fringed cove 20 minutes south of Marmaris — the locals' choice when the resort gets busy.",
+          "longDescription": "Turunç is a small bay on the Datça peninsula side of Marmaris, reached by a winding mountain road or by water taxi. The beach is shorter and quieter than Marmaris's main strand, restaurants line a single seafront promenade, and most hotels are family-run boutiques rather than 600-room resorts. Stay here if you want Marmaris-area sun and water but want to avoid the British package-tour crowd — Turunç is where locals from Muğla send their visiting friends.",
+          "verdict": "Pick this for a quieter, locals-favoured cove with the same Aegean water as Marmaris and half the crowds.",
+          "vibe": "Cove village, scenic, family-run",
+          "walkability": "Beach + restaurants on one strip",
+          "bestForTags": [
+            "couples",
+            "families",
+            "off-the-beaten-path"
+          ],
+          "priceRange": "$70–$220 / night",
+          "pros": [
+            "Calmer beach than Marmaris/Içmeler",
+            "Family-run boutique hotels with sea views",
+            "Water-taxi link to Marmaris harbour",
+            "Good base for Datça day trips"
+          ],
+          "cons": [
+            "Limited nightlife — early dinners by 10pm",
+            "Winding 30-min drive to Marmaris if you didn't pre-arrange transfer",
+            "Smaller beach — fills up in August"
           ]
         }
       ],
@@ -1726,10 +1792,38 @@
         {
           "q": "Marmaris or İçmeler?",
           "a": "Marmaris if you want nightlife and a buzzing town. İçmeler for families and couples who want a calmer beach."
+        },
+        {
+          "q": "Marmaris vs Bodrum vs Fethiye?",
+          "a": "Marmaris is the most package-tour-oriented of the three — best for affordable resort holidays, day boats, and nightlife. Bodrum is more design-led and upscale. Fethiye is closer to the wild lagoons and Lycian Way hiking. Pick by budget and crowd preference."
+        },
+        {
+          "q": "Can I drive between Marmaris and Datça?",
+          "a": "Yes — 2 hours each way on a winding peninsula road. Beautiful but slow. Most travelers do Datça as an overnight rather than a day trip; the road back at sunset is long."
         }
       ],
       "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Marmaris%20old%20town%20near%20castle.JPG?width=1200",
-      "heroImageCredit": "Marmaris old town / Wikimedia Commons"
+      "heroImageCredit": "Marmaris old town / Wikimedia Commons",
+      "gettingAround": "Dalaman Airport (DLM) is 90 minutes east — the standard arrival route, with both shared shuttles ($15) and private transfers via Travelpayouts. Inside Marmaris the dolmuş minibus is the budget hero: $1-2 between Marmaris, İçmeler, and Turunç, running every 5-10 minutes. Water taxis link the resort coves in summer (more expensive but scenic). For day trips to Dalyan or Datça, rent a car or use Localrent's local pickup — saves the day-tour markup.",
+      "nearbyDayTrips": [
+        {
+          "name": "Dalyan + Iztuzu Beach",
+          "description": "90 minutes east. Loggerhead-turtle nesting beach + Lycian rock tombs visible from a riverboat. The classic day boat trip."
+        },
+        {
+          "name": "Cleopatra Beach (Sedir Island)",
+          "description": "Day boat from Marmaris harbour. Imported white sand, ruined ancient city, photo-ready coves. Touristy but iconic."
+        },
+        {
+          "name": "Datça + Knidos",
+          "description": "2-hour drive west to the tip of the peninsula. Quieter beaches, ancient ruins, far fewer visitors than Marmaris."
+        },
+        {
+          "name": "Pamukkale",
+          "description": "3-hour drive inland. Long but doable as a day trip with an early start; an overnight is better."
+        }
+      ],
+      "localFood": "Marmaris itself is more beach-resort than gastronomy hub, but two regional foods are worth seeking out: locally-caught Aegean fish (lavraki sea bass and çipura sea bream are the standards) at the harbour seafood restaurants, and the Datça-peninsula almond — gathered young and green, served with salt as a meze. The Marmaris bazaar sells fresh-cracked walnuts, dried figs from the inland villages, and bal-kaymak (Turkish honey-and-clotted-cream breakfast) that pairs with the local olive bread."
     },
     {
       "slug": "kas",
@@ -1764,13 +1858,16 @@
           "pros": [
             "Incredibly walkable",
             "Excellent dining for a town this size",
-            "Easy boat and diving access"
+            "Easy boat and diving access",
+            "Walk to dive boats + Lycian sarcophagus"
           ],
           "cons": [
             "No real sand beach",
             "Pricey in peak season",
-            "Cobblestones — not wheeled-luggage-friendly"
-          ]
+            "Cobblestones — not wheeled-luggage-friendly",
+            "No real beach — Kaş swims off platforms"
+          ],
+          "longDescription": "Kaş town wraps around a small natural harbour where the daily Lycian-coast boats moor and the diving operators run their morning briefings. Whitewashed stone houses with bougainvillea climb the hill behind, and the ancient Lycian sarcophagus that gives the main square its name sits in the middle of a busy junction — Kaş is the kind of town where 2,500-year-old monuments share the pavement with espresso bars. Stay here if you want everything walkable: harbour, dive boats, the morning market, restaurants, and the small Hellenistic theatre 5 minutes uphill."
         },
         {
           "slug": "cukurbag",
@@ -1787,12 +1884,41 @@
           "pros": [
             "Best sea views in the area",
             "Boutique design hotels",
-            "Private swim platforms"
+            "Private swim platforms",
+            "Cliffside swim platforms with ladders to deep water"
           ],
           "cons": [
             "Need transport to town",
             "Hilly walks",
-            "More expensive"
+            "More expensive",
+            "Need scooter or dolmuş for evenings in town"
+          ],
+          "longDescription": "Çukurbağ is the long peninsula that points south from Kaş town — single road, pine-fringed, dotted with cliffside villas, plunge-pool boutique hotels, and the swim platforms locals use instead of beaches. The road is walkable but long (5-6km end to end); most travelers rent a scooter or take the dolmuş that runs every 30 minutes to town. Stay here if you want a daily swim and the most dramatic sunsets in Kaş — the western tip looks straight at Meis (Greek Kastellorizo) across the strait."
+        },
+        {
+          "slug": "kas-marina",
+          "name": "Marina + Yat Limanı side",
+          "oneLiner": "Boutique stays clustered around the new yacht marina, 10 minutes west of the harbour — quieter, more design-led.",
+          "longDescription": "Kaş's marina district sits just west of the old harbour, a short flat walk along the seafront. Boutique hotels here lean design-led — restored stone houses, plunge pools, sea-view terraces — and the whole strip is calmer than the harbour core, where day-cruise touts cluster. Stay here for the Kaş experience without the harbour-front noise, with the marina cafés and the Çukurbağ peninsula path on your doorstep. Best for couples and travelers who'd pick a quiet sunset over a busy dinner crowd.",
+          "verdict": "Pick this for boutique design hotels with marina views and an easy walk into the harbour for dinner.",
+          "vibe": "Quiet, design-led, sea-front",
+          "walkability": "10 min walk to harbour",
+          "bestForTags": [
+            "couples",
+            "design",
+            "boutique"
+          ],
+          "priceRange": "$120–$320 / night",
+          "pros": [
+            "Newest boutique stock in Kaş",
+            "Quieter than harbour at night",
+            "Marina cafés open early for breakfast walks",
+            "Direct path onto the Çukurbağ peninsula loop"
+          ],
+          "cons": [
+            "10 min walk back from dinner",
+            "Fewer cheap restaurants on the doorstep",
+            "Smaller swimming options than the peninsula"
           ]
         }
       ],
@@ -1857,10 +1983,38 @@
         {
           "q": "Is Kaş good for families?",
           "a": "Kaş is quieter and more adults-oriented than Antalya's resort areas. Many hotels are adults-only. Families usually prefer Antalya or Fethiye instead."
+        },
+        {
+          "q": "Kaş vs Kalkan?",
+          "a": "Kalkan is 30 minutes west — quieter, more upmarket, almost entirely British villa rentals. Kaş is bigger, has actual streets, dive industry, locals year-round. Most travelers prefer Kaş for the energy; couples on a quiet honeymoon might pick Kalkan."
+        },
+        {
+          "q": "Best month for Kaş?",
+          "a": "May, early June, and late September — the swimming is good but the crowds and prices are off-peak. July-August is hot (32-35°C avg) and prices double. April is too cool for the platforms."
         }
       ],
       "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/2023-11-04%20Ka%C5%9F%203.jpg?width=1200",
-      "heroImageCredit": "Kaş, Antalya / Wikimedia Commons"
+      "heroImageCredit": "Kaş, Antalya / Wikimedia Commons",
+      "gettingAround": "Kaş has no airport. Antalya (AYT, 3.5 hours east) and Dalaman (DLM, 2.5 hours west) both work — Dalaman is closer for most arrivals and has shared shuttles ($25-40). Inside Kaş town, walking covers most of it; for the Çukurbağ peninsula use the dolmuş ($2) or rent a scooter ($25/day). For day trips to Kekova, Patara, and Saklıkent, your best bet is a rental car via Localrent — Kaş has no train and limited intercity bus service.",
+      "nearbyDayTrips": [
+        {
+          "name": "Kekova + Simena",
+          "description": "Sunken-city kayak or boat trip — Lycian ruins underwater, Byzantine castle on the cliff. The Kaş day-trip experience."
+        },
+        {
+          "name": "Patara Beach",
+          "description": "12km of empty white sand, 30 minutes east. Roman ruins back from the dunes, turtle nesting in summer. Bring sun protection — no shade."
+        },
+        {
+          "name": "Saklıkent Gorge",
+          "description": "20km canyon you wade into wearing rubber shoes. 1 hour east. Shaded river-cool day in midsummer."
+        },
+        {
+          "name": "Meis (Kastellorizo, Greece)",
+          "description": "20-minute ferry to a tiny Greek island — passport stamp, Greek lunch, return boat at 4pm. Bring your passport, not just your ID card."
+        }
+      ],
+      "localFood": "Kaş leans Lycian-Mediterranean rather than Turkish-classical: pan-fried lavraki and çupra (sea bass + bream) with a wedge of lemon, gözleme stuffed with herbs picked that morning, and the Antalya region's grilled testi kebab (lamb stewed in a clay pot then cracked open at the table). The morning market on Fridays brings down farmers from the inland villages — buy salted-cured anchovies, mountain honey, and the fragrant kekik (wild thyme) that Kaş restaurants use heavily."
     },
     {
       "slug": "trabzon",
@@ -1894,13 +2048,16 @@
           "pros": [
             "Base for Sumela day trips",
             "Plenty of restaurants",
-            "Easy airport access"
+            "Easy airport access",
+            "Best Black Sea hamsi (anchovy) restaurants"
           ],
           "cons": [
             "Not especially scenic",
             "Rainy most of the year",
-            "Limited English in smaller hotels"
-          ]
+            "Limited English in smaller hotels",
+            "Heavy rain — 5-7 wet days per month year-round"
+          ],
+          "longDescription": "Trabzon's centre wraps around the central Atatürk Alanı square and the long Uzun Sokak shopping street. The old town climbs the hill west of the square: the Hagia Sophia (Aya Sofya) church-museum, the medieval Kapısı walls, and the Atatürk Köşkü mansion all sit within a 20-minute walk or short taxi. Stay here for the city-life experience — Black Sea fish restaurants, the Tophane bazaar, the busy seafront promenade — and if you want to walk to most sights. Pack rain layers; Trabzon is one of Turkey's wettest cities and weather can shift in 20 minutes."
         },
         {
           "slug": "uzungol",
@@ -1917,12 +2074,41 @@
           "pros": [
             "Iconic postcard scenery",
             "Fresh mountain air",
-            "Many hotels right on the lake"
+            "Many hotels right on the lake",
+            "Cooler in summer (1100m elevation)"
           ],
           "cons": [
             "1.5 hours from Trabzon",
             "Can feel crowded in summer",
-            "Basic dining options"
+            "Basic dining options",
+            "Crowded and Insta-busy in midsummer"
+          ],
+          "longDescription": "Uzungöl is technically not Trabzon — it's an alpine lake village in the Çaykara district, 100km southeast over a winding mountain road (2-2.5 hours by car). Wooden chalet hotels ring the lake, mosque-and-mountain Instagram shots are the visual currency, and tea-garden lunches by the water are how most travelers spend the afternoon. Stay here ONLY if you have at least 2 nights and a rental car — it's a destination of its own, not a Trabzon neighborhood. Beautiful in spring/autumn; foggy and cold in winter; busy in July-August."
+        },
+        {
+          "slug": "akcaabat",
+          "name": "Akçaabat (coastal west)",
+          "oneLiner": "Quieter coastal town 13km west of Trabzon — the locals' beach side and the home of the famous köfte.",
+          "longDescription": "Akçaabat is the coastal town just west of central Trabzon, connected by a 25-minute dolmuş or by the new highway. Stay here if you want a Black Sea beach pebble walk every morning, a cheaper room, and a 30-minute commute into town for sights. Akçaabat is also the home of Akçaabat köfte — Turkey's most famous regional meatball, served grilled with sumac onions at every köfteci on the seafront. Quieter than Trabzon, family-friendly, and a good base if you have a car for Sumela day trips.",
+          "verdict": "Pick this for a quieter Black Sea coastal stay with the famous köfteciler at the door, plus a short drive to central Trabzon.",
+          "vibe": "Coastal, calm, family-oriented",
+          "walkability": "Seafront promenade only",
+          "bestForTags": [
+            "families",
+            "off-the-beaten-path",
+            "drivers"
+          ],
+          "priceRange": "$50–$130 / night",
+          "pros": [
+            "Cheaper rates than Trabzon centre",
+            "Famous Akçaabat köfteciler on the seafront",
+            "Quieter at night",
+            "Faster drive to Sumela bypass route"
+          ],
+          "cons": [
+            "25-min dolmuş or drive to Trabzon centre",
+            "Limited international dining",
+            "Pebble beach, not sand"
           ]
         }
       ],
@@ -1987,10 +2173,38 @@
         {
           "q": "When is Trabzon best to visit?",
           "a": "June to September. The Black Sea region is very rainy — pack layers and waterproofs even in summer."
+        },
+        {
+          "q": "Trabzon vs Rize for Black Sea trips?",
+          "a": "Trabzon has the airport, the city sights (Sumela, the hagia sophia), and is bigger. Rize is calmer, deeper into tea country, closer to Ayder. Most travelers fly into Trabzon, do Sumela, then road-trip east through Rize toward Ayder."
+        },
+        {
+          "q": "Best month for Trabzon?",
+          "a": "May-June or September-October. July-August is the busy domestic-tourism peak (Trabzon is a major Gulf-tourist destination). Winter is cold and wet but Sumela in snow is striking if you can handle the drive."
         }
       ],
       "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Sumela%20From%20Across%20Valley.JPG?width=1200",
-      "heroImageCredit": "Sumela Monastery, Trabzon / Wikimedia Commons"
+      "heroImageCredit": "Sumela Monastery, Trabzon / Wikimedia Commons",
+      "gettingAround": "Trabzon Airport (TZX) sits 5km east of the centre — taxi or the airport bus 5 ($1) into town. Domestic flights from Istanbul (1h45) are frequent. Inside the city the dolmuş minibus runs the seafront and the hilltop neighborhoods; for Sumela Monastery (50km south, the headline day trip), use the daily public bus from Trabzon Otogar or a hotel-arranged transfer. Uzungöl needs a rental car; the public minibus runs but is slow.",
+      "nearbyDayTrips": [
+        {
+          "name": "Sumela Monastery",
+          "description": "Cliff-face monastery at 1200m, 50km south. The Black Sea region's signature site. Reopened in 2023 after restoration. Half-day with a transfer; allow extra time for the climb."
+        },
+        {
+          "name": "Uzungöl",
+          "description": "Alpine lake at 1100m, 100km southeast. Best as an overnight, not a day trip — the drive each way is long and winding."
+        },
+        {
+          "name": "Hamsiköy",
+          "description": "Mountain village famous for süt mısır (steamed corn) and rice pudding. 60km south — pair with Sumela on the same drive."
+        },
+        {
+          "name": "Ayder Plateau",
+          "description": "2.5 hours east into the Pontic Alps — alpine pastures, hot springs, the heart of Turkish çay country. 1-night minimum."
+        }
+      ],
+      "localFood": "Trabzon's food is Black Sea, not Anatolian: hamsi (fresh anchovy) in every form — fried, baked into hamsili pilav, even sliced into a hamsili ekmek bread. Akçaabat köftesi (the locally-named meatball) is the meat headline. Kuymak (a stretchy cornmeal-and-cheese fondue, also called muhlama) is the breakfast carb. End meals with hamsiköy sütlaç — the rice pudding from Hamsiköy village, baked until the top is mahogany. Trabzon's tea (the local Rize/Trabzon harvest is most of Turkey's çay supply) is served by the carafe."
     }
   ]
 }

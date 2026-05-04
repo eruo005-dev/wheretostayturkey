@@ -1022,6 +1022,15 @@ function flightsBlock(city) {
 function areaBlock(area, city) {
   const areaHotels = city.hotels.filter((h) => h.area === area.slug);
   const areaSearch = bookingLink(`${area.name} ${city.name}`);
+  // Optional richer content (set per-area in data files when available).
+  // longDescription = paragraph that expands the oneLiner with neighborhood
+  // colour, history, and "who this fits". Verdict = one-line "pick this if".
+  const longDesc = area.longDescription
+    ? `<p class="area-long" style="margin-top:8px">${esc(area.longDescription)}</p>`
+    : "";
+  const verdict = area.verdict
+    ? `<p class="area-verdict" style="margin-top:6px;font-style:italic;color:var(--ink-muted)">${esc(area.verdict)}</p>`
+    : "";
   return `
 <section class="area" id="${esc(area.slug)}">
   <div class="tag-row" style="margin-bottom:8px">
@@ -1029,6 +1038,8 @@ function areaBlock(area, city) {
   </div>
   <h3>${esc(area.name)}</h3>
   <p class="area-sub">${esc(area.oneLiner)}</p>
+  ${longDesc}
+  ${verdict}
 
   <div class="area-meta">
     <div><span class="meta-label">Vibe</span><span class="meta-value">${esc(area.vibe)}</span></div>
@@ -1056,8 +1067,30 @@ function areaBlock(area, city) {
   ${restaurantsBlock(area.slug)}
 
   <div class="mt-3">
-    <a class="btn btn-ghost" rel="sponsored nofollow" target="_blank" href="${esc(areaSearch)}">See all ${esc(area.name)} hotels on Booking →</a>
+    <a class="btn btn-ghost" rel="sponsored nofollow" target="_blank" href="${esc(areaSearch)}">See all ${esc(area.name)} hotels →</a>
   </div>
+</section>`;
+}
+
+// Optional city-level prose block: getting around + nearby day trips +
+// local food. Renders only when the city data has any of these populated.
+// Designed for short city pages (Şanlıurfa, Safranbolu, etc.) where the
+// neighborhood count alone doesn't justify a long page; this adds factual
+// substance without padding.
+function cityContextBlock(c) {
+  const ga = (c.gettingAround || "").trim();
+  const dt = (c.nearbyDayTrips || []).filter((x) => x && x.name);
+  const lf = (c.localFood || "").trim();
+  if (!ga && !dt.length && !lf) return "";
+  return `
+<section class="container container-narrow prose mt-4" aria-labelledby="city-context-h">
+  <h2 id="city-context-h">Practical ${esc(c.name)}</h2>
+  ${ga ? `<h3>Getting around</h3><p>${esc(ga)}</p>` : ""}
+  ${lf ? `<h3>What to eat</h3><p>${esc(lf)}</p>` : ""}
+  ${dt.length ? `<h3>What's nearby</h3>
+    <ul>
+      ${dt.map((t) => `<li><strong>${esc(t.name)}</strong>${t.description ? ` — ${esc(t.description)}` : ""}</li>`).join("")}
+    </ul>` : ""}
 </section>`;
 }
 
@@ -1950,6 +1983,8 @@ ${costPerDayWidget(c)}
   <h2>Neighborhood breakdown</h2>
   ${c.areas.map((a) => areaBlock(a, c)).join("")}
 </section>
+
+${cityContextBlock(c)}
 
 ${skipCallout(c)}
 
