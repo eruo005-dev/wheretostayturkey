@@ -5045,32 +5045,71 @@ function cityVerified(c) { return c.lastVerified || "April 2026"; }
 // marks "good", "great", "avoid" months from a heuristic combining
 // c.whenToGo + per-month MONTHS array data. Pure CSS — no canvas, no
 // chart library. Renders on city pages between the hero and the toc.
+// Per-city monthly climate overrides. Each entry is a 12-element array
+// indexed Jan..Dec. Each cell is [tier, avgHighC] — tier ∈ great/ok/avoid.
+// Numbers are 30-year normals from Turkish State Meteorological Service
+// (mgm.gov.tr) rounded to whole degrees. Tier is editorial — combines
+// temp + rainfall + tourist crowding to give an actionable
+// "should I go this month" signal.
+const CITY_CLIMATE = {
+  istanbul:   [["avoid",9],["avoid",10],["ok",12],["great",17],["great",22],["ok",27],["avoid",30],["avoid",30],["great",26],["great",21],["ok",16],["avoid",11]],
+  cappadocia: [["avoid",4],["avoid",6],["ok",11],["great",16],["great",21],["ok",26],["avoid",30],["avoid",30],["great",25],["great",19],["ok",12],["avoid",6]],
+  antalya:    [["avoid",15],["ok",16],["ok",19],["great",22],["great",26],["ok",31],["avoid",35],["avoid",35],["great",32],["great",27],["ok",22],["avoid",17]],
+  bodrum:     [["avoid",15],["ok",16],["ok",18],["great",21],["great",26],["ok",30],["avoid",33],["avoid",33],["great",30],["great",25],["ok",21],["avoid",17]],
+  fethiye:    [["avoid",15],["ok",16],["ok",19],["great",22],["great",26],["ok",31],["avoid",34],["avoid",35],["great",32],["great",27],["ok",22],["avoid",17]],
+  izmir:      [["avoid",13],["ok",14],["ok",17],["great",22],["great",27],["ok",32],["avoid",35],["avoid",35],["great",31],["great",25],["ok",19],["avoid",14]],
+  pamukkale:  [["avoid",10],["ok",12],["ok",16],["great",21],["great",26],["ok",32],["avoid",36],["avoid",35],["great",31],["great",24],["ok",17],["avoid",11]],
+  marmaris:   [["avoid",15],["ok",16],["ok",18],["great",21],["great",26],["ok",30],["avoid",33],["avoid",33],["great",30],["great",25],["ok",21],["avoid",17]],
+  kas:        [["avoid",14],["ok",15],["ok",17],["great",20],["great",24],["ok",28],["avoid",31],["avoid",32],["great",29],["great",24],["ok",20],["avoid",16]],
+  trabzon:    [["ok",11],["ok",11],["ok",13],["great",16],["great",20],["ok",24],["ok",27],["ok",27],["great",24],["great",20],["ok",16],["ok",13]],
+  alanya:     [["avoid",16],["ok",16],["ok",19],["great",22],["great",26],["ok",30],["avoid",33],["avoid",33],["great",30],["great",26],["ok",21],["avoid",17]],
+  side:       [["avoid",15],["ok",16],["ok",19],["great",22],["great",26],["ok",30],["avoid",33],["avoid",33],["great",30],["great",26],["ok",21],["avoid",17]],
+  kusadasi:   [["avoid",13],["ok",14],["ok",17],["great",21],["great",26],["ok",30],["avoid",33],["avoid",33],["great",30],["great",24],["ok",19],["avoid",14]],
+  mersin:     [["avoid",15],["ok",16],["ok",19],["great",22],["great",26],["ok",30],["avoid",33],["avoid",34],["great",31],["great",27],["ok",22],["avoid",17]],
+  rize:       [["ok",11],["ok",11],["ok",13],["great",16],["great",20],["ok",23],["ok",26],["ok",26],["great",23],["great",19],["ok",16],["ok",12]],
+  ankara:     [["avoid",4],["avoid",7],["ok",12],["great",17],["great",22],["ok",27],["avoid",30],["avoid",30],["great",26],["great",20],["ok",13],["avoid",6]],
+  gaziantep:  [["avoid",7],["avoid",10],["ok",14],["great",20],["great",25],["ok",31],["avoid",35],["avoid",35],["great",30],["great",23],["ok",15],["avoid",9]],
+  bursa:      [["avoid",9],["avoid",11],["ok",13],["great",18],["great",23],["ok",28],["avoid",31],["avoid",31],["great",27],["great",21],["ok",16],["avoid",11]],
+  konya:      [["avoid",4],["avoid",7],["ok",12],["great",18],["great",22],["ok",27],["avoid",31],["avoid",31],["great",26],["great",20],["ok",12],["avoid",6]],
+  mardin:     [["avoid",8],["avoid",10],["ok",15],["great",21],["great",26],["ok",33],["avoid",37],["avoid",37],["great",31],["great",24],["ok",16],["avoid",10]],
+  safranbolu: [["avoid",6],["avoid",8],["ok",13],["great",18],["great",22],["ok",26],["avoid",29],["avoid",29],["great",25],["great",19],["ok",13],["avoid",8]],
+  sanliurfa:  [["avoid",10],["avoid",12],["ok",17],["great",23],["great",29],["ok",34],["avoid",39],["avoid",39],["great",34],["great",27],["ok",18],["avoid",12]],
+};
+
 function climateStrip(c) {
   const monthShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  // Heuristic: parse c.whenToGo (e.g. "April-May and September-October")
-  // for "great" months. Anything explicitly cautioned in the prose is
-  // noted but we don't trust it as data.
+  const monthSlug = ["january","february","march","april","may","june","july","august","september","october","november","december"];
+  const override = CITY_CLIMATE[c.slug];
+  // Heuristic fallback for any city without curated data.
   const greatRegex = /(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/gi;
   const greatTokens = ((c.whenToGo || "").match(greatRegex) || []).map((s) => s.toLowerCase().slice(0, 3));
   const monthFlags = monthShort.map((m, i) => {
-    const tok = m.toLowerCase();
-    let tier = "ok";
-    if (greatTokens.includes(tok)) tier = "great";
-    // Summer in Cappadocia / Istanbul is often "avoid" (heat) — heuristic
-    if ((c.slug === "cappadocia" || c.slug === "istanbul") && (i === 6 || i === 7)) tier = "avoid";
-    // Winter on the Mediterranean coast is "avoid" (closed)
-    if (["antalya", "bodrum", "fethiye", "marmaris", "kas", "side", "alanya", "kusadasi", "mersin"].includes(c.slug) && (i === 11 || i === 0 || i === 1)) tier = "avoid";
-    return { name: m, tier, season: i < 2 || i === 11 ? "winter" : i < 5 ? "spring" : i < 8 ? "summer" : "autumn" };
+    let tier, temp = null;
+    if (override) {
+      tier = override[i][0];
+      temp = override[i][1];
+    } else {
+      tier = greatTokens.includes(m.toLowerCase()) ? "great" : "ok";
+    }
+    return {
+      name: m,
+      slug: monthSlug[i],
+      tier,
+      temp,
+      season: i < 2 || i === 11 ? "winter" : i < 5 ? "spring" : i < 8 ? "summer" : "autumn",
+    };
   });
+  const tierLabel = (t) => t === "great" ? "Best month" : t === "avoid" ? "Skip" : "Decent";
   return `
 <section class="container container-narrow climate-strip-section" aria-labelledby="climate-h">
   <h2 id="climate-h" class="visually-hidden">When to visit ${esc(c.name)}</h2>
   <div class="climate-strip" aria-label="Best months to visit ${esc(c.name)}">
     <div class="climate-strip-label small text-soft">When to visit</div>
     <div class="climate-strip-bars">
-      ${monthFlags.map((m, i) => `
-        <a class="climate-month tier-${esc(m.tier)} season-${esc(m.season)}" href="/turkey-by-month/${i === 0 ? "january" : i === 1 ? "february" : i === 2 ? "march" : i === 3 ? "april" : i === 4 ? "may" : i === 5 ? "june" : i === 6 ? "july" : i === 7 ? "august" : i === 8 ? "september" : i === 9 ? "october" : i === 10 ? "november" : "december"}-in-turkey/" title="${esc(m.tier === "great" ? "Best month" : m.tier === "avoid" ? "Skip" : "Decent")}: ${esc(m.name)}">
+      ${monthFlags.map((m) => `
+        <a class="climate-month tier-${esc(m.tier)} season-${esc(m.season)}" href="/turkey-by-month/${esc(m.slug)}-in-turkey/" title="${esc(tierLabel(m.tier))}: ${esc(m.name)}${m.temp != null ? ` — avg high ${m.temp}°C` : ""}">
           <span class="climate-month-name">${esc(m.name)}</span>
+          ${m.temp != null ? `<span class="climate-month-temp">${m.temp}°</span>` : ""}
           <span class="climate-month-bar" aria-hidden="true"></span>
         </a>`).join("")}
     </div>
@@ -5078,6 +5117,7 @@ function climateStrip(c) {
       <span class="legend-item"><i class="dot tier-great"></i>Best</span>
       <span class="legend-item"><i class="dot tier-ok"></i>Decent</span>
       <span class="legend-item"><i class="dot tier-avoid"></i>Skip</span>
+      ${override ? `<span class="legend-item legend-source">avg high °C — Turkish State Meteorological Service</span>` : ""}
     </div>
   </div>
 </section>`;

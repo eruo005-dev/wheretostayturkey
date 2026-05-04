@@ -862,6 +862,15 @@ small, .small { font-size: 0.86rem; }
   letter-spacing: 0.04em;
   margin-bottom: 6px;
 }
+.climate-month-temp {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+  letter-spacing: 0;
+}
 .climate-month-bar {
   display: block;
   width: 100%;
@@ -890,6 +899,7 @@ small, .small { font-size: 0.86rem; }
 .climate-strip-legend .tier-great { background: #22c55e; }
 .climate-strip-legend .tier-ok { background: #fbbf24; }
 .climate-strip-legend .tier-avoid { background: #9ca3af; }
+.climate-strip-legend .legend-source { font-size: 0.72rem; opacity: 0.75; margin-left: auto; font-style: italic; }
 @media (max-width: 600px) {
   .climate-month-name { font-size: 0.62rem; }
   .climate-month-bar { height: 22px; }
