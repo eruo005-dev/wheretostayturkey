@@ -55,6 +55,11 @@ module.exports = {
   getYourGuidePartnerId: affiliates.getYourGuide.partnerId,
   plausibleDomain: "",
   gaMeasurementId: "",
+  // Google AdSense — auto-ads loader. When clientId is set the loader
+  // is injected into <head> on every page; Google places auto-ads
+  // automatically. Configure per-URL exclusions in the AdSense console
+  // if you want commercial-intent city pages ad-free.
+  adsense: { clientId: "ca-pub-8018173696794576" },
   emailCaptureEndpoint: "https://assets.mailerlite.com/jsonp/2296486/forms/185895210894493012/subscribe",
   // Third-party verification snippets injected into <head> on every page.
   // Used for: Travelpayouts site verification, Google Search Console (HTML script verify),

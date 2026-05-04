@@ -420,6 +420,15 @@ function head({ title, description, canonical, ogImage, jsonld = [], preloadHero
       `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(config.gaMeasurementId)}');</script>`
     );
   }
+  // Google AdSense auto-ads. Loaded with async + crossorigin per Google's
+  // current snippet. Placement is decided by Google in the AdSense console
+  // — operator can exclude commercial-intent city pages there if ad
+  // density hurts booking conversion.
+  if (config.adsense && config.adsense.clientId) {
+    analytics.push(
+      `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(config.adsense.clientId)}" crossorigin="anonymous"></script>`
+    );
+  }
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -456,6 +465,9 @@ ${config.twitterHandle ? `<meta name="twitter:site" content="${esc(config.twitte
 <link rel="dns-prefetch" href="https://www.agoda.com">
 <link rel="dns-prefetch" href="https://www.welcomepickups.com">
 <link rel="dns-prefetch" href="https://www.airalo.com">
+${(config.adsense && config.adsense.clientId) ? `<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<link rel="preconnect" href="https://googleads.g.doubleclick.net" crossorigin>
+<link rel="dns-prefetch" href="https://tpc.googlesyndication.com">` : ""}
 ${heroPreload}
 ${ldBlocks}
 ${analytics.join("\n")}
@@ -1746,6 +1758,14 @@ ${entries.map((e) => `<url><loc>${e.url}</loc><lastmod>${e.lastmod}</lastmod><ch
 
 function renderRobots() {
   writeFile("robots.txt", `User-agent: *\nAllow: /\nDisallow: /thank-you/\n\nSitemap: ${config.siteUrl}/sitemap.xml\n`);
+}
+
+// AdSense recommends serving ads.txt at the site root with one DIRECT
+// line per ad system. The TAG-ID f08c47fec0942fa0 is Google's universal
+// publisher identifier and is the same for every AdSense account.
+function renderAdsTxt() {
+  if (!config.adsense || !config.adsense.clientId) return;
+  writeFile("ads.txt", `google.com, ${config.adsense.clientId}, DIRECT, f08c47fec0942fa0\n`);
 }
 
 function render404() {
@@ -4564,12 +4584,13 @@ function renderJournalPost(p) {
          <strong>Coming soon.</strong> The full ${p.readMinutes}-minute read is being written. Subscribe at the foot of any page and we'll email you when it goes live.
        </div>`;
   const body = `
+<div class="reading-progress" id="reading-progress" aria-hidden="true"><div class="reading-progress-bar"></div></div>
 ${nav()}
 ${disclosureBanner()}
 <div class="container">
   <div class="breadcrumb"><a href="/">Home</a> / <a href="/journal/">Journal</a> / ${esc(p.title)}</div>
 </div>
-<article class="container container-narrow journal-article">
+<article class="container container-narrow journal-article" id="article-body">
   <div class="page-head" style="border-bottom:none;padding-bottom:0">
     <div class="eyebrow">Article</div>
     <h1>${esc(p.title)}</h1>
@@ -4657,7 +4678,33 @@ ${(() => {
 
 ${essentialsBlock()}
 ${footer()}
-${tail()}`;
+${tail()}
+<script>
+// Reading progress bar — tracks scroll position across the article body
+// only (not the header / nav / monetization strips). Throttled with rAF.
+(function(){
+  var bar = document.querySelector("#reading-progress .reading-progress-bar");
+  var article = document.getElementById("article-body");
+  if (!bar || !article) return;
+  var pending = false;
+  function update(){
+    pending = false;
+    var rect = article.getBoundingClientRect();
+    var total = article.offsetHeight - window.innerHeight;
+    var scrolled = -rect.top;
+    var pct = total > 0 ? Math.max(0, Math.min(100, (scrolled / total) * 100)) : 0;
+    bar.style.width = pct + "%";
+  }
+  function onScroll(){
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(update);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  update();
+})();
+</script>`;
   // Resolve article-image candidate: use the post's image if set, else
   // the target-city hero photo if any, else the default OG.
   const articleTagSlug = (p.tags || []).find((t) => cities.find((c) => c.slug === t.toLowerCase()));
@@ -4977,6 +5024,7 @@ function run() {
   renderRss();
   renderSitemap();
   renderRobots();
+  renderAdsTxt();
 
   const files = [];
   (function walk(d) {

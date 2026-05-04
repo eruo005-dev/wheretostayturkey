@@ -423,6 +423,25 @@ small, .small { font-size: 0.86rem; }
   .article-toc ol { columns: 1; }
 }
 .mid-cta { /* visual handled inline; ensure it doesn't collapse vertical rhythm */ }
+
+/* ---------- 12.6 Reading progress bar (journal posts) ---------- */
+.reading-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: transparent;
+  z-index: 9999;
+  pointer-events: none;
+}
+.reading-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reading-progress-bar { transition: none; }
+}
 .hotel-card h3 {
   font-family: var(--font-serif);
   font-size: 1.3rem;
