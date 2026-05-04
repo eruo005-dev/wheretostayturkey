@@ -3680,6 +3680,20 @@ ${disclosureBanner()}
   </ul>
   <h2>After Cappadocia</h2>
   <p>Most travelers fly back to Istanbul for their international flight, or continue to Antalya / Izmir. All three have direct flights from Kayseri/Nevşehir.</p>
+
+  <h2>Hidden costs and gotchas</h2>
+  <p>The headline price isn't the trip price. Three things to factor in:</p>
+  <p><strong>Airport transfers add up.</strong> Istanbul Airport (IST) is 50km from Sultanahmet — €40-50 by Welcome Pickups or Kiwitaxi (recommended), €30 by metered taxi (gambling on traffic), or €3 by metro (60-90 minutes door-to-door). Kayseri (ASR) and Nevşehir (NAV) airports both sit 60-80km from Göreme — most cave hotels include or arrange a transfer for €10-20 per person; if not, Kayseri taxi to Göreme is €40-50. Add these to your flight cost: a $35 flight + $50 transfer + $15 transfer = $100 effective fare.</p>
+  <p><strong>Bus departures run from a specific terminal in each city.</strong> Istanbul has TWO bus terminals — Esenler (European side, the default for most operators) and Harem (Asian side). Always check the boarding terminal on your ticket. If you're staying in Sultanahmet and your bus leaves from Harem, factor in 60-90 minutes to cross the Bosphorus during evening traffic. The same applies in Cappadocia: Nevşehir Otogar serves most lines, but some inter-city services use Ürgüp or Kayseri instead.</p>
+  <p><strong>Drive times multiply if you stop.</strong> The 10-hour Istanbul-Cappadocia drive assumes minimal stops and you don't hit Istanbul's notorious morning rush. Add 2 hours if you stop for a proper Anatolian lunch in Konya or Aksaray. Add another hour if anyone wants photos at Lake Tuz (the salt lake on the route).</p>
+
+  <h2>Frequently asked</h2>
+  <h3>Can I do Cappadocia as a day trip from Istanbul?</h3>
+  <p>Technically yes, in practice no. The earliest morning flight from Istanbul lands in Kayseri at 08:30; the latest evening flight back leaves at 21:00. That gives you about 9 useful hours on the ground — minus 2 hours of round-trip airport transfer = 7 hours in Cappadocia. You can see Göreme Open-Air Museum and one valley walk; you cannot do a balloon ride (which requires staying overnight). Worth it only if you have absolutely no flexibility on dates.</p>
+  <h3>Is the overnight bus safe for solo female travelers?</h3>
+  <p>Yes — Turkish overnight buses are heavily used by solo women and the booking platform (Obilet.com) auto-blocks seats next to male strangers. Premium 2+1 seats on Pamukkale Turizm or Kamil Koç are the standard pick. Sleep masks and earplugs help; the steward checks on passengers regularly.</p>
+  <h3>Can I do Istanbul → Cappadocia → Antalya in one trip?</h3>
+  <p>Easily, in a 7-night trip. Suggested split: 3 nights Istanbul, 2 nights Cappadocia, 2 nights Antalya. Fly each leg (each is 1-1.5 hours; total transit time still under 6 hours including airports). The route is a popular triangle — flights run daily.</p>
 </section>
 
 ${leadAndEssentials()}
@@ -3729,6 +3743,27 @@ ${disclosureBanner()}
   <h2>Travel insurance</h2>
   <p>Always get travel insurance — see our <a href="/insurance/">Turkey insurance guide</a> for SafetyWing vs World Nomads vs credit-card-cover. Adventure coverage (balloon flying, paragliding) matters if you're visiting Cappadocia or Ölüdeniz.</p>
   <p class="text-soft small"><em>Not insurance advice. We earn a commission if you buy through our links — this has no effect on price. Always read the policy documents before purchasing and verify coverage for your specific activities.</em></p>
+
+  <h2>Healthcare and emergencies</h2>
+  <p>Turkey's private hospital network (Acıbadem, Memorial, Liv Hospital, Anadolu) operates at Western standards in every major tourist city. English-speaking staff, modern equipment, transparent pricing. Public hospitals are good but slower and English is hit-or-miss. Either way, expect to pay up-front and claim through your insurance after — insurance companies usually negotiate directly with the larger private chains, but solo travelers often pay first then get reimbursed.</p>
+  <p>Emergency numbers: 112 for medical/fire/police (universal). Tourist police in major cities have English-speaking officers — Istanbul's tourism police office is in Sultanahmet. Pharmacies (eczane) are widespread; many are 24-hour, with rotating "duty pharmacy" (nöbetçi eczane) signs in window. Most common medications (antibiotics, painkillers, basic prescriptions) are over-the-counter for pharmacist consultation.</p>
+
+  <h2>Female solo traveler specifics</h2>
+  <p>Turkey rates similarly to Italy and Spain on solo-female experience reports — generally safe, occasional unwanted attention rather than physical danger. Tourist zones (Sultanahmet, Beyoğlu, Kadıköy in Istanbul; Göreme; Antalya old town; Bodrum marina) are well-lit and policed. Conservative dress in eastern/central Anatolia (Konya, Mardin, Şanlıurfa) is respected though not strictly required — long pants and short-sleeved tops fit the rhythm. Avoid hailing taxis on the street, especially at night — use BiTaksi (Turkish equivalent of Uber) or have your hotel call. The most-reported issues with female solo travelers involve unmetered street taxis with shifting fares.</p>
+
+  <h2>Common scams and how to handle them</h2>
+  <p><strong>The shoeshine drop.</strong> A man "drops" his brush on the pavement near you. You pick it up to be helpful. He insists on shining your shoes as gratitude — and then charges 20-50 TL for the unwanted shine. Don't pick up the brush. Walk on.</p>
+  <p><strong>The friendly guide.</strong> A stranger strikes up conversation in English, says he's a teacher / journalist / hotel owner, suggests a coffee. Coffee turns into a bar visit at a friend's place. The bar bill is staggering and the bouncer makes sure you pay. Solo male travelers are the typical mark; women report fewer occurrences. Decline coffee invitations from strangers in tourist areas.</p>
+  <p><strong>The taxi route lengthener.</strong> A driver "doesn't know" your hotel and takes a 25-minute route for a 10-minute destination, with a meter running. Use BiTaksi to lock in the route on your phone before you get in. Or photograph the meter at the start and demand the printed receipt at the end.</p>
+  <p><strong>The carpet-shop ambush.</strong> Common around the Grand Bazaar and Sultanahmet. A "guide" walks you toward the Hagia Sophia or Blue Mosque, then "shows" you a friend's carpet shop on the way. You'll be served apple tea, complimented on your taste, and pressured for two hours. The exit is to leave when the tea arrives — politely but firmly. They will not chase you on the street.</p>
+
+  <h2>Frequently asked</h2>
+  <h3>Are tourist areas in Istanbul safe at night?</h3>
+  <p>Yes. Sultanahmet, Beyoğlu / İstiklal, Kadıköy, Beşiktaş — all heavily trafficked by foreign and Turkish visitors at all hours. The metro runs until midnight; ferries until later. Standard urban awareness applies: stick to lit streets, don't engage with overly-helpful strangers, watch for pickpockets in crowded ferries.</p>
+  <h3>Should I worry about terrorism?</h3>
+  <p>Turkey has had isolated terror incidents historically, more concentrated in the southeastern border provinces (which we don't cover) than in tourist regions. Foreign-office advisories (UK, US, EU) keep current advice — check before booking. Major tourist sites (airports, ferry terminals, mosques during Friday prayers) have visible police and metal-detector entry; this is standard.</p>
+  <h3>What if I'm robbed or scammed?</h3>
+  <p>File a report with the tourism police (in Istanbul, the office is in Sultanahmet near the Hagia Sophia). For credit-card fraud, call your bank immediately and freeze the card. For lost passport, visit your country's embassy or consulate (Ankara has the embassies; Istanbul has consulates for most major countries). Travel insurance pays for stolen-property replacement up to your plan's limit.</p>
 </section>
 
 ${leadAndEssentials()}
@@ -5046,6 +5081,20 @@ ${disclosureBanner()}
   <p>Ramadan dates shift each year. Restaurants in tourist areas stay open for non-Muslims; bars may be quieter. The festive iftar meals at sunset are worth planning around if you visit during the month.</p>
   <h2>If you only have a weekend</h2>
   <p>Any shoulder-season weekend works. If you're choosing between April and October, April edges out for flowers and green; October for light and slightly warmer seas.</p>
+
+  <h2>What changes between months</h2>
+  <p>Three things shift when the calendar moves: <strong>price</strong> (peak July-August coastal hotels charge 2-3x off-season; flights into Istanbul are cheapest November-February); <strong>open vs closed</strong> (most beach resorts close November-March; many cave hotels in Cappadocia stay open all year; Black Sea highland village pensions close November-April); and <strong>crowd density at the major sights</strong> (Hagia Sophia queue is 15 minutes in February and 90 minutes in August at the same time of day). The trip you build should optimize for whichever of these three matters most for your priorities.</p>
+
+  <h2>Festival timing to know</h2>
+  <p>Two annual peaks affect domestic travel: <strong>Ramazan Bayramı / Şeker Bayramı</strong> (Eid al-Fitr) and <strong>Kurban Bayramı</strong> (Eid al-Adha). These are 4-9 day public holidays where many Turks travel. Coastal hotels fill, internal flights book up, and prices spike. Dates shift each year — verify against the current calendar before booking. Independence Day (October 29) and Republic Day (October 29) bring weekend-scale tourism but not full-week closures. The Istanbul Music Festival runs early June and the Antalya International Film Festival late October — both worth scheduling around if you're traveling on those dates.</p>
+
+  <h2>Frequently asked</h2>
+  <h3>What's the cheapest month for Turkey?</h3>
+  <p>February. Flights are at their annual minimum, hotels in non-coastal cities offer winter rates, and the country is quiet. The trade-off: Mediterranean and Aegean coasts are largely closed, the weather in Istanbul and Cappadocia is cold (occasionally snow), and the long evenings limit outdoor exploration. Worth it for travelers who want Istanbul atmospherically without the crowds, or Cappadocia in snow.</p>
+  <h3>Is Cappadocia balloon flying weather-dependent?</h3>
+  <p>Yes. Roughly 85-95% of mornings fly April through October; 60-70% in November, December, and February (winter winds cancel more flights); March and January average around 70-80%. Pilots cancel in winds above ~15 knots at any altitude or in light rain. Book at least 2-3 mornings into your Cappadocia stay so you have a backup if the first morning cancels.</p>
+  <h3>When is the water warmest?</h3>
+  <p>Mediterranean Sea (Antalya, Bodrum, Fethiye) peaks at 27-28°C in August and stays swimmable through mid-October (still 24°C). Aegean (Izmir, Çeşme, Kuşadası) is similar but a degree or two cooler. Black Sea (Trabzon, Rize) peaks at 24°C in August — swimmable but less of the headline attraction. Sea of Marmara (Istanbul beaches) peaks at 25°C in August — locals swim, most travelers don't.</p>
 </section>
 ${leadAndEssentials()}
 ${footer()}
