@@ -52,9 +52,47 @@ const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(
 
 function mkdirp(p) { fs.mkdirSync(p, { recursive: true }); }
 
+// Safe HTML minifier. Stashes contents of <pre>, <textarea>, <script>, and
+// <style> tags verbatim so embedded JS / CSS / pre-formatted text are
+// preserved, then collapses whitespace between and inside tags. Drops
+// HTML comments (except IE conditional <!--[if ...]-->). ~15-25% reduction
+// on this site. Idempotent.
+function minifyHtml(html) {
+  if (!html || html.length < 200) return html;
+  const placeholders = [];
+  const stash = (re) => {
+    html = html.replace(re, (m) => {
+      const i = placeholders.push(m) - 1;
+      // Surround with a marker that survives whitespace collapse.
+      return `\u0001${i}\u0001`;
+    });
+  };
+  stash(/<pre[\s\S]*?<\/pre>/gi);
+  stash(/<textarea[\s\S]*?<\/textarea>/gi);
+  stash(/<script[\s\S]*?<\/script>/gi);
+  stash(/<style[\s\S]*?<\/style>/gi);
+
+  html = html
+    .replace(/\r\n?/g, "\n")
+    .replace(/<!--(?!\[if)[\s\S]*?-->/g, "")  // strip non-conditional comments
+    .replace(/[ \t]+/g, " ")                    // collapse runs of horizontal ws
+    .replace(/ ?\n ?/g, "\n")                  // trim spaces around newlines
+    .replace(/\n+/g, "\n")                     // collapse blank lines
+    .replace(/>\s+</g, "><")                    // drop whitespace between tags
+    .replace(/\s+(?=<\/(?:html|head|body|main|article|section|header|footer|nav|aside|div|ul|ol|li|h[1-6]|p|table|tr|td|th|thead|tbody|figure|figcaption|form|hr|br)\b)/gi, "")
+    .replace(/(<(?:html|head|body|main|article|section|header|footer|nav|aside|div|ul|ol|li|h[1-6]|p|table|tr|td|th|thead|tbody|figure|figcaption|form|hr|br)\b[^>]*>)\s+/gi, "$1")
+    .replace(/  +/g, " ")
+    .trim();
+
+  // Restore stashed blocks. Marker is \u0001N\u0001.
+  html = html.replace(/\u0001(\d+)\u0001/g, (_, i) => placeholders[+i]);
+  return html;
+}
+
 function writeFile(relPath, content) {
   const full = path.join(OUT, relPath);
   mkdirp(path.dirname(full));
+  if (relPath.endsWith(".html")) content = minifyHtml(content);
   fs.writeFileSync(full, content, "utf8");
 }
 
@@ -132,13 +170,18 @@ const A = config.affiliates;
 
 // ---- Hotels / accommodation ----
 function bookingLink(query, extra = {}) {
-  const params = new URLSearchParams({
-    aid: A.booking.aid,
+  const base = {
     ss: query,
     group_adults: "2",
     no_rooms: "1",
     ...extra,
-  });
+  };
+  // Only attach affiliate tag when a real one is configured. Treat empty
+  // string and the historical "BOOKING_AID" placeholder as unconfigured so
+  // we never ship literal placeholder text in production URLs.
+  const aid = A.booking.aid;
+  if (aid && aid !== "BOOKING_AID") base.aid = aid;
+  const params = new URLSearchParams(base);
   return `https://www.booking.com/searchresults.html?${params.toString()}`;
 }
 function hotelLink(hotel, cityName) {
@@ -351,9 +394,22 @@ function compareOtaLinks(query) {
 
 // --------------------------- shared chrome ---------------------------
 
-function head({ title, description, canonical, ogImage, jsonld = [] }) {
+function head({ title, description, canonical, ogImage, jsonld = [], preloadHero = null, ogType = "website", article = null }) {
   const og = ogImage || `${config.siteUrl}${config.defaultOgImage}`;
   const ldBlocks = jsonld.map((obj) => `<script type="application/ld+json">${JSON.stringify(obj)}</script>`).join("\n");
+  const heroPreload = preloadHero
+    ? `<link rel="preload" as="image" href="${esc(preloadHero)}" fetchpriority="high">`
+    : "";
+  // OpenGraph article meta — emitted only when ogType === "article" and the
+  // article object is supplied. Used by Facebook, LinkedIn, and (despite the
+  // name) most sharing tools as cross-platform article metadata.
+  const articleTags = (ogType === "article" && article) ? [
+    article.publishedTime ? `<meta property="article:published_time" content="${esc(article.publishedTime)}">` : "",
+    article.modifiedTime ? `<meta property="article:modified_time" content="${esc(article.modifiedTime)}">` : "",
+    article.author ? `<meta property="article:author" content="${esc(article.author)}">` : "",
+    article.section ? `<meta property="article:section" content="${esc(article.section)}">` : "",
+    ...(Array.isArray(article.tags) ? article.tags.map((t) => `<meta property="article:tag" content="${esc(t)}">`) : []),
+  ].filter(Boolean).join("\n") : "";
   const analytics = [];
   if (config.plausibleDomain) {
     analytics.push(`<script defer data-domain="${esc(config.plausibleDomain)}" src="https://plausible.io/js/script.js"></script>`);
@@ -364,6 +420,15 @@ function head({ title, description, canonical, ogImage, jsonld = [] }) {
       `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(config.gaMeasurementId)}');</script>`
     );
   }
+  // Google AdSense auto-ads. Loaded with async + crossorigin per Google's
+  // current snippet. Placement is decided by Google in the AdSense console
+  // — operator can exclude commercial-intent city pages there if ad
+  // density hurts booking conversion.
+  if (config.adsense && config.adsense.clientId) {
+    analytics.push(
+      `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(config.adsense.clientId)}" crossorigin="anonymous"></script>`
+    );
+  }
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -372,23 +437,27 @@ function head({ title, description, canonical, ogImage, jsonld = [] }) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(canonical)}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="${esc(ogType)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:image" content="${esc(og)}">
+${articleTags}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
 ${config.twitterHandle ? `<meta name="twitter:site" content="${esc(config.twitterHandle)}">` : ""}
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.svg">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="alternate" type="application/rss+xml" title="Where to Stay in Turkey" href="/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
-<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap"></noscript>
+<link rel="preload" as="style" href="/assets/css/styles.css" fetchpriority="high">
+<link rel="stylesheet" href="/assets/css/styles.css" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/filters.css">
 <link rel="preconnect" href="https://www.booking.com">
 <link rel="dns-prefetch" href="https://www.getyourguide.com">
@@ -396,6 +465,10 @@ ${config.twitterHandle ? `<meta name="twitter:site" content="${esc(config.twitte
 <link rel="dns-prefetch" href="https://www.agoda.com">
 <link rel="dns-prefetch" href="https://www.welcomepickups.com">
 <link rel="dns-prefetch" href="https://www.airalo.com">
+${(config.adsense && config.adsense.clientId) ? `<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<link rel="preconnect" href="https://googleads.g.doubleclick.net" crossorigin>
+<link rel="dns-prefetch" href="https://tpc.googlesyndication.com">` : ""}
+${heroPreload}
 ${ldBlocks}
 ${analytics.join("\n")}
 ${(config.verificationScripts || []).join("\n")}
@@ -495,15 +568,18 @@ function footer() {
 </footer>`;
 }
 
-function modal() {
+function modal(opts = {}) {
+  const slug = opts.citySlug;
+  const c = (slug && LEAD_COPY_BY_CITY[slug]) || LEAD_COPY_BY_CITY.istanbul;
+  const source = slug ? `modal-${slug}` : "modal";
   return `
 <div class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal">
     <button class="modal-close" aria-label="Close">×</button>
     <div class="eyebrow">Free download</div>
-    <h3 id="modal-title"><span lang="tr">Buyurun.</span> Your 3-day Istanbul itinerary</h3>
-    <p class="text-muted">The exact plan we'd give a friend visiting Istanbul. Where to eat, where to stay, what to skip.</p>
-    <form class="lead-form" action="${esc(config.emailCaptureEndpoint)}" data-source="modal">
+    <h3 id="modal-title"><span lang="tr">Buyurun.</span> ${esc(c.title)}</h3>
+    <p class="text-muted">${esc(c.sub)}</p>
+    <form class="lead-form" action="${esc(config.emailCaptureEndpoint)}" data-source="${esc(source)}">
       <input type="email" name="email" placeholder="your@email.com" required aria-label="Email">
       <button type="submit" class="btn btn-primary">Send it</button>
     </form>
@@ -552,9 +628,25 @@ function bestForTag(t) {
   return `<span class="tag ${cls}">${esc(t)}</span>`;
 }
 
+// Build a hotel image URL. Operator can either set `hotel.image` to any
+// absolute URL (Unsplash, hotel's own photo CDN, etc.), or set
+// `hotel.bookingPhotoId` for a Booking.com-hosted thumbnail. Falls back
+// to null when nothing is configured.
+function hotelImageUrl(hotel) {
+  if (hotel.image) return hotel.image;
+  if (hotel.bookingPhotoId) {
+    // Booking's affiliate-friendly CDN URL pattern. The {hash} is the
+    // value returned by their hotel-photos API (or scraped from the
+    // hotel's public listing page). max500 = 500px wide JPEG.
+    return `https://cf.bstatic.com/xdata/images/hotel/max500/${hotel.bookingPhotoId}.jpg`;
+  }
+  return null;
+}
+
 function hotelCard(hotel, city) {
   const areaName = (city.areas.find((a) => a.slug === hotel.area) || {}).name || "";
   const link = hotelLink(hotel, city.name);
+  const imageUrl = hotelImageUrl(hotel);
   const compares = compareOtaLinks(`${hotel.name} ${city.name}`);
   const compareRow = compares.length
     ? `<div class="compare-row small text-muted" style="margin-top:10px">
@@ -563,8 +655,51 @@ function hotelCard(hotel, city) {
            .join(" · ")}
        </div>`
     : "";
+  // Per-hotel structured data: lets Google show this hotel as a discrete
+  // entity in rich-result tests. Inlined per card so it travels with the
+  // card if reused on aggregate pages.
+  //
+  // aggregateRating is included only when both `rating` (1-10 Booking-style
+  // numeric) and `reviewCount` are populated on the hotel. Fabricating
+  // ratings would violate Google's structured-data policy, so when data
+  // is absent we just omit the field. The fetch-hotel-photos.js script
+  // can be extended to scrape ratings; until then this lights up
+  // automatically when the operator populates either field.
+  const lodgingLd = {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    name: hotel.name,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: city.name,
+      addressRegion: areaName || undefined,
+      addressCountry: "TR",
+    },
+    priceRange: hotel.tier === "luxury" ? "$$$" : hotel.tier === "budget" ? "$" : "$$",
+    description: hotel.whyStay,
+    url: `${config.siteUrl}/${city.slug}/#${hotel.area}`,
+    ...(imageUrl ? { image: imageUrl } : {}),
+    ...(hotel.rating && hotel.reviewCount ? {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: hotel.rating,
+        bestRating: 10,
+        worstRating: 1,
+        reviewCount: hotel.reviewCount,
+      },
+    } : {}),
+  };
+  const lodgingScript = `<script type="application/ld+json">${JSON.stringify(lodgingLd)}</script>`;
+  // Visible rating badge — only shows when populated.
+  const ratingBadge = (hotel.rating && hotel.reviewCount)
+    ? `<div class="hotel-rating" aria-label="Rated ${esc(hotel.rating)} of 10 from ${esc(hotel.reviewCount)} reviews"><span class="hotel-rating-score">${esc(hotel.rating)}</span><span class="hotel-rating-count">${esc(hotel.reviewCount.toLocaleString("en-US"))} reviews</span></div>`
+    : "";
+  const imageMarkup = imageUrl
+    ? `<img class="hotel-image" loading="lazy" decoding="async" src="${esc(imageUrl)}" alt="${esc(hotel.name)} — ${esc(areaName)}, ${esc(city.name)}">`
+    : "";
   return `
 <article class="card hotel-card" data-tier="${esc(hotel.tier)}" data-bestfor="${esc((hotel.bestFor || []).join(","))}">
+  ${imageMarkup}
   <div class="tag-row">
     ${editorsPickBadge(hotel)}
     ${tierTag(hotel.tier)}
@@ -572,12 +707,14 @@ function hotelCard(hotel, city) {
   </div>
   <h3>${esc(hotel.name)}</h3>
   <div class="hotel-area">${esc(areaName)}, ${esc(city.name)}</div>
+  ${ratingBadge}
   <p class="hotel-why">${esc(hotel.whyStay)}</p>
   <div class="hotel-meta">
     <span class="hotel-price">$${hotel.priceFrom}<span style="color:var(--ink-muted);font-size:.78rem;font-weight:400;margin-left:6px">≈ ₺${(hotel.priceFrom * 34).toLocaleString("tr-TR")}</span> <span class="from">from / night</span></span>
   </div>
   <a class="btn btn-primary btn-block" rel="sponsored nofollow" target="_blank" href="${esc(link)}">Check availability →</a>
   ${compareRow}
+  ${lodgingScript}
 </article>`;
 }
 
@@ -738,18 +875,57 @@ function faqBlock(faqs) {
 </section>`;
 }
 
-function leadMagnet() {
+// Per-city lead-magnet copy. Falls back to the Istanbul 3-day itinerary
+// (the strongest universal hook) for non-city pages. The data-source value
+// flows through MailerLite as `subscriber.source`, so we can see which page
+// converted in the dashboard.
+const LEAD_COPY_BY_CITY = {
+  istanbul:   { eyebrow: "Free — sent instantly", title: "Get our 3-day Istanbul itinerary",        sub: "The exact plan we'd give a friend visiting Istanbul. Where to eat, what to skip, how to avoid tourist traps." },
+  cappadocia: { eyebrow: "Free — sent instantly", title: "Get our Cappadocia plan",                  sub: "Which valley, which cave hotel, balloon-flight tips, and the shoulder-season sweet spot. The version we'd send a friend." },
+  antalya:    { eyebrow: "Free — sent instantly", title: "Get our Antalya area + beach guide",       sub: "Which Antalya base picks the right beach for you — Konyaaltı, Lara, Kaleiçi, or further out. With our day-trip shortlist." },
+  bodrum:     { eyebrow: "Free — sent instantly", title: "Get our Bodrum peninsula playbook",        sub: "Yalıkavak vs Türkbükü vs Gümüşlük — picked for the trip you're actually planning. Plus where to rent a boat for a day." },
+  fethiye:    { eyebrow: "Free — sent instantly", title: "Get our Fethiye + Ölüdeniz plan",          sub: "How to base for paragliding, blue-cruise routes, and the Lycian Way. With Babadağ launch-window timing." },
+  izmir:      { eyebrow: "Free — sent instantly", title: "Get our Izmir + Aegean plan",              sub: "Alaçatı, Çeşme, Şirince, Ephesus — how to string them together. Including which Izmir neighborhood actually beats the resorts." },
+  pamukkale:  { eyebrow: "Free — sent instantly", title: "Get our Pamukkale day-trip playbook",      sub: "Which gate, which time of day, where to overnight, and the Hierapolis order that beats every tour bus." },
+  marmaris:   { eyebrow: "Free — sent instantly", title: "Get our Marmaris + Dalyan guide",          sub: "How to base for Datça, Selimiye, Bozburun, and the Dalyan loggerhead beach without falling into the all-inclusive trap." },
+  kas:        { eyebrow: "Free — sent instantly", title: "Get our Kaş Mediterranean plan",           sub: "Diving, Kekova kayaks, Lycian Way day hikes, and where to eat on the harbour. The slow, beautiful version of the south coast." },
+  trabzon:    { eyebrow: "Free — sent instantly", title: "Get our Black Sea highlands plan",         sub: "Uzungöl, Sumela, the Pokut–Sal yayla loop, and where to find real kuymak. The one Black Sea trip that's worth flying for." },
+  alanya:     { eyebrow: "Free — sent instantly", title: "Get our Alanya + east-Antalya plan",       sub: "Which beach, which old-town stay, the Damlataş + castle morning, and the day-trips most visitors miss." },
+  side:       { eyebrow: "Free — sent instantly", title: "Get our Side + Manavgat plan",             sub: "Old Town vs west-beach vs east-beach — which one is the right base for the trip you're planning. Plus the temple light-trick at sunset." },
+  kusadasi:   { eyebrow: "Free — sent instantly", title: "Get our Kuşadası + Ephesus plan",          sub: "Ephesus timing, Şirince afternoon, Selçuk basilica, and which Kuşadası harbour-front spots earn the price tag." },
+  mersin:     { eyebrow: "Free — sent instantly", title: "Get our Mersin + Cilician coast plan",     sub: "Kızkalesi, Tarsus, Anamur — the eastern Mediterranean stretch most travelers skip and shouldn't." },
+  rize:       { eyebrow: "Free — sent instantly", title: "Get our Rize tea-country plan",            sub: "Ayder, the Fırtına valley, the Kaçkar yaylas — and how to find the family pansiyons the package tours don't book." },
+  ankara:     { eyebrow: "Free — sent instantly", title: "Get our Ankara + central-Anatolia plan",   sub: "Anıtkabir, the Museum of Anatolian Civilizations, Hamamönü night, and how to add a Cappadocia day-trip from the capital." },
+  gaziantep:  { eyebrow: "Free — sent instantly", title: "Get our Gaziantep food itinerary",         sub: "Which kebabçı, which baklava house (it's not the famous one), the copper market sequence, and Zeugma in the right light." },
+  bursa:      { eyebrow: "Free — sent instantly", title: "Get our Bursa + Uludağ plan",              sub: "İskender at the source, Cumalıkızık village, the silk bazaar, and the gondola up Uludağ for the snow-or-summer view." },
+  konya:      { eyebrow: "Free — sent instantly", title: "Get our Konya Sufi-route plan",            sub: "Which sema night to attend (the one tourists skip), Mevlana morning, and the food no Istanbul restaurant gets right." },
+  mardin:     { eyebrow: "Free — sent instantly", title: "Get our Mardin + Tur Abdin plan",          sub: "Stone-old-town stays, Deyrulzafaran morning, Hasankeyf side-trip, and which terrace restaurant earns its sunset price." },
+  safranbolu: { eyebrow: "Free — sent instantly", title: "Get our Safranbolu + Amasra plan",         sub: "Ottoman wooden-house stays, the cinci hamam, Yörük village, and the Black Sea coast finale via Amasra." },
+  sanliurfa:  { eyebrow: "Free — sent instantly", title: "Get our Şanlıurfa + Göbekli Tepe plan",    sub: "Göbekli Tepe morning, the carp pools, balıklı çiğköfte at the right place, and Harran's beehive houses for the road back." },
+};
+
+function leadMagnet(opts = {}) {
+  const slug = opts.citySlug;
+  const c = (slug && LEAD_COPY_BY_CITY[slug]) || LEAD_COPY_BY_CITY.istanbul;
+  const source = opts.source || (slug ? `city-${slug}` : "inline");
   return `
 <section class="container"><div class="lead-magnet">
-  <div class="eyebrow">Free — sent instantly</div>
-  <h3>Get our 3-day Istanbul itinerary</h3>
-  <p class="text-muted">The exact plan we'd give a friend visiting Istanbul. Where to eat, what to skip, how to avoid tourist traps.</p>
-  <form class="lead-form" action="${esc(config.emailCaptureEndpoint)}" data-source="inline">
+  <div class="eyebrow">${esc(c.eyebrow)}</div>
+  <h3>${esc(c.title)}</h3>
+  <p class="text-muted">${esc(c.sub)}</p>
+  <form class="lead-form" action="${esc(config.emailCaptureEndpoint)}" data-source="${esc(source)}">
     <input type="email" name="email" placeholder="your@email.com" required aria-label="Email">
     <button type="submit" class="btn btn-primary">Send it</button>
   </form>
   <p class="lead-note">No spam. Unsubscribe anytime.</p>
 </div></section>`;
+}
+
+// Convenience block for high-intent guide / collection / planning pages that
+// don't already have an inline lead magnet. Combines email capture above the
+// affiliate "Essentials before you fly" cards.
+function leadAndEssentials(opts = {}) {
+  return `${leadMagnet(opts)}\n${essentialsBlock()}`;
 }
 
 function compareTable(city) {
@@ -823,6 +999,92 @@ function itemListLd(name, items) {
       "@type": "ListItem",
       position: i + 1,
       name: it.name,
+    })),
+  };
+}
+
+// Process a journal-article bodyHtml: extract H2 headings to build a
+// table of contents, slug-id each H2 for anchor links, and emit a
+// candidate "midpoint" anchor where a mid-article CTA can be injected
+// (immediately AFTER the closing </p> following the middle H2).
+//
+// Returns { html, toc, wordCount }. Plain JS string transforms — no DOM
+// parser dependency, kept narrow on the patterns we actually emit in
+// data/journal-posts.json.
+function processArticleBody(bodyHtml) {
+  if (!bodyHtml) return { html: "", toc: "", wordCount: 0 };
+  const headings = [];
+  const slugify = (s) => String(s).toLowerCase().replace(/<[^>]+>/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
+  const seen = new Set();
+  // Add `id` to each <h2> that doesn't already have one.
+  let html = bodyHtml.replace(/<h2(\s[^>]*)?>([\s\S]*?)<\/h2>/gi, (m, attrs, inner) => {
+    if (attrs && /\sid=/.test(attrs)) {
+      const idMatch = attrs.match(/id="([^"]+)"/);
+      if (idMatch) headings.push({ id: idMatch[1], text: inner.replace(/<[^>]+>/g, "").trim() });
+      return m;
+    }
+    let id = slugify(inner);
+    if (!id) return m;
+    let unique = id;
+    let n = 2;
+    while (seen.has(unique)) unique = `${id}-${n++}`;
+    seen.add(unique);
+    headings.push({ id: unique, text: inner.replace(/<[^>]+>/g, "").trim() });
+    return `<h2 id="${unique}"${attrs || ""}>${inner}</h2>`;
+  });
+  // Inject the mid-article CTA placeholder marker after the H2 closest to
+  // the middle of the article. Renderer can split on <!-- midpoint --> to
+  // insert custom content. Only when there are >= 4 H2s (i.e. genuinely
+  // long-form). For shorter posts, no mid-CTA.
+  if (headings.length >= 4) {
+    const mid = Math.floor(headings.length / 2);
+    const midId = headings[mid].id;
+    const re = new RegExp(`<h2 id="${midId.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}"`);
+    // Find the END of the section started by the midpoint H2: i.e. the
+    // next </p> after this heading. We replace that </p> with </p><!-- midpoint -->.
+    const idx = html.search(re);
+    if (idx >= 0) {
+      const after = html.indexOf("</p>", idx);
+      if (after > 0) {
+        html = html.slice(0, after + 4) + "<!--midpoint-->" + html.slice(after + 4);
+      }
+    }
+  }
+  const toc = headings.length >= 3
+    ? `<nav class="article-toc" aria-label="Table of contents">
+  <div class="article-toc-label">Contents</div>
+  <ol>
+    ${headings.map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join("")}
+  </ol>
+</nav>`
+    : "";
+  const wordCount = bodyHtml.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  return { html, toc, wordCount };
+}
+
+// HowTo structured data — for procedural guides where each step is a
+// distinct action (e.g. "Install eSIM before you fly"). Steps must be a
+// non-empty array of strings; supplyOf and toolOf are optional.
+function howToLd({ name, description, totalTime, estimatedCost, steps }) {
+  if (!steps || !steps.length) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    ...(description ? { description } : {}),
+    ...(totalTime ? { totalTime } : {}),
+    ...(estimatedCost ? {
+      estimatedCost: {
+        "@type": "MonetaryAmount",
+        currency: estimatedCost.currency || "USD",
+        value: String(estimatedCost.value),
+      },
+    } : {}),
+    step: steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: typeof s === "string" ? `Step ${i + 1}` : (s.name || `Step ${i + 1}`),
+      text: typeof s === "string" ? s : s.text,
     })),
   };
 }
@@ -992,7 +1254,7 @@ ${disclosureBanner()}
 <main id="main">
 <section class="hero-immersive ${c.heroImage ? "has-photo" : ""}" style="${cityPaletteStyle(c.slug)}">
   ${c.heroImage
-    ? `<img class="hero-photo" src="${esc(c.heroImage)}" alt="${esc(c.name)}, Turkey" loading="eager" fetchpriority="high">`
+    ? `<img class="hero-photo" src="${esc(c.heroImage)}" alt="${esc(c.name)}, Turkey" loading="eager" fetchpriority="high" width="1200" height="800" decoding="async">`
     : `<div class="hero-art">${cityHeroSvg(c.slug)}</div>`}
   <div class="container">
     <div class="eyebrow">Where to stay in ${esc(c.name)}, Turkey ${c.emoji || ""}</div>
@@ -1042,7 +1304,7 @@ ${disclosureBanner()}
   ${programmaticLinks}
 </section>
 
-${leadMagnet()}
+${leadMagnet({ citySlug: c.slug })}
 
 <section class="container">
   <h2>All featured hotels in ${esc(c.name)}</h2>
@@ -1080,7 +1342,7 @@ ${essentialsBlock()}
 </main>
 
 ${footer()}
-${modal()}
+${modal({ citySlug: c.slug })}
 ${stickyCta(c.name, c.heroSearch)}
 ${tail()}`;
 
@@ -1102,7 +1364,7 @@ ${tail()}`;
   if (faq) jsonld.push(faq);
 
   const ogImage = c.heroImage || `${config.siteUrl}/assets/img/og/${c.slug}.svg`;
-  const html = head({ title, description, canonical, ogImage, jsonld }) + body;
+  const html = head({ title, description, canonical, ogImage, jsonld, preloadHero: c.heroImage || null }) + body;
   writeFile(`${c.slug}/index.html`, html);
 }
 
@@ -1128,7 +1390,7 @@ ${disclosureBanner()}
   </div>
 </section>
 
-${leadMagnet()}
+${leadMagnet({ citySlug: city.slug })}
 
 <section class="container">
   ${audience ? `<p class="text-muted">${esc(audience)}</p>` : ""}
@@ -1158,7 +1420,7 @@ ${leadMagnet()}
 </section>
 
 ${footer()}
-${modal()}
+${modal({ citySlug: city.slug })}
 ${stickyCta(city.name, `${heading} ${city.name}`)}
 ${tail()}`;
 
@@ -1345,7 +1607,8 @@ ${tail()}`;
 <meta name="description" content="${esc(description)}">
 <meta name="robots" content="noindex, follow">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
-<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="preload" as="style" href="/assets/css/styles.css" fetchpriority="high">
+<link rel="stylesheet" href="/assets/css/styles.css" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/filters.css">
 </head>
 <body>`;
@@ -1381,9 +1644,15 @@ ${disclosureBanner()}
   <p>Every city is visited at least annually. Different neighborhoods on different trips. Restaurants we recommend, we eat at. Public ferries, not chartered ones. We pay for our own bookings. No PR-funded trips. No paid placements.</p>
   <h2 id="affiliate">Affiliate disclosure</h2>
   <p>We partner with Booking.com, Hotels.com, Agoda, Trip.com, Hostelworld, Vrbo, GetYourGuide, Viator, Klook, Tiqets, Welcome Pickups, Kiwitaxi, Discover Cars, Airalo, SafetyWing, World Nomads, Wise, Kiwi.com, and WayAway. Booking through our links earns us a commission at no cost to you.</p>
+  <h2 id="photo-credits">Photo credits</h2>
+  <p>City hero photography from <a rel="noopener" href="https://commons.wikimedia.org/">Wikimedia Commons</a> contributors, used under their respective Creative Commons or Public Domain licenses:</p>
+  <ul>
+    ${cities.filter((c) => c.heroImageCredit).map((c) => `<li><a href="/${esc(c.slug)}/">${esc(c.name)}</a> — ${esc(c.heroImageCredit)}</li>`).join("")}
+  </ul>
   <h2 id="contact">Contact</h2>
   <p>Spotted a mistake? Reply to any email we send.</p>
 </section>
+${leadMagnet()}
 ${footer()}
 ${tail()}`;
   const html = head({ title, description, canonical }) + body;
@@ -1391,60 +1660,98 @@ ${tail()}`;
 }
 
 function renderSitemap() {
-  const urls = [
-    `${config.siteUrl}/`,
-    `${config.siteUrl}/about/`,
-    `${config.siteUrl}/quiz/`,
-    `${config.siteUrl}/visa/`,
-    `${config.siteUrl}/is-turkey-safe/`,
-    `${config.siteUrl}/istanbul-to-cappadocia/`,
-    `${config.siteUrl}/best-time-to-visit-turkey/`,
-    `${config.siteUrl}/how-many-nights-turkey/`,
-    `${config.siteUrl}/guides/`,
-    `${config.siteUrl}/privacy/`,
-    `${config.siteUrl}/terms/`,
-    `${config.siteUrl}/contact/`,
-    `${config.siteUrl}/planner/`,
-    `${config.siteUrl}/journal/`,
-    `${config.siteUrl}/compare/`,
-    `${config.siteUrl}/partnerships/`,
-    `${config.siteUrl}/flights/`,
-    `${config.siteUrl}/insurance/`,
-    `${config.siteUrl}/esim/`,
-    `${config.siteUrl}/money/`,
-    `${config.siteUrl}/packing/`,
-    `${config.siteUrl}/arrival-istanbul/`,
-    `${config.siteUrl}/experiences/`,
-    `${config.siteUrl}/regions/`,
-    `${config.siteUrl}/turkey-guide/`,
-    `${config.siteUrl}/turkey-by-month/`,
-    `${config.siteUrl}/best-of-turkey/`,
-    `${config.siteUrl}/culture/`,
-    `${config.siteUrl}/turkish-phrases/`,
-  ];
-  for (const _cc of CULTURAL_CONCEPTS) urls.push(`${config.siteUrl}/culture/${_cc.slug}/`);
-  for (const _m of MONTHS) urls.push(`${config.siteUrl}/turkey-by-month/${_m.slug}/`);
-  for (const _col of COLLECTIONS) urls.push(`${config.siteUrl}/best-of-turkey/${_col.slug}/`);
-  for (const _e of EXPERIENCES) urls.push(`${config.siteUrl}/experiences/${_e.slug}/`);
-  for (const _r of REGIONS) urls.push(`${config.siteUrl}/regions/${_r.slug}/`);
-  for (const _slug of Object.keys(DAY_TRIPS)) urls.push(`${config.siteUrl}/${_slug}/day-trips/`);
-  for (const p of JOURNAL) urls.push(`${config.siteUrl}/journal/${p.slug}/`);
-  for (const c of cities) {
-    urls.push(`${config.siteUrl}/${c.slug}/`);
-    urls.push(`${config.siteUrl}/${c.slug}/tours/`);
-    urls.push(`${config.siteUrl}/${c.slug}/families/`);
-    urls.push(`${config.siteUrl}/${c.slug}/couples/`);
-    if (c.hotels.some((h) => h.tier === "luxury")) urls.push(`${config.siteUrl}/${c.slug}/luxury/`);
-    if (c.hotels.some((h) => h.tier === "budget")) urls.push(`${config.siteUrl}/${c.slug}/budget/`);
-  }
-  urls.push(`${config.siteUrl}/turkey-luxury/`);
-  urls.push(`${config.siteUrl}/turkey-families/`);
-  urls.push(`${config.siteUrl}/turkey-couples/`);
-  urls.push(`${config.siteUrl}/turkey-off-beaten-path/`);
+  // Priority + changefreq policy:
+  //   1.0  homepage
+  //   0.9  city hubs (highest commercial intent)
+  //   0.8  cross-city collections, top-level guides (visa, safety, transport, when-to-visit)
+  //   0.7  programmatic city pages (luxury/budget/families/couples), tours, day-trips,
+  //        best-of collections, experiences hub, regions hub, turkey-by-month,
+  //        culture concepts, journal posts
+  //   0.6  per-month pages, per-experience pages, per-region pages
+  //   0.4  about, planner, compare, quiz, partnerships
+  //   0.2  privacy, terms, contact
+  // changefreq:
+  //   daily   homepage (only thing actually updated daily)
+  //   weekly  city hubs, journal hub, guides hub
+  //   monthly evergreen guides, programmatic, collections, journal posts
+  //   yearly  legal (privacy, terms)
   const today = new Date().toISOString().split("T")[0];
+  const entries = [];
+  const push = (url, priority, changefreq, lastmod = today) =>
+    entries.push({ url, priority, changefreq, lastmod });
+
+  push(`${config.siteUrl}/`, "1.0", "daily");
+
+  // High-intent commercial: city hubs
+  for (const c of cities) {
+    push(`${config.siteUrl}/${c.slug}/`, "0.9", "weekly");
+    push(`${config.siteUrl}/${c.slug}/tours/`, "0.7", "monthly");
+    push(`${config.siteUrl}/${c.slug}/families/`, "0.7", "monthly");
+    push(`${config.siteUrl}/${c.slug}/couples/`, "0.7", "monthly");
+    if (c.hotels.some((h) => h.tier === "luxury")) push(`${config.siteUrl}/${c.slug}/luxury/`, "0.7", "monthly");
+    if (c.hotels.some((h) => h.tier === "budget")) push(`${config.siteUrl}/${c.slug}/budget/`, "0.7", "monthly");
+  }
+
+  // Top-level collection / cross-city pages
+  push(`${config.siteUrl}/turkey-luxury/`, "0.8", "monthly");
+  push(`${config.siteUrl}/turkey-families/`, "0.8", "monthly");
+  push(`${config.siteUrl}/turkey-couples/`, "0.8", "monthly");
+  push(`${config.siteUrl}/turkey-off-beaten-path/`, "0.8", "monthly");
+
+  // Top-level guides (planning intent, evergreen)
+  push(`${config.siteUrl}/visa/`,                       "0.8", "monthly");
+  push(`${config.siteUrl}/is-turkey-safe/`,             "0.8", "monthly");
+  push(`${config.siteUrl}/istanbul-to-cappadocia/`,     "0.8", "monthly");
+  push(`${config.siteUrl}/best-time-to-visit-turkey/`,  "0.8", "monthly");
+  push(`${config.siteUrl}/how-many-nights-turkey/`,     "0.8", "monthly");
+  push(`${config.siteUrl}/turkey-guide/`,               "0.8", "monthly");
+  push(`${config.siteUrl}/insurance/`,                  "0.7", "monthly");
+  push(`${config.siteUrl}/esim/`,                       "0.7", "monthly");
+  push(`${config.siteUrl}/money/`,                      "0.7", "monthly");
+  push(`${config.siteUrl}/packing/`,                    "0.7", "monthly");
+  push(`${config.siteUrl}/arrival-istanbul/`,           "0.7", "monthly");
+  push(`${config.siteUrl}/turkish-phrases/`,            "0.7", "monthly");
+
+  // Hubs
+  push(`${config.siteUrl}/guides/`,           "0.7", "weekly");
+  push(`${config.siteUrl}/journal/`,          "0.7", "weekly");
+  push(`${config.siteUrl}/flights/`,          "0.7", "weekly");
+  push(`${config.siteUrl}/best-of-turkey/`,   "0.7", "weekly");
+  push(`${config.siteUrl}/turkey-by-month/`,  "0.7", "weekly");
+  push(`${config.siteUrl}/culture/`,          "0.7", "weekly");
+  push(`${config.siteUrl}/experiences/`,      "0.7", "weekly");
+  push(`${config.siteUrl}/regions/`,          "0.7", "weekly");
+
+  // Aggregate / interactive
+  push(`${config.siteUrl}/planner/`, "0.4", "monthly");
+  push(`${config.siteUrl}/compare/`, "0.4", "monthly");
+  push(`${config.siteUrl}/quiz/`,    "0.4", "monthly");
+
+  // Operational
+  push(`${config.siteUrl}/about/`,                   "0.4", "monthly");
+  push(`${config.siteUrl}/about/${AUTHOR.slug}/`,    "0.3", "yearly");
+  push(`${config.siteUrl}/partnerships/`,            "0.4", "monthly");
+  push(`${config.siteUrl}/contact/`,                 "0.2", "yearly");
+  push(`${config.siteUrl}/privacy/`,                 "0.2", "yearly");
+  push(`${config.siteUrl}/terms/`,                   "0.2", "yearly");
+
+  // Programmatic content
+  for (const _cc of CULTURAL_CONCEPTS) push(`${config.siteUrl}/culture/${_cc.slug}/`,           "0.7", "monthly");
+  for (const _m of MONTHS)              push(`${config.siteUrl}/turkey-by-month/${_m.slug}/`,    "0.6", "monthly");
+  for (const _col of COLLECTIONS)       push(`${config.siteUrl}/best-of-turkey/${_col.slug}/`,   "0.7", "monthly");
+  for (const _e of EXPERIENCES)         push(`${config.siteUrl}/experiences/${_e.slug}/`,        "0.6", "monthly");
+  for (const _r of REGIONS)             push(`${config.siteUrl}/regions/${_r.slug}/`,            "0.6", "monthly");
+  for (const _slug of Object.keys(DAY_TRIPS)) push(`${config.siteUrl}/${_slug}/day-trips/`,       "0.7", "monthly");
+
+  // Journal posts use their actual publish date as lastmod when available
+  for (const p of JOURNAL) {
+    const lastmod = p.publishedAt ? p.publishedAt.split("T")[0] : today;
+    push(`${config.siteUrl}/journal/${p.slug}/`, "0.7", "monthly", lastmod);
+  }
+
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((u) => `<url><loc>${u}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq></url>`).join("\n")}
+${entries.map((e) => `<url><loc>${e.url}</loc><lastmod>${e.lastmod}</lastmod><changefreq>${e.changefreq}</changefreq><priority>${e.priority}</priority></url>`).join("\n")}
 </urlset>`;
   writeFile("sitemap.xml", body);
 }
@@ -1453,24 +1760,69 @@ function renderRobots() {
   writeFile("robots.txt", `User-agent: *\nAllow: /\nDisallow: /thank-you/\n\nSitemap: ${config.siteUrl}/sitemap.xml\n`);
 }
 
+// AdSense recommends serving ads.txt at the site root with one DIRECT
+// line per ad system. The TAG-ID f08c47fec0942fa0 is Google's universal
+// publisher identifier and is the same for every AdSense account.
+function renderAdsTxt() {
+  if (!config.adsense || !config.adsense.clientId) return;
+  writeFile("ads.txt", `google.com, ${config.adsense.clientId}, DIRECT, f08c47fec0942fa0\n`);
+}
+
 function render404() {
+  // Pick the 6 highest-priority destinations to surface (matches sitemap priority).
+  const topCities = ["istanbul", "cappadocia", "antalya", "bodrum", "fethiye", "izmir"]
+    .map((s) => cities.find((c) => c.slug === s))
+    .filter(Boolean);
+  const popularGuides = [
+    { url: "/turkey-guide/",                title: "The full Turkey guide",          desc: "Where to stay across 22 cities" },
+    { url: "/best-time-to-visit-turkey/",   title: "Best time to visit Turkey",      desc: "Month-by-month breakdown" },
+    { url: "/how-many-nights-turkey/",      title: "How many nights do you need?",   desc: "Real itineraries by length" },
+    { url: "/quiz/",                        title: "Take the 60-second quiz",        desc: "Find your ideal Turkish city" },
+    { url: "/visa/",                        title: "Turkey visa & eVisa",            desc: "Who needs one, who doesn't" },
+    { url: "/journal/",                     title: "Journal — long reads",           desc: "Tested itineraries and deep-dives" },
+  ];
   const body = `${nav()}
 ${disclosureBanner()}
-<section class="hero-home" style="min-height:60vh;display:flex;align-items:center">
+<section class="hero-home" style="min-height:40vh;display:flex;align-items:center">
   <div class="container" style="text-align:center">
     <div class="eyebrow">Error 404</div>
     <h1>We can't find that page.</h1>
-    <p class="hero-sub" style="margin:0 auto 28px">It may have been moved or the URL is mistyped. Here's where most people go next.</p>
+    <p class="hero-sub" style="margin:0 auto 28px;max-width:560px">It may have been moved or the URL is mistyped. Try one of these instead — or use the navigation above.</p>
     <div class="hero-actions" style="justify-content:center">
-      <a class="btn btn-primary btn-lg" href="/">Go to homepage</a>
-      <a class="btn btn-ghost btn-lg" href="/quiz/">Take the quiz</a>
-      <a class="btn btn-ghost btn-lg" href="/istanbul/">Where to stay in Istanbul</a>
+      <a class="btn btn-primary btn-lg" href="/">Homepage</a>
+      <a class="btn btn-ghost btn-lg" href="/quiz/">Take the 60-second quiz</a>
     </div>
   </div>
 </section>
+
+<section class="container section-sm">
+  <h2 style="font-size:1.4rem">Popular cities</h2>
+  <div class="grid grid-2 grid-3 mt-3">
+    ${topCities.map((c) => `<a class="card" href="/${esc(c.slug)}/" style="text-decoration:none;color:inherit">
+      <div style="font-size:24px;margin-bottom:4px">${esc(c.emoji || "")}</div>
+      <h3 style="font-size:1.1rem;margin:0 0 4px;font-family:var(--font-serif);font-weight:500">${esc(c.name)}</h3>
+      <p class="text-muted small" style="margin:0">${esc(c.tagline || "")}</p>
+    </a>`).join("")}
+  </div>
+</section>
+
+<section class="container section-sm">
+  <h2 style="font-size:1.4rem">Or start with a planning guide</h2>
+  <div class="grid grid-2 grid-3 mt-3">
+    ${popularGuides.map((g) => `<a class="card" href="${esc(g.url)}" style="text-decoration:none;color:inherit">
+      <h3 style="font-size:1rem;margin:0 0 4px;font-family:var(--font-serif);font-weight:500">${esc(g.title)}</h3>
+      <p class="text-muted small" style="margin:0">${esc(g.desc)}</p>
+    </a>`).join("")}
+  </div>
+</section>
+
 ${footer()}
 ${tail()}`;
-  const html = head({ title: `Page not found — ${config.siteName}`, description: `404 — page not found.`, canonical: `${config.siteUrl}/404.html` }) + body;
+  // Tell crawlers not to index the 404 itself even though it returns 200 on
+  // many static hosts. Vercel serves it with a 404 status — defensive nonetheless.
+  const html = head({ title: `Page not found — ${config.siteName}`, description: `404 — page not found.`, canonical: `${config.siteUrl}/404.html` })
+    .replace("</head>", `<meta name="robots" content="noindex">\n</head>`)
+    + body;
   writeFile("404.html", html);
 }
 
@@ -1485,17 +1837,17 @@ function writeManifest() {
     theme_color: "#E11D48",
     icons: [
       { src: "/assets/img/favicon.svg", sizes: "any", type: "image/svg+xml" },
-      { src: "/assets/img/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { src: "/assets/img/apple-touch-icon.svg", sizes: "180x180", type: "image/svg+xml" },
     ],
   };
   writeFile("site.webmanifest", JSON.stringify(manifest, null, 2));
 }
 
 function writeAppleTouchIcon() {
-  // 180x180 PNG — generate as SVG but also write a sensible PNG shim (browsers that need real PNG will get SVG fallback via rel=icon).
-  // Safari needs PNG; provide a minimal solid-color placeholder that the operator can replace.
-  writeFile("assets/img/apple-touch-icon.png.svg", `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180"><rect width="180" height="180" fill="#E11D48"/><text x="90" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="100" font-weight="800" fill="#fff">T</text></svg>`);
-  // Fallback for Safari which doesn't read SVG in apple-touch-icon — note in README.
+  // SVG home-screen icon. iOS 15+ accepts SVG when no PNG is provided. The
+  // operator can drop a real 180x180 PNG at this path and update build.js
+  // refs to switch back to PNG when ready.
+  writeFile("assets/img/apple-touch-icon.svg", `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180"><rect width="180" height="180" fill="#E11D48"/><text x="90" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="100" font-weight="800" fill="#fff">T</text></svg>`);
 }
 
 function writeSecurityTxt() {
@@ -1674,7 +2026,7 @@ ${disclosureBanner()}
   </div>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
 
@@ -1685,11 +2037,14 @@ ${tail()}`;
 <link rel="canonical" href="${esc(canonical)}">
 <meta name="robots" content="noindex, follow">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
-<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap"></noscript>
+<link rel="preload" as="style" href="/assets/css/styles.css" fetchpriority="high">
+<link rel="stylesheet" href="/assets/css/styles.css" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/filters.css">
 </head><body>`;
   writeFile(`${outSlug}/index.html`, customHead + body);
@@ -1767,9 +2122,9 @@ ${transferBlock(c)}
   <div class="mt-3"><a class="btn btn-ghost" href="/${c.slug}/">See all ${esc(c.name)} hotels →</a></div>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials({ citySlug: c.slug })}
 ${footer()}
-${modal()}
+${modal({ citySlug: c.slug })}
 ${stickyCta(c.name, `${c.name} tours`)}
 ${tail()}`;
 
@@ -1942,7 +2297,7 @@ ${disclosureBanner()}
   </div>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}
 
@@ -2089,7 +2444,7 @@ ${disclosureBanner()}
   <p class="text-muted small">This is a practical guide, not legal advice. Always check your own government's travel page and the Turkish consulate site before booking non-refundable flights.</p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [
@@ -2097,6 +2452,19 @@ ${tail()}`;
       { name: "Home", url: `${config.siteUrl}/` },
       { name: "Visa", url: canonical },
     ]),
+    howToLd({
+      name: "How to apply for a Turkey e-Visa",
+      description: "Apply for a Turkey e-Visa online in about 10 minutes. Cost: $35–50 depending on passport. Validity: 180 days from issue.",
+      totalTime: "PT10M",
+      estimatedCost: { value: 50, currency: "USD" },
+      steps: [
+        { name: "Confirm eligibility", text: "Check whether your passport is e-Visa eligible at evisa.gov.tr. Most US, Canadian, Australian, UAE, and Saudi passport holders qualify; many EU/UK/Japan passports are visa-free." },
+        { name: "Open the official site", text: "Go to evisa.gov.tr — only the official site. Third-party 'visa services' charge 2–4× more for the identical form." },
+        { name: "Fill in passport details", text: "Enter your passport number, full name as printed, expiry date, and travel dates. Passport must be valid for at least 6 months from your arrival." },
+        { name: "Pay by card", text: "Pay the $35–50 fee by credit or debit card. Most issues take a few minutes; allow up to 24 hours for edge cases." },
+        { name: "Save the PDF", text: "You'll receive an e-Visa PDF by email within minutes. Print it or save it to your phone — bring both when you fly." },
+      ],
+    }),
   ];
   const html = head({ title, description, canonical, jsonld }) + body;
   writeFile("visa/index.html", html);
@@ -2139,7 +2507,7 @@ ${disclosureBanner()}
   <p>Most travelers fly back to Istanbul for their international flight, or continue to Antalya / Izmir. All three have direct flights from Kayseri/Nevşehir.</p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2188,7 +2556,7 @@ ${disclosureBanner()}
   <p class="text-soft small"><em>Not insurance advice. We earn a commission if you buy through our links — this has no effect on price. Always read the policy documents before purchasing and verify coverage for your specific activities.</em></p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2239,7 +2607,7 @@ ${disclosureBanner()}
   <h2>Activities that need adventure coverage</h2>
   <ul>
     <li>Hot-air balloon flight in <a href="/cappadocia/">Cappadocia</a> — most policies cover commercial passenger balloon flights but verify language explicitly says "passenger / commercial" not "piloting"</li>
-    <li>Paragliding from Babadağ at <a href="/oludeniz/">Ölüdeniz</a> — needs explicit adventure-sports rider</li>
+    <li>Paragliding from Babadağ at <a href="/fethiye/">Ölüdeniz</a> — needs explicit adventure-sports rider</li>
     <li>Scuba diving in <a href="/kas/">Kaş</a> — depth limits matter; check policy depth cap</li>
     <li>Scooter / motorbike rental — frequently excluded; assume not covered unless explicitly listed</li>
   </ul>
@@ -2252,7 +2620,7 @@ ${disclosureBanner()}
   <p class="text-soft small"><em>This is general information, not insurance advice. We earn a small commission if you buy through our links — this doesn't change your price. Read the policy documents, especially exclusions, and verify coverage for your specific activities before purchasing. Insurance providers change terms; verify the latest on their site.</em></p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2319,13 +2687,29 @@ ${disclosureBanner()}
   <p class="text-soft small"><em>Prices update frequently; check current rates on each provider's site. We earn a small commission if you buy through our links — this doesn't change your price.</em></p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
-  const jsonld = [breadcrumbLd([
-    { name: "Home", url: `${config.siteUrl}/` },
-    { name: "eSIM", url: canonical },
-  ])];
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home", url: `${config.siteUrl}/` },
+      { name: "eSIM", url: canonical },
+    ]),
+    howToLd({
+      name: "How to install a Turkey eSIM before you fly",
+      description: "Set up your Turkey eSIM at home so you have working data the moment you land at Istanbul Airport — no roaming bill, no SIM swap.",
+      totalTime: "PT10M",
+      estimatedCost: { value: 14, currency: "USD" },
+      steps: [
+        { name: "Buy your plan online", text: "Buy your plan online while still at home (on hotel WiFi day-of departure works too)." },
+        { name: "Scan the QR code", text: "Scan the QR code Airalo or Holafly emails you with your phone camera. The phone prompts to add the cellular plan." },
+        { name: "Label the new line", text: "Label the new line 'Turkey' so you can toggle it." },
+        { name: "Set as data line", text: "Set the eSIM as your data line. Leave your home line on for SMS and 2-factor auth." },
+        { name: "Toggle Data Roaming on", text: "Toggle Data Roaming ON for the Turkey line — confusingly required even though it's an eSIM, not roaming." },
+        { name: "Land and connect", text: "The eSIM activates the moment you connect to a Turkish cell tower (usually mid-descent). You'll have data the second you turn airplane mode off." },
+      ],
+    }),
+  ].filter(Boolean);
   const html = head({ title, description, canonical, jsonld }) + body;
   writeFile("esim/index.html", html);
 }
@@ -2384,7 +2768,7 @@ ${disclosureBanner()}
   <p>For more practical pre-trip prep, see <a href="/visa/">our visa guide</a>, <a href="/esim/">eSIM guide</a>, and the <a href="/journal/turkey-cost-week/">full trip-cost breakdown</a>.</p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2481,7 +2865,7 @@ ${disclosureBanner()}
   <p>Cheaper to buy in Turkey than to pack: cosmetics (Turkish brands are good), pashmina/scarves (Grand Bazaar), Turkish bath products, fresh-roasted coffee, baklava. Don't buy: anything from the airport duty-free that you can get in a city for half the price.</p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2544,7 +2928,7 @@ ${disclosureBanner()}
   <p>Day 2 is when Turkey starts. We've got a full <a href="/thank-you/">3-day Istanbul itinerary</a> as a free download — gives you the day-by-day plan locals would actually recommend. Or just open <a href="/istanbul/">our Istanbul guide</a> and pick the neighborhood that fits your trip.</p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2591,7 +2975,7 @@ ${disclosureBanner()}
   </div>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
 
@@ -2624,7 +3008,7 @@ ${disclosureBanner()}
   </div>
   <div class="prose mt-4">${p.bodyHtml || `<p>${esc(p.summary || "")}</p>`}</div>
 </article>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [
@@ -2687,7 +3071,7 @@ ${disclosureBanner()}
 <section class="container">
   <div class="grid grid-1 grid-2 grid-3 mt-3">${cards}</div>
 </section>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2749,7 +3133,7 @@ ${disclosureBanner()}
   </ol>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2795,6 +3179,7 @@ ${disclosureBanner()}
   <p class="text-muted" style="max-width:720px">If you're doing 2+ day trips, base yourself centrally. <a href="/${c.slug}/">See our full ${esc(c.name)} neighborhood guide</a> for which area suits which tour pickup.</p>
 </section>
 
+${leadAndEssentials({ citySlug: c.slug })}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2888,7 +3273,7 @@ ${disclosureBanner()}
   <p>One email a week, only when something's worth saying — new article, season change, balloon-flight calendar update. Subscribe via the popup or the foot of any page. We'll send you the 3-day Istanbul itinerary the moment you sign up.</p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2933,7 +3318,7 @@ ${disclosureBanner()}
 <section class="container">
   <div class="grid grid-1 grid-2 grid-3 grid-4 mt-3">${cards}</div>
 </section>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -2980,7 +3365,7 @@ ${disclosureBanner()}
 
   <div class="prose mt-4">${m.bodyHtml || `<p>${esc(m.summary || "")}</p>`}</div>
 </article>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -3016,7 +3401,7 @@ ${disclosureBanner()}
 <section class="container">
   <div class="grid grid-1 grid-2 grid-3 mt-3">${cards}</div>
 </section>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -3073,7 +3458,7 @@ ${c.verdict ? `
   </section>
 ` : ""}
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -3124,7 +3509,7 @@ ${disclosureBanner()}
 <section class="container">
   <div class="grid grid-1 grid-2 grid-3 mt-3">${cards}</div>
 </section>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -3154,7 +3539,7 @@ ${disclosureBanner()}
   </div>
   <div class="prose mt-4">${p.bodyHtml || `<p>${esc(p.summary || "")}</p>`}</div>
 </article>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [
@@ -3231,7 +3616,7 @@ ${disclosureBanner()}
   <p class="text-muted" style="margin-top:32px">Want more cultural context? See our <a href="/culture/">six cultural concept guides</a> or read about <a href="/experiences/cay-culture/">çay culture</a>.</p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -3302,7 +3687,7 @@ ${disclosureBanner()}
   <h2>If you only have a weekend</h2>
   <p>Any shoulder-season weekend works. If you're choosing between April and October, April edges out for flowers and green; October for light and slightly warmer seas.</p>
 </section>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -3350,7 +3735,7 @@ ${disclosureBanner()}
     <li>Flying in Monday, flying out Sunday, trying to include both beach and cave hotels. Pick one.</li>
   </ul>
 </section>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -3391,7 +3776,7 @@ ${disclosureBanner()}
     ${cards.map((c) => `<a class="card" href="${esc(c.href)}" style="text-decoration:none;color:inherit"><h3 style="margin:0 0 6px">${esc(c.h)}</h3><p class="text-muted" style="margin:0">${esc(c.p)}</p></a>`).join("")}
   </div>
 </section>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -3509,6 +3894,7 @@ ${disclosureBanner()}
   <h2>Contact</h2>
   <p>Questions? <a href="mailto:${esc(b.privacyEmail)}">${esc(b.privacyEmail)}</a>. Postal mail: ${esc(b.postalAddress)}.</p>
 </section>
+${leadMagnet()}
 ${footer()}
 ${tail()}`;
   const html = head({ title, description, canonical }) + body;
@@ -3573,6 +3959,7 @@ ${disclosureBanner()}
   <h2>Contact</h2>
   <p><a href="mailto:${esc(b.contactEmail)}">${esc(b.contactEmail)}</a> — ${esc(b.postalAddress)}.</p>
 </section>
+${leadMagnet()}
 ${footer()}
 ${tail()}`;
   const html = head({ title, description, canonical }) + body;
@@ -3607,6 +3994,7 @@ ${disclosureBanner()}
   <h2>Spotted a mistake?</h2>
   <p>If a hotel has closed, a neighborhood description is wrong, or a price range is way off — please tell us. Local knowledge is the whole point. <a href="mailto:${esc(b.contactEmail)}?subject=Correction">Send a correction →</a></p>
 </section>
+${leadMagnet()}
 ${footer()}
 ${tail()}`;
   const html = head({ title, description, canonical }) + body;
@@ -3651,7 +4039,7 @@ function bylineBlock(cityOrNull) {
   <div class="byline-avatar" aria-hidden="true">${esc(AUTHOR.avatarInitials)}</div>
   <div class="byline-info">
     <div class="byline-name">${esc(AUTHOR.name)}</div>
-    <div class="byline-meta">Last verified <time>${esc(verified)}</time> · <a href="/about/eruo/">About ${esc(AUTHOR.name.split(" — ")[0])}</a></div>
+    <div class="byline-meta">Last verified <time>${esc(verified)}</time> · <a href="/about/${esc(AUTHOR.slug)}/">About ${esc(AUTHOR.name.split(" — ")[0])}</a></div>
   </div>
 </div>`;
 }
@@ -3854,14 +4242,14 @@ ${disclosureBanner()}
   <p class="text-soft small mt-3" style="text-align:center">Estimates based on April 2026 booking data. Check live prices via the CTA.</p>
 </section>
 
-${essentialsBlock()}
+${leadAndEssentials()}
 </main>
 ${footer()}
-${cookieBanner()}
 ${tail()}
 
 <script>
 const CITY_COST = ${CITY_COST};
+const BOOKING_AID = ${JSON.stringify(A.booking.aid && A.booking.aid !== "BOOKING_AID" ? A.booking.aid : "")};
 const DAY_FOOD = { budget: 25, mid: 55, lux: 140 }; // per person
 const DAY_LOCAL_TRANSPORT = { budget: 8, mid: 15, lux: 30 };
 const STYLE_MULT = { budget: 0.55, mid: 1.0, lux: 2.3 }; // hotel price multiplier vs avg
@@ -3902,7 +4290,9 @@ function compute() {
     '<div class="pb-row pb-total"><span>Total</span><strong>' + fmt(totalUSD) + '</strong></div>';
 
   // Update book CTA: deep link to that city on Booking
-  $("p-book").href = "https://www.booking.com/searchresults.html?aid=${A.booking.aid}&ss=" + encodeURIComponent(c.name) + "&group_adults=" + state.travelers + "&no_rooms=" + roomsNeeded;
+  var bkParams = "ss=" + encodeURIComponent(c.name) + "&group_adults=" + state.travelers + "&no_rooms=" + roomsNeeded;
+  if (BOOKING_AID) bkParams = "aid=" + encodeURIComponent(BOOKING_AID) + "&" + bkParams;
+  $("p-book").href = "https://www.booking.com/searchresults.html?" + bkParams;
 }
 
 // Wire interactions
@@ -4087,7 +4477,7 @@ ${disclosureBanner()}
     <p><a href="mailto:${esc(config.business.contactEmail)}">${esc(config.business.contactEmail)}</a> for corrections, suggestions, or trip-planning questions.</p>
   </div>
 </section>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [
@@ -4141,7 +4531,7 @@ ${disclosureBanner()}
     `).join("")}
   </div>
 </section>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
   const jsonld = [
@@ -4172,13 +4562,35 @@ function renderJournalPost(p) {
   const canonical = `${config.siteUrl}/journal/${p.slug}/`;
   const title = `${p.title} — ${config.siteName}`;
   const description = (p.subtitle && p.subtitle.length >= 80 ? p.subtitle : (p.summary || p.subtitle || "")).replace(/\s+/g, " ").trim().slice(0, 160);
+  // Process the article body: add anchor ids to H2s, build a TOC, and
+  // mark a midpoint where a mid-article CTA can be injected.
+  const processed = processArticleBody(p.bodyHtml);
+  // Mid-article CTA — only injected on long posts (4+ H2s) and only
+  // when we found a midpoint marker. Targets the post's first city tag.
+  const midCta = (() => {
+    const tagSlug = (p.tags || []).find((t) => cities.find((c) => c.slug === t.toLowerCase()));
+    const targetCity = tagSlug ? cities.find((c) => c.slug === tagSlug.toLowerCase()) : null;
+    if (!targetCity) return "";
+    return `<aside class="mid-cta" style="margin:32px 0;padding:22px 24px;background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:var(--radius)">
+      <div class="eyebrow" style="margin-bottom:6px">While you're reading</div>
+      <p style="margin:0 0 12px;font-family:var(--font-serif);font-size:1.1rem;color:var(--ink)">Picking where to stay in ${esc(targetCity.name)}? Our full neighborhood guide breaks it down.</p>
+      <a class="btn btn-primary btn-sm" href="/${esc(targetCity.slug)}/">Open the ${esc(targetCity.name)} guide →</a>
+    </aside>`;
+  })();
+  const articleHtml = processed.html
+    ? processed.html.replace("<!--midpoint-->", midCta)
+    : `<p>${esc(p.summary)}</p>
+       <div class="callout-warning" style="background:var(--accent-soft);border-left:2px solid var(--accent);padding:18px 22px;margin:24px 0;font-size:0.95rem;color:var(--ink-muted)">
+         <strong>Coming soon.</strong> The full ${p.readMinutes}-minute read is being written. Subscribe at the foot of any page and we'll email you when it goes live.
+       </div>`;
   const body = `
+<div class="reading-progress" id="reading-progress" aria-hidden="true"><div class="reading-progress-bar"></div></div>
 ${nav()}
 ${disclosureBanner()}
 <div class="container">
   <div class="breadcrumb"><a href="/">Home</a> / <a href="/journal/">Journal</a> / ${esc(p.title)}</div>
 </div>
-<article class="container container-narrow journal-article">
+<article class="container container-narrow journal-article" id="article-body">
   <div class="page-head" style="border-bottom:none;padding-bottom:0">
     <div class="eyebrow">Article</div>
     <h1>${esc(p.title)}</h1>
@@ -4192,13 +4604,10 @@ ${disclosureBanner()}
     </div>
   </div>
 
+  ${processed.toc}
+
   <div class="prose mt-4">
-    ${p.bodyHtml ? p.bodyHtml : `
-      <p>${esc(p.summary)}</p>
-      <div class="callout-warning" style="background:var(--accent-soft);border-left:2px solid var(--accent);padding:18px 22px;margin:24px 0;font-size:0.95rem;color:var(--ink-muted)">
-        <strong>Coming soon.</strong> The full ${p.readMinutes}-minute read is being written. Subscribe at the foot of any page and we'll email you when it goes live.
-      </div>
-    `}
+    ${articleHtml}
     <p style="margin-top:32px;color:var(--ink-muted);font-size:.92rem">Tagged: ${p.tags.map((t) => `<span style="background:var(--accent-soft);padding:2px 8px;border-radius:2px;margin-right:6px">${esc(t)}</span>`).join("")}</p>
   </div>
   ${(() => {
@@ -4208,19 +4617,101 @@ ${disclosureBanner()}
     return `<div class="card mt-4" style="padding:24px;background:var(--c-accent-soft, #f7efe2);border-left:3px solid var(--c-accent, #b45309)"><div class="eyebrow">Plan your stay</div><h3 style="margin:6px 0 8px">Where to stay in ${esc(targetCity.name)}</h3><p style="margin:0 0 14px;color:var(--c-text-soft, #5e6473)">Pick the right neighborhood and the right hotel — our full ${esc(targetCity.name)} guide breaks down every area we recommend.</p><a class="btn btn-primary" href="/${esc(targetCity.slug)}/">See ${esc(targetCity.name)} guide →</a></div>`;
   })()}
 
-  <div class="lead-magnet mt-4">
+  ${(() => {
+    // Tailor the inline lead magnet to the post's target city when known.
+    const tagSlug = (p.tags || []).find((t) => LEAD_COPY_BY_CITY[t.toLowerCase()]);
+    const copy = (tagSlug && LEAD_COPY_BY_CITY[tagSlug.toLowerCase()]) || LEAD_COPY_BY_CITY.istanbul;
+    return `<div class="lead-magnet mt-4">
     <div class="eyebrow">Free, sent instantly</div>
-    <h3>Get our 3-day Istanbul itinerary while you wait</h3>
-    <p class="text-muted">The exact day-by-day plan we'd send a friend.</p>
+    <h3>${esc(copy.title)} while you wait</h3>
+    <p class="text-muted">${esc(copy.sub)}</p>
     <form class="lead-form" action="${esc(config.emailCaptureEndpoint)}" data-source="journal-${esc(p.slug)}">
       <input type="email" name="email" placeholder="your@email.com" required>
       <button type="submit" class="btn btn-primary">Send it</button>
     </form>
-  </div>
+  </div>`;
+  })()}
 </article>
+
+${(() => {
+  // Related-articles block: rank other journal posts by tag overlap, take top 3.
+  const myTags = new Set((p.tags || []).map((t) => t.toLowerCase()));
+  if (myTags.size === 0) return "";
+  const scored = JOURNAL
+    .filter((q) => q.slug !== p.slug)
+    .map((q) => {
+      const qt = (q.tags || []).map((t) => t.toLowerCase());
+      const shared = qt.filter((t) => myTags.has(t)).length;
+      return { q, score: shared };
+    })
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score || (b.q.publishedAt || "").localeCompare(a.q.publishedAt || ""))
+    .slice(0, 3);
+  if (!scored.length) return "";
+  return `<section class="container container-narrow section-sm">
+  <h2 style="font-size:1.4rem">Keep reading</h2>
+  <div class="grid grid-1 grid-3 mt-3">
+    ${scored.map(({ q }) => `<a class="card" href="/journal/${esc(q.slug)}/" style="text-decoration:none;color:inherit">
+      <div class="eyebrow">${esc((q.tags || [])[0] || "Article")}</div>
+      <h3 style="font-size:1.1rem;margin:6px 0 8px">${esc(q.title)}</h3>
+      <p class="text-muted small" style="margin:0">${esc(q.subtitle || q.summary || "")}</p>
+    </a>`).join("")}
+  </div>
+</section>`;
+})()}
+
+${(() => {
+  // Author bio block — surfaces /about/{slug}/ link, gives the article
+  // a face. Only on journal posts (high engagement, where bylines matter).
+  return `<section class="container container-narrow section-sm">
+  <div class="card" style="display:flex;gap:18px;align-items:flex-start;padding:22px">
+    <div class="byline-avatar" aria-hidden="true" style="flex:0 0 auto;width:54px;height:54px;border-radius:999px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:1.3rem">${esc(AUTHOR.avatarInitials || AUTHOR.name.charAt(0))}</div>
+    <div style="flex:1 1 auto">
+      <div class="eyebrow">Written by</div>
+      <div style="font-family:var(--font-serif);font-size:1.15rem;margin:2px 0 6px">${esc(AUTHOR.name)}</div>
+      <p class="text-muted small" style="margin:0 0 10px">${esc(AUTHOR.shortBio || AUTHOR.credentials || "")}</p>
+      <a class="small" href="/about/${esc(AUTHOR.slug)}/">More about ${esc((AUTHOR.name || "").split(" ")[0] || "the author")} →</a>
+    </div>
+  </div>
+</section>`;
+})()}
+
 ${essentialsBlock()}
 ${footer()}
-${tail()}`;
+${tail()}
+<script>
+// Reading progress bar — tracks scroll position across the article body
+// only (not the header / nav / monetization strips). Throttled with rAF.
+(function(){
+  var bar = document.querySelector("#reading-progress .reading-progress-bar");
+  var article = document.getElementById("article-body");
+  if (!bar || !article) return;
+  var pending = false;
+  function update(){
+    pending = false;
+    var rect = article.getBoundingClientRect();
+    var total = article.offsetHeight - window.innerHeight;
+    var scrolled = -rect.top;
+    var pct = total > 0 ? Math.max(0, Math.min(100, (scrolled / total) * 100)) : 0;
+    bar.style.width = pct + "%";
+  }
+  function onScroll(){
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(update);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  update();
+})();
+</script>`;
+  // Resolve article-image candidate: use the post's image if set, else
+  // the target-city hero photo if any, else the default OG.
+  const articleTagSlug = (p.tags || []).find((t) => cities.find((c) => c.slug === t.toLowerCase()));
+  const articleCity = articleTagSlug ? cities.find((c) => c.slug === articleTagSlug.toLowerCase()) : null;
+  const articleImage = p.image || (articleCity && articleCity.heroImage) || `${config.siteUrl}${config.defaultOgImage}`;
+  const primarySection = (p.tags && p.tags[0]) ? p.tags[0] : "Travel";
+
   const jsonld = [
     breadcrumbLd([
       { name: "Home", url: `${config.siteUrl}/` },
@@ -4230,15 +4721,42 @@ ${tail()}`;
     {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
+      mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
       headline: p.title,
-      description: p.subtitle,
+      description: p.subtitle || p.summary || "",
       url: canonical,
+      image: articleImage,
       datePublished: p.publishedAt,
-      author: { "@type": "Person", name: AUTHOR.name },
-      publisher: { "@type": "Organization", name: config.siteName, url: config.siteUrl },
+      dateModified: p.updatedAt || p.publishedAt,
+      articleSection: primarySection,
+      keywords: (p.tags || []).join(", "),
+      wordCount: processed.wordCount,
+      timeRequired: `PT${p.readMinutes || 6}M`,
+      inLanguage: "en",
+      author: { "@type": "Person", name: AUTHOR.name, url: `${config.siteUrl}/about/${AUTHOR.slug}/` },
+      publisher: {
+        "@type": "Organization",
+        name: config.siteName,
+        url: config.siteUrl,
+        logo: { "@type": "ImageObject", url: `${config.siteUrl}/assets/img/favicon.svg` },
+      },
     },
   ];
-  const html = head({ title, description, canonical, jsonld }) + body;
+  const html = head({
+    title,
+    description,
+    canonical,
+    jsonld,
+    ogImage: articleImage,
+    ogType: "article",
+    article: {
+      publishedTime: p.publishedAt,
+      modifiedTime: p.updatedAt || p.publishedAt,
+      author: AUTHOR.name,
+      section: primarySection,
+      tags: p.tags || [],
+    },
+  }) + body;
   writeFile(`journal/${p.slug}/index.html`, html);
 }
 
@@ -4294,7 +4812,7 @@ ${disclosureBanner()}
     <div class="compare-result" id="compare-result"></div>
   </div>
 </section>
-${essentialsBlock()}
+${leadAndEssentials()}
 ${footer()}
 ${tail()}
 
@@ -4404,6 +4922,7 @@ ${disclosureBanner()}
     </ul>
   </div>
 </section>
+${leadMagnet()}
 ${footer()}
 ${tail()}`;
   const jsonld = [breadcrumbLd([
@@ -4451,6 +4970,7 @@ function run() {
 
   renderHome();
   renderAbout();
+  renderAuthorPage();
   renderThankYouNew();                 // both /thank-you/ and /thank-you-combo/
   renderQuiz();
   renderVisa();
@@ -4504,6 +5024,7 @@ function run() {
   renderRss();
   renderSitemap();
   renderRobots();
+  renderAdsTxt();
 
   const files = [];
   (function walk(d) {

@@ -5,7 +5,7 @@
 const tp = { marker: "722878", trs: "523094" };
 
 const affiliates = {
-  booking:        { aid: "BOOKING_AID" },
+  booking:        { aid: "" },
   hotelsCom:      { camref: "" },
   agoda:          { cid: "" },
   tripcom:        { allianceid: "8157710", sid: "308782349", tripSub3: "D16205590" },
@@ -53,9 +53,13 @@ module.exports = {
   affiliates,
   bookingAid: affiliates.booking.aid,
   getYourGuidePartnerId: affiliates.getYourGuide.partnerId,
-  adsense: { clientId: "", slotCity: "" },
   plausibleDomain: "",
   gaMeasurementId: "",
+  // Google AdSense — auto-ads loader. When clientId is set the loader
+  // is injected into <head> on every page; Google places auto-ads
+  // automatically. Configure per-URL exclusions in the AdSense console
+  // if you want commercial-intent city pages ad-free.
+  adsense: { clientId: "ca-pub-8018173696794576" },
   emailCaptureEndpoint: "https://assets.mailerlite.com/jsonp/2296486/forms/185895210894493012/subscribe",
   // Third-party verification snippets injected into <head> on every page.
   // Used for: Travelpayouts site verification, Google Search Console (HTML script verify),

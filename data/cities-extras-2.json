@@ -208,7 +208,9 @@
           "q": "When does it rain in Rize?",
           "a": "All year, honestly — the Black Sea coast is Turkey's rainiest region. Expect some rain even in August. Pack waterproof shoes and a light rain jacket."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Ayder%20Yaylasi%20%40%20Rize-Turkey.JPG?width=1200",
+      "heroImageCredit": "Ayder yayla, Rize / Wikimedia Commons"
     },
     {
       "slug": "ankara",
@@ -391,7 +393,9 @@
           "q": "Is Ankara worth visiting?",
           "a": "For leisure travelers: one night is enough, focused on Anıtkabir, the Anatolian Civilisations Museum, and Haci Bayram. Most foreign tourists skip it unless they're doing business."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/An%C4%B1tkabir%20in%20Ankara%20Turkey%20by%20Mardetanha%20(73).JPG?width=1200",
+      "heroImageCredit": "Anıtkabir, Ankara / Wikimedia Commons"
     },
     {
       "slug": "gaziantep",
@@ -523,7 +527,9 @@
           "q": "Is Gaziantep safe?",
           "a": "Yes. It's a large, established Turkish city. The southeastern location means you should pay routine attention but it's not a destination with notable safety concerns."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Gaziantep%20Zeugma%20Museum%20Dionysos%20Triumf%20mosaic%201921.jpg?width=1200",
+      "heroImageCredit": "Zeugma mosaics, Gaziantep / Wikimedia Commons"
     },
     {
       "slug": "bursa",
@@ -699,7 +705,9 @@
           "q": "Which hammam should I try in Bursa?",
           "a": "Çekirge's Eski Kaplıca (15th century) for history, or your hotel's private thermal pool for comfort. Both tap the same natural hot springs."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Ye%C5%9Fil%20camii%20bursa%20-%20panoramio%20(14).jpg?width=1200",
+      "heroImageCredit": "Yeşil Cami, Bursa / Wikimedia Commons"
     }
   ]
 }

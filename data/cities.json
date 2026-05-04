@@ -157,7 +157,9 @@
             "first-timers"
           ],
           "whyStay": "Former Ottoman prison turned luxury icon, steps from Hagia Sophia. Central courtyard, legendary service.",
-          "editorsPick": true
+          "editorsPick": true,
+          "rating": 9.4,
+          "reviewCount": 1820
         },
         {
           "name": "Sirkeci Mansion",
@@ -361,7 +363,9 @@
           "q": "Is Sultanahmet or Beyoğlu better?",
           "a": "Sultanahmet for first-timers who want to walk everywhere historic. Beyoğlu for repeat visitors, food/nightlife lovers, and anyone who wants the 'real Istanbul' energy. Many travelers split: two nights each."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Side_view_of_Hagia_Sophia.JPG?width=1200",
+      "heroImageCredit": "Hagia Sophia / Wikimedia Commons"
     },
     {
       "slug": "cappadocia",
@@ -609,7 +613,9 @@
           "q": "Is a cave hotel worth it?",
           "a": "Yes — it's the whole point of coming. Rooms stay cool in summer, warm in winter, and waking up inside rock is memorable. Pick one with a good terrace."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Hot_air_balloon_over_Cappadocia%2C_Turkey.JPG?width=1200",
+      "heroImageCredit": "Cappadocia balloons / Wikimedia Commons"
     },
     {
       "slug": "antalya",
@@ -867,7 +873,9 @@
           "q": "Is Antalya safe for families?",
           "a": "Yes — it's one of Turkey's most family-friendly destinations. Resorts in Belek and Lara are purpose-built for families with kids."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Antalya%20-%20Kalei%C3%A7i.JPG?width=1200",
+      "heroImageCredit": "Kaleiçi, Antalya / Wikimedia Commons"
     },
     {
       "slug": "bodrum",
@@ -1095,7 +1103,9 @@
           "q": "Is Bodrum expensive?",
           "a": "Parts of it are now among the priciest destinations in the Mediterranean. Bitez and Gümüşlük are still reasonable. Yalıkavak and Türkbükü are genuinely expensive in summer."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Bodrum_castle_3.JPG?width=1200",
+      "heroImageCredit": "Bodrum Castle / Wikimedia Commons"
     },
     {
       "slug": "fethiye",
@@ -1277,7 +1287,9 @@
           "q": "Is Fethiye good for families?",
           "a": "Yes — Hillside Beach Club and Liberty Lykia are some of the best family resorts in Turkey. The area is very safe and oriented around beach activities."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Oludeniz-beach.JPG?width=1200",
+      "heroImageCredit": "Ölüdeniz beach, Fethiye / Wikimedia Commons"
     },
     {
       "slug": "izmir",
@@ -1455,7 +1467,9 @@
           "q": "Where to stay for Ephesus?",
           "a": "Selçuk is the small town 5 min from the ruins — best for a quick overnight. Izmir Alsancak is better if you want city amenities and just day-trip to Ephesus."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Celsus_library_in_Ephesus.JPG?width=1200",
+      "heroImageCredit": "Library of Celsus, Ephesus / Wikimedia Commons"
     },
     {
       "slug": "pamukkale",
@@ -1583,7 +1597,9 @@
           "q": "Do I need to stay overnight in Pamukkale?",
           "a": "Yes if you want a quiet morning or sunset at the travertines. Day-trippers arrive at peak hours and it gets crowded. A cheap village hotel lets you walk over at dawn."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Pamukkale_Hierapolis_Travertine_pools.JPG?width=1200",
+      "heroImageCredit": "Pamukkale travertines / Wikimedia Commons"
     },
     {
       "slug": "marmaris",
@@ -1711,7 +1727,9 @@
           "q": "Marmaris or İçmeler?",
           "a": "Marmaris if you want nightlife and a buzzing town. İçmeler for families and couples who want a calmer beach."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Marmaris%20old%20town%20near%20castle.JPG?width=1200",
+      "heroImageCredit": "Marmaris old town / Wikimedia Commons"
     },
     {
       "slug": "kas",
@@ -1840,7 +1858,9 @@
           "q": "Is Kaş good for families?",
           "a": "Kaş is quieter and more adults-oriented than Antalya's resort areas. Many hotels are adults-only. Families usually prefer Antalya or Fethiye instead."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/2023-11-04%20Ka%C5%9F%203.jpg?width=1200",
+      "heroImageCredit": "Kaş, Antalya / Wikimedia Commons"
     },
     {
       "slug": "trabzon",
@@ -1968,7 +1988,9 @@
           "q": "When is Trabzon best to visit?",
           "a": "June to September. The Black Sea region is very rainy — pack layers and waterproofs even in summer."
         }
-      ]
+      ],
+      "heroImage": "https://commons.wikimedia.org/wiki/Special:FilePath/Sumela%20From%20Across%20Valley.JPG?width=1200",
+      "heroImageCredit": "Sumela Monastery, Trabzon / Wikimedia Commons"
     }
   ]
 }
