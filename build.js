@@ -3002,6 +3002,12 @@ function renderToursPage(c) {
   const canonical = `${config.siteUrl}/${c.slug}/tours/`;
   const title = `Best tours and things to do in ${c.name} — 2026`;
   const description = `Hand-picked tours, tickets, and activities in ${c.name}, Turkey. Compare GetYourGuide, Viator, and Klook pricing for skip-the-line access.`;
+  const skipLineExamples = (function () {
+    if (c.name === "Istanbul") return "Hagia Sophia, Topkapı, Basilica Cistern";
+    if (c.name === "Cappadocia") return "balloon flight is the obvious one";
+    if (c.name === "Antalya") return "Aspendos and Side Roman ruins";
+    return "main museum and citadel";
+  })();
 
   const buckets = [
     { heading: `Top-rated tours in ${c.name}`,     query: `${c.name} top tours`,       hint: "Bestsellers" },
@@ -3046,6 +3052,23 @@ ${disclosureBanner()}
 </section>
 
 ${transferBlock(c)}
+
+<section class="container container-narrow prose mt-4">
+  <h2>How tours actually work in ${esc(c.name)}</h2>
+  <p>The tour landscape in ${esc(c.name)} is layered. At the top sit the marquee tours — the ones every hotel concierge will recommend, the ones travel guides feature, the ones that consistently book out two weeks ahead in peak season. Below them sits a wider tier of decent-but-unremarkable tours operating the same routes with different vans. At the bottom sits a ring of street-level operators offering "we'll take you cheaper" deals from cardboard signs near hotel entrances — sometimes fine, often a different itinerary than promised, no recourse if it goes wrong. The category cards above are filtered to the top tier only: aggregators that rank by review velocity (Klook, GetYourGuide), and Tiqets for skip-the-line single-attraction tickets.</p>
+  <p>Two practical rules: <strong>book skip-the-line tickets ahead</strong> for every major sight (the ${esc(skipLineExamples)} fill up by 11am in season), and <strong>do at least one half-day private tour</strong> if your trip is longer than 3 days. The marginal cost over a group tour is small (~30%), the experience difference is large.</p>
+
+  <h2>What we recommend skipping</h2>
+  <p>Generic "city highlights" bus tours that cover six sights in five hours mostly waste your time on commute and queue. Pick three sights and book skip-the-line tickets for each — you'll see more in less time. Dinner-and-show evening tours marketed as "Turkish night" are entertainment-grade re-enactments, fine if that's the trip you want, but they don't add anything cultural that a proper restaurant + a sema ceremony don't already give you. Boat tours that promise "private" but pack 30 people on board — read the fine print on capacity before paying premium prices.</p>
+
+  <h2>Frequently asked</h2>
+  <h3>Should I book before I arrive?</h3>
+  <p>For peak-season (June–September) and the marquee tours, yes — at least a week ahead, two for balloon flights. Off-season, day-of often works for general tours. Skip-the-line tickets to fixed-time-slot sights (Hagia Sophia, Topkapı, the Cappadocia balloon) are always worth pre-booking; the price is the same.</p>
+  <h3>Are the city-card aggregators (Klook, GetYourGuide) marking up the price?</h3>
+  <p>Marginally — they take a commission from operators rather than the customer, so the ticket price is generally the same as booking direct. The benefit is the review density, the cancellation policy, and the multi-language customer support. The cost is occasional same-tour-different-name redundancy.</p>
+  <h3>Do I need to tip tour guides?</h3>
+  <p>Yes — 50–100 TL per person on a group tour, more for a private tour or specialist guide. Cash, given at the end. Drivers are usually included in the guide tip; restaurants are separate.</p>
+</section>
 
 <section class="container section-sm">
   <h2>Stay near the tours</h2>
@@ -4302,6 +4325,18 @@ ${disclosureBanner()}
   </ol>
 </section>
 
+<section class="container container-narrow prose mt-4">
+  <h2>Getting around the ${esc(r.name)}</h2>
+  <p>The ${esc(r.name)} works best as a road-trip rather than a hub-and-spoke. Cities sit close enough together that domestic flights add overhead — a 1-hour flight plus 2 hours of airport time often loses to a 3-hour drive on the same route. Localrent (the Turkey-focused car rental aggregator) has depots in every major city in the region and is the practical pickup if you're driving more than two cities. Public buses (Pamukkale Turizm, Kamil Koç, Metro Turizm) cover the major routes with overnight options that save a hotel night; book through Obilet.com in English.</p>
+  <p>Internal flights make sense only for the longest hops — Trabzon to Istanbul, for example, or skipping straight from one end of the region to the other. SunExpress, AnadoluJet, and Pegasus all fly daily; book 2-4 weeks ahead for the cheapest fares.</p>
+
+  <h2>What separates this region from the rest of Turkey</h2>
+  <p>Each Turkish region has its own character, food, and architectural register. The ${esc(r.name)} differs from neighboring regions in three concrete ways: the seasonal calendar (different months work for different reasons — see the per-city pages below for the detailed climate strip), the price tier (this region clusters around a typical mid-range double-room rate that's distinct from coastal Turkey or Istanbul), and the food map (regional dishes that don't travel well to chain restaurants in other parts of the country). Travelers who treat Turkey as one place miss this; travelers who pick a region and dig in for 5-7 nights tend to come back.</p>
+
+  <h2>How to combine with other regions</h2>
+  <p>Most first-Turkey travelers pair this region with Istanbul (the obligatory front door) for a 7-10 night trip — Istanbul handles arrival, atmosphere, and the historical sweep, then the ${esc(r.name)} delivers the regional specialism. Returning travelers often pair it with one other region for a deeper second trip — Aegean + Mediterranean if your trip is coastal-themed, Cappadocia + Eastern Anatolia if it's history-themed. The Turkish Airlines / Pegasus internal flight grid makes any two-region combination doable in a 10-night trip.</p>
+</section>
+
 ${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
@@ -4351,6 +4386,18 @@ ${disclosureBanner()}
 <section class="container section-sm">
   <h2>Where to stay in ${esc(c.name)}</h2>
   <p class="text-muted" style="max-width:720px">If you're doing 2+ day trips, base yourself centrally. <a href="/${c.slug}/">See our full ${esc(c.name)} neighborhood guide</a> for which area suits which tour pickup.</p>
+</section>
+
+<section class="container container-narrow prose mt-4">
+  <h2>How to choose between day trips</h2>
+  <p>Three factors decide which day trip fits your trip: <strong>distance</strong> (anything over 100km each way eats most of the day in transit and rewards an overnight rather than a day trip — Pamukkale from Antalya is the classic example), <strong>terrain</strong> (canyon hiking, ruins climbing, rafting all need real shoes and water; the cards above flag this in the eyebrow), and <strong>your trip length</strong> (with 4 nights or fewer in ${esc(c.name)}, one day trip max; with 6+, two work well, three is overscheduled). Pick by what your trip is missing — if you've been on the beach for three days, take the ruins trip; if you've been climbing ruins, take the canyon-rafting trip.</p>
+  <p>Tour-operator pickups standardly happen at 7-8am from your hotel and return by 6-7pm. Half-day trips run 8am-1pm or 1pm-7pm. Lunch is usually included on full-day tours; bring a backup snack anyway because the included lunch is often the weakest part. Most operators allow free cancellation up to 24 hours ahead through the aggregator booking platforms.</p>
+
+  <h2>What we'd skip</h2>
+  <p>Multi-stop "highlights" tours that promise four sights in one day usually deliver tour-bus parking lots at four sights, with too little time at each to see anything substantive. Better to pick one and own it for 4-5 hours. Boat tours that cover "12 islands" in a day rarely stop at any one for more than 30 minutes — pick the trip that sells one island and dives there for an afternoon. Tours that include shopping stops (carpet, jewelry, ceramics) are subsidized by commission from the shops; they're not free even if they say they are — you pay in time.</p>
+
+  <h2>Combining a day trip with an overnight</h2>
+  <p>Two of the more demanding day trips above are better as overnights — Pamukkale especially (it's a 5am start to do as a day trip and you miss the sunrise on the travertines, which is the actual point). Same for the more remote ruins on the longer drives. If a day trip is going to be 12+ hours of total travel-time, look at adding a single overnight at a small village pension instead. Cost adds €40-80 per night; the experience nearly doubles.</p>
 </section>
 
 ${leadAndEssentials({ citySlug: c.slug })}
