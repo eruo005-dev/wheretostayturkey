@@ -1077,7 +1077,7 @@ function leadMagnet(opts = {}) {
   return `
 <section class="container"><div class="lead-magnet">
   <div class="eyebrow">${esc(c.eyebrow)}</div>
-  <h3>${esc(c.title)}</h3>
+  <h2 class="lead-magnet-h">${esc(c.title)}</h2>
   <p class="text-muted">${esc(c.sub)}</p>
   <form class="lead-form" action="${esc(config.emailCaptureEndpoint)}" data-source="${esc(source)}">
     <input type="email" name="email" placeholder="your@email.com" required aria-label="Email">
@@ -2166,7 +2166,7 @@ function renderThankYou() {
         ${d.flow.map((f) => `<li><span class="flow-time">${esc(f.time)}</span><span class="flow-what">${esc(f.what)}</span></li>`).join("")}
       </ol>
       <div class="tips">
-        <h4>Notes</h4>
+        <h3>Notes</h3>
         <ul>${d.tips.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
       </div>
     </section>
@@ -2683,7 +2683,8 @@ ${disclosureBanner()}
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">${esc(intro)}</p>
   </div>
 </div>
-<section class="container">
+<section class="container" aria-labelledby="cross-coll-h">
+  <h2 id="cross-coll-h" class="visually-hidden">${esc(heading)} — hotel picks</h2>
   <p class="text-muted">${matches.length} picks across ${new Set(matches.map((m) => m.c.slug)).size} cities.</p>
   <div class="grid grid-2 grid-3 mt-3">
     ${matches.map((m) => hotelCard(m.h, m.c)).join("")}
@@ -2754,7 +2755,7 @@ function renderLeadMagnetPage(dataFile, outSlug, heroUpsellQueries) {
         ${d.flow.map((f) => `<li><span class="flow-time">${esc(f.time)}</span><span class="flow-what">${esc(f.what)}</span></li>`).join("")}
       </ol>
       <div class="tips">
-        <h4>Notes</h4>
+        <h3>Notes</h3>
         <ul>${d.tips.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
       </div>
     </section>
@@ -2787,7 +2788,7 @@ ${disclosureBanner()}
 <section class="container">
   <div class="lead-magnet" style="text-align:left">
     <div class="eyebrow">Book these first</div>
-    <h3 style="margin-top:4px">These three sell out and get expensive at the door</h3>
+    <h2 class="lead-magnet-h" style="margin-top:4px">These three sell out and get expensive at the door</h2>
     <div class="grid grid-2 grid-3 mt-3">
       ${upsells.slice(0, 3).map((u) => `
         <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(u.url)}" style="text-decoration:none;color:inherit">
@@ -3036,17 +3037,17 @@ ${disclosureBanner()}
   <div class="grid grid-2 grid-3 mt-3">
     <div class="card" style="padding:24px">
       <div class="eyebrow">Honest pricing</div>
-      <h4 style="margin:6px 0">Final price you'll pay</h4>
+      <h3 style="margin:6px 0">Final price you'll pay</h3>
       <p style="color:var(--c-text-soft);font-size:.95rem">Trip.com shows the all-in price including taxes and bag fees — no surprise add-ons at checkout.</p>
     </div>
     <div class="card" style="padding:24px">
       <div class="eyebrow">Real options</div>
-      <h4 style="margin:6px 0">Every major carrier</h4>
+      <h3 style="margin:6px 0">Every major carrier</h3>
       <p style="color:var(--c-text-soft);font-size:.95rem">Turkish Airlines, Pegasus, Lufthansa, BA, Emirates, Qatar — compared side-by-side, not just the OTA's preferred airline.</p>
     </div>
     <div class="card" style="padding:24px">
       <div class="eyebrow">Mistake fares</div>
-      <h4 style="margin:6px 0">Same-day price drops</h4>
+      <h3 style="margin:6px 0">Same-day price drops</h3>
       <p style="color:var(--c-text-soft);font-size:.95rem">Search at different times — Tuesday 6am ET catches the most error fares. Trip.com surfaces them as soon as airlines publish.</p>
     </div>
   </div>
@@ -3593,7 +3594,8 @@ ${disclosureBanner()}
   </div>
 </div>
 
-<section class="container">
+<section class="container" aria-labelledby="insurance-picks-h">
+  <h2 id="insurance-picks-h" class="visually-hidden">Recommended insurance providers</h2>
   <div class="grid grid-1 grid-2 mt-3">
     <div class="card" style="padding:28px">
       <div class="eyebrow">Recommended for most travelers</div>
@@ -4757,7 +4759,8 @@ ${disclosureBanner()}
     <p class="text-muted" style="font-size:1.1rem;max-width:720px">Practical planning stuff — not blog posts. Pick the question, get the answer.</p>
   </div>
 </div>
-<section class="container">
+<section class="container" aria-labelledby="guides-cards-h">
+  <h2 id="guides-cards-h" class="visually-hidden">Browse all guides</h2>
   <div class="grid grid-2 grid-3">
     ${cards.map((c) => `<a class="card" href="${esc(c.href)}" style="text-decoration:none;color:inherit"><h3 style="margin:0 0 6px">${esc(c.h)}</h3><p class="text-muted" style="margin:0">${esc(c.p)}</p></a>`).join("")}
   </div>

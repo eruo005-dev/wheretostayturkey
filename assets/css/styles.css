@@ -1468,7 +1468,7 @@ a.btn:focus-visible,
   text-align: center;
   margin: var(--s-7) 0;
 }
-.lead-magnet h3 { font-family: var(--font-serif); font-weight: 500; font-size: 1.7rem; margin-bottom: var(--s-3); }
+.lead-magnet h3, .lead-magnet .lead-magnet-h { font-family: var(--font-serif); font-weight: 500; font-size: 1.7rem; margin-bottom: var(--s-3); margin-top: 0; }
 .lead-form {
   display: flex; flex-direction: column; gap: var(--s-2);
   max-width: 440px; margin: var(--s-4) auto 0;
