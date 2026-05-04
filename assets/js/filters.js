@@ -30,9 +30,18 @@
     const cards = document.querySelectorAll(".hotel-card");
     cards.forEach((card) => {
       if (card.dataset.amenitiesInjected === "true") return;
-      const txt = card.textContent.toLowerCase();
-      const matches = KEYWORDS.filter((k) => k.test.test(txt)).slice(0, 4);
-      if (!matches.length) return;
+      // Prefer build-time tags (data-amenities) — falls back to text regex
+      // for any older cards that haven't been re-rendered.
+      const tagged = (card.dataset.amenities || "").trim().split(/\s+/).filter(Boolean);
+      const matches = tagged.length
+        ? KEYWORDS.filter((k) => tagged.includes(k.key)).slice(0, 4)
+        : (function () {
+            const txt = card.textContent.toLowerCase();
+            const m = KEYWORDS.filter((k) => k.test.test(txt)).slice(0, 4);
+            if (m.length) card.dataset.amenities = m.map((x) => x.key).join(" ");
+            return m;
+          })();
+      if (!matches.length) { card.dataset.amenitiesInjected = "true"; return; }
       const row = document.createElement("div");
       row.className = "amenity-row";
       row.innerHTML = matches
@@ -48,21 +57,43 @@
     });
   }
 
-  function applyFilter(filter) {
-    const cards = document.querySelectorAll(".hotel-card");
-    cards.forEach((card) => {
-      let show = true;
-      if (filter && filter !== "all") {
-        const tier = (card.dataset.tier || "").toLowerCase();
-        const bestFor = (card.dataset.bestfor || "").toLowerCase();
-        if (filter === "luxury" || filter === "budget") {
-          show = tier === filter;
-        } else {
-          show = bestFor.split(",").map((t) => t.trim()).includes(filter);
-        }
+  // Combined persona + amenity filter. A card is shown only when it
+  // satisfies BOTH the active persona (single) and ALL active amenities
+  // (multi-select intersection).
+  let activePersona = "all";
+  const activeAmenities = new Set();
+
+  function cardMatches(card) {
+    if (activePersona && activePersona !== "all") {
+      const tier = (card.dataset.tier || "").toLowerCase();
+      const bestFor = (card.dataset.bestfor || "").toLowerCase();
+      if (activePersona === "luxury" || activePersona === "budget") {
+        if (tier !== activePersona) return false;
+      } else {
+        if (!bestFor.split(",").map((t) => t.trim()).includes(activePersona)) return false;
       }
-      card.dataset.hidden = show ? "false" : "true";
+    }
+    if (activeAmenities.size) {
+      const tagged = new Set((card.dataset.amenities || "").trim().split(/\s+/).filter(Boolean));
+      for (const a of activeAmenities) if (!tagged.has(a)) return false;
+    }
+    return true;
+  }
+
+  function reapply() {
+    document.querySelectorAll(".hotel-card").forEach((card) => {
+      card.dataset.hidden = cardMatches(card) ? "false" : "true";
     });
+    document.querySelectorAll(".amenity-chip[data-amenity]").forEach((chip) => {
+      chip.dataset.active = activeAmenities.has(chip.dataset.amenity) ? "true" : "false";
+    });
+    const clearBtn = document.querySelector(".amenity-chip-clear");
+    if (clearBtn) clearBtn.hidden = activeAmenities.size === 0;
+  }
+
+  function applyFilter(filter) {
+    activePersona = filter || "all";
+    reapply();
   }
 
   function setActiveChip(filter) {
@@ -93,9 +124,25 @@
     });
   }
 
+  function initAmenityFilters() {
+    const bar = document.querySelector(".amenity-filter");
+    if (!bar) return;
+    bar.addEventListener("click", (e) => {
+      const clear = e.target.closest("[data-amenity-clear]");
+      if (clear) { activeAmenities.clear(); reapply(); return; }
+      const chip = e.target.closest(".amenity-chip[data-amenity]");
+      if (!chip) return;
+      const a = chip.dataset.amenity;
+      if (activeAmenities.has(a)) activeAmenities.delete(a);
+      else activeAmenities.add(a);
+      reapply();
+    });
+  }
+
   function init() {
     injectAmenityIcons();
     initFilters();
+    initAmenityFilters();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

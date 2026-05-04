@@ -809,9 +809,42 @@ function hotelImageUrl(hotel) {
   return null;
 }
 
+// Amenity derivation — regex over hotel name + whyStay text. Mirrored
+// in assets/js/filters.js so the runtime icon injection and the chip
+// filter agree on the same vocabulary. Order matters for chip display.
+const AMENITY_RULES = [
+  { key: "pool",      label: "Pool",       test: /\b(pool|swimming|infinity)\b/i },
+  { key: "rooftop",   label: "Rooftop",    test: /\b(rooftop|terrace|panoramic)\b/i },
+  { key: "spa",       label: "Spa",        test: /\b(hammam|spa|sauna|steam)\b/i },
+  { key: "sea",       label: "Sea view",   test: /\b(sea[- ]?view|seafront|beachfront|ocean|aegean|mediterranean|bosphorus|waterfront)\b/i },
+  { key: "family",    label: "Families",   test: /\b(famil(y|ies)|kid|child|playground)\b/i },
+  { key: "boutique",  label: "Boutique",   test: /\b(boutique|design[- ]led|hipster)\b/i },
+  { key: "historic",  label: "Historic",   test: /\b(historic|ottoman|mansion|konak|cave|byzantine|palazzo|century)\b/i },
+  { key: "breakfast", label: "Breakfast",  test: /\b(breakfast|kahvalt[ıi])\b/i },
+];
+function deriveAmenities(hotel) {
+  const txt = `${hotel.name || ""} ${hotel.whyStay || ""}`;
+  return AMENITY_RULES.filter((r) => r.test.test(txt)).map((r) => r.key);
+}
+
+// Render the amenity chip bar for a city's hotel list. Counts are
+// derived from the same regex set so chips never advertise zero matches.
+function amenityChipBar(hotels) {
+  const counts = {};
+  for (const h of hotels) for (const k of deriveAmenities(h)) counts[k] = (counts[k] || 0) + 1;
+  const chips = AMENITY_RULES.filter((r) => counts[r.key] >= 2);
+  if (chips.length < 2) return "";
+  return `
+  <div class="amenity-filter" role="group" aria-label="Filter hotels by amenity">
+    ${chips.map((r) => `<button class="amenity-chip" type="button" data-amenity="${esc(r.key)}">${esc(r.label)} <span class="amenity-chip-count">${counts[r.key]}</span></button>`).join("")}
+    <button class="amenity-chip amenity-chip-clear" type="button" data-amenity-clear="1" hidden>Clear</button>
+  </div>`;
+}
+
 function hotelCard(hotel, city) {
   const areaName = (city.areas.find((a) => a.slug === hotel.area) || {}).name || "";
   const link = hotelLink(hotel, city.name);
+  const amenities = deriveAmenities(hotel);
   const imageUrl = hotelImageUrl(hotel);
   const compares = compareOtaLinks(`${hotel.name} ${city.name}`);
   const compareRow = compares.length
@@ -864,7 +897,7 @@ function hotelCard(hotel, city) {
     ? `<img class="hotel-image" loading="lazy" decoding="async" src="${esc(imageUrl)}" alt="${esc(hotel.name)} — ${esc(areaName)}, ${esc(city.name)}">`
     : "";
   return `
-<article class="card hotel-card" data-tier="${esc(hotel.tier)}" data-bestfor="${esc((hotel.bestFor || []).join(","))}">
+<article class="card hotel-card" data-tier="${esc(hotel.tier)}" data-bestfor="${esc((hotel.bestFor || []).join(","))}" data-amenities="${esc(amenities.join(" "))}">
   ${imageMarkup}
   <div class="tag-row">
     ${editorsPickBadge(hotel)}
@@ -1940,6 +1973,7 @@ ${leadMagnet({ citySlug: c.slug })}
     <button class="persona-chip" data-filter="luxury" type="button">Luxury</button>
     <button class="persona-chip" data-filter="budget" type="button">Budget</button>
   </div>
+  ${amenityChipBar(c.hotels)}
   <div class="grid grid-2 grid-3">
     ${c.hotels.map((h) => hotelCard(h, c)).join("")}
   </div>
