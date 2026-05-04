@@ -5703,6 +5703,13 @@ function renderJournalHub() {
   const canonical = `${config.siteUrl}/journal/`;
   const title = `Journal — ${config.siteName}`;
   const description = `Editorial articles on Turkey travel — itinerary deep-dives, seasonal advice, and tested-by-us reviews.`;
+  // Tally tags so we can show only those with 2+ posts (avoids noise).
+  const tagCounts = {};
+  for (const p of JOURNAL) for (const t of (p.tags || [])) tagCounts[t] = (tagCounts[t] || 0) + 1;
+  const tagChips = Object.entries(tagCounts)
+    .filter(([, n]) => n >= 2)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 12);
   const body = `
 ${nav()}
 ${disclosureBanner()}
@@ -5715,9 +5722,14 @@ ${disclosureBanner()}
     <h1>The Journal</h1>
     <p class="text-muted" style="font-size:1.1rem;max-width:680px">Longer reads on Turkey — tested itineraries, seasonal advice, and the small things that separate a great trip from a mediocre one.</p>
   </div>
+  ${tagChips.length ? `
+  <div class="amenity-filter journal-tag-filter" role="group" aria-label="Filter articles by tag">
+    <button class="amenity-chip" type="button" data-journal-tag="all" data-active="true">All <span class="amenity-chip-count">${JOURNAL.length}</span></button>
+    ${tagChips.map(([t, n]) => `<button class="amenity-chip" type="button" data-journal-tag="${esc(t)}">${esc(t.replace(/-/g, " "))} <span class="amenity-chip-count">${n}</span></button>`).join("")}
+  </div>` : ""}
   <div class="journal-list">
     ${JOURNAL.map((p) => `
-      <article class="journal-item">
+      <article class="journal-item" data-tags="${esc((p.tags || []).join(" "))}">
         <div class="journal-meta">
           <time>${esc(p.publishedAt)}</time>
           <span>·</span>
@@ -5729,6 +5741,7 @@ ${disclosureBanner()}
         <a href="/journal/${esc(p.slug)}/" class="journal-link">Read →</a>
       </article>
     `).join("")}
+    <p class="journal-empty" hidden>No articles match that tag yet.</p>
   </div>
 </section>
 ${leadAndEssentials()}
