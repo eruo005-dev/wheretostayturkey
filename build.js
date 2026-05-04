@@ -3575,6 +3575,26 @@ ${disclosureBanner()}
     <li>Accommodation address (first night)</li>
   </ul>
   <p class="text-muted small">This is a practical guide, not legal advice. Always check your own government's travel page and the Turkish consulate site before booking non-refundable flights.</p>
+
+  <h2>How long does the e-Visa take?</h2>
+  <p>Approval is usually within minutes — for most North American, Australian, and Gulf passports, the PDF arrives in your inbox before you've finished closing the browser tab. Edge cases (older passports, travel from sanctioned-list countries, recent name changes) can take up to 24 hours. Apply at least 48 hours before flying to give yourself a buffer; do not apply the morning of departure.</p>
+  <p>The e-Visa fee is not refundable if your application is rejected. Rejections are rare but happen — most often because of passport-validity issues (less than 6 months from arrival) or non-eligible passport types (some refugee travel documents). If you're rejected you'll need to apply for a sticker visa at the nearest Turkish consulate, which takes 1-3 weeks.</p>
+
+  <h2>How long can I stay?</h2>
+  <p>The standard tourist e-Visa is single or multiple entry, valid for 180 days from issue, allowing up to 90 days of presence within any 180-day period. If you arrive on day 1 and stay 60 days, you can come back later within the 180-day validity for another 30 days — but the cumulative limit is 90. Overstaying triggers fines starting at $50 and escalating; chronic overstayers face entry bans.</p>
+  <p>For longer stays (study, work, longer leisure stays of 90+ days) you need a residence permit (ikamet) — applied for after arrival within the first 90 days, at the Göç İdaresi (immigration office). The process is digital and English-friendly via e-ikamet.goc.gov.tr.</p>
+
+  <h2>Border arrival realities</h2>
+  <p>At Istanbul Airport (IST), Sabiha Gökçen (SAW), and other major points of entry, the passport-control queue is usually 20-40 minutes during daylight arrivals, longer (60-90 minutes) for late-evening flights from Northern Europe arriving in Istanbul's peak. Officers will scan your passport and the e-Visa, ask one or two cursory questions about purpose of visit, and stamp you in. Have your e-Visa printout or PDF ready on your phone — the officer will scan the QR code if asked.</p>
+  <p>Customs after passport control is usually a green-channel walkthrough; bag inspection is rare unless you're carrying high-value goods. Dollar / Euro cash limits: under $10,000 equivalent doesn't need declaration; over that, declare at customs to avoid issues at exit.</p>
+
+  <h2>Frequently asked</h2>
+  <h3>Does Turkey require proof of onward travel?</h3>
+  <p>Officially no, in practice rarely asked at land borders, occasionally asked when checking in at your home airport for an Istanbul flight. Carry a screenshot of your return ticket if you have one. If you're flying one-way and onward (e.g., overland to Iran or Greece), book a cheap refundable Pegasus flight to a nearby city as a fallback proof — refund it after you arrive.</p>
+  <h3>Can I apply for the e-Visa for someone else?</h3>
+  <p>Yes — the application doesn't verify the applicant is the same as the traveler. Many people apply for their family on a single sitting. Each person needs their own e-Visa with their own passport details.</p>
+  <h3>What if I lose my passport in Turkey?</h3>
+  <p>Visit your country's embassy or consulate (most countries have an embassy in Ankara and a consulate in Istanbul). Apply for an emergency travel document, then visit the local Göç İdaresi to get an exit stamp before departure. Allow 3-5 days for the full process.</p>
 </section>
 
 ${leadAndEssentials()}
@@ -4102,6 +4122,19 @@ ${disclosureBanner()}
   </div>
 </section>
 
+<section class="container container-narrow prose mt-4">
+  <h2>What "experience" means here</h2>
+  <p>The word "experience" is overused in travel marketing — usually it means a tour bus with a guided commentary. We use it differently. Each of the six experiences below is a cultural ritual that locals participate in regularly, that takes 30 minutes to a full afternoon, and that gives a non-Turkish visitor real access to how the country operates. They aren't activities you book; they're rhythms you join.</p>
+  <p>The reading order matters. Çay culture is the foundation — Turkey runs on tea and you'll be offered hundreds of glasses if you stay a week. Turkish coffee is the formal cousin: ceremonial, foretelling, served at decision moments. The hammam is the body's chapter — a 90-minute social bath with rules you don't want to learn by mistake. The whirling dervishes are the spiritual chapter, a 13th-century Sufi liturgy still performed weekly. The bazaar is the negotiation chapter — an hour with a rug seller is a masterclass in patient theatre, whether you buy or not. Anatolian breakfast is where the country's regional diversity shows up on a single table.</p>
+
+  <h2>How to fit these into a trip</h2>
+  <p>None of these need pre-booking unless explicitly noted. Çay and coffee are free and constant; they happen to you, you don't book them. The hammam wants 90 minutes and a hotel-recommended bath house — avoid the package-tour places near the Hagia Sophia in Istanbul and ask a local-staff hotelier instead. Whirling dervish ceremonies happen on specific weekly schedules at the Mevlana Cultural Centre in Konya (Saturday evenings) and several Istanbul venues — book the official ones, not the dinner-cruise add-ons. Anatolian breakfast is best in Gaziantep, Şanlıurfa, or any boutique hotel breakfast room outside Istanbul.</p>
+  <p>Pair experiences geographically: Istanbul covers çay, coffee, hammam, and bazaar comfortably in 4 days. Cappadocia adds the regional breakfast version. Konya unlocks the proper sema. Gaziantep / Şanlıurfa are where the food experiences peak. Your trip doesn't need all six — pick the three that match how you travel.</p>
+
+  <h2>What we leave off this list</h2>
+  <p>Hot-air balloon rides in Cappadocia, the Bosphorus dinner cruise, belly-dancing dinner shows, and "Turkish nights" at package resorts — these are activities we cover in their own pages, but they're tourist products, not cultural rituals. They're worth doing if your trip wants them, but they don't tell you anything about Turkey.</p>
+</section>
+
 ${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
@@ -4192,6 +4225,22 @@ ${disclosureBanner()}
     ${REGIONS.map(regionShowcaseCard).join("")}
   </div>
 </section>
+
+<section class="container container-narrow prose mt-4">
+  <h2>How to think about Turkey's regions</h2>
+  <p>Turkey is the size of Texas plus Pennsylvania. A trip that "covers Turkey" by flying between five cities sees five cities — it doesn't see Turkey. The country is structured by region: each one has its own food, its own architectural style, its own seasonal rhythm, often its own dialect, and almost always its own answer to the question "what is Turkey?" Understanding the regional grid is the difference between a generic Turkey trip and a coherent one.</p>
+  <p>The five we cover here are the five that matter for travelers:</p>
+  <p><strong>Aegean Coast</strong> — Bodrum, Çeşme, Kuşadası, the Turquoise Coast down to Fethiye and Kaş. White-stone houses, blue water, ancient ruins (Ephesus, Bodrum's Mausoleum). Most of Turkey's design hotels and serious wine country sit here. Best for travelers wanting "Mediterranean Turkey done well."</p>
+  <p><strong>Mediterranean Coast (Lycian / Antalya / Eastern Mediterranean)</strong> — Antalya, Side, Alanya, Mersin. More resort, less boutique than the Aegean. Cleopatra Beach, Roman ruins (Aspendos, Side, Termessos), the Lycian Way long-distance hiking trail. Best for affordable family resort holidays + Roman ruin enthusiasts.</p>
+  <p><strong>Cappadocia</strong> — geographically a single region (Nevşehir province) but treated as its own due to the distinct experience: cave hotels, fairy chimneys, hot-air balloons, Byzantine cave churches. Best paired with Istanbul as a 5-day double-header.</p>
+  <p><strong>Black Sea Coast</strong> — Trabzon, Rize, Samsun, with the Pontic Alps inland. Tea country, alpine plateaus, Sumela Monastery, Ayder hot springs. Wetter and cooler than the south coasts; greener than anywhere else in Turkey. Best for hikers and travelers wanting unfamiliar Turkey.</p>
+  <p><strong>Eastern Anatolia / Mesopotamia</strong> — Mardin, Şanlıurfa, Gaziantep, Diyarbakır, Van. The deepest history (Göbekli Tepe is here), the best food (Gaziantep is UNESCO Creative City of Gastronomy), and the highest cultural density per square kilometre. Less infrastructure, more reward. Best for travelers on their second or third Turkey trip.</p>
+
+  <h2>How to combine regions</h2>
+  <p>The classic first-Turkey trip is <strong>Istanbul + Cappadocia</strong> — two regions, 5-7 nights, captures the country's polarity (cosmopolitan-Western and ancient-Anatolian). The second trip usually adds the <strong>Aegean or Mediterranean coast</strong>. The third trip is when travelers find the <strong>Eastern Anatolia / Mesopotamia</strong> combination that includes the food capital (Gaziantep), the prophet city (Şanlıurfa), and the limestone hill town (Mardin). The Black Sea fits anywhere as a 4-night detour from Istanbul.</p>
+  <p>Internal flights cost $40-90 between major cities and take 1-2 hours; the alternative (10-12 hour overnight bus) is a romantic option for one leg, not three. Pegasus, AnadoluJet (Turkish Airlines' budget arm), and SunExpress all fly the major routes daily.</p>
+</section>
+
 ${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
@@ -4436,6 +4485,20 @@ ${disclosureBanner()}
     ${MONTHS.map(monthShowcaseCard).join("")}
   </div>
 </section>
+
+<section class="container container-narrow prose mt-4">
+  <h2>The four-season summary</h2>
+  <p>Turkey covers six climate zones from the temperate Aegean to the continental Eastern Anatolian plateau. Picking a month is really picking a region: the same week in March is cherry-blossom season in Istanbul and still snowing in Erzurum. The four-season heuristic that works for most travelers:</p>
+  <p><strong>Spring (April–May)</strong> is the goldilocks pair of months. Every region works. Istanbul and Cappadocia are at peak — wildflowers in the steppe, balloons flying daily, evenings warm enough for outdoor dinner. The Mediterranean coast is opening but the water is still cool (May 22°C, June 26°C). Crowds are moderate, prices are mid-season.</p>
+  <p><strong>Summer (June–August)</strong> splits the country. The coasts (Antalya, Bodrum, Fethiye, Marmaris, Çeşme, Trabzon's Black Sea) are at peak — sea is warm, beach clubs are open, prices are high. Istanbul and Cappadocia are hot (28-32°C high) but workable. Eastern Anatolia (Mardin, Şanlıurfa, Gaziantep) is uncomfortable (37-39°C) — best avoided unless you have indoor-cool-museum patience.</p>
+  <p><strong>Autumn (September–October)</strong> mirrors spring but with warmer water. The single best month for a coastal-and-cultural combined trip is September: water still 26°C, cultural cities not too hot, light golden, crowds thinning. October works for inland cities; the coast starts to close in late October.</p>
+  <p><strong>Winter (November–March)</strong> is for travelers who care about specific things. Cappadocia in snow is iconic (and balloons fly more than people realize — the cold mornings have less wind than midsummer). Istanbul in winter is moody and cheap. The Mediterranean and Aegean coasts are largely closed for tourism. Eastern Anatolia is harsh. December-February domestic flights are cheapest of the year.</p>
+
+  <h2>How to read the per-month pages</h2>
+  <p>Each month page below has the verdict in the eyebrow ("Go", "Maybe", "Skip"), then average highs by region, what's open and closed, festival timing (Ramadan, the bayrams, Independence Day, the Istanbul Music Festival), and the balloon-flight rate in Cappadocia for that month. The "balloon flight rate" is the most-asked question — winter days flying is around 60%; April–October is 85-95%.</p>
+  <p>For a quick best-time decision use <a href="/best-time-to-visit-turkey/">our best-time guide</a>. For trip-length advice see <a href="/how-many-nights-turkey/">how many nights you need</a>.</p>
+</section>
+
 ${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
@@ -4515,6 +4578,25 @@ ${disclosureBanner()}
     ${COLLECTIONS.map(collectionShowcaseCard).join("")}
   </div>
 </section>
+
+<section class="container container-narrow prose mt-4">
+  <h2>How we pick</h2>
+  <p>Every property in these collections has been editorially reviewed against the same four criteria, applied identically across all 22 cities: a Trip.com / TripAdvisor / Google review average above 8.5 across 200+ reviews sustained for at least 12 months; location inside the neighborhood it represents (we've walked there); a consistent best-for fit (a "couples" pick can't have a karaoke pool deck, a "family" pick can't have a 9pm cocktail-only restriction); and an editorial visit within the past 24 months. What rejects a hotel: persistent cleanliness complaints, sustained value issues, missing accessibility info on a property that markets to it, or anything our visit found that contradicts marketing claims.</p>
+  <p>What we don't do: PR-funded trips, comped stays, paid placements, or guaranteed inclusion. Editorial visits are paid in full at our published rates. Hotel staff and PRs occasionally send blurbs — we rewrite from our own visit notes. Read the full <a href="/editorial-standards/">editorial standards</a>.</p>
+
+  <h2>How to use these collections</h2>
+  <p>Each collection focuses on a single decision axis — honeymooners care about different things than families, who care about different things than business travelers. Pick the collection that matches your trip's center of gravity, then narrow by city using the per-city neighborhood guides we link from every pick. The collection page tells you "which hotel in which city for this kind of trip"; the city page tells you "which neighborhood, and what to skip."</p>
+  <p>Pricing in the collection cards is the editorial "from" rate — typical lowest-double-room in the property's main season, refreshed quarterly. Live rates always rule; click through to Trip.com via any "Check rates" button to see today's price for your dates.</p>
+
+  <h2>Frequently asked</h2>
+  <h3>How often are these refreshed?</h3>
+  <p>The shortlists are reviewed every six months; pricing snapshots refresh in March and September. Cities themselves are visited at least annually. If you spot a hotel that's closed or substantially changed, email the editor — we aim to correct within 7 days.</p>
+  <h3>Do you take payment from any of these hotels?</h3>
+  <p>No. Our affiliate revenue comes from Trip.com bookings made through the "Check rates" links — Trip.com pays a small commission on confirmed stays at no cost to you. The commission does not change which hotels we list. Every property would be on the list whether or not we earned anything.</p>
+  <h3>What if my city / region isn't here?</h3>
+  <p>The collections deliberately surface a small number of best-in-class options across the whole country. For comprehensive city coverage use the <a href="/#all-cities">22 city guides</a> directly. The <a href="/regions/">regional hubs</a> group cities geographically (Aegean, Mediterranean, Cappadocia, Black Sea, Eastern Anatolia) if you'd rather think by region than by theme.</p>
+</section>
+
 ${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
@@ -4620,6 +4702,20 @@ ${disclosureBanner()}
     ${CULTURAL_CONCEPTS.map(culturalConceptShowcaseCard).join("")}
   </div>
 </section>
+
+<section class="container container-narrow prose mt-4">
+  <h2>Why these six</h2>
+  <p>Turkey sits across two continents, three empires' afterlives, and a hundred regional dialects of hospitality. A short list can't capture all of that, and we won't pretend otherwise. What these six concepts <em>do</em> capture is the operating system — the daily, unspoken rules that govern how people in Turkey treat each other, and how a respectful visitor can find footing without making things weird.</p>
+  <p><strong>Misafirperverlik</strong> (hospitality) is the umbrella; everything else hangs off it. <strong>Mahalle</strong> (neighborhood-as-community) is the spatial form — why a Turkish address is more than a postcode. <strong>Çay</strong> (tea) is the social glue — accepting a glass costs you nothing and signals that you're open to the conversation. <strong>Kolay gelsin</strong> ("may it come easy", said to anyone working) is the verbal grace note that locals leave on every interaction. <strong>İmece</strong> (collective work) is the cooperative ethic that built the village and now runs the apartment building. <strong>Bayram</strong> (the religious-civic festivals) is the rhythm — when shops close, families travel, and trip plans bend.</p>
+
+  <h2>How to use this section</h2>
+  <p>Each concept page is short — under 1,000 words, written by people who live with the concept rather than read about it. Read them in any order; they cross-reference each other. The Turkish words aren't quiz material — knowing them won't make you a local — but recognizing them as they appear in conversation will dramatically change what you hear. When a shopkeeper says <em>kolay gelsin</em> as you leave, the cultural register is very different from "have a nice day."</p>
+  <p>If you're arriving in Turkey for the first time, read <em>misafirperverlik</em> and <em>çay</em> on the plane. If you're past the first trip, the <em>mahalle</em> piece will recolour the city you thought you knew. <em>Bayram</em> matters most around April-May (Ramazan / Ramazan Bayramı / Şeker Bayramı) and June-August (Kurban Bayramı, dates shift annually) — if your travel dates land near a bayram, read it specifically.</p>
+
+  <h2>What's not here yet</h2>
+  <p>The full picture would also include muhabbet (the long open-ended conversation that defines Turkish evenings), mahcup (the social shame that disciplines public behaviour), nazar (the evil-eye protection that hangs in every door), keyif (the slow pleasure of sitting with one's life), and the layered legacy of the Ottoman millet system. We'll add these as separate pages over time. Suggestions, corrections, or gentle disagreements: email the editor — we read everything.</p>
+</section>
+
 ${leadAndEssentials()}
 ${footer()}
 ${tail()}`;
@@ -4948,6 +5044,21 @@ ${disclosureBanner()}
     <li>Istanbul and Cappadocia as a day trip from each other — it's a 80-min flight, not a day trip.</li>
     <li>Flying in Monday, flying out Sunday, trying to include both beach and cave hotels. Pick one.</li>
   </ul>
+
+  <h2>How nights translate to "things you'll actually see"</h2>
+  <p>A useful frame: every full day in a Turkish city gives you one major sight, two meals, and one neighborhood walk. Every transfer day (flying or driving between cities) eats most of a day. So 5 nights in Turkey is really "5 days minus 2 transfer days = 3 full days of sightseeing." That's two cities, comfortably. Three cities is possible but the third gets short-changed. Four cities in 5 nights is a hostel-bracelet collection, not a trip.</p>
+  <p>The corollary: long-haul travelers from North America, Asia, or Australia who fly 14+ hours each way should commit to 8-10 nights minimum. The marginal cost of a 6-night vs 8-night trip is small (two more hotel nights); the marginal experience gain is huge (a third city + recovery time + a slow morning at sunset). Travelers from Europe with a 3-hour flight can rationally do shorter — Istanbul as a long-weekend (3-4 nights) is a perfectly good trip for them, where it isn't for someone arriving from Sydney.</p>
+
+  <h2>How season changes the math</h2>
+  <p>April-May and September-October are the goldilocks months — every region works. Add a night to your plans for these months because the light and temperatures reward slow walking and long evenings. June-August: the Mediterranean coast (Antalya, Bodrum, Fethiye) and the Black Sea (Trabzon, Rize) work well; Istanbul and Cappadocia are hot but doable; Eastern Anatolia (Mardin, Şanlıurfa) is uncomfortable. December-February: Istanbul and Cappadocia work (cold but atmospheric, snow on the fairy chimneys is iconic); the Mediterranean coast is largely closed; Eastern Anatolia is harsh. Match your duration to the season, not just to your annual leave.</p>
+
+  <h2>Frequently asked</h2>
+  <h3>Is 7 nights too long for just Istanbul?</h3>
+  <p>For most travelers, yes — Istanbul rewards 4-5 nights well, but day 6-7 starts to feel like extra. Better to spend day 5 onwards on a Cappadocia or Antalya add-on. Exception: Istanbul-only trips work for repeat visitors with specific deep-dive agendas (Bosphorus villages, Princes' Islands, day-trips to Bursa).</p>
+  <h3>Can I do Turkey in 3 nights?</h3>
+  <p>Yes — Istanbul only. Land Friday morning, two full days, Sunday afternoon flight home. You'll see Sultanahmet, Beyoğlu, the Bosphorus, and one good dinner. You won't see Cappadocia or any beach.</p>
+  <h3>What about 14 nights?</h3>
+  <p>Two weeks is the trip you'll wish you'd taken. Suggested: 4 Istanbul + 3 Cappadocia + 4 Mediterranean coast (Antalya or Fethiye) + 3 buffer (one of Bodrum, Pamukkale, or a flying visit to Şanlıurfa for Göbekli Tepe). Or replace the buffer with longer stays in the prior three.</p>
 </section>
 ${leadAndEssentials()}
 ${footer()}
