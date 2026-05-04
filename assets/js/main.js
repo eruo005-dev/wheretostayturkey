@@ -138,6 +138,72 @@
   });
 })();
 
+// ---- Anchor-copy buttons on h2s ----
+// Walks long-form h2s, assigns slug ids if missing, appends a "#" button
+// that copies the deep-link to the clipboard. Skips visually-hidden h2s,
+// lead-magnet headings, card headings, and anything inside the nav/footer/modal.
+(function () {
+  function slugify(s) {
+    return String(s).toLowerCase().replace(/<[^>]+>/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
+  }
+  const SKIP = /(?:^|\s)(visually-hidden|lead-magnet-h|card-h|footer-col-h)(?:\s|$)/;
+  const heads = document.querySelectorAll("section.container h2, article h2, .prose h2");
+  const used = new Set();
+  let toast;
+  function getToast() {
+    if (toast) return toast;
+    toast = document.createElement("div");
+    toast.className = "anchor-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    document.body.appendChild(toast);
+    return toast;
+  }
+  function flashToast(msg) {
+    const t = getToast();
+    t.textContent = msg;
+    t.classList.add("is-on");
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove("is-on"), 1600);
+  }
+  heads.forEach((h) => {
+    if (h.className && SKIP.test(h.className)) return;
+    if (h.closest(".lead-magnet, .nav, .footer, .modal-backdrop, .cookie-banner, .hero-home, .hero")) return;
+    let id = h.id;
+    if (!id) {
+      id = slugify(h.textContent || "");
+      if (!id) return;
+      let suffix = 2;
+      while (used.has(id) || document.getElementById(id)) {
+        id = slugify(h.textContent || "") + "-" + suffix++;
+      }
+      h.id = id;
+    }
+    used.add(id);
+    if (h.querySelector(".anchor-link")) return;
+    const a = document.createElement("a");
+    a.className = "anchor-link";
+    a.href = "#" + id;
+    a.setAttribute("aria-label", "Copy link to this section");
+    a.textContent = "#";
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      const url = location.origin + location.pathname + "#" + id;
+      const done = () => flashToast("Link copied");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done, () => {
+          history.replaceState(null, "", "#" + id);
+          flashToast("Link updated");
+        });
+      } else {
+        history.replaceState(null, "", "#" + id);
+        flashToast("Link updated");
+      }
+    });
+    h.appendChild(a);
+  });
+})();
+
 // ---- Mouse-driven 3D scene parallax on homepage hero ----
 (function () {
   const scene = document.getElementById("scene-3d");

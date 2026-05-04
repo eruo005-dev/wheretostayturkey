@@ -1165,6 +1165,14 @@ a.btn:focus-visible,
   min-height: 44px;
 }
 
+/* h2 anchor-link copy buttons (added by main.js) */
+.anchor-link{display:inline-block;margin-left:.3em;color:var(--c-text-soft,#888);text-decoration:none;font-weight:400;font-size:.7em;vertical-align:middle;opacity:0;transition:opacity .15s ease,color .15s ease}
+h2:hover .anchor-link,.anchor-link:focus-visible{opacity:1}
+.anchor-link:hover{color:var(--c-accent,#E11D48)}
+@media (hover:none){.anchor-link{opacity:.4}}
+.anchor-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(12px);background:rgba(20,20,20,.92);color:#fff;padding:10px 18px;border-radius:999px;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:1000}
+.anchor-toast.is-on{opacity:1;transform:translateX(-50%) translateY(0)}
+
 /* Visually-hidden helper for screen-reader-only text. Used for adding
    labels to icon-only controls without showing them. */
 .visually-hidden {
