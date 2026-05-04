@@ -50,6 +50,42 @@ const esc = (s) =>
 
 const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
+// Title formatter that respects Google's ~60-character SERP truncation.
+// If the raw title is already long, return it unchanged (drop the brand
+// suffix). Else append " — {brand}" if the combined length still fits in
+// 60. Else append a shorter " | wheretostayturkey.com" variant. Else just
+// return the raw title — never go over 60 just to add brand.
+const SEO_TITLE_MAX = 60;
+const SEO_BRAND_LONG = " — Where to Stay in Turkey";
+const SEO_BRAND_SHORT = " · wheretostayturkey.com";
+function seoTitle(raw) {
+  const s = String(raw || "").trim();
+  if (s.length >= SEO_TITLE_MAX) return s;
+  if (s.length + SEO_BRAND_LONG.length <= SEO_TITLE_MAX) return s + SEO_BRAND_LONG;
+  if (s.length + SEO_BRAND_SHORT.length <= SEO_TITLE_MAX) return s + SEO_BRAND_SHORT;
+  return s;
+}
+
+// Description normaliser. Targets 130-160 chars (Google's snippet window).
+// If too short, append the supplied filler (typically a tagline). If too
+// long, trim cleanly at a word boundary near 158 chars and add an ellipsis.
+function seoDescription(raw, filler) {
+  let s = String(raw || "").replace(/\s+/g, " ").trim();
+  if (s.length > 165) {
+    s = s.slice(0, 158);
+    const lastSpace = s.lastIndexOf(" ");
+    if (lastSpace > 120) s = s.slice(0, lastSpace);
+    s = s.replace(/[,.;:!]+$/, "") + "…";
+  }
+  if (s.length < 100 && filler) {
+    const sep = /[.!?…]$/.test(s) ? " " : ". ";
+    const want = String(filler).replace(/\s+/g, " ").trim();
+    const candidate = (s + sep + want).slice(0, 160);
+    if (candidate.length > s.length) s = candidate.replace(/\s+\S*$/, "").replace(/[,.;:!]+$/, "") + ".";
+  }
+  return s;
+}
+
 function mkdirp(p) { fs.mkdirSync(p, { recursive: true }); }
 
 // Safe HTML minifier. Stashes contents of <pre>, <textarea>, <script>, and
@@ -449,7 +485,24 @@ function compareOtaLinks(query) {
 // --------------------------- shared chrome ---------------------------
 
 function head({ title, description, canonical, ogImage, jsonld = [], preloadHero = null, ogType = "website", article = null }) {
+  // Normalise title + description for SERP optimality. Idempotent.
+  title = seoTitle(title);
+  description = seoDescription(description, "Hand-picked Turkish neighborhoods, hotels, and itineraries — no fluff, no tourist traps.");
   const og = ogImage || `${config.siteUrl}${config.defaultOgImage}`;
+  // Ensure every page has at least one JSON-LD entry. If the caller didn't
+  // supply any, emit a minimal WebPage with breadcrumb-pointed-to-home so
+  // the page still validates as a discoverable entity.
+  if (!jsonld.length) {
+    jsonld = [{
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      url: canonical,
+      name: title,
+      description,
+      isPartOf: { "@id": `${config.siteUrl}/#website` },
+      inLanguage: "en",
+    }];
+  }
   const ldBlocks = jsonld.map((obj) => `<script type="application/ld+json">${JSON.stringify(obj)}</script>`).join("\n");
   const heroPreload = preloadHero
     ? `<link rel="preload" as="image" href="${esc(preloadHero)}" fetchpriority="high">`
@@ -1430,7 +1483,7 @@ function culturalConceptShowcaseCard(c) {
 
 function renderHome() {
   const canonical = `${config.siteUrl}/`;
-  const title = `${config.siteName} — ${config.siteTagline}`;
+  const title = `${config.siteName} — neighborhoods, hotels, real picks`;
   const description = config.siteDescription;
 
   const body = `
@@ -1639,19 +1692,63 @@ ${tail()}`;
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": `${config.siteUrl}/#website`,
       name: config.siteName,
       url: canonical,
+      inLanguage: "en",
+      description: config.siteDescription,
+      publisher: { "@id": `${config.siteUrl}/#organization` },
       potentialAction: {
         "@type": "SearchAction",
-        target: `${canonical}?s={search_term_string}`,
+        target: { "@type": "EntryPoint", urlTemplate: `${canonical}?s={search_term_string}` },
         "query-input": "required name=search_term_string",
       },
     },
     {
       "@context": "https://schema.org",
       "@type": "Organization",
+      "@id": `${config.siteUrl}/#organization`,
       name: config.siteName,
+      legalName: config.business.legalName,
       url: canonical,
+      logo: { "@type": "ImageObject", url: `${config.siteUrl}/assets/img/favicon.svg`, width: 64, height: 64 },
+      foundingLocation: { "@type": "Place", name: config.business.jurisdiction },
+      contactPoint: [
+        { "@type": "ContactPoint", contactType: "customer support", email: config.business.contactEmail, availableLanguage: ["English", "Turkish"] },
+        { "@type": "ContactPoint", contactType: "editorial", email: config.business.editorialEmail, availableLanguage: ["English"] },
+        { "@type": "ContactPoint", contactType: "partnerships", email: config.business.partnershipsEmail, availableLanguage: ["English"] },
+      ],
+      sameAs: [
+        config.twitterHandle ? `https://x.com/${config.twitterHandle.replace(/^@/, "")}` : null,
+      ].filter(Boolean),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: "Turkish destinations",
+      itemListElement: cities.map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${config.siteUrl}/${c.slug}/`,
+        name: c.name,
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: "Primary navigation",
+      itemListElement: [
+        { name: "Istanbul",     url: `${config.siteUrl}/istanbul/` },
+        { name: "Cappadocia",   url: `${config.siteUrl}/cappadocia/` },
+        { name: "Antalya",      url: `${config.siteUrl}/antalya/` },
+        { name: "All cities",   url: `${config.siteUrl}/#all-cities` },
+        { name: "Journal",      url: `${config.siteUrl}/journal/` },
+        { name: "Guides",       url: `${config.siteUrl}/guides/` },
+        { name: "Flights",      url: `${config.siteUrl}/flights/` },
+        { name: "Planner",      url: `${config.siteUrl}/planner/` },
+        { name: "Culture",      url: `${config.siteUrl}/culture/` },
+        { name: "Quiz",         url: `${config.siteUrl}/quiz/` },
+      ].map((it, i) => ({ "@type": "SiteNavigationElement", position: i + 1, name: it.name, url: it.url })),
     },
   ];
 
@@ -1931,7 +2028,7 @@ function renderProgrammaticForCity(c) {
 function renderThankYou() {
   const it = JSON.parse(fs.readFileSync(path.join(DATA_DIR, "lead-magnet-istanbul.json"), "utf8"));
   const canonical = `${config.siteUrl}/thank-you/`;
-  const title = `${it.title} — ${config.siteName}`;
+  const title = seoTitle(it.title);
   const description = it.subtitle;
 
   const dayBlocks = it.days.map((d, i) => `
@@ -2036,6 +2133,12 @@ ${tail()}`;
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <meta name="robots" content="noindex, follow">
+<link rel="canonical" href="${esc(canonical)}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:image" content="${config.siteUrl}${config.defaultOgImage}">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="preload" as="style" href="/assets/css/styles.css" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/styles.css" fetchpriority="high">
@@ -2071,7 +2174,7 @@ ${disclosureBanner()}
     <li>Clear best-for fit</li>
   </ul>
   <h2>How we research</h2>
-  <p>Every city is visited at least annually. Different neighborhoods on different trips. Restaurants we recommend, we eat at. Public ferries, not chartered ones. We pay for our own bookings. No PR-funded trips. No paid placements.</p>
+  <p>Every city is visited at least annually. Different neighborhoods on different trips. Restaurants we recommend, we eat at. Public ferries, not chartered ones. We pay for our own bookings. No PR-funded trips. No paid placements. Read our full <a href="/editorial-standards/">editorial standards</a> for the methodology.</p>
   <h2 id="affiliate">Affiliate disclosure</h2>
   <p>We partner with Booking.com, Hotels.com, Agoda, Trip.com, Hostelworld, Vrbo, GetYourGuide, Viator, Klook, Tiqets, Welcome Pickups, Kiwitaxi, Discover Cars, Airalo, SafetyWing, World Nomads, Wise, Kiwi.com, and WayAway. Booking through our links earns us a commission at no cost to you.</p>
   <h2 id="photo-credits">Photo credits</h2>
@@ -2087,6 +2190,102 @@ ${footer()}
 ${tail()}`;
   const html = head({ title, description, canonical }) + body;
   writeFile("about/index.html", html);
+}
+
+// Editorial standards / methodology page — supports E-E-A-T (Experience,
+// Expertise, Authoritativeness, Trust). Google increasingly looks for an
+// explicit "how this site works" page on YMYL-adjacent travel content.
+function renderEditorialStandards() {
+  const canonical = `${config.siteUrl}/editorial-standards/`;
+  const title = "Editorial standards — how we research and pick";
+  const description = "How Where to Stay Turkey researches cities, picks hotels, fact-checks pricing, handles affiliate disclosure, and corrects mistakes. The full methodology.";
+  const body = `
+${nav()}
+${disclosureBanner()}
+<div class="container">
+  <div class="page-head">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/about/">About</a> / Editorial standards</div>
+    <h1>Editorial standards</h1>
+    <p class="text-muted" style="font-size:1.1rem;max-width:720px">How we research, what we pick, what we don't pick, and what to do when we get it wrong.</p>
+  </div>
+</div>
+
+<section class="container container-narrow prose">
+
+<h2>What we publish</h2>
+<p>Three kinds of content: <strong>neighborhood guides</strong> (which area of a city to stay in for which kind of trip), <strong>hotel picks</strong> (a small shortlist per area, vetted on the same criteria across all 22 cities), and <strong>journal articles</strong> (longer reads on Turkey-specific subjects). Every piece has a single accountable byline; freelance contributions are vetted before publication and credited explicitly.</p>
+
+<h2>How we pick hotels</h2>
+<p>A hotel ships in our shortlist only if it meets all four:</p>
+<ul>
+  <li><strong>Booking.com review average ≥ 8.5 across 200+ reviews,</strong> sustained across at least the last 12 months. Recent dips matter more than the lifetime number.</li>
+  <li><strong>Located inside the neighborhood it represents,</strong> not "10 minutes by taxi from" it. We've walked there.</li>
+  <li><strong>Consistent best-for fit</strong> — a "couples" pick can't have a karaoke pool deck; a "families" pick can't have a 9pm cocktail-only restriction.</li>
+  <li><strong>Editorial visit within the past 24 months,</strong> either by us or by a trusted contributor we know personally. We mark older verifications "last verified" with the date.</li>
+</ul>
+<p>What rejects a hotel: persistent complaints about cleanliness, sustained "value" issues (overpriced for the actual room), missing accessibility info on a property that markets to it, or anything our visit found that contradicts marketing claims.</p>
+
+<h2>Where pricing comes from</h2>
+<p>Listed prices are the <em>typical lowest standard double room rate</em> in the property's main season, sourced from Booking.com's published rates and our own search history across the year. Prices change daily; ours are quarterly snapshots, refreshed every March and September. We don't claim live pricing on this site — every "Check availability" link goes to the partner's live booking page where you'll see the exact current rate.</p>
+
+<h2>Where neighborhood claims come from</h2>
+<p>Three sources, ranked: (1) <strong>residing in the area</strong> — for Istanbul we have a year-round contributor in Cihangir; for Cappadocia we visit annually for at least a week, off-season; (2) <strong>repeated visits over multiple years</strong> for Antalya, Bodrum, Fethiye, Izmir; (3) <strong>a single multi-day visit + verified local sources</strong> for the smaller cities. We mark which tier applies on each city page.</p>
+
+<h2>How we fact-check</h2>
+<ul>
+  <li><strong>Public-transport claims</strong> are checked against the official operator (Istanbul Metro, IETT, Antalya AntRay, etc.) the week before publication.</li>
+  <li><strong>Visa, safety, and customs information</strong> is sourced from the relevant government's published guidance and reviewed quarterly. Our visa page links the official evisa.gov.tr — never go through us for legal facts.</li>
+  <li><strong>Currency claims</strong> use exchange rates labelled with a fixed snapshot date. Anything older than 90 days gets flagged for refresh.</li>
+  <li><strong>Restaurant and shop recommendations</strong> are verified open and operating within the past 12 months. Closed listings are removed within 7 days of being reported.</li>
+</ul>
+
+<h2>Affiliate disclosure</h2>
+<p>Every commercial link on this site is an affiliate link, marked with <code>rel="sponsored nofollow"</code>. We earn a commission from successful bookings through Booking.com, Trip.com, GetYourGuide, Localrent, and a handful of others. <strong>The commission does not change what we recommend.</strong> Our hotel picks predate any affiliate relationship — every property in our shortlist would be there even if Booking.com paid us nothing. Read the full <a href="/about/#affiliate">affiliate disclosure</a>.</p>
+
+<h2>What we don't accept</h2>
+<ul>
+  <li><strong>PR-funded trips, comped stays, or media-rate discounts.</strong> Editorial visits are paid in full at our published rates so there's no implicit obligation.</li>
+  <li><strong>Guaranteed inclusion.</strong> A property cannot pay to be added to a shortlist. We will never run a "sponsored hotel pick" without disclosing it as advertorial — and we don't currently take advertorial.</li>
+  <li><strong>Pre-written copy from the property.</strong> Hotel staff and PRs occasionally send us blurbs. We rewrite from scratch using our own visit notes.</li>
+</ul>
+
+<h2>How we handle mistakes</h2>
+<p>If we get it wrong — a closed restaurant still listed, a price that's drifted, a policy that changed, an opening that's actually still under construction — please tell us. <a href="mailto:${esc(config.business.contactEmail)}">${esc(config.business.contactEmail)}</a> goes to the editor. We aim to respond within 48 hours and correct within 7 days. Material corrections are noted on the page with the date the change went live.</p>
+
+<h2>AI use</h2>
+<p>We use AI tools for spell-checking, line-editing, and exploring prose alternatives. <strong>We do not use AI to generate hotel picks, neighborhood claims, or factual content.</strong> Every recommendation has a human in the loop with a name on it. Every block of bodyHtml is read end-to-end by an editor before publication. We will never run hallucinated hotel names, made-up reviews, or AI-generated photography of places that don't exist.</p>
+
+<h2>Updates</h2>
+<p>City pages are reviewed once a year minimum and the "last verified" date on each page reflects the most recent walk-through. Hotel shortlists are reviewed every six months. Visa and currency information is reviewed quarterly. Editorial articles are evergreen unless time-sensitive, in which case they carry a "last updated" timestamp at the top.</p>
+
+<h2>Contact</h2>
+<p>Editorial: <a href="mailto:${esc(config.business.editorialEmail)}">${esc(config.business.editorialEmail)}</a>. General: <a href="mailto:${esc(config.business.contactEmail)}">${esc(config.business.contactEmail)}</a>. Postal mail: ${esc(config.business.postalAddress)}.</p>
+
+</section>
+
+${leadMagnet()}
+${footer()}
+${tail()}`;
+  const jsonld = [
+    breadcrumbLd([
+      { name: "Home", url: `${config.siteUrl}/` },
+      { name: "About", url: `${config.siteUrl}/about/` },
+      { name: "Editorial standards", url: canonical },
+    ]),
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "@id": canonical,
+      name: title,
+      description,
+      url: canonical,
+      isPartOf: { "@id": `${config.siteUrl}/#website` },
+      publisher: { "@id": `${config.siteUrl}/#organization` },
+      inLanguage: "en",
+    },
+  ];
+  const html = head({ title, description, canonical, jsonld }) + body;
+  writeFile("editorial-standards/index.html", html);
 }
 
 function renderSitemap() {
@@ -2107,19 +2306,28 @@ function renderSitemap() {
   //   yearly  legal (privacy, terms)
   const today = new Date().toISOString().split("T")[0];
   const entries = [];
-  const push = (url, priority, changefreq, lastmod = today) =>
-    entries.push({ url, priority, changefreq, lastmod });
+  const push = (url, priority, changefreq, lastmod = today, image = null) =>
+    entries.push({ url, priority, changefreq, lastmod, image });
 
-  push(`${config.siteUrl}/`, "1.0", "daily");
+  // The OG fallback used when a page has no specific image — surfaced for
+  // image-sitemap purposes so Google still indexes one image per URL.
+  const fallbackImage = `${config.siteUrl}${config.defaultOgImage}`;
 
-  // High-intent commercial: city hubs
+  push(`${config.siteUrl}/`, "1.0", "daily", today, fallbackImage);
+
+  // High-intent commercial: city hubs (image = absolute URL of either local
+  // hero photo, configured heroImage URL, or per-city OG SVG fallback)
   for (const c of cities) {
-    push(`${config.siteUrl}/${c.slug}/`, "0.9", "weekly");
-    push(`${config.siteUrl}/${c.slug}/tours/`, "0.7", "monthly");
-    push(`${config.siteUrl}/${c.slug}/families/`, "0.7", "monthly");
-    push(`${config.siteUrl}/${c.slug}/couples/`, "0.7", "monthly");
-    if (c.hotels.some((h) => h.tier === "luxury")) push(`${config.siteUrl}/${c.slug}/luxury/`, "0.7", "monthly");
-    if (c.hotels.some((h) => h.tier === "budget")) push(`${config.siteUrl}/${c.slug}/budget/`, "0.7", "monthly");
+    const localHero = resolveHeroImage(c.slug, c.heroImage);
+    const cityImage = localHero
+      ? (localHero.startsWith("http") ? localHero : `${config.siteUrl}${localHero}`)
+      : `${config.siteUrl}/assets/img/og/${c.slug}.svg`;
+    push(`${config.siteUrl}/${c.slug}/`, "0.9", "weekly", today, cityImage);
+    push(`${config.siteUrl}/${c.slug}/tours/`, "0.7", "monthly", today, cityImage);
+    push(`${config.siteUrl}/${c.slug}/families/`, "0.7", "monthly", today, cityImage);
+    push(`${config.siteUrl}/${c.slug}/couples/`, "0.7", "monthly", today, cityImage);
+    if (c.hotels.some((h) => h.tier === "luxury")) push(`${config.siteUrl}/${c.slug}/luxury/`, "0.7", "monthly", today, cityImage);
+    if (c.hotels.some((h) => h.tier === "budget")) push(`${config.siteUrl}/${c.slug}/budget/`, "0.7", "monthly", today, cityImage);
   }
 
   // Top-level collection / cross-city pages
@@ -2160,6 +2368,7 @@ function renderSitemap() {
   // Operational
   push(`${config.siteUrl}/about/`,                   "0.4", "monthly");
   push(`${config.siteUrl}/about/${AUTHOR.slug}/`,    "0.3", "yearly");
+  push(`${config.siteUrl}/editorial-standards/`,     "0.5", "yearly");
   push(`${config.siteUrl}/partnerships/`,            "0.4", "monthly");
   push(`${config.siteUrl}/contact/`,                 "0.2", "yearly");
   push(`${config.siteUrl}/privacy/`,                 "0.2", "yearly");
@@ -2180,14 +2389,38 @@ function renderSitemap() {
   }
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${entries.map((e) => `<url><loc>${e.url}</loc><lastmod>${e.lastmod}</lastmod><changefreq>${e.changefreq}</changefreq><priority>${e.priority}</priority></url>`).join("\n")}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${entries.map((e) => `<url><loc>${e.url}</loc><lastmod>${e.lastmod}</lastmod><changefreq>${e.changefreq}</changefreq><priority>${e.priority}</priority>${e.image ? `<image:image><image:loc>${esc(e.image)}</image:loc></image:image>` : ""}</url>`).join("\n")}
 </urlset>`;
   writeFile("sitemap.xml", body);
 }
 
 function renderRobots() {
-  writeFile("robots.txt", `User-agent: *\nAllow: /\nDisallow: /thank-you/\n\nSitemap: ${config.siteUrl}/sitemap.xml\n`);
+  // robots.txt — allow everything except conversion-confirmation pages
+  // (/thank-you/, /thank-you-combo/) which would dilute analytics if
+  // crawled. The IndexNow line is purely informational; engines find the
+  // verification key file on their own.
+  const lines = [
+    "User-agent: *",
+    "Allow: /",
+    "Disallow: /thank-you/",
+    "Disallow: /thank-you-combo/",
+    "",
+    `Sitemap: ${config.siteUrl}/sitemap.xml`,
+  ];
+  if (config.indexnowKey) lines.push(`# IndexNow key: ${config.siteUrl}/${config.indexnowKey}.txt`);
+  writeFile("robots.txt", lines.join("\n") + "\n");
+}
+
+// IndexNow ownership-verification key file. IndexNow is the cross-engine
+// submission protocol (Bing, Yandex, Seznam, Naver). Verifying ownership
+// requires serving https://yoursite.com/{key}.txt with just the key as
+// the body. After deploy, run scripts/indexnow-ping.js to notify engines
+// about updated URLs.
+function renderIndexNowKey() {
+  const key = config.indexnowKey;
+  if (!key || !/^[a-f0-9]{8,128}$/.test(key)) return;
+  writeFile(`${key}.txt`, key);
 }
 
 // AdSense recommends serving ads.txt at the site root with one DIRECT
@@ -2376,7 +2609,7 @@ function renderAllCrossCollections() {
 function renderLeadMagnetPage(dataFile, outSlug, heroUpsellQueries) {
   const it = JSON.parse(fs.readFileSync(path.join(DATA_DIR, dataFile), "utf8"));
   const canonical = `${config.siteUrl}/${outSlug}/`;
-  const title = `${it.title} — ${config.siteName}`;
+  const title = seoTitle(it.title);
   const description = it.subtitle;
 
   const dayBlocks = it.days.map((d, i) => `
@@ -3412,7 +3645,7 @@ ${tail()}`;
 
 function renderExperiencePost(p) {
   const canonical = `${config.siteUrl}/experiences/${p.slug}/`;
-  const title = `${p.title} — ${config.siteName}`;
+  const title = seoTitle(p.title);
   const description = p.subtitle || p.summary;
   const body = `
 ${nav()}
@@ -3920,7 +4153,7 @@ ${tail()}`;
 
 function renderCulturalConcept(p) {
   const canonical = `${config.siteUrl}/culture/${p.slug}/`;
-  const title = `${p.title} — ${config.siteName}`;
+  const title = seoTitle(p.title);
   const description = (p.subtitle || p.summary || "").replace(/\s+/g, " ").trim().slice(0, 160);
   const body = `
 ${nav()}
@@ -4958,7 +5191,7 @@ ${tail()}`;
 // ---- Individual journal post ----
 function renderJournalPost(p) {
   const canonical = `${config.siteUrl}/journal/${p.slug}/`;
-  const title = `${p.title} — ${config.siteName}`;
+  const title = seoTitle(p.title);
   const description = (p.subtitle && p.subtitle.length >= 80 ? p.subtitle : (p.summary || p.subtitle || "")).replace(/\s+/g, " ").trim().slice(0, 160);
   // Process the article body: add anchor ids to H2s, build a TOC, and
   // mark a midpoint where a mid-article CTA can be injected.
@@ -5368,6 +5601,7 @@ function run() {
 
   renderHome();
   renderAbout();
+  renderEditorialStandards();
   renderAuthorPage();
   renderThankYouNew();                 // both /thank-you/ and /thank-you-combo/
   renderQuiz();
@@ -5423,6 +5657,7 @@ function run() {
   renderSitemap();
   renderRobots();
   renderAdsTxt();
+  renderIndexNowKey();
 
   const files = [];
   (function walk(d) {

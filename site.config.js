@@ -133,6 +133,11 @@ module.exports = {
   // We keep verified Wikimedia URLs in cities*.json data so this can be
   // flipped to true the moment the operator wants real-photo cards back.
   useHeroPhotos: false,
+  // IndexNow protocol (Bing, Yandex, Seznam, Naver). 32-char hex string,
+  // any value the operator picks. The build emits a key file at the site
+  // root so search engines can verify ownership. After each deploy, run
+  // `node scripts/indexnow-ping.js` to push fresh URLs to IndexNow.
+  indexnowKey: "fb1c608ab6dba0aed5ba0fa8164e8766",
   currency: "USD",
   locale: "en-US",
 };
