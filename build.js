@@ -1160,6 +1160,66 @@ function cityCard(c) {
 </a>`;
 }
 
+// Per-collection visual identity — emoji + palette (mirrors CITY_PALETTES
+// pattern). Used by the collections hub showcase grid. Not all collections
+// are wired below; missing keys fall back to the default accent palette.
+const COLLECTION_THEME = {
+  "honeymoon-hotels-turkey":      { emoji: "💍", a: "#9d174d", b: "#fbbf24" },
+  "family-friendly-hotels-turkey":{ emoji: "👨‍👩‍👧", a: "#0e7490", b: "#fb923c" },
+  "historic-hotels-turkey":       { emoji: "🏛️", a: "#7c2d12", b: "#fef3c7" },
+  "beachfront-hotels-turkey":     { emoji: "🏖️", a: "#075985", b: "#67e8f9" },
+  "cave-hotels-cappadocia":       { emoji: "🏞️", a: "#7c2d12", b: "#f59e0b" },
+  "luxury-resorts-turkish-coast": { emoji: "✨", a: "#1e3a8a", b: "#fbbf24" },
+};
+// Per-region palette + emoji.
+const REGION_THEME = {
+  "aegean-coast":               { emoji: "🌊", a: "#65a30d", b: "#0891b2" },
+  "mediterranean-riviera":      { emoji: "⛱️", a: "#0e7490", b: "#fde68a" },
+  "cappadocia-central-anatolia":{ emoji: "🎈", a: "#7c2d12", b: "#f59e0b" },
+  "black-sea":                  { emoji: "🌲", a: "#064e3b", b: "#34d399" },
+  "eastern-anatolia":           { emoji: "🕌", a: "#7c2d12", b: "#fb923c" },
+};
+
+// Render the .showcase-card markup for any photo-led card. Generic enough
+// to cover cities, collections, regions — caller supplies all visible bits.
+function showcaseCard({
+  href,
+  title,
+  description,
+  chip,                  // string or null — top-left overlay text
+  badge,                 // raw HTML for badge (top-right) or null
+  emoji,                 // emoji watermark when no photo
+  paletteStyle,          // "--city-a:#xxx;--city-b:#yyy"
+  artSvg,                // optional themed SVG (string) for art fallback
+  photoUrl,              // optional photo URL — only used when usePhoto=true
+  usePhoto,
+  dataAttrs,             // string of extra data-* attributes on the <a>
+  cta = "See more",
+}) {
+  const heroMarkup = (usePhoto && photoUrl)
+    ? `<img src="${esc(photoUrl)}" alt="${esc(title)}" loading="lazy" decoding="async">`
+    : `<div class="showcase-art" style="${paletteStyle || ""}">
+         <div class="showcase-art-emoji">${emoji || "📍"}</div>
+         ${artSvg ? `<div class="showcase-art-svg">${artSvg}</div>` : ""}
+       </div>`;
+  return `
+<a class="showcase-card ${(usePhoto && photoUrl) ? "has-photo" : "has-art"}" href="${esc(href)}" ${dataAttrs || ""}>
+  <div class="showcase-photo">
+    ${chip ? `<span class="showcase-chip"><span class="showcase-chip-flag" aria-hidden="true">🇹🇷</span><span>${esc(chip)}</span></span>` : ""}
+    ${badge || ""}
+    ${heroMarkup}
+  </div>
+  <div class="showcase-body">
+    <h3 class="showcase-title">${esc(title)}</h3>
+    <p class="showcase-desc">${esc(description)}</p>
+  </div>
+  <div class="showcase-cta">
+    <span>${esc(cta)}</span>
+    <span class="showcase-cta-arrow" aria-hidden="true">→</span>
+  </div>
+</a>`;
+}
+
 // Showcase card — the photo-led "Top 10 places to stay in X" card pattern.
 // Used on the homepage destinations grid and (optionally) collection hubs.
 // When site config has useHeroPhotos=false, OR when a city has no heroImage,
@@ -1170,32 +1230,70 @@ function cityCard(c) {
 function cityShowcaseCard(c) {
   const description = (c.intro || c.tagline || "").replace(/\s+/g, " ").trim();
   const editorsPick = !!(c.hotels || []).find((h) => h.editorsPick);
-  const usePhoto = config.useHeroPhotos && c.heroImage;
-  const heroMarkup = usePhoto
-    ? `<img src="${esc(c.heroImage)}" alt="${esc(c.name)}, Turkey" loading="lazy" decoding="async">`
-    : `<div class="showcase-art" style="${cityPaletteStyle(c.slug)}">
-         <div class="showcase-art-emoji">${c.emoji || "📍"}</div>
-         <div class="showcase-art-svg">${cityHeroSvg(c.slug)}</div>
-       </div>`;
   const badge = editorsPick
     ? `<span class="showcase-badge" title="Has editor's-pick hotels" aria-label="Editor's pick"><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"/></svg></span>`
     : "";
-  return `
-<a class="showcase-card ${usePhoto ? "has-photo" : "has-art"}" data-city="${esc(c.slug)}" data-name="${esc(c.name.toLowerCase())}" data-popularity="${esc(String(c.popularity || 0))}" href="/${esc(c.slug)}/">
-  <div class="showcase-photo">
-    <span class="showcase-chip"><span class="showcase-chip-flag" aria-hidden="true">🇹🇷</span><span>${esc(c.name)}</span></span>
-    ${badge}
-    ${heroMarkup}
-  </div>
-  <div class="showcase-body">
-    <h3 class="showcase-title">Where to stay in ${esc(c.name)}</h3>
-    <p class="showcase-desc">${esc(description)}</p>
-  </div>
-  <div class="showcase-cta">
-    <span>See more</span>
-    <span class="showcase-cta-arrow" aria-hidden="true">→</span>
-  </div>
-</a>`;
+  return showcaseCard({
+    href: `/${c.slug}/`,
+    title: `Where to stay in ${c.name}`,
+    description,
+    chip: c.name,
+    badge,
+    emoji: c.emoji || "📍",
+    paletteStyle: cityPaletteStyle(c.slug),
+    artSvg: cityHeroSvg(c.slug),
+    photoUrl: c.heroImage,
+    usePhoto: config.useHeroPhotos && c.heroImage,
+    dataAttrs: `data-city="${esc(c.slug)}" data-name="${esc(c.name.toLowerCase())}" data-popularity="${esc(String(c.popularity || 0))}"`,
+  });
+}
+
+// Collection showcase card. `c` is a collection from data/collections.json.
+function collectionShowcaseCard(c) {
+  const theme = COLLECTION_THEME[c.slug] || { emoji: "🏨", a: "#0b0f19", b: "#b45309" };
+  const description = (c.subtitle || (c.intro || "").slice(0, 200)).replace(/\s+/g, " ").trim();
+  const count = (c.picks || []).length;
+  const badge = count > 0
+    ? `<span class="showcase-badge" title="${count} verified picks" aria-label="${count} verified picks" style="background:var(--ink);color:#fff;font-family:var(--font-sans);font-weight:700;font-size:0.78rem;padding:0 8px;width:auto;height:28px;border-radius:14px">${count}</span>`
+    : "";
+  return showcaseCard({
+    href: `/best-of-turkey/${c.slug}/`,
+    title: c.title,
+    description,
+    chip: "Collection",
+    badge,
+    emoji: theme.emoji,
+    paletteStyle: `--city-a:${theme.a};--city-b:${theme.b};--city-ink:#fff`,
+    artSvg: null,
+    photoUrl: c.heroImage,
+    usePhoto: config.useHeroPhotos && c.heroImage,
+    dataAttrs: `data-name="${esc((c.title || "").toLowerCase())}"`,
+    cta: "Open collection",
+  });
+}
+
+// Region showcase card. `r` is a region from data/regions.json.
+function regionShowcaseCard(r) {
+  const theme = REGION_THEME[r.slug] || { emoji: "🗺️", a: "#0b0f19", b: "#b45309" };
+  const description = (r.summary || r.tagline || "").replace(/\s+/g, " ").trim();
+  const cityCount = (r.cities || []).length;
+  const badge = cityCount > 0
+    ? `<span class="showcase-badge" title="${cityCount} cities" aria-label="${cityCount} cities" style="background:var(--ink);color:#fff;font-family:var(--font-sans);font-weight:700;font-size:0.78rem;padding:0 8px;width:auto;height:28px;border-radius:14px">${cityCount}</span>`
+    : "";
+  return showcaseCard({
+    href: `/regions/${r.slug}/`,
+    title: r.name,
+    description,
+    chip: "Region",
+    badge,
+    emoji: theme.emoji,
+    paletteStyle: `--city-a:${theme.a};--city-b:${theme.b};--city-ink:#fff`,
+    artSvg: null,
+    photoUrl: r.heroImage,
+    usePhoto: config.useHeroPhotos && r.heroImage,
+    dataAttrs: `data-name="${esc((r.name || "").toLowerCase())}"`,
+    cta: "Explore region",
+  });
 }
 
 function renderHome() {
@@ -3246,15 +3344,6 @@ function renderRegionsHub() {
   const canonical = `${config.siteUrl}/regions/`;
   const title = "The 5 regions of Turkey — pick which one fits your trip";
   const description = "Aegean Coast, Mediterranean Riviera, Cappadocia, Black Sea, Eastern Anatolia. Each region has a completely different Turkey trip. Compare them and pick yours.";
-  const cards = REGIONS.map((r) => `
-    <a class="card" href="/regions/${esc(r.slug)}/" style="text-decoration:none;color:inherit;padding:24px">
-      <div class="eyebrow">Region</div>
-      <h3 style="margin:6px 0 8px">${esc(r.name)}</h3>
-      <p style="color:var(--c-text-soft);font-size:.95rem;margin:0 0 8px">${esc(r.tagline)}</p>
-      <p style="font-size:.85rem;color:var(--ink-muted);margin:0">${(r.cities || []).slice(0, 4).map((c) => esc(c)).join(" · ")}</p>
-      <div style="color:var(--c-accent);font-weight:600;font-size:.95rem;margin-top:14px">Explore →</div>
-    </a>
-  `).join("");
   const body = `
 ${nav()}
 ${disclosureBanner()}
@@ -3266,7 +3355,9 @@ ${disclosureBanner()}
   </div>
 </div>
 <section class="container">
-  <div class="grid grid-1 grid-2 grid-3 mt-3">${cards}</div>
+  <div class="grid grid-1 grid-2 grid-3 mt-3 showcase-grid" data-view="grid">
+    ${REGIONS.map(regionShowcaseCard).join("")}
+  </div>
 </section>
 ${leadAndEssentials()}
 ${footer()}
@@ -3578,13 +3669,6 @@ function renderCollectionsHub() {
   const canonical = `${config.siteUrl}/best-of-turkey/`;
   const title = "Best of Turkey — curated hotel collections";
   const description = "Themed collections of the best hotels across Turkey: honeymoons, families, history, beachfront, cave hotels, and luxury resorts. Verified picks only.";
-  const cards = COLLECTIONS.map((c) => `
-    <a class="card" href="/best-of-turkey/${esc(c.slug)}/" style="text-decoration:none;color:inherit;padding:22px">
-      <div class="eyebrow">${c.picks.length} verified picks</div>
-      <h3 style="margin:6px 0 8px">${esc(c.title)}</h3>
-      <p style="color:var(--c-text-soft);font-size:.92rem;margin:0">${esc((c.subtitle || "").slice(0, 110))}</p>
-    </a>
-  `).join("");
   const body = `
 ${nav()}
 ${disclosureBanner()}
@@ -3596,7 +3680,9 @@ ${disclosureBanner()}
   </div>
 </div>
 <section class="container">
-  <div class="grid grid-1 grid-2 grid-3 mt-3">${cards}</div>
+  <div class="grid grid-1 grid-2 grid-3 mt-3 showcase-grid" data-view="grid">
+    ${COLLECTIONS.map(collectionShowcaseCard).join("")}
+  </div>
 </section>
 ${leadAndEssentials()}
 ${footer()}
