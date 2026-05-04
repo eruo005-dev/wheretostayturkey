@@ -274,16 +274,20 @@ const GYG_CITIES = {
   trabzon: "trabzon-l22076",
 };
 function getYourGuideLink(query) {
-  // If query starts with a known city, deep-link to the city page (better UX + higher conversion).
+  // GetYourGuide is NOT a Travelpayouts partner. Per operator policy
+  // (TP-only attribution) we suppress the link entirely when partnerId
+  // is empty. Callers must handle null. Klook (which IS in TP) is the
+  // operational replacement — see klookLink for tour CTAs.
+  if (!A.getYourGuide.partnerId) return null;
   const citySlug = Object.keys(GYG_CITIES).find((s) => query.toLowerCase().includes(s.replace(/-/g, " ")));
   const base = citySlug
     ? `https://www.getyourguide.com/${GYG_CITIES[citySlug]}/`
     : `https://www.getyourguide.com/s?q=${encodeURIComponent(query)}`;
-  if (!A.getYourGuide.partnerId) return base;
   const sep = base.includes("?") ? "&" : "?";
   return `${base}${sep}partner_id=${A.getYourGuide.partnerId}`;
 }
 function viatorLink(query) {
+  // Not on Travelpayouts. Return null when no pid — TP-only policy.
   if (!A.viator.pid) return null;
   return `https://www.viator.com/search/${encodeURIComponent(query)}?pid=${A.viator.pid}&mcid=42383`;
 }
@@ -302,14 +306,16 @@ function tpMediaLink({ campaignId, partnerId, destUrl, sub1 }) {
   return `https://tp.media/r?${params.toString()}&u=${encodeURIComponent(destUrl)}`;
 }
 // Helper: route a destination URL through tp.media when the program has
-// both campaignId AND partnerId. Otherwise return the raw URL so the user
-// still gets to the partner page (unattributed but functional).
+// both campaignId AND partnerId. Returns null when the program isn't
+// fully configured — callers MUST handle null and suppress the link.
+// Operator policy (per #23 + audit): TP-only attribution; we never
+// emit unattributed external partner URLs.
 function tpRouteOrDirect(programKey, destUrl, sub1) {
   const cfg = A[programKey];
   if (cfg && cfg.campaignId && cfg.partnerId) {
     return tpMediaLink({ campaignId: cfg.campaignId, partnerId: cfg.partnerId, destUrl, sub1 });
   }
-  return destUrl;
+  return null;
 }
 function klookLink(query) {
   // Deep-link to Klook search; route through tp.media when configured.
@@ -343,9 +349,9 @@ function getTransferLink(cityOrQuery) {
   return tpRouteOrDirect("getTransfer", dest, `gt-${slug(cityOrQuery)}`);
 }
 function discoverCarsLink(city) {
-  // Direct (non-TP) — falls back to the partner page when aAid is blank.
-  const base = `https://www.discovercars.com/turkey/${slug(city)}`;
-  return A.discoverCars.aAid ? `${base}?a_aid=${A.discoverCars.aAid}` : base;
+  // Not on TP. Return null when no aAid — TP-only policy.
+  if (!A.discoverCars.aAid) return null;
+  return `https://www.discovercars.com/turkey/${slug(city)}?a_aid=${A.discoverCars.aAid}`;
 }
 function autoEuropeLink(city) {
   // AutoEurope (TP-routed when configured).
@@ -373,9 +379,9 @@ function localrentLink(cityName, sub1) {
   return tpRouteOrDirect("localrent", localrentDestUrl(cityName), sub1 || `lr-${slug(cityName)}`);
 }
 function rentalcarsLink(city) {
-  // Direct (non-TP).
-  const base = `https://www.rentalcars.com/SearchResults.do?location=${encodeURIComponent(city)}`;
-  return A.rentalcars.aid ? `${base}&aid=${A.rentalcars.aid}` : base;
+  // Not on TP. Return null when no aid — TP-only policy.
+  if (!A.rentalcars.aid) return null;
+  return `https://www.rentalcars.com/SearchResults.do?location=${encodeURIComponent(city)}&aid=${A.rentalcars.aid}`;
 }
 
 // ---- Trip.com flights ----
@@ -427,8 +433,10 @@ function sailyLink() {
   return tpRouteOrDirect("saily", dest, "saily-turkey");
 }
 function holaflyLink() {
-  const base = "https://esim.holafly.com/esim-turkey/";
-  return A.holafly.ref ? `${base}?ref=${A.holafly.ref}` : base;
+  // Holafly is NOT a Travelpayouts partner. Per operator policy we only
+  // emit attributed links — return null when ref is empty so callers skip.
+  if (!A.holafly.ref) return null;
+  return `https://esim.holafly.com/esim-turkey/?ref=${A.holafly.ref}`;
 }
 function visitorsCoverageLink() {
   const dest = "https://www.visitorscoverage.com/";
@@ -443,16 +451,19 @@ function airHelpLink() {
   return tpRouteOrDirect("airHelp", dest, "airhelp");
 }
 function safetyWingLink() {
-  const base = "https://safetywing.com/nomad-insurance/";
-  return A.safetywing.ref ? `${base}?referenceID=${A.safetywing.ref}` : base;
+  // Not a Travelpayouts partner. Return null when no ref — TP-only policy.
+  if (!A.safetywing.ref) return null;
+  return `https://safetywing.com/nomad-insurance/?referenceID=${A.safetywing.ref}`;
 }
 function worldNomadsLink() {
-  const base = "https://www.worldnomads.com/travel-insurance/";
-  return A.worldNomads.ref ? `${base}?affiliate=${A.worldNomads.ref}` : base;
+  // Not a Travelpayouts partner. Return null when no ref — TP-only policy.
+  if (!A.worldNomads.ref) return null;
+  return `https://www.worldnomads.com/travel-insurance/?affiliate=${A.worldNomads.ref}`;
 }
 function wiseLink() {
-  const base = "https://wise.com/invite/";
-  return A.wise.invite ? `${base}u/${A.wise.invite}` : "https://wise.com";
+  // Not a Travelpayouts partner. Return null when no invite — TP-only policy.
+  if (!A.wise.invite) return null;
+  return `https://wise.com/invite/u/${A.wise.invite}`;
 }
 
 // ---- Flights ----
@@ -462,8 +473,9 @@ function kiwiFlightsLink(city) {
   return tpRouteOrDirect("kiwiCom", dest, `kiwi-${slug(city)}`);
 }
 function wayawayLink(city) {
-  const base = `https://wayaway.io/search/${encodeURIComponent(city)}`;
-  return A.wayaway.marker ? `${base}?marker=${A.wayaway.marker}` : base;
+  // Not on this account. Return null when marker is empty — TP-only policy.
+  if (!A.wayaway.marker) return null;
+  return `https://wayaway.io/search/${encodeURIComponent(city)}?marker=${A.wayaway.marker}`;
 }
 
 // Active-only compare-row OTAs. Trip.com is intentionally excluded
@@ -919,16 +931,14 @@ function hotelCard(hotel, city) {
 
 // "Experiences in {city}" — tours & activities strip
 function experiencesBlock(city) {
-  const gyg = getYourGuideLink(`${city.name} Turkey`);
-  const viator = viatorLink(`${city.name} Turkey`);
-  const klook = klookLink(`${city.name} Turkey`);
-  const tiqets = tiqetsLink(`${city.name}`);
+  // Only emit cards with attributed URLs (TP-only policy). Functions
+  // return null when their program isn't fully configured.
   const cards = [
-    { partner: "GetYourGuide", tag: "Top-rated tours", url: gyg, active: true },
-    { partner: "Viator",       tag: "Alt tour marketplace", url: viator, active: !!viator },
-    { partner: "Klook",        tag: "Discounted activities", url: klook, active: !!klook },
-    { partner: "Tiqets",       tag: "Museum & attraction tickets", url: tiqets, active: !!tiqets },
-  ].filter((c) => c.active);
+    { partner: "Klook",        tag: "Discounted activities",        url: klookLink(`${city.name} Turkey`) },
+    { partner: "GetYourGuide", tag: "Top-rated tours",              url: getYourGuideLink(`${city.name} Turkey`) },
+    { partner: "Viator",       tag: "Alt tour marketplace",         url: viatorLink(`${city.name} Turkey`) },
+    { partner: "Tiqets",       tag: "Museum & attraction tickets",  url: tiqetsLink(`${city.name}`) },
+  ].filter((c) => !!c.url);
   if (!cards.length) return "";
   return `
 <section class="container section-sm">
@@ -946,18 +956,18 @@ function experiencesBlock(city) {
 </section>`;
 }
 
-// "Getting there" — airport transfers + car rental
+// "Getting there" — airport transfers + car rental. Only renders cards
+// whose helper returned a real URL (TP-attributed); silent skip for
+// programs that don't have a partnerId yet.
 function transferBlock(city) {
-  const wp = welcomePickupsLink(city.name);
-  const kt = kiwitaxiLink(city.name);
-  const lr = localrentLink(city.name, `transfer-${slug(city.name)}`);
-  const dc = discoverCarsLink(city.name);
-  const rc = rentalcarsLink(city.name);
   const cards = [
-    { partner: "Welcome Pickups", tag: "Fixed-price airport transfer", url: wp, active: true },
-    { partner: "Kiwitaxi",        tag: "Pre-book a private car",       url: kt, active: true },
-    { partner: "Localrent",       tag: "Rental cars — Turkey-focused, no deposit",       url: lr, active: true },
-  ].filter((c) => c.active);
+    { partner: "Kiwitaxi",        tag: "Pre-book a private car",                       url: kiwitaxiLink(city.name) },
+    { partner: "Localrent",       tag: "Rental cars — Turkey-focused, no deposit",     url: localrentLink(city.name, `transfer-${slug(city.name)}`) },
+    { partner: "Welcome Pickups", tag: "Fixed-price airport transfer",                 url: welcomePickupsLink(city.name) },
+    { partner: "Discover Cars",   tag: "Compare car rental rates",                     url: discoverCarsLink(city.name) },
+    { partner: "Rentalcars",      tag: "Major-brand car rental",                       url: rentalcarsLink(city.name) },
+  ].filter((c) => !!c.url);
+  if (!cards.length) return "";
   return `
 <section class="container section-sm">
   <h2>Getting around ${esc(city.name)}</h2>
@@ -973,15 +983,25 @@ function transferBlock(city) {
 </section>`;
 }
 
-// "Before you fly" — eSIM, insurance, money — shown on homepage + city pages
+// "Before you fly" — eSIM, insurance, money — shown on homepage + city
+// pages. Only renders cards whose helper returned a real URL (TP-only
+// attribution policy). Non-TP partners (Holafly, SafetyWing, World
+// Nomads, Wise) return null until refs are populated.
 function essentialsBlock() {
   const cards = [
-    { partner: "Airalo",      tag: "Turkey eSIM — no roaming fees",    url: airaloLink() },
-    { partner: "Holafly",     tag: "Unlimited eSIM alternative",       url: holaflyLink() },
-    { partner: "SafetyWing",  tag: "Flexible travel medical insurance",url: safetyWingLink() },
-    { partner: "World Nomads",tag: "Adventure travel insurance",       url: worldNomadsLink() },
-    { partner: "Wise",        tag: "Cheap lira transfers & card",      url: wiseLink() },
-  ];
+    { partner: "Airalo",       tag: "Turkey eSIM — no roaming fees",     url: airaloLink() },
+    { partner: "Yesim",        tag: "Pay-as-you-go eSIM",                url: yesimLink() },
+    { partner: "GigSky",       tag: "Multi-country eSIM",                url: gigskyLink() },
+    { partner: "Saily",        tag: "Privacy-first eSIM",                url: sailyLink() },
+    { partner: "Holafly",      tag: "Unlimited eSIM alternative",        url: holaflyLink() },
+    { partner: "VisitorsCoverage", tag: "Travel medical insurance",      url: visitorsCoverageLink() },
+    { partner: "Insubuy",      tag: "Travel insurance comparison",       url: insubuyLink() },
+    { partner: "AirHelp",      tag: "Flight delay/cancellation claims",  url: airHelpLink() },
+    { partner: "SafetyWing",   tag: "Flexible travel medical insurance", url: safetyWingLink() },
+    { partner: "World Nomads", tag: "Adventure travel insurance",        url: worldNomadsLink() },
+    { partner: "Wise",         tag: "Cheap lira transfers & card",       url: wiseLink() },
+  ].filter((c) => !!c.url).slice(0, 6);
+  if (!cards.length) return "";
   return `
 <section class="container section-sm">
   <h2>Essentials before you fly</h2>
@@ -997,13 +1017,14 @@ function essentialsBlock() {
 </section>`;
 }
 
-// Flights — only if the user has added a Kiwi/WayAway marker
+// Flights — only renders cards whose helper returned a real URL.
+// Both partners are TP-routed; cards skip silently when partnerId is
+// missing.
 function flightsBlock(city) {
-  const kc = kiwiFlightsLink(city.name);
-  const wa = wayawayLink(city.name);
-  const cards = [];
-  if (A.kiwiCom.marker)  cards.push({ partner: "Kiwi.com",  tag: `Flights to ${city.name}`,               url: kc });
-  if (A.wayaway.marker)  cards.push({ partner: "WayAway",   tag: `Flights to ${city.name} (with cashback)`, url: wa });
+  const cards = [
+    { partner: "Kiwi.com",  tag: `Flights to ${city.name}`,                  url: kiwiFlightsLink(city.name) },
+    { partner: "WayAway",   tag: `Flights to ${city.name} (with cashback)`,  url: wayawayLink(city.name) },
+  ].filter((c) => !!c.url);
   if (!cards.length) return "";
   return `
 <section class="container section-sm">
@@ -2239,15 +2260,19 @@ function renderThankYou() {
     </section>
   `).join("");
 
-  // Affiliate upsell strip — the single biggest conversion moment on the site
+  // Affiliate upsell strip — the single biggest conversion moment on
+  // the site. Filtered to TP-attributed only; non-TP partners (Airalo
+  // without partnerId, GetYourGuide, SafetyWing) drop out silently.
+  // Klook + Kiwitaxi + Trip.com cover the "book before you arrive"
+  // intent on this page.
   const upsells = [
-    { partner: "Airalo",          tag: "Turkey eSIM — activate before boarding", url: airaloLink() },
-    { partner: "Welcome Pickups", tag: "Istanbul airport transfer (fixed fare)",  url: welcomePickupsLink("Istanbul") },
-    { partner: "GetYourGuide",    tag: "Bosphorus cruise + Hagia Sophia tickets", url: getYourGuideLink("Istanbul Bosphorus cruise") },
-    { partner: "GetYourGuide",    tag: "Cappadocia balloon add-on (book early)",  url: getYourGuideLink("Cappadocia hot air balloon") },
-    { partner: "SafetyWing",      tag: "Travel insurance (flexible, monthly)",    url: safetyWingLink() },
-    { partner: "Trip.com",        tag: "Istanbul hotels — see availability",      url: bookingLink("Istanbul") },
-  ];
+    { partner: "Trip.com",        tag: "Istanbul hotels — see availability",            url: bookingLink("Istanbul") },
+    { partner: "Klook",           tag: "Bosphorus cruise + Hagia Sophia tickets",       url: klookLink("Istanbul Bosphorus cruise") },
+    { partner: "Klook",           tag: "Cappadocia balloon add-on (book early)",        url: klookLink("Cappadocia hot air balloon") },
+    { partner: "Kiwitaxi",        tag: "Istanbul airport transfer (fixed fare)",        url: kiwitaxiLink("Istanbul") },
+    { partner: "Localrent",       tag: "Rental car — Turkey-focused, no deposit",       url: localrentLink("Istanbul", "thank-you-istanbul") },
+    { partner: "Airalo",          tag: "Turkey eSIM — activate before boarding",        url: airaloLink() },
+  ].filter((u) => !!u.url);
 
   const body = `
 ${nav()}
@@ -2833,14 +2858,16 @@ function renderLeadMagnetPage(dataFile, outSlug, heroUpsellQueries) {
     </section>
   `).join("");
 
+  // Filtered to TP-attributed partners only (operator policy). Non-TP
+  // helpers return null and drop out via .filter below.
   const upsells = [
-    { partner: "Airalo",          tag: "Turkey eSIM — activate before boarding", url: airaloLink() },
-    { partner: "Welcome Pickups", tag: "Airport transfer (fixed fare)",            url: welcomePickupsLink(heroUpsellQueries.city || "Istanbul") },
-    { partner: "GetYourGuide",    tag: heroUpsellQueries.tour || "Top-rated tours",url: getYourGuideLink(heroUpsellQueries.tourQuery || "Istanbul tours") },
-    { partner: "GetYourGuide",    tag: "Cappadocia balloon (book early)",          url: getYourGuideLink("Cappadocia hot air balloon") },
-    { partner: "SafetyWing",      tag: "Travel insurance",                         url: safetyWingLink() },
-    { partner: "Trip.com",        tag: `${heroUpsellQueries.city} hotels`,         url: bookingLink(heroUpsellQueries.city || "Istanbul") },
-  ];
+    { partner: "Trip.com",        tag: `${heroUpsellQueries.city} hotels`,                        url: bookingLink(heroUpsellQueries.city || "Istanbul") },
+    { partner: "Klook",           tag: heroUpsellQueries.tour || "Top-rated tours",               url: klookLink(heroUpsellQueries.tourQuery || "Istanbul tours") },
+    { partner: "Klook",           tag: "Cappadocia balloon (book early)",                         url: klookLink("Cappadocia hot air balloon") },
+    { partner: "Kiwitaxi",        tag: "Airport transfer (fixed fare)",                           url: kiwitaxiLink(heroUpsellQueries.city || "Istanbul") },
+    { partner: "Localrent",       tag: "Rental car — Turkey-focused",                             url: localrentLink(heroUpsellQueries.city || "Istanbul", `lm-${slug(heroUpsellQueries.city || "Istanbul")}`) },
+    { partner: "Airalo",          tag: "Turkey eSIM — activate before boarding",                  url: airaloLink() },
+  ].filter((u) => !!u.url);
 
   const body = `
 ${nav()}
