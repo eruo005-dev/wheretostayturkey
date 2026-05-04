@@ -3024,22 +3024,21 @@ ${disclosureBanner()}
 <section class="container" aria-labelledby="tours-h">
   <h2 id="tours-h" class="visually-hidden">Tour categories in ${esc(c.name)}</h2>
   ${buckets.map((b) => {
-    const gyg = getYourGuideLink(b.query);
-    const viator = viatorLink(b.query);
-    const klook = klookLink(b.query);
-    const tiqets = tiqetsLink(b.query);
+    // Each helper returns null when its program isn't TP-attributed.
+    // Filter the list so we never emit href="null" cards.
+    const cards = [
+      { partner: "Klook",        url: klookLink(b.query),       label: "Browse on Klook →" },
+      { partner: "GetYourGuide", url: getYourGuideLink(b.query),label: "Browse on GetYourGuide →" },
+      { partner: "Viator",       url: viatorLink(b.query),      label: "Browse on Viator →" },
+      { partner: "Tiqets",       url: tiqetsLink(b.query),      label: "Attraction tickets →" },
+    ].filter((x) => !!x.url);
+    if (!cards.length) return "";
     return `
       <div class="card mt-3" style="padding:24px">
         <div class="eyebrow" style="color:var(--c-text-soft)">${esc(b.hint)}</div>
         <h3 style="margin:4px 0 12px">${esc(b.heading)}</h3>
         <div class="grid grid-2 grid-4">
-          <a class="card" rel="sponsored nofollow" target="_blank" href="${esc(gyg)}" style="text-decoration:none;color:inherit">
-            <div class="eyebrow">GetYourGuide</div>
-            <h3 class="card-h" style="margin:4px 0">Browse on GetYourGuide →</h3>
-          </a>
-          ${viator ? `<a class="card" rel="sponsored nofollow" target="_blank" href="${esc(viator)}" style="text-decoration:none;color:inherit"><div class="eyebrow">Viator</div><h3 class="card-h" style="margin:4px 0">Browse on Viator →</h3></a>` : ""}
-          ${klook ? `<a class="card" rel="sponsored nofollow" target="_blank" href="${esc(klook)}" style="text-decoration:none;color:inherit"><div class="eyebrow">Klook</div><h3 class="card-h" style="margin:4px 0">Browse on Klook →</h3></a>` : ""}
-          ${tiqets ? `<a class="card" rel="sponsored nofollow" target="_blank" href="${esc(tiqets)}" style="text-decoration:none;color:inherit"><div class="eyebrow">Tiqets</div><h3 class="card-h" style="margin:4px 0">Attraction tickets →</h3></a>` : ""}
+          ${cards.map((x) => `<a class="card" rel="sponsored nofollow" target="_blank" href="${esc(x.url)}" style="text-decoration:none;color:inherit"><div class="eyebrow">${esc(x.partner)}</div><h3 class="card-h" style="margin:4px 0">${esc(x.label)}</h3></a>`).join("")}
         </div>
       </div>
     `;
@@ -3705,7 +3704,7 @@ ${disclosureBanner()}
   <h2>Political demonstrations</h2>
   <p>Occasional protests happen in Taksim Square and other central areas. Give them a wide berth. Check your home government's travel advisory before flying.</p>
   <h2>Travel insurance</h2>
-  <p>Always get travel insurance — <a href="${safetyWingLink()}" rel="sponsored nofollow" target="_blank">SafetyWing</a> and <a href="${worldNomadsLink()}" rel="sponsored nofollow" target="_blank">World Nomads</a> both cover Turkey well. Adventure coverage (balloon flying, paragliding) matters if you're visiting Cappadocia or Ölüdeniz.</p>
+  <p>Always get travel insurance — see our <a href="/insurance/">Turkey insurance guide</a> for SafetyWing vs World Nomads vs credit-card-cover. Adventure coverage (balloon flying, paragliding) matters if you're visiting Cappadocia or Ölüdeniz.</p>
   <p class="text-soft small"><em>Not insurance advice. We earn a commission if you buy through our links — this has no effect on price. Always read the policy documents before purchasing and verify coverage for your specific activities.</em></p>
 </section>
 
@@ -3743,13 +3742,13 @@ ${disclosureBanner()}
       <div class="eyebrow">Recommended for most travelers</div>
       <h3 style="margin:6px 0">SafetyWing — Nomad Insurance</h3>
       <p style="color:var(--ink-muted);margin:10px 0">Subscription model from $45.08 / 4 weeks. Covers trip interruption, medical, baggage, emergency evacuation. Activity coverage extends to the standard Turkey adventure list (balloon flight, paragliding, scuba). Renew month-by-month if your trip extends.</p>
-      <a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(safetyWingLink())}">Get a SafetyWing quote →</a>
+      ${(function () { const u = safetyWingLink(); return u ? `<a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(u)}">Get a SafetyWing quote →</a>` : `<p class="text-soft small" style="margin:0">Search "SafetyWing nomad insurance" to compare quotes for your dates.</p>`; })()}
     </div>
     <div class="card" style="padding:28px">
       <div class="eyebrow">Best for adventure-heavy trips</div>
       <h3 style="margin:6px 0">World Nomads</h3>
       <p style="color:var(--ink-muted);margin:10px 0">Higher trip-cost coverage, multiple plan tiers, broader adventure-activity list (kitesurfing, motorbike rentals, mountain trekking). Better for Cappadocia + Antalya combo trips with several adventure bookings.</p>
-      <a class="btn btn-ghost" rel="sponsored nofollow" target="_blank" href="${esc(worldNomadsLink())}">Get a World Nomads quote →</a>
+      ${(function () { const u = worldNomadsLink(); return u ? `<a class="btn btn-ghost" rel="sponsored nofollow" target="_blank" href="${esc(u)}">Get a World Nomads quote →</a>` : `<p class="text-soft small" style="margin:0">Search "World Nomads travel insurance" to compare quotes.</p>`; })()}
     </div>
   </div>
 </section>
@@ -3808,13 +3807,13 @@ ${disclosureBanner()}
       <div class="eyebrow">Most popular — best value</div>
       <h3 style="margin:6px 0">Airalo</h3>
       <p style="color:var(--ink-muted);margin:10px 0">Cheapest mainstream eSIM provider. Turkey plans from $4.50 (1 GB / 7 days) to $26 (20 GB / 30 days). Activates instantly, works on every iPhone XS+ and any Android with eSIM support.</p>
-      <a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(airaloLink())}">Browse Airalo Turkey plans →</a>
+      ${(function () { const u = airaloLink(); return u ? `<a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(u)}">Browse Airalo Turkey plans →</a>` : `<p class="text-soft small" style="margin:0">Available at airalo.com/turkey-esim — search the App Store for the Airalo app.</p>`; })()}
     </div>
     <div class="card" style="padding:28px">
       <div class="eyebrow">Unlimited data, simpler choice</div>
       <h3 style="margin:6px 0">Holafly</h3>
       <p style="color:var(--ink-muted);margin:10px 0">Unlimited data plans from $19 / 5 days to $59 / 30 days. No data caps, but no Turkish phone number — outgoing SMS limited to in-app. Best if you stream a lot or share data with a partner.</p>
-      <a class="btn btn-ghost" rel="sponsored nofollow" target="_blank" href="${esc(holaflyLink())}">Browse Holafly Turkey plans →</a>
+      ${(function () { const u = holaflyLink(); return u ? `<a class="btn btn-ghost" rel="sponsored nofollow" target="_blank" href="${esc(u)}">Browse Holafly Turkey plans →</a>` : `<p class="text-soft small" style="margin:0">Available at esim.holafly.com/esim-turkey/.</p>`; })()}
     </div>
   </div>
 </section>
@@ -4061,8 +4060,8 @@ ${disclosureBanner()}
   <h2>Step 4: Get to your hotel — three options</h2>
 
   <h3>Option A: Pre-booked transfer (the smart move)</h3>
-  <p>Book Welcome Pickups or a similar service before you fly. Driver waits at arrivals with a sign with your name. Fixed price (~€35–50 to most central hotels). No haggling, no language confusion, no wrong-zone taxi gotchas. <strong>This is what we recommend for first-time visitors.</strong></p>
-  <p><a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(welcomePickupsLink('istanbul'))}">Pre-book Welcome Pickups →</a></p>
+  <p>Book a fixed-price airport transfer before you fly — Kiwitaxi or Welcome Pickups both cover Istanbul. Driver waits at arrivals with a sign with your name. Fixed price (~€35–50 to most central hotels). No haggling, no language confusion, no wrong-zone taxi gotchas. <strong>This is what we recommend for first-time visitors.</strong></p>
+  ${(function () { const wp = welcomePickupsLink('istanbul'); const kt = kiwitaxiLink('istanbul'); const url = kt || wp; return url ? `<p><a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(url)}">Pre-book a transfer →</a></p>` : ``; })()}
 
   <h3>Option B: M11 metro to city + connection</h3>
   <p>The M11 metro from IST to Gayrettepe takes 35 minutes (€1.50 with Istanbulkart). From there, M2 metro to Vezneciler (Sultanahmet) or Taksim (Beyoğlu). Total time: ~80 minutes. Total cost: €3. Buy Istanbulkart from the IDO machine before the metro turnstiles, top up ₺100 ($4) — covers your first 2 days of metro / ferry / bus.</p>
@@ -4335,14 +4334,18 @@ ${disclosureBanner()}
 
 <section class="container" aria-labelledby="trips-h">
   <h2 id="trips-h" class="visually-hidden">Day trips from ${esc(c.name)} — ranked options</h2>
-  ${trips.map((t, i) => `
+  ${trips.map((t, i) => {
+    // Prefer Klook (TP-attributed) over GYG (no partnerId on this account).
+    // Falls back to GYG when partnerId is later populated.
+    const tourUrl = getYourGuideLink(t.tourQuery) || klookLink(t.tourQuery);
+    return `
     <div class="card mt-3" style="padding:28px">
       <div class="eyebrow">${esc(t.distance)} · ${esc(t.time)}</div>
       <h3 style="margin:6px 0 12px">${i + 1}. ${esc(t.name)}</h3>
       <p style="margin:0 0 16px;color:var(--c-text-soft)">${t.summary}</p>
-      <a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(getYourGuideLink(t.tourQuery))}">Book a ${esc(t.name)} tour →</a>
+      ${tourUrl ? `<a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(tourUrl)}">Book a ${esc(t.name)} tour →</a>` : `<a class="btn btn-primary" href="/${c.slug}/tours/">See ${esc(c.name)} tours →</a>`}
     </div>
-  `).join("")}
+  `;}).join("")}
 </section>
 
 <section class="container section-sm">
