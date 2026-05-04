@@ -541,6 +541,7 @@ function head({ title, description, canonical, ogImage, jsonld = [], preloadHero
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(canonical)}">
+${(config.adsense && config.adsense.clientId) ? `<meta name="google-adsense-account" content="${esc(config.adsense.clientId)}">` : ""}
 <meta property="og:type" content="${esc(ogType)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
@@ -2291,6 +2292,8 @@ ${tail()}`;
 <meta name="description" content="${esc(description)}">
 <meta name="robots" content="noindex, follow">
 <link rel="canonical" href="${esc(canonical)}">
+${(config.adsense && config.adsense.clientId) ? `<meta name="google-adsense-account" content="${esc(config.adsense.clientId)}">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(config.adsense.clientId)}" crossorigin="anonymous"></script>` : ""}
 <meta property="og:type" content="website">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
@@ -2867,6 +2870,8 @@ ${tail()}`;
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(canonical)}">
 <meta name="robots" content="noindex, follow">
+${(config.adsense && config.adsense.clientId) ? `<meta name="google-adsense-account" content="${esc(config.adsense.clientId)}">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(config.adsense.clientId)}" crossorigin="anonymous"></script>` : ""}
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
