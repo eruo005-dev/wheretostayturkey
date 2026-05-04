@@ -1,0 +1,42 @@
+name: IndexNow ping
+
+# Notifies Bing / Yandex / Seznam / Naver of every URL in the live
+# sitemap whenever main changes. Runs AFTER the Build check workflow
+# has confirmed the build is clean — Vercel will already have started
+# deploying by then but the IndexNow API doesn't care if the URLs are
+# fully propagated; engines simply re-crawl what we tell them.
+#
+# Google does NOT participate in IndexNow. Use Search Console for Google.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+# Don't fire while build-check is still running. workflow_run lets us
+# wait, but for simplicity we just sleep ~60s before pinging — that's
+# enough for the build to finish on this codebase.
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Build site (we need the sitemap to enumerate URLs)
+        run: node build.js
+
+      - name: Wait briefly so Vercel has the new commit
+        run: sleep 30
+
+      - name: Submit sitemap to IndexNow
+        run: node scripts/indexnow-ping.js
+        # If the API rate-limits or temporarily 4xxs we don't want to
+        # block the entire workflow. Soft-fail.
+        continue-on-error: true

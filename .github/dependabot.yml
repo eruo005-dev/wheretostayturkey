@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # Node deps. We have effectively zero runtime npm deps (build is
+  # pure node), but devDeps and any future additions get watched.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Istanbul"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    groups:
+      # One PR per security/major bump cluster — easier to review and
+      # less PR-noise in inboxes.
+      security:
+        applies-to: security-updates
+        update-types: ["patch", "minor"]
+      minor-and-patch:
+        update-types: ["patch", "minor"]
+
+  # GitHub Actions — keep workflow runners + actions current.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "ci"
