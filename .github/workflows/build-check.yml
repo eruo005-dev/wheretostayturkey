@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version-file: .nvmrc
 
       - name: Validate config
         run: node -e "const c = require('./site.config'); if (!c.business || !c.affiliates) throw new Error('config malformed');"
