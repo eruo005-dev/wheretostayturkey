@@ -5642,6 +5642,19 @@ compute();
 // ---- RSS feed (signal of active publication; read by feed readers + Google News) ----
 function renderRss() {
   const today = new Date().toUTCString();
+  // Journal posts go first since they're the dated content. Sorted
+  // newest-first using publishedAt; falls back to today's date if missing.
+  const journalSorted = [...JOURNAL].sort((a, b) => (b.publishedAt || "").localeCompare(a.publishedAt || ""));
+  const journalItems = journalSorted.map((p) => {
+    const pub = p.publishedAt ? new Date(p.publishedAt).toUTCString() : today;
+    return `  <item>
+    <title>${esc(p.title)}</title>
+    <link>${config.siteUrl}/journal/${p.slug}/</link>
+    <guid>${config.siteUrl}/journal/${p.slug}/</guid>
+    <description>${esc(p.subtitle || p.summary || "")}</description>
+    <pubDate>${pub}</pubDate>
+  </item>`;
+  }).join("\n");
   const items = cities.map((c) => {
     return `  <item>
     <title>${esc(c.name)}: where to stay</title>
@@ -5675,6 +5688,7 @@ function renderRss() {
   <description>${esc(config.siteDescription)}</description>
   <language>en</language>
   <lastBuildDate>${today}</lastBuildDate>
+${journalItems}
 ${items}
 ${guides}
 </channel>
@@ -5817,6 +5831,9 @@ function renderJournalHub() {
     .filter(([, n]) => n >= 2)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 12);
+  // Sort posts newest-first so the hub doesn't surface 4-week-old posts
+  // above last-week's. Falls back to source order when dates are missing.
+  const postsSorted = [...JOURNAL].sort((a, b) => (b.publishedAt || "").localeCompare(a.publishedAt || ""));
   const body = `
 ${nav()}
 ${disclosureBanner()}
@@ -5835,7 +5852,7 @@ ${disclosureBanner()}
     ${tagChips.map(([t, n]) => `<button class="amenity-chip" type="button" data-journal-tag="${esc(t)}">${esc(t.replace(/-/g, " "))} <span class="amenity-chip-count">${n}</span></button>`).join("")}
   </div>` : ""}
   <div class="journal-list">
-    ${JOURNAL.map((p) => `
+    ${postsSorted.map((p) => `
       <article class="journal-item" data-tags="${esc((p.tags || []).join(" "))}">
         <div class="journal-meta">
           <time>${esc(p.publishedAt)}</time>
@@ -5864,7 +5881,7 @@ ${tail()}`;
       "@type": "Blog",
       name: `${config.siteName} Journal`,
       url: canonical,
-      blogPost: JOURNAL.map((p) => ({
+      blogPost: postsSorted.map((p) => ({
         "@type": "BlogPosting",
         headline: p.title,
         url: `${config.siteUrl}/journal/${p.slug}/`,
