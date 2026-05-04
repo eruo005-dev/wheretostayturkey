@@ -97,7 +97,10 @@ const business = {
   privacyEmail: "privacy@wheretostayturkey.com",
   editorialEmail: "editorial@wheretostayturkey.com",
   partnershipsEmail: "partnerships@wheretostayturkey.com",
-  postalAddress: "[Street address, City, Postal Code, Country]",
+  // Optional. Leave blank until a registered business address exists;
+  // the build hides "Postal mail:" lines whenever this is empty rather
+  // than rendering a placeholder. Set to a real string once available.
+  postalAddress: "",
   lastUpdated: "2026-04-24",
 };
 

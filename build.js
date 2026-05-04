@@ -804,19 +804,14 @@ function bestForTag(t) {
   return `<span class="tag ${cls}">${esc(t)}</span>`;
 }
 
-// Build a hotel image URL. Operator can either set `hotel.image` to any
-// absolute URL (Unsplash, hotel's own photo CDN, etc.), or set
-// `hotel.bookingPhotoId` for a Booking.com-hosted thumbnail. Falls back
-// to null when nothing is configured.
+// Build a hotel image URL. Operator sets `hotel.image` to any absolute
+// URL — own CDN, Wikimedia, Unsplash, hotel's PR pack. Returns null
+// when nothing is configured (the card just renders without a photo).
+// Note: a `bookingPhotoId` Booking-CDN fallback used to live here; it
+// was removed in the TP-only attribution pass since we don't link to
+// Booking anymore and hosting their CDN reads off-policy.
 function hotelImageUrl(hotel) {
-  if (hotel.image) return hotel.image;
-  if (hotel.bookingPhotoId) {
-    // Booking's affiliate-friendly CDN URL pattern. The {hash} is the
-    // value returned by their hotel-photos API (or scraped from the
-    // hotel's public listing page). max500 = 500px wide JPEG.
-    return `https://cf.bstatic.com/xdata/images/hotel/max500/${hotel.bookingPhotoId}.jpg`;
-  }
-  return null;
+  return hotel.image || null;
 }
 
 // Amenity derivation — regex over hotel name + whyStay text. Mirrored
@@ -2479,7 +2474,7 @@ ${disclosureBanner()}
 <p>City pages are reviewed once a year minimum and the "last verified" date on each page reflects the most recent walk-through. Hotel shortlists are reviewed every six months. Visa and currency information is reviewed quarterly. Editorial articles are evergreen unless time-sensitive, in which case they carry a "last updated" timestamp at the top.</p>
 
 <h2>Contact</h2>
-<p>Editorial: <a href="mailto:${esc(config.business.editorialEmail)}">${esc(config.business.editorialEmail)}</a>. General: <a href="mailto:${esc(config.business.contactEmail)}">${esc(config.business.contactEmail)}</a>. Postal mail: ${esc(config.business.postalAddress)}.</p>
+<p>Editorial: <a href="mailto:${esc(config.business.editorialEmail)}">${esc(config.business.editorialEmail)}</a>. General: <a href="mailto:${esc(config.business.contactEmail)}">${esc(config.business.contactEmail)}</a>.${config.business.postalAddress ? ` Postal mail: ${esc(config.business.postalAddress)}.` : ""}</p>
 
 </section>
 
@@ -5086,7 +5081,7 @@ ${disclosureBanner()}
   <p>We may update this policy. Material changes will be announced on the homepage or via email to subscribers. The "last updated" date at the top reflects the most recent revision.</p>
 
   <h2>Contact</h2>
-  <p>Questions? <a href="mailto:${esc(b.privacyEmail)}">${esc(b.privacyEmail)}</a>. Postal mail: ${esc(b.postalAddress)}.</p>
+  <p>Questions? <a href="mailto:${esc(b.privacyEmail)}">${esc(b.privacyEmail)}</a>.${b.postalAddress ? ` Postal mail: ${esc(b.postalAddress)}.` : ""}</p>
 </section>
 ${leadMagnet()}
 ${footer()}
@@ -5151,7 +5146,7 @@ ${disclosureBanner()}
   <p>We may update these terms. Continued use of the site after changes constitutes acceptance.</p>
 
   <h2>Contact</h2>
-  <p><a href="mailto:${esc(b.contactEmail)}">${esc(b.contactEmail)}</a> — ${esc(b.postalAddress)}.</p>
+  <p><a href="mailto:${esc(b.contactEmail)}">${esc(b.contactEmail)}</a>${b.postalAddress ? ` — ${esc(b.postalAddress)}` : ""}.</p>
 </section>
 ${leadMagnet()}
 ${footer()}
@@ -5183,8 +5178,8 @@ ${disclosureBanner()}
   <p><a href="mailto:${esc(b.privacyEmail)}">${esc(b.privacyEmail)}</a> — GDPR/CCPA requests, data deletion, access requests. We respond within 30 days.</p>
   <h2>Hotel &amp; experience partnerships</h2>
   <p>We don't accept paid placements or PR-funded trips, but we do add hotels based on reader feedback. If you run a Turkish property with consistent 8.5+ reviews and want to be considered, email <a href="mailto:${esc(b.supportEmail)}">${esc(b.supportEmail)}</a> with your property details.</p>
-  <h2>Postal</h2>
-  <p>${esc(b.legalName)}<br>${esc(b.postalAddress)}</p>
+  ${b.postalAddress ? `<h2>Postal</h2>
+  <p>${esc(b.legalName)}<br>${esc(b.postalAddress)}</p>` : ""}
   <h2>Spotted a mistake?</h2>
   <p>If a hotel has closed, a neighborhood description is wrong, or a price range is way off — please tell us. Local knowledge is the whole point. <a href="mailto:${esc(b.contactEmail)}?subject=Correction">Send a correction →</a></p>
 </section>
