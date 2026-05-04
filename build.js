@@ -728,7 +728,7 @@ function stickyCta(cityName, search) {
 <div class="sticky-cta">
   <div class="sticky-meta">
     <strong>Ready to book in ${esc(cityName)}?</strong>
-    <span class="text-muted">Check live prices on Booking.com</span>
+    <span class="text-muted">Check live prices on Trip.com</span>
   </div>
   <a class="btn btn-primary" rel="sponsored nofollow" target="_blank" href="${esc(bookingLink(search))}">Check availability →</a>
 </div>`;
