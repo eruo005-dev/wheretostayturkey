@@ -204,6 +204,36 @@
   });
 })();
 
+// ---- Journal hub tag filter ----
+(function () {
+  const bar = document.querySelector(".journal-tag-filter");
+  if (!bar) return;
+  const items = document.querySelectorAll(".journal-item");
+  const empty = document.querySelector(".journal-empty");
+  function applyTag(tag) {
+    let visible = 0;
+    items.forEach((it) => {
+      const tags = (it.dataset.tags || "").trim().split(/\s+/);
+      const show = tag === "all" || tags.includes(tag);
+      it.hidden = !show;
+      if (show) visible++;
+    });
+    bar.querySelectorAll("[data-journal-tag]").forEach((c) => {
+      c.dataset.active = c.dataset.journalTag === tag ? "true" : "false";
+    });
+    if (empty) empty.hidden = visible > 0;
+    if (tag === "all") history.replaceState(null, "", location.pathname);
+    else history.replaceState(null, "", "#tag-" + tag);
+  }
+  bar.addEventListener("click", (e) => {
+    const c = e.target.closest("[data-journal-tag]");
+    if (c) applyTag(c.dataset.journalTag);
+  });
+  // Honor #tag-foo deep-link on load
+  const m = (location.hash || "").match(/^#tag-(.+)/);
+  if (m) applyTag(m[1]);
+})();
+
 // ---- Mouse-driven 3D scene parallax on homepage hero ----
 (function () {
   const scene = document.getElementById("scene-3d");
