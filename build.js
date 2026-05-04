@@ -563,6 +563,20 @@ ${config.twitterHandle ? `<meta name="twitter:site" content="${esc(config.twitte
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap"></noscript>
+<style>
+/* Block-level FOIT fallback so headings don't shift when Fraunces swaps in.
+   size-adjust + ascent-override align fallback metrics to Fraunces so the
+   FOUT is invisible; matches CWV-CLS=0 target. */
+@font-face{font-family:"Fraunces Fallback";src:local("Georgia");size-adjust:108%;ascent-override:88%;descent-override:22%;line-gap-override:0%}
+:root{--font-serif:"Fraunces","Fraunces Fallback",Georgia,"Times New Roman",serif}
+/* Reserve viewport space for the cookie banner so it can't shift content
+   when it appears post-hydration. Hidden by default; main.js shows it. */
+.cookie-banner{contain:layout style}
+/* content-visibility hint: lets the browser skip rendering work for
+   below-fold sections until they're near the viewport. Massive perf win
+   on long pages (city pages, journal posts, regions). */
+section.section-sm,section.container.section-sm,article + section.container,#also-consider,.dest-empty{content-visibility:auto;contain-intrinsic-size:auto 600px}
+</style>
 <link rel="preload" as="style" href="/assets/css/styles.css" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/styles.css" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/filters.css">
@@ -709,6 +723,19 @@ function stickyCta(cityName, search) {
 function tail() {
   return `
 ${cookieBanner()}
+<script type="speculationrules">
+{
+  "prerender": [{
+    "where": { "and": [
+      { "href_matches": "/*" },
+      { "not": { "selector_matches": ".no-prerender" } },
+      { "not": { "href_matches": "/thank-you*" } },
+      { "not": { "href_matches": "/quiz/" } }
+    ] },
+    "eagerness": "moderate"
+  }]
+}
+</script>
 <script src="/assets/js/main.js" defer></script>
 <script src="/assets/js/filters.js" defer></script>
 </body>
@@ -2706,6 +2733,20 @@ ${tail()}`;
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap"></noscript>
+<style>
+/* Block-level FOIT fallback so headings don't shift when Fraunces swaps in.
+   size-adjust + ascent-override align fallback metrics to Fraunces so the
+   FOUT is invisible; matches CWV-CLS=0 target. */
+@font-face{font-family:"Fraunces Fallback";src:local("Georgia");size-adjust:108%;ascent-override:88%;descent-override:22%;line-gap-override:0%}
+:root{--font-serif:"Fraunces","Fraunces Fallback",Georgia,"Times New Roman",serif}
+/* Reserve viewport space for the cookie banner so it can't shift content
+   when it appears post-hydration. Hidden by default; main.js shows it. */
+.cookie-banner{contain:layout style}
+/* content-visibility hint: lets the browser skip rendering work for
+   below-fold sections until they're near the viewport. Massive perf win
+   on long pages (city pages, journal posts, regions). */
+section.section-sm,section.container.section-sm,article + section.container,#also-consider,.dest-empty{content-visibility:auto;contain-intrinsic-size:auto 600px}
+</style>
 <link rel="preload" as="style" href="/assets/css/styles.css" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/styles.css" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/filters.css">

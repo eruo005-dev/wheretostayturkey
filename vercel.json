@@ -22,7 +22,14 @@
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "interest-cohort=()" }
+        { "key": "Permissions-Policy", "value": "interest-cohort=()" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
+      ]
+    },
+    {
+      "source": "/((?!thank-you|404).*)",
+      "headers": [
+        { "key": "Link", "value": "</assets/css/styles.css>; rel=preload; as=style; fetchpriority=high, <https://fonts.googleapis.com>; rel=preconnect, <https://fonts.gstatic.com>; rel=preconnect; crossorigin" }
       ]
     }
   ],
