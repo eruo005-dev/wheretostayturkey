@@ -129,6 +129,10 @@ module.exports = {
   ],
   defaultOgImage: "/assets/img/og-default.svg",
   twitterHandle: "@wheretostayturkey",
+  // Render city/showcase cards using their data.heroImage URLs (when set).
+  // We keep verified Wikimedia URLs in cities*.json data so this can be
+  // flipped to true the moment the operator wants real-photo cards back.
+  useHeroPhotos: false,
   currency: "USD",
   locale: "en-US",
 };
