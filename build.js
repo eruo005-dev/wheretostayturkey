@@ -75,10 +75,23 @@ const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(
 // 60. Else append a shorter " | wheretostayturkey.com" variant. Else just
 // return the raw title — never go over 60 just to add brand.
 const SEO_TITLE_MAX = 60;
+// Hard cap before SERP truncation. Google typically truncates titles
+// over ~580px (~60-65 chars depending on character widths). Keep titles
+// under SEO_TITLE_MAX so the brand isn't cut off and the title shows
+// in full.
+const SEO_TITLE_HARD_MAX = 65;
 const SEO_BRAND_LONG = " — Where to Stay in Turkey";
 const SEO_BRAND_SHORT = " · wheretostayturkey.com";
 function seoTitle(raw) {
-  const s = String(raw || "").trim();
+  let s = String(raw || "").trim();
+  // If the raw title is itself too long for the SERP, trim at a word
+  // boundary near the cap rather than handing Google a cut-off title.
+  if (s.length > SEO_TITLE_HARD_MAX) {
+    s = s.slice(0, SEO_TITLE_HARD_MAX);
+    const cut = s.lastIndexOf(" ");
+    if (cut > 40) s = s.slice(0, cut);
+    s = s.replace(/[,.;:!—–-]+$/, "").trim();
+  }
   if (s.length >= SEO_TITLE_MAX) return s;
   if (s.length + SEO_BRAND_LONG.length <= SEO_TITLE_MAX) return s + SEO_BRAND_LONG;
   if (s.length + SEO_BRAND_SHORT.length <= SEO_TITLE_MAX) return s + SEO_BRAND_SHORT;
@@ -1949,7 +1962,7 @@ ${tail()}`;
 
 function renderCity(c) {
   const canonical = `${config.siteUrl}/${c.slug}/`;
-  const title = `Where to stay in ${c.name} — neighborhoods & best hotels (2026)`;
+  const title = `Where to stay in ${c.name} — best hotels & areas (2026)`;
   const description = `${c.summary.slice(0, 150)}… Compare areas and hand-picked hotels.`;
 
   const luxury = c.hotels.filter((h) => h.tier === "luxury");
@@ -3003,6 +3016,15 @@ ${tail()}`;
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(canonical)}">
 <meta name="robots" content="noindex, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:image" content="${config.siteUrl}${config.defaultOgImage}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(description)}">
+<meta name="twitter:image" content="${config.siteUrl}${config.defaultOgImage}">
 ${(config.adsense && config.adsense.clientId) ? `<meta name="google-adsense-account" content="${esc(config.adsense.clientId)}">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(config.adsense.clientId)}" crossorigin="anonymous"></script>` : ""}
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">

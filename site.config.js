@@ -107,7 +107,12 @@ const business = {
 module.exports = {
   siteName: "Where to Stay in Turkey",
   siteTagline: "The fastest way to decide where to stay in Turkey.",
-  siteUrl: "https://wheretostayturkey.com",
+  // Canonical site URL — must match what Vercel actually serves so
+  // canonicals don't point to a 308-redirect chain. Apex (no-www)
+  // 308-redirects to www on this deployment, so the canonical lives
+  // at the www subdomain. If the redirect direction is ever flipped,
+  // change this to "https://wheretostayturkey.com" and rebuild.
+  siteUrl: "https://www.wheretostayturkey.com",
   siteDescription: "A decision engine for the best neighborhoods and hotels in Turkey.",
   business,
   affiliates,
