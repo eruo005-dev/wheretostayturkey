@@ -38,6 +38,25 @@ function loadCities() {
 }
 const cities = loadCities();
 
+// Per-city / per-cohort variant copy for programmatic /city/{variant}/
+// pages. See data/variant-copy.json for the full set. Cohort lookup
+// flattens the {cohort: [slugs]} map into {slug: cohort} for O(1) lookup.
+const VARIANT_COPY = (() => {
+  try { return require("./data/variant-copy.json"); }
+  catch (_) { return { cohorts: {}, cohortBody: {}, cityOpeners: {} }; }
+})();
+const CITY_COHORT = (() => {
+  const m = {};
+  for (const [cohort, slugs] of Object.entries(VARIANT_COPY.cohorts || {})) {
+    for (const s of slugs) m[s] = cohort;
+  }
+  return m;
+})();
+const TOUR_COPY = (() => {
+  try { return require("./data/tour-copy.json"); }
+  catch (_) { return { cohortBody: {}, cityOpeners: {} }; }
+})();
+
 // --------------------------- helpers ---------------------------
 
 const esc = (s) =>
@@ -1972,6 +1991,7 @@ ${disclosureBanner()}
 
 <div class="container">
   <div class="breadcrumb small text-soft" style="padding:18px 0;border-bottom:1px solid var(--c-hairline);margin-bottom:20px"><a href="/" style="color:inherit">Turkey</a> <span style="margin:0 8px">/</span> ${esc(c.name)}</div>
+  ${bylineBlock(c)}
   <div class="prose mb-4" style="max-width:720px">
     ${lastVisitedBadge(c)}
     <p style="font-size:1.05rem;margin-top:12px">${esc(c.summary)}</p>
@@ -2097,6 +2117,30 @@ ${tail()}`;
   const faq = faqLd(c.faqs);
   if (faq) jsonld.push(faq);
 
+  // Article schema with author + dateModified — strong E-E-A-T signal.
+  // Required for AdSense to read the page as authored editorial content
+  // rather than scaled programmatic output. dateModified pulls from
+  // c.lastVerified so freshness is real, not auto-stamped today.
+  jsonld.push({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${canonical}#article`,
+    headline: `Where to stay in ${c.name}`,
+    description: c.summary,
+    url: canonical,
+    image: resolveHeroImage(c.slug, c.heroImage) || `${config.siteUrl}/assets/img/og/${c.slug}.svg`,
+    author: {
+      "@type": "Person",
+      "@id": `${config.siteUrl}/about/${AUTHOR.slug}/#person`,
+      name: AUTHOR.name,
+      url: `${config.siteUrl}/about/${AUTHOR.slug}/`,
+    },
+    publisher: { "@id": `${config.siteUrl}/#organization` },
+    datePublished: "2026-01-01",
+    dateModified: cityVerified(c).match(/\d{4}-\d{2}-\d{2}/) ? cityVerified(c) : "2026-04-24",
+    mainEntityOfPage: canonical,
+  });
+
   const ogImage = c.heroImage || `${config.siteUrl}/assets/img/og/${c.slug}.svg`;
   const html = head({ title, description, canonical, ogImage, jsonld, preloadHero: resolveHeroImage(c.slug, c.heroImage) }) + body;
   writeFile(`${c.slug}/index.html`, html);
@@ -2104,19 +2148,21 @@ ${tail()}`;
 
 function renderProgrammatic({ city, variant, title, description, heading, intro, hotels, audience }) {
   const canonical = `${config.siteUrl}/${city.slug}/${variant}/`;
-  // Variant-specific prose. Adds ~150-220 words of unique content per
-  // page (was thin / doorway-shaped). Falls back to a templated default
-  // when the city doesn't have variant-specific copy yet.
+  // Variant-specific prose. Built from a per-city OPENER sentence (unique
+  // per (city, variant) — see data/variant-copy.json) followed by a
+  // COHORT body (cities grouped into 7 cohorts: istanbul, cappadocia,
+  // mediterranean, aegean, eastern-anatolia, inland-anatolia, black-sea).
+  // Different cohorts get genuinely different paragraphs so within-sample
+  // variation is real, not just city-name swap. Override per-city via
+  // city.variantCopy[variant] in data files.
   const variantCopy = (function () {
-    const copy = (city.variantCopy || {})[variant];
-    if (copy) return copy;
-    const generic = {
-      luxury: `${city.name}'s 5-star and design-led options sit in the neighborhoods with the highest review averages and the longest views — typically the historic core or the waterfront, never the airport hotels. Expect $250–$900 per night in season; book 8–12 weeks ahead for the named properties. Most luxury picks include breakfast, airport transfer, and pool access; spa packages are usually à la carte. The best months to splurge are ${city.whenToGo}, when the light is right and the crowds are thinner than peak summer.`,
-      budget: `${city.name}'s budget tier (under $100/night) clusters in the older central districts and the modern student/transit areas — both walkable to the main sights, both safe by Turkish big-city standards. Expect basic but clean rooms, often with simple Turkish breakfast included; lifts and 24-hour reception aren't standard at this tier so check the listing carefully. Booking 2–4 weeks ahead works for most months; the August beach-resort weeks and the May–early-June shoulder push prices up sharply.`,
-      families: `${city.name} for families works best in the residential-but-walkable neighborhoods rather than the bar-and-restaurant strips. Look for properties with two-bedroom suites or connecting rooms, a real pool (most "rooftop pools" are decorative), and a 24-hour kitchen for late arrivals. The dolmuş minibus network is genuinely usable with kids — stroller access is hit-or-miss but car seats are not legally required and most drivers are fine with one in your lap. Pediatric clinics in tourist areas accept walk-ins; bring your insurance card.`,
-      couples: `${city.name} reads romantic in the neighborhoods that prioritise atmosphere over efficiency — restored mansion hotels with courtyards, sunset terraces, and walking distance to the dinner-and-tea-after-dinner ritual. The single best month for a couples trip is typically ${city.whenToGo.split(/[,&]| and /)[0]}. Avoid the all-inclusive resort blocks unless that's the point of your trip; they're built for groups, not for the long-dinner-then-walk evening that defines a Turkish romantic stay.`,
-    };
-    return generic[variant] || "";
+    const explicit = (city.variantCopy || {})[variant];
+    if (explicit) return explicit;
+    const opener = ((VARIANT_COPY.cityOpeners || {})[city.slug] || {})[variant] || "";
+    const cohort = CITY_COHORT[city.slug] || "mediterranean";
+    let body = ((VARIANT_COPY.cohortBody || {})[cohort] || {})[variant] || "";
+    body = body.replace(/\$\{cityName\}/g, city.name);
+    return [opener, body].filter(Boolean).join(" ");
   })();
   // Filter areas by variant fit; if the filter empties the list, fall
   // back to all areas so the page still has neighborhood depth.
@@ -3055,22 +3101,31 @@ ${disclosureBanner()}
 
 ${transferBlock(c)}
 
-<section class="container container-narrow prose mt-4">
+${(function () {
+  // Tour-page editorial prose. Per-city opener + cohort-specific body
+  // so 22 city tour pages don't read as templated. Falls back to a
+  // generic 2-paragraph block when the data is missing for a city.
+  const opener = (TOUR_COPY.cityOpeners || {})[c.slug] || "";
+  const cohort = CITY_COHORT[c.slug] || "mediterranean";
+  const body = (TOUR_COPY.cohortBody || {})[cohort] || "";
+  const lead = [opener, body].filter(Boolean).join(" ");
+  return `<section class="container container-narrow prose mt-4">
   <h2>How tours actually work in ${esc(c.name)}</h2>
-  <p>The tour landscape in ${esc(c.name)} is layered. At the top sit the marquee tours — the ones every hotel concierge will recommend, the ones travel guides feature, the ones that consistently book out two weeks ahead in peak season. Below them sits a wider tier of decent-but-unremarkable tours operating the same routes with different vans. At the bottom sits a ring of street-level operators offering "we'll take you cheaper" deals from cardboard signs near hotel entrances — sometimes fine, often a different itinerary than promised, no recourse if it goes wrong. The category cards above are filtered to the top tier only: aggregators that rank by review velocity (Klook, GetYourGuide), and Tiqets for skip-the-line single-attraction tickets.</p>
-  <p>Two practical rules: <strong>book skip-the-line tickets ahead</strong> for every major sight (the ${esc(skipLineExamples)} fill up by 11am in season), and <strong>do at least one half-day private tour</strong> if your trip is longer than 3 days. The marginal cost over a group tour is small (~30%), the experience difference is large.</p>
+  <p>${esc(lead)}</p>
+  <p>Two practical rules apply across the country: <strong>book skip-the-line tickets ahead</strong> for every major fixed-time-slot sight (the ${esc(skipLineExamples)} fill up by 11am in season), and <strong>do at least one half-day private tour</strong> if your trip is longer than 3 days. The marginal cost over a group tour is small (~30%); the experience difference is large.</p>
 
-  <h2>What we recommend skipping</h2>
-  <p>Generic "city highlights" bus tours that cover six sights in five hours mostly waste your time on commute and queue. Pick three sights and book skip-the-line tickets for each — you'll see more in less time. Dinner-and-show evening tours marketed as "Turkish night" are entertainment-grade re-enactments, fine if that's the trip you want, but they don't add anything cultural that a proper restaurant + a sema ceremony don't already give you. Boat tours that promise "private" but pack 30 people on board — read the fine print on capacity before paying premium prices.</p>
+  <h2>What we recommend skipping in ${esc(c.name)}</h2>
+  <p>Generic "city highlights" bus tours that cover six sights in five hours mostly waste your time on commute and queue. Pick three sights and book skip-the-line tickets for each — you'll see more in less time. "Turkish night" dinner shows are entertainment-grade re-enactments — fine if that's the trip you want, but they don't add anything cultural that a proper restaurant evening + a sema ceremony don't already give you. Boat tours that promise "private" but pack 30 people on board are the most-reported tour-disappointment in ${esc(c.name)} reviews — read the capacity fine print before paying premium prices.</p>
 
   <h2>Frequently asked</h2>
-  <h3>Should I book before I arrive?</h3>
-  <p>For peak-season (June–September) and the marquee tours, yes — at least a week ahead, two for balloon flights. Off-season, day-of often works for general tours. Skip-the-line tickets to fixed-time-slot sights (Hagia Sophia, Topkapı, the Cappadocia balloon) are always worth pre-booking; the price is the same.</p>
-  <h3>Are the city-card aggregators (Klook, GetYourGuide) marking up the price?</h3>
-  <p>Marginally — they take a commission from operators rather than the customer, so the ticket price is generally the same as booking direct. The benefit is the review density, the cancellation policy, and the multi-language customer support. The cost is occasional same-tour-different-name redundancy.</p>
-  <h3>Do I need to tip tour guides?</h3>
-  <p>Yes — 50–100 TL per person on a group tour, more for a private tour or specialist guide. Cash, given at the end. Drivers are usually included in the guide tip; restaurants are separate.</p>
-</section>
+  <h3>Should I book before I arrive in ${esc(c.name)}?</h3>
+  <p>For peak season (June–September) and the marquee tours, yes — at least a week ahead, two for balloon flights or named day-cruise charters. Off-season, day-of often works for general tours. Skip-the-line tickets to fixed-time-slot sights are always worth pre-booking; the price is the same as walking up.</p>
+  <h3>Are the aggregator platforms (Klook, GetYourGuide) marking up the price?</h3>
+  <p>Marginally if at all — they take a commission from operators rather than the customer, so the ticket price is generally the same as booking direct. The benefit is review density, cancellation policy, and multi-language support. The cost is occasional same-tour-different-name redundancy in the listings.</p>
+  <h3>Do I need to tip tour guides in ${esc(c.name)}?</h3>
+  <p>Yes — 50–100 TL per person on a group tour, more for a private tour or specialist guide. Cash, given at the end. Drivers are usually included in the guide tip; restaurants are separate. Hotel concierges expect 30–50 TL for any tour they book on your behalf.</p>
+</section>`;
+})()}
 
 <section class="container section-sm">
   <h2>Stay near the tours</h2>
@@ -4362,17 +4417,49 @@ ${disclosureBanner()}
   </ol>
 </section>
 
-<section class="container container-narrow prose mt-4">
+${(function () {
+  // Region-specific deep dive. Each of 5 regions gets a distinct
+  // paragraph — different food, transport, seasonal advice — not
+  // just region-name swap. Falls back to a generic block when slug
+  // doesn't match.
+  const regionDeepDive = {
+    "aegean-coast": {
+      around: "The Aegean Coast works best as single-base + day-trip rather than a road trip. Pick Bodrum or Çeşme as the base; rent a car from Localrent for 2-3 days to cover Ephesus, Şirince, the Aegean coves; otherwise the dolmuş minibus network reaches every cove cheaply. Domestic flights serve Bodrum (BJV), Izmir (ADB), and Dalaman (DLM) — book the cheapest, transfers between cities are short.",
+      character: "The Aegean is Turkey's cultural-leaning coastal region — design hotels, serious wine country (Şirince, Urla), Ephesus and the Ionian-Roman ruin chain, and a more European-oriented crowd than the Mediterranean's package-tour belt. Food is olive-oil-heavy, lighter than Anatolian; the seafood meyhane culture (long fish-and-rakı dinners) is at its best here. Locals from Istanbul summer here in droves, raising both the quality bar and the prices.",
+      combine: "Pair the Aegean with Istanbul for a 7-night first-Turkey trip (3+4 split), or with Cappadocia for a 9-night two-coast-and-cave trip. The Aegean is also the natural extension if you've already done Mediterranean Turkey — different food, calmer rhythm, more architectural variety.",
+    },
+    "mediterranean-riviera": {
+      around: "The Mediterranean Riviera works as hub-and-spoke from a resort base — Antalya for Lara/Konyaaltı, Alanya/Side for the central coast, Fethiye for the Lycian Way, Kaş for the boutique-and-diving end. Antalya Airport (AYT) and Dalaman (DLM) are the two practical entry points; transfers between coastal towns are easier by Localrent rental car than by intercity bus.",
+      character: "The Mediterranean is Turkey's package-holiday capital — large all-inclusive resorts, sandy beaches, predictable family-friendly amenities, and the lowest peak-season prices of the coastal regions. The headline non-resort attractions are the Lycian Way (a 760km coastal hiking trail) and the dense Roman ruin chain (Aspendos, Side, Olympos, Patara, Phaselis, Termessos). Best for affordable resort holidays + Roman ruin enthusiasts.",
+      combine: "The classic 7-night first-Turkey trip is Istanbul + this region (3+4). Returning travelers often add Cappadocia for a 10-night three-region trip. Pair with the Aegean if your trip is coastal-themed.",
+    },
+    "cappadocia-central-anatolia": {
+      around: "Cappadocia + Central Anatolia is best as fly-in / drive-out. Fly into Kayseri (ASR) or Nevşehir (NAV) for Cappadocia (60-80km transfer to Göreme); then either fly out from the same airport or rent a car and drive to Konya (3 hours), Ankara (5 hours), or back to Istanbul (10 hours, better as overnight bus). Inside Cappadocia itself, the cave hotels arrange transfers and you walk between sights.",
+      character: "Cappadocia is Turkey's single-most-photographed landscape — fairy chimneys, volcanic-tuff cave hotels, sunrise hot-air balloons. Central Anatolia adds the cultural depth — Konya's Mevlana mausoleum and the whirling-dervish ceremonies, Ankara's Atatürk-era museums and the Anatolian Civilizations Museum (one of the finest in the world). Pair Cappadocia with one of these inland cities to give the trip more dimension than the balloon photos alone.",
+      combine: "Cappadocia + Istanbul is the iconic first-Turkey 5-night double-header (2+3). For a 9-night trip add Antalya or the Aegean. Return travelers often pair Cappadocia with Eastern Anatolia (Mardin, Şanlıurfa, Gaziantep) for a serious cultural-history trip.",
+    },
+    "black-sea": {
+      around: "The Black Sea region is essentially a road trip — fly into Trabzon (TZX), rent a car, drive east through Rize and into the Pontic Alps, fly out from the same airport or continue overland. The headline routes are coastal (Trabzon → Akçaabat → toward Samsun) and inland (Trabzon → Sumela → Uzungöl, Rize → Ayder → Hemşin). Limited public transport once you leave the main coastal cities.",
+      character: "The Black Sea is the only Turkish region where the headline isn't sea or ruins — it's the Pontic Alps. Tea plantations, alpine yaylas (highland villages), wood-clad chalet hotels, mist-and-mountain landscapes that don't exist anywhere else in Turkey. Food is regional — hamsi (anchovy) in every form, Akçaabat köfte, kuymak/muhlama (cornmeal-and-cheese fondue). It rains here, year-round; pack a real rain jacket.",
+      combine: "Black Sea works as a 4-night detour from Istanbul (1-hour flight). Pair with another inland region (Cappadocia or Eastern Anatolia) for a 9-night non-coastal Turkey trip. Less commonly paired with the Aegean or Mediterranean coasts — too much travel for a single trip.",
+    },
+    "eastern-anatolia": {
+      around: "Eastern Anatolia is best with a rental car for at least one leg. Fly into Mardin (MQM) or Şanlıurfa (SFQ); the Mardin → Şanlıurfa → Gaziantep → Adıyaman → Mount Nemrut loop covers the headline sites in 5-7 days. Public transport between major cities is workable (intercity bus); rural day trips need a car or hired driver. The summer heat is the practical limiter — April-May or September-November are the comfortable months.",
+      character: "Eastern Anatolia / Mesopotamia has the deepest history (Göbekli Tepe is here — 11,000-year-old temple complex), the best food (Gaziantep is UNESCO Creative City of Gastronomy), and the highest cultural density per square kilometre. Less infrastructure, more reward. The architectural language is honey-coloured limestone, Syriac stonework, Mardin's hill-town profile, Mor Gabriel's monastic ensembles. This is where return-Turkey travelers go on their second or third trip.",
+      combine: "Pair Eastern Anatolia with Cappadocia (4-hour drive west) for a serious 9-10 night cultural trip. Returning travelers sometimes do Eastern Anatolia + Black Sea for a non-coastal grand tour. Less commonly paired with coastal Turkey — the trip's centre of gravity is too different.",
+    },
+  };
+  const dd = regionDeepDive[r.slug] || {};
+  return `<section class="container container-narrow prose mt-4">
   <h2>Getting around the ${esc(r.name)}</h2>
-  <p>The ${esc(r.name)} works best as a road-trip rather than a hub-and-spoke. Cities sit close enough together that domestic flights add overhead — a 1-hour flight plus 2 hours of airport time often loses to a 3-hour drive on the same route. Localrent (the Turkey-focused car rental aggregator) has depots in every major city in the region and is the practical pickup if you're driving more than two cities. Public buses (Pamukkale Turizm, Kamil Koç, Metro Turizm) cover the major routes with overnight options that save a hotel night; book through Obilet.com in English.</p>
-  <p>Internal flights make sense only for the longest hops — Trabzon to Istanbul, for example, or skipping straight from one end of the region to the other. SunExpress, AnadoluJet, and Pegasus all fly daily; book 2-4 weeks ahead for the cheapest fares.</p>
+  <p>${esc(dd.around || "")}</p>
 
-  <h2>What separates this region from the rest of Turkey</h2>
-  <p>Each Turkish region has its own character, food, and architectural register. The ${esc(r.name)} differs from neighboring regions in three concrete ways: the seasonal calendar (different months work for different reasons — see the per-city pages below for the detailed climate strip), the price tier (this region clusters around a typical mid-range double-room rate that's distinct from coastal Turkey or Istanbul), and the food map (regional dishes that don't travel well to chain restaurants in other parts of the country). Travelers who treat Turkey as one place miss this; travelers who pick a region and dig in for 5-7 nights tend to come back.</p>
+  <h2>What separates the ${esc(r.name)} from the rest of Turkey</h2>
+  <p>${esc(dd.character || "")}</p>
 
   <h2>How to combine with other regions</h2>
-  <p>Most first-Turkey travelers pair this region with Istanbul (the obligatory front door) for a 7-10 night trip — Istanbul handles arrival, atmosphere, and the historical sweep, then the ${esc(r.name)} delivers the regional specialism. Returning travelers often pair it with one other region for a deeper second trip — Aegean + Mediterranean if your trip is coastal-themed, Cappadocia + Eastern Anatolia if it's history-themed. The Turkish Airlines / Pegasus internal flight grid makes any two-region combination doable in a 10-night trip.</p>
-</section>
+  <p>${esc(dd.combine || "")}</p>
+</section>`;})()}
 
 ${leadAndEssentials()}
 ${footer()}
@@ -4425,17 +4512,32 @@ ${disclosureBanner()}
   <p class="text-muted" style="max-width:720px">If you're doing 2+ day trips, base yourself centrally. <a href="/${c.slug}/">See our full ${esc(c.name)} neighborhood guide</a> for which area suits which tour pickup.</p>
 </section>
 
-<section class="container container-narrow prose mt-4">
-  <h2>How to choose between day trips</h2>
-  <p>Three factors decide which day trip fits your trip: <strong>distance</strong> (anything over 100km each way eats most of the day in transit and rewards an overnight rather than a day trip — Pamukkale from Antalya is the classic example), <strong>terrain</strong> (canyon hiking, ruins climbing, rafting all need real shoes and water; the cards above flag this in the eyebrow), and <strong>your trip length</strong> (with 4 nights or fewer in ${esc(c.name)}, one day trip max; with 6+, two work well, three is overscheduled). Pick by what your trip is missing — if you've been on the beach for three days, take the ruins trip; if you've been climbing ruins, take the canyon-rafting trip.</p>
-  <p>Tour-operator pickups standardly happen at 7-8am from your hotel and return by 6-7pm. Half-day trips run 8am-1pm or 1pm-7pm. Lunch is usually included on full-day tours; bring a backup snack anyway because the included lunch is often the weakest part. Most operators allow free cancellation up to 24 hours ahead through the aggregator booking platforms.</p>
+${(function () {
+  // Per-city day-trip prose. Generic helper text for the universals
+  // (distance/terrain/operator-mechanics) plus a city-specific intro
+  // sentence. Only 6 cities have day-trip data so templating risk is
+  // lower, but we still vary the opening hook by city.
+  const cityIntros = {
+    istanbul:  "Istanbul day-trips trade the city's density for one specific extra — Bursa for tombs and Iskender kebab, Princes' Islands for car-free 19th-century atmosphere, Cumalıkızık village for Ottoman timber houses, Şile + Ağva for Black Sea coastline.",
+    antalya:   "Antalya day-trips lean Roman-ruins-and-canyons — Aspendos and Side both reachable as half-days, Termessos for the mountain ruins, Köprülü Canyon for rafting + Selge ruins, plus Pamukkale as a long-day option (4 hours each way, better as overnight).",
+    bodrum:    "Bodrum day-trips are mostly boat-trips — gulet day cruises around the peninsula's coves, ferries across to the Greek island of Kos, and the more ambitious overnight to Datça or Pamukkale.",
+    cappadocia:"Cappadocia day-trips fan out from Göreme: the Ihlara Valley + Selime Monastery 1.5h south, the Derinkuyu / Kaymaklı underground cities just south, and the lesser-visited Soğanlı Valley further out — all bookable as group or private day trips.",
+    fethiye:   "Fethiye day-trips are paragliding (Babadağ above Ölüdeniz), the 12 Islands gulet day, the Saklıkent Gorge canyon walk, and the Kayaköy ghost-village circuit at sunset.",
+    izmir:     "Izmir day-trips centre on Ephesus + Şirince village + the House of the Virgin Mary — a single full day from the city, the most-booked archaeology trip in Turkey.",
+  };
+  const intro = cityIntros[c.slug] || "";
+  return `<section class="container container-narrow prose mt-4">
+  <h2>How to choose between ${esc(c.name)} day trips</h2>
+  ${intro ? `<p>${esc(intro)}</p>` : ""}
+  <p>Three factors decide which day trip fits your trip: <strong>distance</strong> (anything over 100km each way eats most of the day in transit and rewards an overnight rather than a day trip — Pamukkale from Antalya is the classic example), <strong>terrain</strong> (canyon hiking, ruins climbing, rafting all need real shoes and water — the cards above flag this in the eyebrow), and <strong>your trip length</strong> (with 4 nights or fewer in ${esc(c.name)}, one day trip max; with 6+, two work well, three is overscheduled). Pick by what your trip is missing — if you've been on the beach for three days, take the ruins trip; if you've been climbing ruins, take the canyon-rafting trip.</p>
+  <p>Tour-operator pickups standardly happen at 7–8am from your hotel and return by 6–7pm. Half-day trips run 8am–1pm or 1pm–7pm. Lunch is usually included on full-day tours; bring a backup snack anyway because the included lunch is often the weakest part of the day. Most operators allow free cancellation up to 24 hours ahead through the aggregator booking platforms.</p>
 
   <h2>What we'd skip</h2>
-  <p>Multi-stop "highlights" tours that promise four sights in one day usually deliver tour-bus parking lots at four sights, with too little time at each to see anything substantive. Better to pick one and own it for 4-5 hours. Boat tours that cover "12 islands" in a day rarely stop at any one for more than 30 minutes — pick the trip that sells one island and dives there for an afternoon. Tours that include shopping stops (carpet, jewelry, ceramics) are subsidized by commission from the shops; they're not free even if they say they are — you pay in time.</p>
+  <p>Multi-stop "highlights" tours that promise four sights in one day usually deliver tour-bus parking lots at four sights, with too little time at each to see anything substantive. Better to pick one and own it for 4–5 hours. Boat tours that cover "12 islands" in a day rarely stop at any one for more than 30 minutes — pick the trip that sells one island and dives there for an afternoon. Tours that include shopping stops (carpet, jewelry, ceramics) are subsidised by commission from the shops; they're not free even if they say they are — you pay in time.</p>
 
-  <h2>Combining a day trip with an overnight</h2>
-  <p>Two of the more demanding day trips above are better as overnights — Pamukkale especially (it's a 5am start to do as a day trip and you miss the sunrise on the travertines, which is the actual point). Same for the more remote ruins on the longer drives. If a day trip is going to be 12+ hours of total travel-time, look at adding a single overnight at a small village pension instead. Cost adds €40-80 per night; the experience nearly doubles.</p>
-</section>
+  <h2>Combining a ${esc(c.name)} day trip with an overnight</h2>
+  <p>Two of the more demanding day trips above are better as overnights — Pamukkale especially (it's a 5am start to do as a day trip and you miss the sunrise on the travertines, which is the actual point). Same for the more remote ruins on the longer drives. If a day trip is going to be 12+ hours of total travel-time, look at adding a single overnight at a small village pension instead. Cost adds €40–80 per night; the experience nearly doubles.</p>
+</section>`;})()}
 
 ${leadAndEssentials({ citySlug: c.slug })}
 ${footer()}
