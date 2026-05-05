@@ -1678,6 +1678,7 @@ function renderHome() {
   const body = `
 ${nav()}
 ${disclosureBanner()}
+<main id="main">
 <section class="hero-home">
 
   <div class="container" style="position:relative">
@@ -1747,19 +1748,19 @@ ${disclosureBanner()}
       <aside class="dest-sidebar" aria-label="Filter destinations">
         <h3><span class="pin" aria-hidden="true">📍</span>Destinations in Turkey</h3>
         <div class="dest-search"><input type="search" id="dest-search" placeholder="Search destinations in Turkey" aria-label="Search destinations" autocomplete="off"></div>
-        <ul class="dest-list" id="dest-list" role="group">
+        <ul class="dest-list" id="dest-list">
           ${cities.slice().sort((a, b) => a.name.localeCompare(b.name)).map((c) => `
             <li data-name="${esc(c.name.toLowerCase())}" data-slug="${esc(c.slug)}">
               <label><input type="checkbox" data-city="${esc(c.slug)}" aria-label="Filter by ${esc(c.name)}"><span>${esc(c.name)}</span></label>
             </li>`).join("")}
-          <button type="button" class="reset" id="dest-reset">Reset filters</button>
         </ul>
+        <button type="button" class="reset" id="dest-reset">Reset filters</button>
       </aside>
       <div class="dest-main">
         <div class="dest-toolbar">
-          <div class="view-toggle" role="tablist" aria-label="View mode">
-            <button type="button" data-view="grid" class="is-active" aria-label="Grid view"><svg viewBox="0 0 24 24"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg></button>
-            <button type="button" data-view="list" aria-label="List view"><svg viewBox="0 0 24 24"><path d="M3 5h18v2H3zm0 6h18v2H3zm0 6h18v2H3z"/></svg></button>
+          <div class="view-toggle" role="group" aria-label="View mode">
+            <button type="button" data-view="grid" class="is-active" aria-label="Grid view" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg></button>
+            <button type="button" data-view="list" aria-label="List view" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 5h18v2H3zm0 6h18v2H3zm0 6h18v2H3z"/></svg></button>
           </div>
           <h2 class="dest-title">Top Places To Stay in Turkey</h2>
           <div class="sort">
@@ -1872,6 +1873,7 @@ ${essentialsBlock()}
     </div>
   </div>
 </section>
+</main>
 
 ${footer()}
 ${modal()}

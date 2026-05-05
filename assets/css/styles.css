@@ -11,13 +11,25 @@
   --surface: #ffffff;         /* cards, modals */
   --ink: #0b0f19;             /* primary text, primary button */
   --ink-muted: #3d4252;       /* body prose */
-  --ink-soft: #6b7085;        /* meta, labels */
+  --ink-soft: #595e72;        /* meta, labels — was #6b7085, darkened for AA contrast (5.6:1 on #faf8f3) */
   --hairline: #d9d4c5;        /* thin rules, borders */
   --hairline-soft: #ebe6d8;   /* very faint dividers */
   --accent: #b45309;          /* burnt sienna — for accents, never overused */
   --accent-soft: #fef6ec;     /* hover / callout bg */
   --success: #256b3f;
   --warn: #8b4513;
+  /* --c-* aliases — historically used in inline styles emitted by build.js
+     but never defined here. Without these, those inline colors inherit
+     an ambiguous color or fail Lighthouse contrast checks. Aliasing them
+     to the canonical --ink-* tokens fixes both. */
+  --c-text:        var(--ink);
+  --c-text-muted:  var(--ink-muted);
+  --c-text-soft:   var(--ink-soft);
+  --c-accent:      var(--accent);
+  --c-accent-soft: var(--accent-soft);
+  --c-border:      var(--hairline);
+  --c-hairline:    var(--hairline);
+  --c-success:     var(--success);
 
   /* Typography */
   --font-serif: "Fraunces", "Instrument Serif", Georgia, "Times New Roman", serif;
