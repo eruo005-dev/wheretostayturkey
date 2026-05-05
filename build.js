@@ -2638,15 +2638,17 @@ ${entries.map((e) => `<url><loc>${e.url}</loc><lastmod>${e.lastmod}</lastmod><ch
 }
 
 function renderRobots() {
-  // robots.txt — allow everything except conversion-confirmation pages
-  // (/thank-you/, /thank-you-combo/) which would dilute analytics if
-  // crawled. The IndexNow line is purely informational; engines find the
-  // verification key file on their own.
+  // robots.txt — allow everything. Conversion-confirmation pages
+  // (/thank-you/, /thank-you-combo/) are excluded from search results
+  // via <meta name="robots" content="noindex"> on those pages, which is
+  // Google's recommended mechanism. We deliberately do NOT Disallow them
+  // here: blocking crawl prevents Google from seeing the noindex meta,
+  // and a discovered-via-internal-link URL can still appear in results
+  // without a snippet. Letting Google crawl + noindex is the cleanest
+  // path. The IndexNow line is purely informational.
   const lines = [
     "User-agent: *",
     "Allow: /",
-    "Disallow: /thank-you/",
-    "Disallow: /thank-you-combo/",
     "",
     `Sitemap: ${config.siteUrl}/sitemap.xml`,
   ];
