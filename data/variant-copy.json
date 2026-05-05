@@ -1,0 +1,190 @@
+{
+  "_comment": "Cohort-tiered + per-city variant copy for programmatic /city/{variant}/ pages. Each city falls into one cohort (cohorts share a body paragraph). Each city × variant also has its own 1-2-sentence opener that prepends the cohort body — this prevents identical prose across pages within a cohort. AdSense reviewers sample 5-10 pages; the per-city opener ensures every sample looks distinct.",
+  "cohorts": {
+    "istanbul":     ["istanbul"],
+    "cappadocia":   ["cappadocia"],
+    "mediterranean":["antalya", "side", "alanya", "mersin", "fethiye", "kas", "marmaris"],
+    "aegean":       ["bodrum", "izmir", "kusadasi", "pamukkale"],
+    "eastern-anatolia": ["mardin", "sanliurfa", "gaziantep"],
+    "inland-anatolia":  ["ankara", "konya", "bursa", "safranbolu"],
+    "black-sea":    ["trabzon", "rize"]
+  },
+  "cohortBody": {
+    "istanbul": {
+      "luxury": "Istanbul is one of the few cities in the world where a luxury hotel can put you inside an Ottoman palace, on a Bosphorus shoreline, or in a 19th-century European-quarter mansion — sometimes all three within walking distance. Expect $400–$1,200 per night for the named properties (Çırağan Palace, Four Seasons Sultanahmet and Bosphorus, Pera Palace, Six Senses Kocataş, Shangri-La Bosphorus). Most include sweeping breakfast, club-lounge access, and a hammam visit; concierge teams handle private Bosphorus cruises and after-hours museum visits. Book the Bosphorus-front rooms 8–12 weeks ahead in spring and autumn — they sell out faster than the city-side suites.",
+      "budget": "Istanbul's budget tier ($30–$80) clusters in three areas: the Sultanahmet backpacker grid (Cankurtaran and the streets behind the Blue Mosque), the Cihangir / Galata pension district near Taksim, and Kadıköy on the Asian side. Hostels with private rooms run $30–$45; small pensions $50–$80. The Asian-side budget options give you the Istanbul most tourists miss for the same price. Sultanahmet wins on walk-to-everything sights; Kadıköy wins on real-life atmosphere; Cihangir splits the difference. Public transport is excellent and one Istanbulkart serves them all.",
+      "families": "Istanbul with kids is mostly about pacing. The big sights (Hagia Sophia, Topkapı, Basilica Cistern, Grand Bazaar) reward 2-hour visits with lunch breaks rather than marathon mornings. Pick a hotel within a 10-minute walk of a tram stop — the T1 line links Kabataş, Sultanahmet, and Eminönü, which covers most of what you want to see. Two-bedroom apartments and family suites in Beyoğlu (Cihangir) or Beşiktaş work well; Sultanahmet gets crowded. The Bosphorus ferries are kid-magnets, the Istanbul Toy Museum in Göztepe is excellent, and most rooftop hotel restaurants are family-friendly.",
+      "couples": "Istanbul for couples is about layered evenings: sunset at a Galata rooftop, dinner at a meyhane on Asmalımescit, then a slow walk back through Cihangir's lit-up steps. The romantic-stay shortlist concentrates in Beyoğlu (boutique mansion hotels with Bosphorus glimpses), Sultanahmet (Ottoman-mansion hotels around Topkapı's outer walls), and the Bosphorus villages of Bebek and Ortaköy (waterfront hotels with private piers). Avoid the airport-area chains — you'll burn 90 minutes of every day commuting in and out. Best couples months are April–May and September–October."
+    },
+    "cappadocia": {
+      "luxury": "Luxury in Cappadocia means cave suites carved into volcanic tuff — fireplaces in stone alcoves, antique-furnished sleeping platforms, private terraces with the balloons floating up at sunrise. The benchmark properties (Argos in Cappadocia, Museum Hotel, Sacred House, Kayakapı Premium Caves) sit in Uçhisar and Ürgüp rather than touristy Göreme. Expect $400–$900 per night with breakfast, sometimes dinner included. Book the balloon flight separately and far ahead — the marquee operators sell out 6–8 weeks for spring and autumn dates.",
+      "budget": "Cappadocia's budget tier (mostly Göreme village, $30–$70 per night) is the world's most photogenic backpacker scene. Pansiyons carved into the same volcanic rock as the $700 cave suites, served by the same balloon-flying view at sunrise. Trade-off: smaller rooms, occasionally dim lighting, basic breakfast, but the 6am call to prayer + balloon-flame sounds cost the same wherever you sleep. Look for places on the upper streets of Göreme — better balloon-photo angles than the lower main strip.",
+      "families": "Cappadocia with kids works for short stays (2 nights ideal, 3 max). The cave-hotel novelty is universal across age groups. Look for properties with two-room cave suites or interconnecting cave rooms; the famous balloon ride has a minimum age (usually 6) and requires standing for an hour. Fill the day with the Open-Air Museum at Göreme, a horseback ride through the valleys, and the Underground City at Derinkuyu (claustrophobia warning for the deep levels). The volcanic-rock terrain isn't stroller-friendly — frame trips with carrying-aged kids in mind.",
+      "couples": "Cappadocia is the honeymoon capital of Turkey for a reason. Cave suites with private hot tubs, Relais & Châteaux properties (Argos in Cappadocia is one), Ottoman-style breakfasts on rooftop terraces, and the morning balloon flight — a 1-hour silent float over fairy chimneys at sunrise — cover the marquee romantic-trip checklist. Pair Uçhisar (highest, quietest, most upscale) for sleep with Göreme for daytime exploration. Most couples spend 2–3 nights; the photographs justify a flight from Istanbul."
+    },
+    "mediterranean": {
+      "luxury": "${cityName}'s luxury tier sits on the Turquoise Coast — Mediterranean water that holds 27°C through August, pine-fringed coves, and 5-star resorts that have spent 20 years refining the all-inclusive formula for European travelers. Expect $300–$700 per night with most or all meals, multiple pools, kids' clubs at the larger properties, and a private beach or cove. The boutique tier (under 30 rooms, designer-led) is smaller but growing — typically $250–$500 with breakfast only. Book peak July–August 8 weeks ahead; May, June, September, October are the better months to visit.",
+      "budget": "${cityName}'s budget tier mixes pension stays in the old town (where there is one) with apart-hotels in the residential strips behind the resort beaches. $50–$90 gets you a clean room with breakfast, often a small pool. The upside: the same Mediterranean water and beach access as the 5-star resorts. The downside: smaller rooms, basic breakfast, and a 5-15 minute walk to the beach instead of a beachfront pool. Best for trips where the days are spent out — at the beach, ruins, or boat trips — and the room is just for sleep.",
+      "families": "${cityName} for families works in the resort blocks where everything is bundled — pool, beach, kids' club, three meals — and you don't need a car. The Mediterranean-coast resort formula is genuinely good for families with kids 3–13: most properties run a daytime kids' programme, the food is buffet-friendly, and the staff are unfailingly patient. Look for resorts with a real (not decorative) family pool, two-bedroom suites or interconnecting rooms, and a 24-hour front desk for late-arrival contingencies. The dolmuş minibus reaches every town centre for $1–2 if you want to explore beyond the resort.",
+      "couples": "${cityName} for couples works best in the boutique end of the spectrum — small properties with sea-view terraces, breakfast served in a stone courtyard, and the beach a 5-minute walk away. Skip the 600-room all-inclusive blocks unless you want a wedding-with-cousins atmosphere; pick the 12-room family-run boutique hotels in the old town or the cliffside coves above the resort strips. Best months are May, June, September, October — water still warm but the package-tour density is lower. Pair with a sunset gulet boat trip from the harbour."
+    },
+    "aegean": {
+      "luxury": "${cityName}'s luxury hotels skew design-led rather than palace-formal — restored stone houses with infinity pools, organic-Aegean restaurants, and a more curated atmosphere than the Mediterranean coast's resort blocks. Maçakızı, the Six Senses Kaplankaya, and the Mandarin Oriental Bodrum set the regional benchmark; smaller boutique properties dot the peninsula. Expect $400–$900 per night. The Aegean is best in late spring and early autumn — May or September give you warm water without the August yacht-charter crowds.",
+      "budget": "${cityName}'s budget options cluster in the central neighborhoods near the marina and the older residential streets behind the seafront. $50–$100 gets you a clean room, breakfast, and walk-to-beach access in most cases. Family-run pansiyons offer the best value; the larger budget chain hotels lack atmosphere but include reliable hot water and air-con. The dolmuş covers the peninsula for $1–2 a hop, so you can sleep cheap and eat at the boutique-resort bay-front restaurants.",
+      "families": "${cityName} for families has the standard Aegean coast advantages: warm calm water for swimming, sand-and-shingle beaches, and a working dolmuş network that reaches every cove. Resort hotels with kids' clubs are concentrated in the larger central districts; smaller boutique pansiyons in the village outskirts work for older children and teenagers. Most restaurants serve children at any hour; high chairs are usually available without asking. Pack reef shoes — many Aegean beaches are pebbly rather than sandy.",
+      "couples": "${cityName} for couples leans toward the design-boutique end — small stone-house hotels, infinity pools above the harbour, and a calmer evening rhythm than Bodrum's bay can deliver. The classic Aegean couples evening: sunset at a hilltop bar, dinner at a meyhane on the seafront, a long walk back via the lit marina. Best months are May, June, September — water is swimmable, dining terraces are open, and you'll share the beach with locals rather than yacht-week crews."
+    },
+    "eastern-anatolia": {
+      "luxury": "${cityName}'s luxury tier means restored Ottoman or Syriac mansion hotels with stone courtyards, hand-laid mosaic floors, and rooftop terraces that look across the Mesopotamian plain. There aren't 5-star international chains here — the experience is heritage-led rather than amenity-led. Expect $150–$350 per night for the named konak properties (Cercis Murat Konağı in Mardin, Manici Kasrı in Şanlıurfa, Anadolu Evleri in Gaziantep). The food alone justifies the trip; the architecture is the bonus.",
+      "budget": "${cityName} on a budget ($40–$90) means small mansion-conversion hotels in the old city — cleaner and more atmospheric than equivalent prices in coastal Turkey. The food in Eastern Anatolia is among Turkey's best regardless of where you sleep; budget travelers eat the same Urfa kebab, Antep baklava, and Mardin içli köfte as luxury travelers, often at the same restaurants. Public transport is basic; expect to hire a half-day driver or rent a car for sights outside the city centre.",
+      "families": "${cityName} for families works for older children who can handle the heat and the heritage focus. Eastern-Anatolia trips are about food, history, and architecture rather than beaches or theme parks — best for families with kids 8+. The Şanlıurfa Archaeology Museum (with the original Göbekli Tepe steles), the Gaziantep Zeugma Mosaic Museum, and the Mardin sunset terraces are universal age-pleasers. Avoid June–August (40°C+) with younger children; March–May or September–November are far more comfortable.",
+      "couples": "${cityName} for couples is for travelers who'd pick a meal over a beach and a 13th-century mansion over a balcony with a sea view. The food alone — Urfa kebabı, Antep pistachio baklava, Mardin's Mesopotamian dishes, Şanlıurfa's çiğ köfte and isot pepper — earns it a place in every serious Turkish food trip. Mansion-hotel terraces with sunset views over the plain handle the romantic side. Avoid summer; April, May, October, November are the comfortable months."
+    },
+    "inland-anatolia": {
+      "luxury": "${cityName}'s luxury tier is mostly modern (DoubleTree, Wyndham, Hilton, Divan) rather than heritage. The Ottoman or Seljuk culture lives in the city's sights — Mevlana's mausoleum, Bursa's Green Mosque, Safranbolu's konak streets, Ankara's Atatürk's mausoleum — but the hotel rooms are reliable contemporary rather than character-led. Expect $120–$280 per night with full breakfast. Book a city-centre property within walking distance of the headline sight; the modern districts are calmer but cost you a tram ride for everything.",
+      "budget": "${cityName} on a budget ($40–$90) is straightforward: 3-star hotels in the older central districts give you walking access to the headline sights at reasonable prices. The food is great in all four cities of inland Anatolia — Bursa's Iskender kebabı, Konya's etli ekmek, Safranbolu's saffron-laced lokum, Ankara's Anatolian-classic restaurants. Public transport (tram, bus, dolmuş) is well-developed; you don't need a car within the city.",
+      "families": "${cityName} for families is the cultural-day-trip slot in a longer Turkey trip. None of the four inland cities is a destination on its own — they're 1–2 night cultural stops on a Cappadocia or Black Sea road-trip. Pick modern district hotels with pools and family suites if you have younger kids; the old-town konak hotels are more atmospheric but tighter on space. Train connections from Ankara and Konya make these cities easy day trips from Istanbul (4-5 hours by high-speed rail).",
+      "couples": "${cityName} for couples is the slow-Turkey trip rather than the romantic-Turkey trip. No beaches, no sunset cocktails on the Bosphorus — instead long evenings in restored Ottoman houses, careful regional dinners, and the calm of cities that don't depend on tourism for their economy. Best for couples on a return trip to Turkey rather than a first-Turkey trip; pair with Cappadocia (3-hour drive) or Istanbul (high-speed rail) for variety."
+    },
+    "black-sea": {
+      "luxury": "${cityName}'s luxury tier is small but real — restored konak hotels in the city centre, alpine chalet-style retreats in the inland highlands (Uzungöl, Ayder Plateau), and a handful of contemporary international-brand hotels in central Trabzon. Expect $120–$300 per night. The Pontic Alps backdrop is the main attraction — mist-and-tea-plantation landscapes that don't exist anywhere else in Turkey — and the food (hamsi anchovy in every form, Akçaabat köfte, kuymak cornmeal-and-cheese fondue) is regional and excellent.",
+      "budget": "${cityName} on a budget is genuinely cheap — the Black Sea coast sees less international tourism than the Aegean or Mediterranean and prices reflect it. $40–$80 gets you a clean room with breakfast in the city centre; $30–$60 in the smaller coastal towns. Food is correspondingly affordable. The catch: it rains here. A lot. Pack a real rain jacket; budget pansiyons rarely have laundry options for wet clothes.",
+      "families": "${cityName} for families has the Pontic Alps as the main draw — alpine pasture meadows, hot springs at Ayder, the cliff-face Sumela Monastery, and tea-plantation-and-forest landscapes that genuinely don't exist anywhere else in Turkey. Best for families with kids 8+ who can handle some hiking. Pebble beaches on the coast are workable but cool (Black Sea peaks at 24°C in August). Pack rain layers regardless of season.",
+      "couples": "${cityName} for couples is the moody-romantic trip rather than the sun-and-sea trip. Mist over tea plantations, alpine villages with wood-clad chalets, the Black Sea fish meyhanes for dinner — different from anywhere else in Turkey. Best in late spring through early autumn (May–October). Pair with an inland highland overnight (Ayder, Uzungöl) for the full effect."
+    }
+  },
+  "cityOpeners": {
+    "istanbul": {
+      "luxury": "Istanbul's luxury map runs along the Bosphorus from the Çırağan Palace through Bebek and out to the Sariyer villages, plus a dense cluster of Ottoman-mansion 5-stars in Sultanahmet.",
+      "budget": "Istanbul's budget belt is the Cankurtaran backstreets behind the Blue Mosque, plus the older pension district in Cihangir — both 5 minutes from a tram stop and 15 from every major sight.",
+      "families": "Istanbul for families is genuinely workable — the Bosphorus ferries, the Toy Museum in Göztepe, and the Park Orman play areas balance the heavy-history days at Topkapı and the Hagia Sophia.",
+      "couples": "Istanbul for couples runs evenings on the Galata–Karaköy rooftops, sunsets at Pierre Loti above the Golden Horn, and quiet stone-mansion stays in the side streets of Cihangir."
+    },
+    "cappadocia": {
+      "luxury": "Cappadocia's luxury map sits on the Uçhisar ridge and the upper streets of Ürgüp — cave suites with fireplaces, balloon-view terraces, and antique-furnished suites in restored Greek mansions.",
+      "budget": "Cappadocia's budget pansiyons fill the upper streets of Göreme — the same volcanic-tuff caves and balloon-view roof terraces as the $700 suites, just smaller rooms and basic breakfast.",
+      "families": "Cappadocia with kids works across all ages: the cave-hotel novelty is universal, the Open-Air Museum is short and visually engaging, and the underground cities at Derinkuyu / Kaymaklı are essentially one giant labyrinth.",
+      "couples": "Cappadocia is the honeymoon stop in a typical Turkey trip — cave suites with private hot tubs, the silent dawn balloon flight, and Uçhisar's panoramic-terrace dinners."
+    },
+    "antalya": {
+      "luxury": "Antalya's luxury hotels run east along the Mediterranean coast through Lara and Belek — sprawling 5-star resorts with private beaches, golf courses, and the Aspendos Roman amphitheater 40 minutes inland.",
+      "budget": "Antalya on a budget centres on Kaleiçi (the old town) — pension hotels in restored Ottoman houses, a 5-minute walk to the harbour, and a 15-minute dolmuş to Konyaaltı or Lara beaches.",
+      "families": "Antalya for families is well-served by the Lara and Konyaaltı beachfront resorts — most run kids' clubs, family suites, and a dolmuş to Aspendos and Side for the half-day Roman-ruin add-on.",
+      "couples": "Antalya for couples works in Kaleiçi (the walled old town) — boutique stone-house hotels, harbour-front fish restaurants, and the Hadrian's Gate–Hıdırlık Tower walking circuit at sunset."
+    },
+    "side": {
+      "luxury": "Side's luxury hotels mostly sit in Manavgat just east of the old town — large all-inclusive resorts with private beaches and 10-minute shuttle access to the Roman amphitheatre.",
+      "budget": "Side on a budget concentrates in the village core — small pensions a short walk to Apollo Temple, the harbour, and the long sand beach east of the ancient walls.",
+      "families": "Side for families combines beach-resort comfort with archaeology — the Roman ruins are walkable from most hotels and the surrounding waters are calm enough for younger swimmers.",
+      "couples": "Side for couples works for the sunset at Apollo Temple combo — the Roman columns directly on the beach, a candlelit dinner at one of the harbour restaurants, and a quiet boutique hotel in the old village."
+    },
+    "alanya": {
+      "luxury": "Alanya's luxury tier sits east in Mahmutlar and west in Konaklı — large all-inclusive resorts with private coves, 10-minute shuttle to Cleopatra Beach and the Seljuk citadel.",
+      "budget": "Alanya on a budget is a digital-nomad and long-stay favourite — Mahmutlar's apart-hotel cluster offers monthly rates, kitchenettes, and short walks to a quieter section of beach.",
+      "families": "Alanya for families works in Konaklı and central Alanya — beachfront resorts with kids' pools, Cleopatra Beach within walking distance, and the cable car up to the Seljuk castle as a half-day outing.",
+      "couples": "Alanya for couples is best in the smaller Konaklı boutiques and the quiet coves near the harbour — Cleopatra Beach at sunset, dinner at the harbourside fish restaurants below the castle."
+    },
+    "mersin": {
+      "luxury": "Mersin's luxury hotels are mostly modern coastal high-rises — fewer cave-and-konak conversions, more standard 5-star Mediterranean resort experience at lower prices than Antalya.",
+      "budget": "Mersin on a budget gives you Mediterranean coastal hotels at 30-40% less than Antalya — Tarsus and Mezitli are the practical bases, both with dolmuş access to the city centre.",
+      "families": "Mersin for families is the lower-priced Mediterranean resort alternative — same warm sea, calmer beaches, fewer crowds. Tarsus is the historical add-on — Cleopatra's Gate and Saint Paul's birthplace.",
+      "couples": "Mersin for couples leans practical rather than romantic — calmer waterfront promenades, less tourist density, and a working Anatolian city's food scene rather than resort-buffet kitchen."
+    },
+    "fethiye": {
+      "luxury": "Fethiye's luxury map runs west to Ölüdeniz and the Lycian Way trailheads — boutique cliff-side hotels, the Hisarönü mountain road, and access to the famous Blue Lagoon swims.",
+      "budget": "Fethiye on a budget centres on Kaya village (the abandoned ghost-Greek-village area) and the Çalış Beach belt — pension-style accommodation, walk-to-beach, dolmuş to the harbour.",
+      "families": "Fethiye for families is a Turquoise Coast classic — Ölüdeniz Blue Lagoon swimming, paragliding from Babadağ for older kids, and the Saklıkent Gorge canyon walk just inland.",
+      "couples": "Fethiye for couples is paragliding-and-Lycian-Way territory — small cliff-side boutiques near Ölüdeniz, dinner at one of the harbour-front restaurants in the old town, and the abandoned ghost-village walk at dusk."
+    },
+    "kas": {
+      "luxury": "Kaş's luxury tier sits along the Çukurbağ peninsula — boutique cliff-side hotels with plunge pools, swim platforms cut into the rock, and views straight across to Greek Meis (Kastellorizo).",
+      "budget": "Kaş on a budget is harbourside pansiyons — the town is small and walkable, the Lycian sarcophagus is in the main square, and the dive boats moor 3 minutes from your room.",
+      "families": "Kaş for families is more for older children and teenagers — sea-kayaking to the Kekova sunken city, the ferry to Greek Meis, dive-school day-tasters. The town has no big sandy beach.",
+      "couples": "Kaş for couples is the Mediterranean-Turkey small-town romantic stay — boutique stone houses on the peninsula, sunset over Meis, slow dinners in the harbour squares."
+    },
+    "marmaris": {
+      "luxury": "Marmaris's luxury hotels cluster east in Içmeler and the marina — large 4-5-star resorts with private beaches, the gulet harbour for day-charter trips, and the busy nightlife of Bar Street nearby.",
+      "budget": "Marmaris on a budget is Içmeler pension-style accommodation — same long beach as the resort blocks, smaller hotels, $50-90 per night with breakfast.",
+      "families": "Marmaris for families works in the Içmeler resort cluster — large family pools, kids' clubs, the gulet day-trip harbour, and the dolmuş to Cleopatra Beach as a 30-minute outing.",
+      "couples": "Marmaris for couples works best in Turunç (a quieter cove 20 minutes south by water taxi) rather than the central resort district — boutique stays, a single seafront promenade, and earlier-evening dinners."
+    },
+    "bodrum": {
+      "luxury": "Bodrum's luxury map fans across the peninsula's coves — Maçakızı in Türkbükü, the Mandarin Oriental in Cennet Bay, design-led boutique hotels in Yalıkavak. The marina is the social hub; the smaller bays are the quieter stays.",
+      "budget": "Bodrum on a budget concentrates in the central district behind the castle — small pansiyons, walk-to-marina, dolmuş access to the peninsula's beach coves.",
+      "families": "Bodrum for families has two modes: the family-resort blocks at Bitez or Gümbet (large pools, kids' clubs, sandy beaches) or the smaller boutique hotels in Yalıkavak / Türkbükü with private coves.",
+      "couples": "Bodrum for couples leans design-led — the boutique end of the peninsula (Türkbükü, Yalıkavak, the Maçakızı zone) — small stone-house hotels with infinity pools and bay-view restaurants."
+    },
+    "izmir": {
+      "luxury": "Izmir's luxury hotels mostly sit on the Konak waterfront — modern 5-star high-rises, plus a growing cluster of boutique converted-mansion hotels in Alsancak. The peninsula coves at Çeşme are 70 minutes by car.",
+      "budget": "Izmir on a budget centres on Alsancak — small pension-style hotels in 19th-century Greek and Levantine townhouses, walk-to-Kordon-promenade, and ferry connections across the bay.",
+      "families": "Izmir for families is more city than resort — the Bornova Forum mall, the Kordon waterfront, and Ephesus as a major day-trip 90 minutes south. Best paired with a Çeşme overnight for proper beach time.",
+      "couples": "Izmir for couples is design-led mansion-hotel territory in Alsancak — old townhouses converted to small hotels, the Kordon evening walk, a day-trip out to Çeşme or Şirince winery village."
+    },
+    "kusadasi": {
+      "luxury": "Kuşadası's luxury hotels mostly sit along the Ladies' Beach corridor and toward Selçuk — large beachfront 5-star resorts, plus boutique mansion hotels in Şirince village inland.",
+      "budget": "Kuşadası on a budget is straightforward: pension stays in the old harbour, $50-100 per night with breakfast, walk to the marina and the dolmuş that runs to Ephesus every 30 minutes.",
+      "families": "Kuşadası for families works on the Ladies' Beach resort strip — large family pools, sandy beach, plus the major Ephesus archaeological site as a half-day outing 25 minutes inland.",
+      "couples": "Kuşadası for couples works best paired with Şirince (the wine-and-Greek-village stop 30 minutes inland) — boutique stone-house pensions, slow lunches, and Ephesus at sunrise rather than midday."
+    },
+    "pamukkale": {
+      "luxury": "Pamukkale's luxury options are mostly thermal-spa resorts in nearby Karahayit (the red-water mineral springs town 4km north) — large 5-star spa hotels, all-inclusive options, and 10-minute shuttle to the white travertines.",
+      "budget": "Pamukkale Village's pansiyons are the budget pick — family-run hotels at the foot of the travertines, $40-80 per night with proper Anatolian breakfast, 5-minute walk to the south gate of Hierapolis.",
+      "families": "Pamukkale for families is a 1-2 night stop on a longer trip — the white travertines and Cleopatra's antique pool reward 4-6 hours, then the family-spa pools at Karahayit run for the rest of the day.",
+      "couples": "Pamukkale for couples is a single-night atmospheric stay — sunset on the travertines, the Karahayit thermal spa for a couples treatment, and an early start the next day for the Aphrodisias day-trip."
+    },
+    "trabzon": {
+      "luxury": "Trabzon's luxury hotels include modern international-brand high-rises in the city centre and alpine chalet-style retreats in Uzungöl 2 hours inland — distinctive Black Sea positioning rather than coastal-resort tier.",
+      "budget": "Trabzon on a budget centres on the city core near Atatürk Alanı — straightforward 3-star hotels, walk-to-Hagia-Sophia, and dolmuş access to Sumela Monastery as a half-day outing.",
+      "families": "Trabzon for families combines city sights with Pontic Alps day trips — Sumela's cliff-face monastery, the Uzungöl alpine lake, and the Akçaabat coastal beaches a short dolmuş ride west.",
+      "couples": "Trabzon for couples leans toward the highland-overnight pairing — a city night for sights and seafood, then 1-2 nights at an Uzungöl chalet for the alpine-and-mist atmosphere."
+    },
+    "rize": {
+      "luxury": "Rize's luxury offerings are mostly highland-retreat properties in Ayder and the surrounding Pontic Alps villages — wood-clad chalets, hot-springs access, hiking trails. Few coastal-luxury options exist; the region is inland-focused.",
+      "budget": "Rize on a budget works the same as the rest of the Black Sea — small pansiyons in the city centre, $30-70 per night, dolmuş routes into the tea-plantation valleys.",
+      "families": "Rize for families is for kids who like outdoor adventure — hiking in the Çamlıhemşin valley, visiting the Hemşin highland villages, and the Ayder hot springs. Older children get more from this trip than younger ones.",
+      "couples": "Rize for couples is the misty-romantic Black Sea trip — Ayder Plateau chalets, the Şenyuva valley, tea-plantation hikes, and the Black Sea food (hamsi, kuymak, muhlama) that doesn't exist anywhere else in Turkey."
+    },
+    "ankara": {
+      "luxury": "Ankara's luxury hotels sit in Çankaya (the diplomatic-quarter district) — modern international-brand 5-star properties with full business amenities. The Anatolian Civilizations Museum and Atatürk's mausoleum are the headline sights.",
+      "budget": "Ankara on a budget concentrates in Kızılay (the central commercial district) — straightforward 3-star hotels, walk to the high-speed train station, dolmuş routes to Anıtkabir and the citadel.",
+      "families": "Ankara for families is a 1-2 night cultural stop — Anıtkabir (Atatürk's mausoleum), the Anatolian Civilizations Museum, and the Çengelhan (Rahmi Koç) industrial-history museum work for kids 7+.",
+      "couples": "Ankara for couples works for the cultural-detour evening — old-citadel stone-house dinners at Hacı Arif Bey or Boğaziçi Lokantası, then back to a modern Çankaya hotel."
+    },
+    "konya": {
+      "luxury": "Konya's luxury hotels are modern Wyndham, DoubleTree, Hilton properties in Selçuklu (the new district 10 minutes from Mevlana) — reliable 5-star comfort rather than konak-mansion atmosphere.",
+      "budget": "Konya on a budget centres on the streets around the Mevlana Museum — small 3-star hotels, walk to the mausoleum, the central tram line for getting elsewhere.",
+      "families": "Konya for families is a 1-night Mevlana stop — the museum is short and visually striking, the sema (whirling-dervish ceremony) is family-friendly, and the modern Selçuklu hotels have pools for the afternoon.",
+      "couples": "Konya for couples is the cultural-Sufi-pilgrim slot in a longer trip — a single night near the Mevlana mausoleum, the Saturday-evening sema ceremony, and the etli ekmek dinner that defines local food."
+    },
+    "bursa": {
+      "luxury": "Bursa's luxury hotels are mostly Çekirge thermal-spa properties — restored 19th-century Ottoman bath complexes with hot-springs access, modern spa amenities, and 10-minute shuttle to the Green Mosque.",
+      "budget": "Bursa on a budget centres on the Heykel central district — walk-to-Iskender-kebabı, dolmuş access to the Çekirge baths, and the Cumalıkızık village 25 minutes east as the half-day outing.",
+      "families": "Bursa for families combines the Mount Uludağ cable car (longest in the world for a while) with the Cumalıkızık Ottoman village — both work for kids 6+, and the Çekirge thermal baths handle the spa-day.",
+      "couples": "Bursa for couples is the slow-cultural overnight — Çekirge thermal-spa hotel, the Green Mosque and Yeşil Tomb at sunset, and the Iskender kebab original. Two nights is comfortable, three is one too many."
+    },
+    "mardin": {
+      "luxury": "Mardin's luxury tier is restored Syriac and Ottoman mansion hotels along the upper old-town ridge — stone courtyards, mosaic floors, sunset terraces over the Mesopotamian plain.",
+      "budget": "Mardin on a budget gives you mansion-hotel atmosphere at $40-80 per night — small konak conversions in the old town, walk to every sight, the same plain-view terraces as the luxury properties.",
+      "families": "Mardin for families works for older children — the architecture, the Syriac monasteries, the Mesopotamian sunset views need a kid old enough to appreciate slow pace and stone stairs.",
+      "couples": "Mardin for couples is the Eastern-Anatolian heritage-romantic trip — restored Syriac mansion hotels, sunset terraces over the Mesopotamian plain, and food that's seriously Levantine (içli köfte, kaburga dolması)."
+    },
+    "safranbolu": {
+      "luxury": "Safranbolu's luxury options are restored Ottoman konak hotels in Çarşı (the UNESCO old town) — courtyards with citrus trees, saffron-laced breakfasts, and walls of carved walnut. Modern luxury chains don't exist here.",
+      "budget": "Safranbolu on a budget gives you konak atmosphere at $40-80 — small Ottoman mansion conversions in the old town, generous breakfast spreads, walk-to-Cinci-Han.",
+      "families": "Safranbolu for families is a 1-night stop — the cobbled old town is small, the Cinci Han caravanserai is short, and the Yörük Köyü village 15 minutes east handles the half-day outing.",
+      "couples": "Safranbolu for couples is the slow-Ottoman-village stay — sleep inside a UNESCO konak, breakfast in the courtyard, walk the cobbled lanes at dusk when the day-trippers leave."
+    },
+    "sanliurfa": {
+      "luxury": "Şanlıurfa's luxury tier is restored mansion hotels around Balıklıgöl — stone courtyards, Ottoman-style suites, and walking access to the Pool of Sacred Fish + the Archaeology Museum's Göbekli Tepe steles.",
+      "budget": "Şanlıurfa on a budget combines old-city mansion atmosphere ($40-90 per night) with the modern Karaköprü district's chain hotels (Hilton Garden Inn, etc.) — pick old-city if you want atmosphere, modern if you have a rental car.",
+      "families": "Şanlıurfa for families works for older children interested in archaeology — Göbekli Tepe is the trip, paired with Karahan Tepe and Harran for a full archaeology day. Avoid June-August (40°C+); spring or autumn only.",
+      "couples": "Şanlıurfa for couples is the archaeology-pilgrim trip — Göbekli Tepe at sunrise, mansion-hotel atmosphere in the old city, and the food that defines southeast Turkey (çiğ köfte, Urfa kebabı, isot pepper)."
+    },
+    "gaziantep": {
+      "luxury": "Gaziantep's luxury hotels include both restored konak properties on the Anadolu Evleri street and modern international-brand 5-stars in the Şehitkamil district. The food alone is the trip; the architecture is the bonus.",
+      "budget": "Gaziantep on a budget keeps you close to the Bakırcılar bazaar — small mansion-hotel conversions and 3-star modern properties at $50-100 per night, walking distance to the headline food destinations.",
+      "families": "Gaziantep for families is a UNESCO Creative City of Gastronomy trip — the Zeugma Mosaic Museum is genuinely engaging for kids 8+, and the bazaar food adventure (lahmacun, baklava, katmer) is universal.",
+      "couples": "Gaziantep for couples is a serious food trip — the world's best pistachio baklava, lahmacun thinner and spicier than Istanbul's, beyran çorbası breakfast soup. Two nights minimum, three if you're adding Halfeti."
+    }
+  }
+}
